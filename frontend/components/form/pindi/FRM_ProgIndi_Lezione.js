@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -13,6 +14,7 @@ import DCT_Breadcrumbs from "../../DCT_Breadcrumbs";
 import DCT_LinkButton from "../../DCT_LinkButton";
 import jnStyles from "../../../styles/utils.module.css";
 
+const utils = require("../../../lib");
 const pi_cfg = require("./config");
 
 class FRM_ProgIndi_Lezione extends React.Component {
@@ -22,7 +24,8 @@ class FRM_ProgIndi_Lezione extends React.Component {
       classeId: "cb_classe",
       classeValue: { label: "", id: 0 },
       listId: "lst_lezione",
-      lezioneValue: [],
+      lezioneValue: this.props.data.lezione,
+      selectedValue: [],
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,9 +35,25 @@ class FRM_ProgIndi_Lezione extends React.Component {
     this.handleBack = this.handleBack.bind(this);
     this.handleAddAll = this.handleAddAll.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.loadComboClasseArg = this.loadComboClasseArg.bind(this);
 
     this.changeChildClasseId = React.createRef();
     this.changeChildListId = React.createRef();
+  }
+
+  async componentDidMount() {
+    await this.loadComboClasseArg();
+  }
+
+  async loadComboClasseArg() {
+    const data = await utils.fetchJson("/api/clasarg", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(this.state.classeValue),
+    });
+    // console.log(data);
+    this.setState({ lezioneValue: data });
+    this.setState({ selectedValue: [] });
   }
 
   handleBack(event) {
@@ -46,28 +65,33 @@ class FRM_ProgIndi_Lezione extends React.Component {
     const data = {
       id: pi_cfg.FRM_PINDI_STEP_1,
       classe: this.state.classeValue,
-      lezione: this.state.lezioneValue,
+      lezione: this.state.selectedValue,
     };
-    await this.props.onSubmit(event, data);
+
+    if (this.state.selectedValue.length > 0) {
+      await this.props.onSubmit(event, data);
+    }
   }
 
-  handleReset(event) {
-    // console.log("RESET");
+  async handleReset(event) {
     this.changeChildClasseId.current.handleReset();
     this.changeChildListId.current.handleReset();
-    this.setState({ classeValue: { label: "", id: 0 } });
-    this.setState({ lezioneValue: [] });
+
+    this.setState({ classeValue: { label: "", id: 0 } }, () => {
+      this.loadComboClasseArg();
+      // console.log(this.state.lezioneValue);
+    });
   }
 
-  handleSearch(event) {
-    // console.log("SEARCH");
-    event.preventDefault();
+  async handleSearch(event) {
+    await this.loadComboClasseArg();
+
     const data = {
       id: pi_cfg.FRM_PINDI_STEP_1,
       classe: this.state.classeValue,
       lezione: this.state.lezioneValue,
     };
-    this.props.onSearch(event, data);
+    await this.props.onSearch(event, data);
   }
 
   handleAddAll(event) {
@@ -84,7 +108,7 @@ class FRM_ProgIndi_Lezione extends React.Component {
         this.setState({ classeValue: data });
         break;
       case this.state.listId:
-        this.setState({ lezioneValue: data });
+        this.setState({ selectedValue: data });
         break;
       default:
         console.log(id);
@@ -94,9 +118,9 @@ class FRM_ProgIndi_Lezione extends React.Component {
   }
 
   async onDeleteRow(id, data) {
-    console.log("DELETE ROW");
-    console.log(id);
-    console.log(data);
+    // console.log("DELETE ROW");
+    // console.log(id);
+    // console.log(data);
 
     const rowData = {
       id: pi_cfg.FRM_PBASE_STEP_1,
@@ -109,10 +133,15 @@ class FRM_ProgIndi_Lezione extends React.Component {
     // console.log(`<${pi_cfg.FRM_PINDI_STEP_1}='${this.props.id}'>`);
     // console.log(this.props.selection);
 
-    let comboClasseSelection = 0;
-    if (this.props.selection) {
-      comboClasseSelection = this.props.selection[2];
-    }
+    // let comboClasseSelection = 0;
+    // if (this.props.selection) {
+    //   console.log("COMBO SELECTION");
+    //   console.log(this.props.selection);
+    //   console.log(this.state.classeValue);
+    //   console.log(this.props.selection[2]);
+    //   comboClasseSelection = this.props.selection[2];
+    // }
+    let comboClasseSelection = this.state.classeValue.id;
 
     return (
       <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
@@ -129,8 +158,10 @@ class FRM_ProgIndi_Lezione extends React.Component {
                 list={this.props.data.bread}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={1}>
               <DCT_LinkButton href={`/pi/${pi_cfg.PINDI_STEP_0}`} text="back" />
+            </Grid>
+            <Grid item xs={11}>
               <DCT_Stepper
                 id="stepper"
                 activeStep={this.props.activeStep}
@@ -138,63 +169,75 @@ class FRM_ProgIndi_Lezione extends React.Component {
               />
             </Grid>
             <Grid item xs={4} textAlign="center">
-              <DCT_ComboBox
-                id={this.state.classeId}
-                list={this.props.data.classe}
-                label={this.props.data.classe_label}
-                onChange={this.onChangeForm}
-                size={200}
-                ref={this.changeChildClasseId}
-                selection={comboClasseSelection}
-              />
-              <ButtonGroup
-                variant="contained"
-                aria-label="outlined primary button group"
-                classes={{ root: jnStyles.jnBT }}
-              >
-                <Button
-                  type="button"
-                  variant="contained"
-                  classes={{ root: jnStyles.jnBT }}
-                  onClick={(event) => this.handleSearch(event)}
-                >
-                  Cerca
-                </Button>
-                <Button
-                  type="reset"
-                  variant="contained"
-                  classes={{ root: jnStyles.jnBT }}
-                >
-                  Reset
-                </Button>
-              </ButtonGroup>
-              <DCT_CheckList
-                id={this.state.listId}
-                list={this.props.data.lezione}
-                ref={this.changeChildListId}
-                onChange={this.onChangeForm}
-              />
-              <ButtonGroup
-                variant="contained"
-                aria-label="outlined primary button group"
-                classes={{ root: jnStyles.jnBT }}
-              >
-                <Button
-                  type="button"
-                  variant="contained"
-                  classes={{ root: jnStyles.jnBT }}
-                  onClick={(event) => this.handleAddAll(event)}
-                >
-                  Aggiungi tutto
-                </Button>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  classes={{ root: jnStyles.jnBT }}
-                >
-                  Salva
-                </Button>
-              </ButtonGroup>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <DCT_ComboBox
+                    id={this.state.classeId}
+                    list={this.props.data.classe}
+                    label={this.props.data.classe_label}
+                    onChange={this.onChangeForm}
+                    size={200}
+                    ref={this.changeChildClasseId}
+                    selection={comboClasseSelection}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <ButtonGroup
+                    variant="contained"
+                    aria-label="outlined primary button group"
+                    classes={{ root: jnStyles.jnBT }}
+                  >
+                    <Button
+                      type="button"
+                      variant="contained"
+                      classes={{ root: jnStyles.jnBT }}
+                      onClick={(event) => this.handleSearch(event)}
+                    >
+                      Cerca
+                    </Button>
+                    <Button
+                      type="reset"
+                      variant="contained"
+                      classes={{ root: jnStyles.jnBT }}
+                    >
+                      Reset
+                    </Button>
+                  </ButtonGroup>
+                </Grid>
+                <Grid item xs={12}>
+                  <DCT_CheckList
+                    id={this.state.listId}
+                    // list={this.props.data.lezione}
+                    list={this.state.lezioneValue}
+                    ref={this.changeChildListId}
+                    onChange={this.onChangeForm}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  {" "}
+                  <ButtonGroup
+                    variant="contained"
+                    aria-label="outlined primary button group"
+                    classes={{ root: jnStyles.jnBT }}
+                  >
+                    <Button
+                      type="button"
+                      variant="contained"
+                      classes={{ root: jnStyles.jnBT }}
+                      onClick={(event) => this.handleAddAll(event)}
+                    >
+                      Aggiungi tutto
+                    </Button>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      classes={{ root: jnStyles.jnBT }}
+                    >
+                      Salva
+                    </Button>
+                  </ButtonGroup>
+                </Grid>
+              </Grid>
             </Grid>
             <Grid item xs={8}>
               <DTC_DataGrid

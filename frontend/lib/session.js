@@ -32,7 +32,7 @@ const getToken = async (user, password) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(credential),
   });
-  console.log(data);
+  // console.log(data);
   return data;
 };
 

@@ -65,7 +65,7 @@ sessionOptions);
 
 function Main() {
   //Recupera info utente
-  const { fallback } = useSWRConfig();
+  const { fallback, mutate } = useSWRConfig();
   const { userInfo, pageName, apiUrl, pageQuery } = fallback;
   // const router = useRouter();
   //Carica dati
@@ -76,13 +76,8 @@ function Main() {
   if (error) return <div>{error.message}</div>;
   if (!data) return <Loader id="pi" />;
 
-  const handleSearch = async (event, formData) => {
-    event.preventDefault();
-    // console.log(router);
-    const buildRoute = `${pageQuery.param[0]}/${pageQuery.param[1]}/${formData.classe.id}`;
-    // console.log(buildRoute);
-    // router.replace(buildRoute);
-    forceSearchUtil(buildRoute);
+  const handleSearch = async (event, formData) => {    
+    data.lezione = formData.lezione;
   };
 
   const handleSubmit = async (event, formData) => {

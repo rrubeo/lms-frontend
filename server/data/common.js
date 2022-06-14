@@ -188,7 +188,7 @@ const getClasseArgomento = async (token, id) => {
   const f = await utils.getFetch(token, GetClasseArgomento(id));
 
   console.log("getClasseArgomento");
-  // console.log(f);
+  console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {

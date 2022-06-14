@@ -23,24 +23,37 @@ class DCT_ComboBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: this.props.selection
-        ? this.props.list[
-            this.props.list.findIndex((item) => item.id == this.props.selection)
-          ]
-        : this.props.list[0],
+      // value: this.props.selection
+      //   ? this.props.list[
+      //       this.props.list.findIndex((item) => item.id == this.props.selection)
+      //     ]
+      //   : this.props.list[0],
+      value: this.props.list[0],
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleValueChange = this.handleValueChange.bind(this);
     this.handleReset = this.handleReset.bind(this);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    console.log("COMBO componentDidMount");
+    console.log(this.props.selection);
+    if (this.props.selection) {
+      console.log(this.props.list);
+      console.log(
+        this.props.list.findIndex((item) => item.id == this.props.selection)
+      );
+    }
+  }
 
   handleInputChange(event, value) {
     // console.log("INPUT CHANGE");
   }
 
   handleValueChange(event, value) {
+    // console.log("COMBO VALUE CHANGE");
+    // console.log(this.props.list);
+    // console.log(value);
     this.setState({ value: value });
     this.props.onChange(this.props.id, value);
   }
@@ -67,10 +80,10 @@ class DCT_ComboBox extends React.Component {
           key={this.props.id}
           id={this.props.id}
           disableClearable
-          value={this.state.value}
           onChange={this.handleValueChange}
           onInputChange={this.handleInputChange}
           options={this.props.list}
+          value={this.state.value}          
           classes={{
             inputRoot: jnStyles.jnComboInput,
             listbox: jnStyles.jnO2,

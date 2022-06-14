@@ -11,8 +11,7 @@ class DCT_CheckList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      listaElenco: this.props.list,
-      checked: [0],
+      checked: [],
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
@@ -35,33 +34,33 @@ class DCT_CheckList extends React.Component {
       checked: newChecked,
     });
 
-    this.props.onChange(this.props.id, newChecked);
+    const selectedValue = newChecked.map((x) => {
+      const i = this.props.list.findIndex((item) => item.id == x);
+      if (i != -1) return this.props.list[i];
+    });
+    // console.log(selectedValue);
+    this.props.onChange(this.props.id, selectedValue);
   }
 
   handleReset() {
     this.setState({
-      checked: [0],
+      checked: [],
     });
-    this.props.onChange(this.props.id, [0]);
+    this.props.onChange(this.props.id, []);
   }
 
   handleAddAll() {
-    // console.log("ADD ALL");
-    const newChecked = this.state.listaElenco.map((item) => {
+    const newChecked = this.props.list.map((item) => {
       return item.id;
     });
-    // console.log(newChecked);
     this.setState({
       checked: newChecked,
     });
 
-    this.props.onChange(this.props.id, newChecked);
+    this.props.onChange(this.props.id, this.props.list);
   }
 
   render() {
-    // console.log(
-    //   `<DCT_CheckList ='${this.props.id}'> (${this.state.listaElenco.length})`
-    // );
     return (
       <List
         sx={{
@@ -71,7 +70,7 @@ class DCT_CheckList extends React.Component {
           maxHeight: 300,
         }}
       >
-        {this.state.listaElenco.map((value) => {
+        {this.props.list.map((value) => {
           const labelId = `checkbox-list-label-${value.id}`;
           return (
             <ListItem key={value.id} disablePadding>

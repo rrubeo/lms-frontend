@@ -4,6 +4,7 @@ const PINDI_STEP_0 = "pi_1base";
 const PINDI_STEP_1 = "pi_2le";
 
 const PINDI_STEP_1_API_CLASSE = `${process.env.server}/pindi/classe`;
+const PINDI_STEP_1_API_COMBO_CLASSE = `${process.env.server}/pindi/cbclasse`;
 
 const FRM_PINDI_STEP_0 = "FRM_ProgIndi_ProgBase";
 const PINDI_STEP_0_API = `${process.env.server}/pindi`;
@@ -25,6 +26,7 @@ const PINDI_STEP_0_ACTION = [
 
 const FRM_PINDI_STEP_1 = "FRM_ProgIndi_Lezione";
 const PINDI_STEP_1_API = `${process.env.server}/pindi/lezione`;
+
 const PINDI_STEP_1_ACTION = [
   {
     id: "1",
@@ -72,6 +74,7 @@ module.exports = {
   PINDI_STEP_0,
   PINDI_STEP_1,
   PINDI_STEP_1_API_CLASSE,
+  PINDI_STEP_1_API_COMBO_CLASSE,
   getApiUrl,
   getPageName,
   GRID_ROUTE_ACTION,

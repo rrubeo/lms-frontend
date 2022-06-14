@@ -9,8 +9,7 @@ import { rows, cols, classe_select } from "../../../../data/pindi/data_lezione";
 import {
   getToken,
   getFunzioniForm,
-  getClasseArgomentoCombo,
-  getLezClasseArgomentoId,
+  getClasseArgomentoCombo,  
   getProgrammaIndi,
   getProgrammaIndiBread,
   insertProgrammaIndi,
@@ -20,21 +19,16 @@ import {
 export default async function handler(req, res) {
   // Run cors
   await utils.cors(req, res);
-  console.log("LEZIONE");
-  // console.log(req.method);
-  // console.log(req.query);
-
-  let carg = 0;
+  console.log("LEZIONE"); 
   let id = 0;
 
   let { pid } = req.query;
   console.log(pid);
   if (pid) {
-    id = pid[0];
-    if (pid[1]) carg = pid[1];
+    id = pid[0];  
   }
   console.log(id);
-  console.log(carg);
+  
 
   const userLogin = await getToken("Romolo", "pass2");
   const db_funzioni = await getFunzioniForm(
@@ -43,8 +37,7 @@ export default async function handler(req, res) {
     "FRM_ProgBase_Ricerca"
   );
 
-  const db_classe = await getClasseArgomentoCombo(userLogin.token);
-  const db_lezioni = await getLezClasseArgomentoId(userLogin.token, carg);
+  const db_classe = await getClasseArgomentoCombo(userLogin.token);  
   const data = {
     title: "Configurazione Programma Indirizzo",
     stepper: stepperIndirizzo,
@@ -54,7 +47,7 @@ export default async function handler(req, res) {
     classe_label: "Classe Argomento",
     classe: db_classe,
     lezione_label: "Lezione",
-    lezione: db_lezioni,
+    lezione: [],
     back_label: tornaIndietro,
     rows: [],
     cols: cols,
@@ -79,7 +72,7 @@ export default async function handler(req, res) {
             prinFkAninId: id,
             prinSysuser: userLogin.userID,
             prinFlagAttiva: 1,
-            prinFkLeziId: m,
+            prinFkLeziId: m.id,
           };
           console.log(poba);
           let p3 = await insertProgrammaIndi(userLogin.token, poba);
