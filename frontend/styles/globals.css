@@ -1,0 +1,31 @@
+html,
+body {
+  background-color: #252846;
+  background-repeat: repeat;
+  background-image: url("/images/janus_pattern_2.png");
+  padding: 0;
+  margin: 0;
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* * {
+  box-sizing: border-box;  
+} */
+
+
+.fc-theme-standard .fc-scrollgrid {
+  background-color: #798DB4;
+  /* border: 2px solid !important; */
+  border: 2px solid #000000 !important;
+  /* border-radius: 26px; */
+  color: #ffffff;
+  font-size: 12pt;
+  font-weight: 800;
+}
+

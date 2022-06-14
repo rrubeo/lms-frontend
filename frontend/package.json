@@ -1,0 +1,52 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@babel/preset-react": "^7.17.12",
+    "@emotion/react": "^11.9.0",
+    "@emotion/server": "^11.4.0",
+    "@emotion/styled": "^11.8.1",
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-brands-svg-icons": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
+    "@fullcalendar/common": "^5.11.0",
+    "@fullcalendar/core": "^5.11.0",
+    "@fullcalendar/daygrid": "^5.11.0",
+    "@fullcalendar/interaction": "^5.11.0",
+    "@fullcalendar/list": "^5.11.0",
+    "@fullcalendar/react": "^5.11.1",
+    "@fullcalendar/timegrid": "^5.11.0",
+    "@hookform/resolvers": "^2.6.1",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "@material-ui/styles": "^4.11.5",
+    "@mui/icons-material": "^5.6.0",
+    "@mui/material": "^5.6.0",
+    "@mui/x-data-grid-generator": "^5.9.0",
+    "@mui/x-data-grid-pro": "^5.8.0",
+    "@nextui-org/react": "^1.0.7-beta.5",
+    "cors": "2.8.5",
+    "next": "12.1.0",
+    "next-transpile-modules": "^9.0.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-hot-toast": "^2.2.0",
+    "safe-json-stringify": "^1.2.0",
+    "sharp": "^0.30.4",
+    "swr": "^1.0.1",
+    "yup": "^0.32.9",
+    "iron-session": "^6.1.3"
+  },
+  "devDependencies": {
+    "eslint": "8.11.0",
+    "eslint-config-next": "12.1.0"
+  }
+}

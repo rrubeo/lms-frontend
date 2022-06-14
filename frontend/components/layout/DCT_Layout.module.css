@@ -1,0 +1,41 @@
+.container {
+  /* max-width: 36rem; 
+     */
+  background-color: #252846;
+  background-repeat: repeat;
+  background-image: url("/images/janus_pattern_2.png");
+  border-style: dotted;
+  border-width: 0px;
+  padding: 0;
+  margin: 0;
+}
+
+.header {
+  /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+  border-style: dotted;
+  border-width: 0px;
+  /* background-color: #252846;
+    color: #FFFFFF; */
+
+}
+
+.footer {
+  /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+  border-style: dotted;
+  border-width: 0px;
+  /* background-color: #788CB4; */
+}
+
+.main {
+  /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+  /* background-color: lightblue;  */
+  border-style: solid;
+  border-width: 10px;
+  padding: 0px;
+}

@@ -1,0 +1,159 @@
+import React from "react";
+import useSWR, { useSWRConfig, SWRConfig } from "swr";
+import Loader from "../../components/layout/loader";
+import DCT_Layout from "../../components/layout/DCT_Layout";
+import FRM_ProgIndi_ProgBase from "../../components/form/pindi/FRM_ProgIndi_ProgBase";
+import FRM_ProgIndi_Lezione from "../../components/form/pindi/FRM_ProgIndi_Lezione";
+
+import { validateForm } from "../../components/form/pindi/validator";
+
+import {
+  defaultLogin,
+  sessionOptions,
+  getAuthSession,
+  validationMessage,
+  MSG_SUCCESS,
+  MSG_ERROR,
+  MSG_INFO,
+  MSG_WARNING,
+  forceReloadUtil,
+  forceNavigateUtil,
+  forceSearchUtil,
+} from "../../lib";
+
+import { withIronSessionSsr } from "iron-session/next";
+
+const utils = require("../../lib/utils");
+const pi_cfg = require("../../components/form/pindi/config");
+
+export const getServerSideProps = withIronSessionSsr(async function ({
+  req,
+  res,
+  query,
+}) {
+  // console.dir(query);
+  let fallback = {
+    authenticated: false,
+    userInfo: defaultLogin,
+  };
+
+  const authSession = await getAuthSession(req);
+  if (!authSession) {
+    res.setHeader("location", "/login");
+    res.statusCode = 302;
+    res.end();
+    return {
+      props: {
+        fallback: fallback,
+      },
+    };
+  }
+
+  fallback.pageName = pi_cfg.getPageName(query);
+  fallback.apiUrl = pi_cfg.getApiUrl(query);
+  fallback.authenticated = true;
+  fallback.userInfo = authSession;
+  fallback.pageQuery = query;
+
+  return {
+    props: {
+      fallback: fallback,
+    },
+  };
+},
+sessionOptions);
+
+function Main() {
+  //Recupera info utente
+  const { fallback } = useSWRConfig();
+  const { userInfo, pageName, apiUrl, pageQuery } = fallback;
+  // const router = useRouter();
+  //Carica dati
+  let { data, error } = useSWR(
+    userInfo ? [apiUrl, userInfo] : null,
+    utils.fetchWithUser
+  );
+  if (error) return <div>{error.message}</div>;
+  if (!data) return <Loader id="pi" />;
+
+  const handleSearch = async (event, formData) => {
+    event.preventDefault();
+    // console.log(router);
+    const buildRoute = `${pageQuery.param[0]}/${pageQuery.param[1]}/${formData.classe.id}`;
+    // console.log(buildRoute);
+    // router.replace(buildRoute);
+    forceSearchUtil(buildRoute);
+  };
+
+  const handleSubmit = async (event, formData) => {
+    event.preventDefault();
+    const res = await utils.sender(apiUrl, formData);
+    if (res.status != 200) {
+      validationMessage(res.message, MSG_ERROR);
+    } else {
+      validationMessage(res.message, MSG_SUCCESS);
+      forceReloadUtil();
+    }
+  };
+
+  const handleDelete = async (rowData) => {
+    const res = await utils.deleter(apiUrl, rowData);
+    if (res.status != 200) {
+      validationMessage(res.message, MSG_ERROR);
+    } else {
+      validationMessage(res.message, MSG_INFO);
+    }
+  };
+
+  const handleNextStep = async (event, filter, route) => {
+    event.preventDefault();
+    if (!filter) console.log("MANCANO PARAMETRI");
+    forceNavigateUtil(route, filter);
+  };
+
+  return (
+    <DCT_Layout id="Layout" data={data}>
+      <section>
+        <h1>{data.title}</h1>
+        {pageName === pi_cfg.PINDI_STEP_0 ? (
+          <FRM_ProgIndi_ProgBase
+            id={pi_cfg.FRM_PINDI_STEP_0}
+            activeStep={0}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            data={data}
+            onNextStep={handleNextStep}
+            action={pi_cfg.PINDI_STEP_0_ACTION}
+            query={pageQuery}
+          />
+        ) : (
+          <></>
+        )}
+        {pageName === pi_cfg.PINDI_STEP_1 ? (
+          <FRM_ProgIndi_Lezione
+            id={pi_cfg.FRM_PINDI_STEP_1}
+            activeStep={1}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            onSearch={handleSearch}
+            data={data}
+            onNextStep={handleNextStep}
+            action={pi_cfg.PINDI_STEP_1_ACTION}
+            selection={pageQuery.param}
+            query={pageQuery}
+          />
+        ) : (
+          <></>
+        )}
+      </section>
+    </DCT_Layout>
+  );
+}
+
+export default function Home({ fallback }) {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Main />
+    </SWRConfig>
+  );
+}

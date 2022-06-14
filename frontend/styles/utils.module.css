@@ -1,0 +1,270 @@
+.jnA1 {
+    font-size: 50pt;
+    font-weight: 800;
+    color: black;
+}
+
+.jnB1 {
+    font-size: 37pt;
+    font-weight: 300;
+    color: #8A8A8A;
+}
+
+.jnB2 {
+    font-size: 37pt;
+    font-weight: 300;
+    color: #B34A9D;
+}
+
+.jnC1 {
+    font-size: 30pt;
+    font-weight: 800;
+    color: black;
+}
+
+.jnD1 {
+    font-size: 29pt;
+    font-weight: 800;
+    color: black;
+}
+
+.jnD2 {
+    font-size: 29pt;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.jnD3 {
+    font-size: 29pt;
+    font-weight: 800;
+    color: #252846;
+}
+
+.jnD4 {
+    font-size: 29pt;
+    font-weight: 300;
+    color: #414141;
+}
+
+.jnE1 {
+    font-size: 28pt;
+    font-weight: 800;
+    color: #B34A9D;
+}
+
+.jnE2 {
+    font-size: 28pt;
+    font-weight: 800;
+    color: #798DB4;
+}
+
+.jnN8 {
+    font-size: 10pt;
+    font-weight: 800;
+    color: #798DB4;
+}
+
+.jnO2 {
+    font-size: 11pt;
+    font-weight: 800;
+    color: #000000;
+    border: 0px;
+    padding: 0px;
+}
+
+.jnBD {
+    border-radius: 26px;
+    font-size: 11pt;
+    font-weight: 500;
+    color: #000000;
+    padding: 0px;
+}
+
+.jnBDMulti {
+    border-radius: 26px;
+    font-size: 11pt;
+    font-weight: 500;
+    color: #000000;
+    padding: 10px;
+}
+
+.jnPD0 {
+    padding: 0px;
+    margin: 0px;
+    border-radius: 26px;
+    font-size: 11pt;
+    font-weight: 800;
+
+}
+
+.jnComboInput {
+    padding: 0px;
+    margin: 0px;
+    border-radius: 26px;
+    font-size: 11pt;
+    font-weight: 800;
+    color: #000000;
+
+}
+
+.jnDCT_Text_Border {
+    border-radius: 26px;
+    padding: 7px;
+    -webkit-box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.2);
+}
+
+.jnDCT_Text_Input_Border {
+    border: 0px;
+    padding: 0 0 100 100;
+}
+
+.jnDCT_Text_Input {
+    font-size: 11pt;
+    font-weight: 800;
+    color: #000000;
+    border: 0px;
+    padding: 0 0 0 0;
+    position: absolute;
+    top: -24%;
+    transform-origin: 10px 40px;
+
+}
+
+.jnDCT_Multi_Input {
+    font-size: 11pt;
+    font-weight: 800;
+    color: #000000;
+    border: 0px;
+    padding: 0 0 0 0;
+    position: absolute;
+    top: -20%;
+    transform-origin: 10px 30px;
+}
+
+.jnDCT_Text {
+    font-size: 11pt;
+    font-weight: 800;
+    color: #000000;
+    border: 0px;
+    padding: 0 0 0 10px;
+
+}
+
+.jnGridRoot {
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+    border-radius: 26px;
+    background-color: #ffffff;
+    font-size: 10pt;
+    font-weight: 800;
+}
+
+.jnGridCell {
+    padding: 0px;
+    margin: 0px;
+    border: 0.1px solid #ffffff;
+    border-radius: 0px;
+    background-color: #F0F0F0;
+    font-size: 10pt;
+    font-weight: 400;
+}
+
+.jnGrid {
+    padding: 0px;
+    margin: 0px;
+    border: 1px solid #414141;
+    border-radius: 26px;
+    background-color: #F0F0F0;
+}
+
+.jnGridColumn {
+    padding: 0px;
+    margin: 0px;
+    border: 0.1px solid #ffffff;
+    border-radius: 26px 26px 0px 0px;
+    background-color: #F0F0F0;
+}
+
+.jnGridSelect {
+    padding: 0px;
+    margin: 0px;
+    background-color: #B34A9D;
+}
+
+.jnBT {
+    border-radius: 26px;
+    font-size: 10pt;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.jnL1 {
+    font-size: 12pt;
+    font-weight: 400;
+    color: #ffffff;
+}
+
+.jnL1Copy {
+    font-size: 12pt;
+    font-weight: 400;
+    color: #afaeae;
+}
+
+.jnF1 {
+    font-size: 19pt;
+    font-weight: 800;
+    color: #000000;
+}
+
+.jnN7 {
+    font-size: 11pt;
+    font-weight: 800;
+    color: #B34A9D;
+}
+
+.shadow {
+    -webkit-box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.5);
+}
+
+.jnToast {
+    border-radius: 40px;
+    padding: 10px 20px 10px 10px;
+    -webkit-box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.2);
+    font-size: 11pt;
+    font-weight: 400;
+    color: black;
+    background-color: #ffffff;
+    border: 1px solid #8A8A8A;
+}
+
+.jnToastTitle {
+    font-size: 11pt;
+    font-weight: 800;
+}
+
+.jnIconSide1 {
+    font-size: 20pt;
+    font-weight: 800;
+    color: #B34A9D;
+}
+
+.jnTextSide1 {
+    font-size: 13pt;
+    font-weight: 800;
+}
+
+.jnIconSide2 {
+    font-size: 20pt;
+    font-weight: 800;
+    color: black;
+}
+
+.jnTextSide2 {
+    font-size: 11pt;
+    font-weight: 400;
+    color: #798DB4;
+}

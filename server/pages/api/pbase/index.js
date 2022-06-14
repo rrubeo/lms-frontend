@@ -1,0 +1,61 @@
+const utils = require("../../../lib/utils");
+import { sidemenu, navmenu, usermenu } from "../../../data/data_sidemenu";
+import { rows } from "../../../data/pbase/data_materie";
+
+import {
+  getToken,
+  getFunzioniForm,
+  getRiepilogoProgrammaBase,
+} from "../../../data/common";
+
+export default async function handler(req, res) {
+  await utils.cors(req, res);
+
+  console.log("RICERCA");
+  console.log(req.method);
+
+  const cols = [
+    { field: "col1", headerName: "Anno Frequenza", flex: 1, minWidth: 50 },
+    { field: "col2", headerName: "Materia", flex: 1, minWidth: 50 },
+    { field: "col3", headerName: "Classe Argomento", flex: 1, minWidth: 50 },
+    { field: "col4", headerName: "Argomento", flex: 1, minWidth: 50 },
+    { field: "col5", headerName: "Lezione", flex: 1, minWidth: 50 },
+    { field: "col6", headerName: "Contenuto", flex: 1, minWidth: 50 },
+    { field: "col7", headerName: "Tipo", flex: 1, minWidth: 50, maxWidth: 120 },
+    {
+      field: "col8",
+      headerName: "Durata",
+      flex: 1,
+      minWidth: 50,
+      maxWidth: 90,
+    },
+  ];
+
+  const userLogin = await getToken("Romolo", "pass2");
+  const db_funzioni = await getFunzioniForm(
+    userLogin.token,
+    userLogin.userID,
+    "FRM_ProgBase_Ricerca"
+  );
+
+  switch (req.method) {
+    case "GET":
+      const db_rows = await getRiepilogoProgrammaBase(userLogin.token);
+      const data = {
+        title: "Ricerca Programma Base",
+        menu: sidemenu,
+        navmenu: navmenu,
+        usermenu: usermenu,
+        config_label: "Configurazione Programma Base",
+        rows: db_rows,
+        cols: cols,
+        funzioni: db_funzioni,
+      };
+      res.status(200).json(data);
+      break;
+    default:
+      // console.log(req.method);
+      // console.log(req.headers);
+      break;
+  }
+}
