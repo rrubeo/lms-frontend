@@ -35,6 +35,9 @@ const CLOUD_API_TBL_PBASE_RIEPILOGO = "api/Tables/GetRiepilogoProgrammaBase";
 const CLOUD_API_CLAS_LEZIO = "api/LeziLezioneDats";
 const CLOUD_API_CLAS_CONTE = "api/ColeContenutoLezioneDats";
 const CLOUD_API_TIPO_CONT = "api/TicoTipoContenutoTyps";
+const CLOUD_API_BREAD_CLAS_ARGO = "api/Tables/GetBreadClasseArgomento";
+const CLOUD_API_BREAD_ARG = "api/Tables/GetBreadArgomento";
+const CLOUD_API_BREAD_LEZIO = "api/Tables/GetBreadLezione";
 //Endpoint
 function GetProgrammaBase(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_PBASE}/${id}`;
@@ -45,14 +48,23 @@ function GetProgrammaBaseCombo(id) {
 function GetClasseArgomento(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_CLAS_ARG}/${id}`;
 }
+function GetBreadClasseArgomento(id) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_BREAD_CLAS_ARGO}/${id}`;
+}
 function GetClasseArgomentoCombo(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_CLAS_ARG_COMBO}/${id}`;
 }
 function GetArgomento(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_ARG}/${id}`;
 }
+function GetBreadArgomento(id) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_BREAD_ARG}/${id}`;
+}
 function GetLezione(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_LEZ}/${id}`;
+}
+function GetBreadLezione(id) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_BREAD_LEZIO}/${id}`;
 }
 function GetContenuto(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_CONT}/${id}`;
@@ -132,9 +144,12 @@ module.exports = {
   GetProgrammaBase,
   GetProgrammaBaseCombo,
   GetClasseArgomento,
+  GetBreadClasseArgomento,
   GetClasseArgomentoCombo,
   GetArgomento,
+  GetBreadArgomento,
   GetLezione,
+  GetBreadLezione,
   GetContenuto,
   GetFunzioniForm,
   GetRiepilogoProgrammaBase,

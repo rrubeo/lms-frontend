@@ -5,9 +5,12 @@ import {
   GetProgrammaBase,
   GetProgrammaBaseCombo,
   GetClasseArgomento,
+  GetBreadClasseArgomento,
   GetClasseArgomentoCombo,
   GetArgomento,
+  GetBreadArgomento,
   GetLezione,
+  GetBreadLezione,
   GetContenuto,
   GetFunzioniForm,
   PobaProgrammaBaseAnas,
@@ -216,16 +219,17 @@ const getArgomento = async (token, id) => {
   return data;
 };
 const getArgomentoBread = async (token, id) => {
-  const f = await utils.getFetch(token,GetClasseArgomento(id));
+  const f = await utils.getFetch(token, GetBreadClasseArgomento(id));
 
   console.log("getArgomentoBread");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
   let data = [];
-  // if (f.length == 1) {
-  // data.push({ key: 1, text: f.clarDescr });
-  // }
-  // console.log(data);
+  if (f.length == 1) {
+    data.push({ key: 1, text: f[0].materia });
+    data.push({ key: 2, text: f[0].annoFrequenza });
+    data.push({ key: 3, text: f[0].classeArgomento });
+  }
   return data;
 };
 const insertArgomento = async (token, body) => {
@@ -254,7 +258,7 @@ const getLezione = async (token, id) => {
   return data;
 };
 const getLezioneBread = async (token, id) => {
-  const f = await utils.getFetch(token, GetArgomento(id));
+  const f = await utils.getFetch(token, GetBreadArgomento(id));
 
   console.log("getLezioneBread");
   // console.log(f);
@@ -265,8 +269,7 @@ const getLezioneBread = async (token, id) => {
     data.push({ key: 2, text: f[0].annoFrequenza });
     data.push({ key: 3, text: f[0].classeArgomento });
     data.push({ key: 4, text: f[0].argomento });
-  }
-  // console.log(data);
+  } 
   return data;
 };
 const insertLezione = async (token, body) => {
@@ -297,17 +300,17 @@ const getContenuto = async (token, id) => {
   return data;
 };
 const getContenutoBread = async (token, id) => {
-  const f = await utils.getFetch(token, GetLezione(id));
+  const f = await utils.getFetch(token, GetBreadLezione(id));
 
   console.log("getContenutoBread");
   console.log(f);
   if (f.status) return [];
   let data = [];
   if (f.length == 1) {
-    // data.push({ key: 1, text: f[0].materia });
-    // data.push({ key: 2, text: f[0].annoFrequenza });
-    // data.push({ key: 3, text: f[0].classeArgomento });
-    // data.push({ key: 4, text: f[0].argomento });
+    data.push({ key: 1, text: f[0].materia });
+    data.push({ key: 2, text: f[0].annoFrequenza });
+    data.push({ key: 3, text: f[0].classeArgomento });
+    data.push({ key: 4, text: f[0].lezioneDesc });
   }
   // console.log(data);
   return data;
