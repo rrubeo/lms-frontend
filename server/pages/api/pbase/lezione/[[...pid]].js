@@ -25,6 +25,18 @@ export default async function handler(req, res) {
   else pid = pid[0];
   console.log(pid);
 
+  // let userLogin = {
+  //   userID: "",
+  //   token: "",
+  // };
+
+  // if (req.headers.token) {
+  //   userLogin.userID = req.headers.userid;
+  //   userLogin.token = req.headers.token;
+  // }
+
+  // console.log(userLogin);
+
   const userLogin = await getToken("Romolo", "pass2");
   const db_funzioni = await getFunzioniForm(
     userLogin.token,

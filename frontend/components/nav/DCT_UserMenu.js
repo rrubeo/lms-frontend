@@ -1,4 +1,5 @@
 import * as React from "react";
+import Router from 'next/router'
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -12,7 +13,6 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { fetchJson, FetchError } from "../../lib";
 
 class DCT_UserMenu extends React.Component {
   constructor(props) {
@@ -48,14 +48,15 @@ class DCT_UserMenu extends React.Component {
     // console.log(event);
     console.log(index);
     if (index === "logOut") {
-      // mutateUser(await fetchJson("/api/logout", { method: "POST" }), false);
+      const data = await fetch("/api/logout", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      Router.push("./login");
     }
   }
 
   render() {
-    // console.log(
-    //   `<DCT_UserMenu ='${this.props.id}'>  ${this.props.open} ${this.state.open}`
-    // );
     return (
       <>
         <Box

@@ -69,23 +69,26 @@ sessionOptions);
 function Main() {
   //Recupera info utente
   const { fallback } = useSWRConfig();
-
   const { userInfo, pageName, apiUrl, pageQuery } = fallback;
-  // console.log(`<Main ='${pageName}'>`);
+  
   //Carica dati
-  let { data, error } = useSWR(
-    userInfo ? [apiUrl, userInfo] : null,
-    utils.fetchWithUser
-  );
+  // let { data, error } = useSWR(
+  //   userInfo ? [apiUrl, userInfo] : null,
+  //   utils.fetchWithUser
+  // );
+  
+  let { data, error } = useSWR(apiUrl, utils.getData);
+
   if (error) return <div>{error.message}</div>;
   if (!data) return <Loader id="pb" />;
+  if (data.status != 200) return <div>{data.message}</div>;
 
   const handleSubmit = async (event, formData) => {
     event.preventDefault();
     const vres = await validateForm(formData);
 
     if (vres.valid) {
-      const res = await utils.sender(apiUrl, formData);
+      const res = await utils.postData(apiUrl, formData);
       // console.log(res.status);
       if (res.status != 200) {
         validationMessage(res.message, MSG_ERROR);
@@ -100,7 +103,7 @@ function Main() {
   };
 
   const handleDelete = async (rowData) => {
-    const res = await utils.deleter(apiUrl, rowData);
+    const res = await utils.deleteData(apiUrl, rowData);
     if (res.status != 200) {
       validationMessage(res.message, MSG_ERROR);
     } else {

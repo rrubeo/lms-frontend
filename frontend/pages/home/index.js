@@ -1,12 +1,10 @@
 import React from "react";
-import Image from "next/image";
 import DCT_Layout from "../../components/layout/DCT_Layout";
 import Loader from "../../components/layout/loader";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import safeJsonStringify from "safe-json-stringify";
 import useSWR, { useSWRConfig, SWRConfig } from "swr";
-import { useRouter } from "next/router";
 import DTC_Calendar from "../../components/calendar/calendar";
 import { withIronSessionSsr } from "iron-session/next";
 import { defaultLogin, sessionOptions, getAuthSession } from "../../lib/";
@@ -20,7 +18,13 @@ export const pageTitle = "Home";
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
   res,
+  query,
 }) {
+  let fallback = {
+    authenticated: false,
+    userInfo: defaultLogin,
+  };
+
   const authSession = await getAuthSession(req);
 
   if (!authSession) {
@@ -29,44 +33,39 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     res.end();
     return {
       props: {
-        user: defaultLogin,
+        fallback: fallback,
       },
     };
   }
 
-  const data = await utils.fetcher(API);
+  fallback.pageName = "home";
+  fallback.apiUrl = API;
+  fallback.authenticated = true;
+  fallback.userInfo = authSession;
+  fallback.pageQuery = query;
+
   return {
     props: {
-      fallback: {
-        title: data.title,
-        menu: data.menu,
-        usermenu: data.usermenu,
-        navmenu: data.navmenu,
-        user: authSession,
-      },
+      fallback: fallback,
     },
   };
 },
 sessionOptions);
 
 function HomeMain() {
-  console.log("<Home>");
   const { user } = useUser({
     redirectTo: "/login",
   });
-  
-  // console.log(user);
-  const { fallback } = useSWRConfig();
-  const userInfo = fallback.user;
 
-  const { data, error } = useSWR(
-    userInfo ? [API, userInfo] : null,
-    utils.fetchWithUser
-  );
+  const { fallback } = useSWRConfig();
+  const { userInfo, pageName, apiUrl, pageQuery } = fallback;
+
+  let { data, error } = useSWR(apiUrl, utils.getData);
 
   if (error) return <div>{error.message}</div>;
   if (!data) return <Loader id="home" />;
-  // console.log(data);
+  if (data.status != 200) return <div>{data.message}</div>;
+
   return (
     <>
       <DCT_Layout id="Layout" data={data}>
@@ -81,7 +80,6 @@ function HomeMain() {
 }
 
 export default function Home({ fallback }) {
-  // console.log({ fallback });
   return (
     <SWRConfig value={{ fallback }}>
       <HomeMain />

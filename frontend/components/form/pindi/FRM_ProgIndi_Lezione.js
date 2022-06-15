@@ -206,11 +206,12 @@ class FRM_ProgIndi_Lezione extends React.Component {
                 </Grid>
                 <Grid item xs={12}>
                   <DCT_CheckList
-                    id={this.state.listId}
-                    // list={this.props.data.lezione}
+                    id={this.state.listId}                    
+                    label={this.props.data.lezione_label}
                     list={this.state.lezioneValue}
                     ref={this.changeChildListId}
                     onChange={this.onChangeForm}
+                    size={400}
                   />
                 </Grid>
                 <Grid item xs={12}>

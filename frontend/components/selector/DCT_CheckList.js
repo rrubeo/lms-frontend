@@ -5,6 +5,9 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
 import jnStyles from "../../styles/utils.module.css";
 
 class DCT_CheckList extends React.Component {
@@ -62,44 +65,78 @@ class DCT_CheckList extends React.Component {
 
   render() {
     return (
-      <List
+      <FormControl
         sx={{
-          width: "100%",
-          bgcolor: "background.paper",
+          m: 0,
+          p: 0,
+          maxHeight: this.props.size,
           overflow: "auto",
-          maxHeight: 300,
+          width: "100%",
+          bgcolor: "#B34A9D",
         }}
+        classes={{ root: jnStyles.jnDCT_Text_Border }}
       >
-        {this.props.list.map((value) => {
-          const labelId = `checkbox-list-label-${value.id}`;
-          return (
-            <ListItem key={value.id} disablePadding>
-              <ListItemButton
-                role={undefined}
-                onClick={(event) => this.handleToggle(event, value.id)}
-                dense
+        <List
+          sx={{}}
+          // classes={{
+          //   root: jnStyles.jnDCT_Text_Border,
+          //   input: jnStyles.jnDCT_Text,
+          // }}
+        >
+          {this.props.list.map((value) => {
+            const labelId = `checkbox-list-label-${value.id}`;
+            return (
+              <ListItem
+                key={value.id}
+                disablePadding={true}
+                dense={true}
+                divider={true}
+                sx={{
+                  m: 0,
+                  p: 0,
+                }}
               >
-                <ListItemIcon>
-                  <Checkbox
-                    edge="start"
-                    checked={this.state.checked.indexOf(value.id) !== -1}
-                    tabIndex={-1}
-                    disableRipple
-                    inputProps={{ "aria-labelledby": labelId }}
-                  />
-                </ListItemIcon>
-                <ListItemText
-                  id={labelId}
-                  primary={value.label}
-                  classes={{
-                    primary: jnStyles.jnO2,
+                <ListItemButton
+                  role={undefined}
+                  onClick={(event) => this.handleToggle(event, value.id)}
+                  dense
+                  sx={{
+                    mx: 2,
+                    p: 0,
                   }}
-                />
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
-      </List>
+                >
+                  <ListItemIcon>
+                    <Checkbox
+                      sx={{
+                        color: "#FFFFFF",
+                        "&.Mui-checked": {
+                          color: "#FFFFFF",
+                        },
+                      }}
+                      edge="start"
+                      checked={this.state.checked.indexOf(value.id) !== -1}
+                      tabIndex={-1}
+                      disableRipple
+                      inputProps={{ "aria-labelledby": labelId }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText
+                    id={labelId}
+                    primary={value.label}
+                    classes={{
+                      primary: jnStyles.jnO2sm,
+                    }}
+                    sx={{
+                      m: 0,
+                      p: 0,
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            );
+          })}
+        </List>
+      </FormControl>
     );
   }
 }

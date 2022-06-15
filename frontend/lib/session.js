@@ -37,17 +37,26 @@ const getToken = async (user, password) => {
 };
 
 const validateToken = async (user, token) => {
+  console.log("validateToken");
+
   const credential = {
     userID: user,
     token: token,
   };
+  // console.log(credential);
 
-  const data = await fetchJson(UserValidate, {
+  const data = await fetch(UserValidate, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(credential),
   });
-  console.log(data);
+
+  // const data = await fetchJson(UserValidate, {
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/json" },
+  //   body: JSON.stringify(credential),
+  // });
+  // console.log(data);
   return data;
 };
 

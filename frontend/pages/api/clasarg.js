@@ -1,6 +1,6 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { getToken, sessionOptions } from "../../lib/session";
-import { fetchWithUser } from "../../lib";
+import { fetchWithUser, getData } from "../../lib";
 
 const pi_cfg = require("../../components/form/pindi/config");
 
@@ -14,6 +14,10 @@ export default withIronSessionApiRoute(async (req, res) => {
   }
   const userLogin = req.session.user;
   try {
+    // const url = `${pi_cfg.PINDI_STEP_1_API_COMBO_CLASSE}/${id}`;
+    // console.log(url);
+    // const data = await getData(url);
+    // console.log(data);
     const data = await fetchWithUser(
       `${pi_cfg.PINDI_STEP_1_API_COMBO_CLASSE}/${id}`,
       userLogin

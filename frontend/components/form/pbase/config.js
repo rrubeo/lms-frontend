@@ -116,7 +116,7 @@ const MENU_API = `${process.env.server}/menu`;
 const NO_DATA_DESC = "Nessun dato";
 
 function getApiUrl(query) {
-  console.log("getApiUrl");
+  // console.log("getApiUrl");
   // console.log(query);
   const page = query.param[0];
   // console.log(page);

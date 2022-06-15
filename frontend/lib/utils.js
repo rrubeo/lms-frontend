@@ -18,6 +18,81 @@ async function fetchJson(input, init) {
   });
 }
 
+async function postData(url, postedData) {
+  const packBody = {
+    extUrl: url,
+    data: postedData,
+  };
+
+  try {
+    const data = await fetchJson("/api/postint", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(packBody),
+    });
+
+    console.log(data);
+    return data;
+  } catch (error) {
+    if (error instanceof FetchError) {
+      console.error("postData:", error.data.message);
+      return error.data;
+    } else {
+      console.error("An unexpected error happened:", error);
+      return error;
+    }
+  }
+}
+
+async function getData(url) {
+  const packBody = {
+    extUrl: url,
+  };
+  try {
+    const data = await fetchJson("/api/getint", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(packBody),
+    });
+    // console.log(data);
+    return data;
+  } catch (error) {
+    if (error instanceof FetchError) {
+      console.error("getData:", error.data.message);
+      return error.data;
+    } else {
+      console.error("An unexpected error happened:", error);
+      return error;
+    }
+  }
+}
+
+async function deleteData(url, postedData) {
+  const packBody = {
+    extUrl: url,
+    data: postedData,
+  };
+
+  try {
+    const data = await fetchJson("/api/deleteint", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(packBody),
+    });
+
+    // console.log(data);
+    return data;
+  } catch (error) {
+    if (error instanceof FetchError) {
+      console.error("postData:", error.data.message);
+      return error.data;
+    } else {
+      console.error("An unexpected error happened:", error);
+      return error;
+    }
+  }
+}
+
 async function fetchWithUser(url, userInfo) {
   console.log("fetchWithUser");
   // console.log(url);
@@ -33,18 +108,6 @@ async function fetchWithUser(url, userInfo) {
     },
   });
   return data;
-}
-
-function setBody(JSONdata) {
-  const options = {
-    method: "POST",
-    headers: {
-      Authorization: "X1X1X",
-      "Content-Type": "application/json",
-    },
-    body: JSONdata,
-  };
-  return options;
 }
 
 const fetcher = async (url) => {
@@ -80,38 +143,6 @@ const fetcher = async (url) => {
   // return data;
 };
 
-const sender = async (url, formData) => {
-  console.log("SENDER");
-  // console.log(formData);
-  const JSONdata = JSON.stringify(formData);
-  console.log(JSONdata);
-  const response = await fetch(url, setBody(JSONdata));
-  const result = await response.json();
-  // console.log(result);
-  return result;
-};
-
-const deleter = async (url, rowData) => {
-  console.log(url);
-  let f = await fetch(url, {
-    headers: {
-      Authorization: "X1X1X",
-      "Content-Type": "application/json",
-    },
-    method: "DELETE",
-    body: JSON.stringify(rowData),
-  });
-
-  let resp = await f;
-  const data = await resp.json();
-
-  // if (resp.ok) {
-  //   return data;
-  // }
-
-  return data;
-};
-
 class FetchError extends Error {
   response;
   data;
@@ -133,8 +164,9 @@ class FetchError extends Error {
 module.exports = {
   fetchJson,
   fetchWithUser,
+  postData,
+  getData,
+  deleteData,
   fetcher,
-  sender,
-  deleter,
   FetchError,
 };
