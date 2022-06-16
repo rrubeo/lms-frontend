@@ -33,7 +33,7 @@ export default withIronSessionApiRoute(async (req, res) => {
   // console.log("Mo basta pero.");
   try {
     const validation = await validateToken(userInfo.login, userInfo.token);
-    console.log(validation.status);
+    // console.log(validation.status);
     if (validation.status != 200) {
       req.session.destroy();
       res.status(401).json({ status: 401, message: "Invalid Token." });

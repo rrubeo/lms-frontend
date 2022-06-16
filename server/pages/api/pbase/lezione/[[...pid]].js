@@ -61,7 +61,7 @@ export default async function handler(req, res) {
     case "GET":
       const db_rows = await getLezione(userLogin.token, pid);
       const db_bread = await getLezioneBread(userLogin.token, pid);
-
+      console.log(db_bread);
       data.rows = db_rows;
       data.bread = db_bread;
       res.status(200).json(data);

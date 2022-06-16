@@ -10,7 +10,7 @@ async function fetchJson(input, init) {
   if (response.ok) {
     return data;
   }
-
+  console.log("fetchJson error");
   throw new FetchError({
     message: response.statusText,
     response,
@@ -23,7 +23,7 @@ async function postData(url, postedData) {
     extUrl: url,
     data: postedData,
   };
-
+  // console.log(packBody);
   try {
     const data = await fetchJson("/api/postint", {
       method: "POST",
@@ -31,10 +31,11 @@ async function postData(url, postedData) {
       body: JSON.stringify(packBody),
     });
 
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     if (error instanceof FetchError) {
+      // console.error(error);
       console.error("postData:", error.data.message);
       return error.data;
     } else {

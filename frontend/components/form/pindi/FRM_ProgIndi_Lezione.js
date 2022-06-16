@@ -26,6 +26,7 @@ class FRM_ProgIndi_Lezione extends React.Component {
       listId: "lst_lezione",
       lezioneValue: this.props.data.lezione,
       selectedValue: [],
+      rows: this.props.data.rows,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -244,7 +245,7 @@ class FRM_ProgIndi_Lezione extends React.Component {
               <DTC_DataGrid
                 id="gd_lezione"
                 cols={this.props.data.cols}
-                rows={this.props.data.rows}
+                rows={this.state.rows}
                 onChange={this.onChangeForm}
                 onDelete={this.onDeleteRow}
                 onNextStep={this.props.onNextStep}

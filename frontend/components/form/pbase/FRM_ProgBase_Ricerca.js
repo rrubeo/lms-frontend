@@ -18,18 +18,6 @@ class FRM_ProgBase_Ricerca extends React.Component {
     this.onChangeForm = this.onChangeForm.bind(this);
     this.onDeleteRow = this.onDeleteRow.bind(this);
     this.handleReset = this.handleReset.bind(this);
-    this.handleBack = this.handleBack.bind(this);
-  }
-
-  handleBack(event) {
-    console.log("RICERCA TO MATERIE");
-    event.preventDefault();
-
-    // this.props.router.replace(pb_cfg.PBASE_STEP_1);
-    // this.props.router.prefetch(pb_cfg.PBASE_STEP_1);
-    // this.props.router.back();
-    // this.props.router.push(pb_cfg.PBASE_STEP_1);
-    // this.props.onNextStep(event, null, pb_cfg.PBASE_STEP_1);
   }
 
   handleSubmit(event) {
@@ -80,7 +68,7 @@ class FRM_ProgBase_Ricerca extends React.Component {
             classes={{ root: jnStyles.jnBT }}
           >
             {this.props.data.config_label}
-          </Button>       
+          </Button>
         </Box>
         <DTC_DataGrid
           id="gd_ricerca"

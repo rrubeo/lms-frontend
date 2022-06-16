@@ -67,18 +67,24 @@ function Main() {
   //Recupera info utente
   const { fallback, mutate } = useSWRConfig();
   const { userInfo, pageName, apiUrl, pageQuery } = fallback;
-  
-  //Carica dati
-  // let { data, error } = useSWR(
-  //   userInfo ? [apiUrl, userInfo] : null,
-  //   utils.fetchWithUser
-  // );
 
   let { data, error } = useSWR(apiUrl, utils.getData);
-  
+
   if (error) return <div>{error.message}</div>;
   if (!data) return <Loader id="pi" />;
   if (data.status != 200) return <div>{data.message}</div>;
+
+  const loadTableData = async () => {
+    const packBody = {
+      extUrl: apiUrl,
+    };
+    const datatable = await utils.fetchJson("/api/gettable", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(packBody),
+    });
+    return datatable;
+  };
 
   const handleSearch = async (event, formData) => {
     data.lezione = formData.lezione;

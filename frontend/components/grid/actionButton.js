@@ -3,6 +3,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 
 export default function ActionButton({ title, icon, params, callBack, route }) {
+  console.log(title);
   return (
     <Tooltip TransitionComponent={Zoom} title={title} arrow>
       <IconButton

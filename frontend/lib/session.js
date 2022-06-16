@@ -37,7 +37,7 @@ const getToken = async (user, password) => {
 };
 
 const validateToken = async (user, token) => {
-  console.log("validateToken");
+  // console.log("validateToken");
 
   const credential = {
     userID: user,

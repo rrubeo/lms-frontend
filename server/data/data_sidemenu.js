@@ -44,20 +44,20 @@ const sidemenu = [
     id: utils.getUID(),
     text: "Reset Password",
     icon: "icon-reset-password",
-    link: `${process.env.frontend}/pb/${cfg.PBASE_STEP_5}`,
+    link: `${process.env.frontend}/${cfg.HOME_0}`,
   },
   {
     id: utils.getUID(),
     text: "Assegnazione Ruoli",
     icon: "icon-role-assignment",
-    link: `${process.env.frontend}/pb/${cfg.PBASE_STEP_4}`,
+    link: `${process.env.frontend}/${cfg.HOME_0}`,
   },
   {
     id: utils.getUID(),
     text: "Anagrafica Utenti",
     icon: "icon-registry",
-    link: `${process.env.frontend}/pb/${cfg.PBASE_STEP_5}`,
-  },  
+    link: `${process.env.frontend}/${cfg.HOME_0}`,
+  },
   {
     id: utils.getUID(),
     link: "br",
@@ -85,7 +85,7 @@ const sidemenu = [
     id: utils.getUID(),
     text: "Gestione Esercitazioni",
     icon: "icon-lesson-management",
-    link: `${process.env.frontend}/pb/${cfg.PBASE_STEP_3}`,
+    link: `${process.env.frontend}/${cfg.HOME_0}`,
   },
   {
     id: utils.getUID(),
@@ -101,7 +101,7 @@ const sidemenu = [
     id: utils.getUID(),
     text: "Cruscotto Iscritti",
     icon: "icon-dashboard-subscribers",
-    link: `${process.env.frontend}/pb/${cfg.PBASE_STEP_3}`,
+    link: `${process.env.frontend}/${cfg.HOME_0}`,
   },
 ];
 
@@ -110,7 +110,7 @@ const navmenu = [
     id: utils.getUID(),
     text: "Profile",
     icon: "icon-headphones",
-    link: `${process.env.frontend}/pb/${cfg.PBASE_STEP_3}`,
+    link: `${process.env.frontend}/${cfg.HOME_0}`,
   },
   {
     id: utils.getUID(),
@@ -120,9 +120,9 @@ const navmenu = [
   },
   {
     id: utils.getUID(),
-    text: "Profile",
+    text: "News",
     icon: "icon-bell",
-    link: `${process.env.frontend}/pb/${cfg.PBASE_STEP_3}`,
+    link: `${process.env.frontend}/${cfg.HOME_0}`,
   },
 ];
 

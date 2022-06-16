@@ -53,9 +53,9 @@ class FRM_ProgBase_Materie extends React.Component {
   }
 
   onChangeForm(id, data) {
-    console.log("CHANGE FORM");
-    console.log(id);
-    console.log(data);
+    // console.log("CHANGE FORM");
+    // console.log(id);
+    // console.log(data);
 
     switch (id) {
       case this.state.annoId:

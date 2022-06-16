@@ -97,8 +97,8 @@ const getRiepilogoProgrammaBase = async (token) => {
   if (f.status) return [];
 
   const data = f.map((x, index) => {
-    return {
-      id: x.idProgrammaBase + "_" + index,
+    return {      
+      id: x.idProgrammaBase + "_" + index,      
       col1: x.annoFrequenza,
       col2: x.materia,
       col3: x.classeArgomento,
@@ -115,7 +115,7 @@ const getProgrammaBase = async (token, id) => {
   const f = await utils.getFetch(token, GetProgrammaBase(id));
 
   console.log("getProgrammaBase");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -188,7 +188,7 @@ const getClasseArgomento = async (token, id) => {
   const f = await utils.getFetch(token, GetClasseArgomento(id));
 
   console.log("getClasseArgomento");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -261,7 +261,7 @@ const getLezioneBread = async (token, id) => {
   const f = await utils.getFetch(token, GetBreadArgomento(id));
 
   console.log("getLezioneBread");
-  // console.log(f);
+  console.log(f);
   if (f.status) return [];
   let data = [];
   if (f.length == 1) {
@@ -269,7 +269,7 @@ const getLezioneBread = async (token, id) => {
     data.push({ key: 2, text: f[0].annoFrequenza });
     data.push({ key: 3, text: f[0].classeArgomento });
     data.push({ key: 4, text: f[0].argomento });
-  } 
+  }
   return data;
 };
 const insertLezione = async (token, body) => {

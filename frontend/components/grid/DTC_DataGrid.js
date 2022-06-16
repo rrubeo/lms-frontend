@@ -10,6 +10,10 @@ import {
 import Box from "@mui/material/Box";
 import jnStyles from "../../styles/utils.module.css";
 import ActionGrid from "./actionGrid";
+import ActionButton from "./actionButton";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
 
 const gd_cfg = require("./config");
 
@@ -17,8 +21,10 @@ class DTC_DataGrid extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      columns: props.cols,
-      value: props.rows,
+      // columns: this.props.cols,
+      columns: [],
+      // value: this.props.rows,
+      value: [],
       currentId: "-1",
       actionList: [],
     };
@@ -29,7 +35,14 @@ class DTC_DataGrid extends React.Component {
     this.handleAddClick = this.handleAddClick.bind(this);
     this.handleRouteClick = this.handleRouteClick.bind(this);
 
-    const alist = props.action.map((item) => {
+    // // this.state.actionList = alist;
+  }
+
+  componentDidMount() {
+    console.log("componentDidMount");
+    this.setState({ columns: [] });
+    this.setState({ value: [] });
+    const alist = this.props.action.map((item) => {
       switch (item.callBack) {
         case gd_cfg.GRID_DELETE_ACTION:
           item.callBack = this.handleDeleteClick;
@@ -42,17 +55,57 @@ class DTC_DataGrid extends React.Component {
           return item;
       }
     });
-    this.state.actionList = alist;
-    this.state.columns.push({
+    this.setState({ actionList: alist });
+    const buttonColumn = {
       field: "actions",
       type: "actions",
-      maxWidth: 180,
+      maxWidth: 100,
       flex: 1,
       align: "center",
       renderCell: (params) => {
-        return <ActionGrid params={params} action={alist} />;
+        // return <ActionGrid params={params} action={alist} />;
+        return (
+          <Box>
+            {this.state.actionList.map((item) => (
+              // <ActionButton
+              //   key={item.id}
+              //   title={item.title}
+              //   icon={item.icon}
+              //   params={params}
+              //   callBack={item.callBack}
+              //   route={item.route}
+              // />
+              <Tooltip
+                key={item.id}
+                TransitionComponent={Zoom}
+                title={item.title}
+                arrow
+              >
+                <IconButton
+                  sx={{
+                    justifyContent: "center",
+                    px: 1.5,
+                  }}
+                  color="primary"
+                  size="small"
+                  onClick={(event) => {
+                    item.callBack(params, event, item.route);
+                  }}
+                >
+                  <span className={item.icon}></span>
+                </IconButton>
+              </Tooltip>
+            ))}
+          </Box>
+        );
       },
-    });
+    };
+
+    let allColumn = this.props.cols;
+    allColumn.push(buttonColumn);
+
+    this.setState({ columns: allColumn });
+    this.setState({ value: this.props.rows });
   }
 
   createRandomRow(counter) {
@@ -64,7 +117,7 @@ class DTC_DataGrid extends React.Component {
     };
   }
 
-  handleAddClick(params, event) {
+  handleAddClick(params, event, route) {
     // console.log(params.api.state.rows);
     event.stopPropagation(); // don't select this row after clicking
     const newRow = this.createRandomRow(randomUnitPrice());
@@ -87,7 +140,7 @@ class DTC_DataGrid extends React.Component {
     return thisRow;
   }
 
-  handleDeleteClick(params, event) {
+  handleDeleteClick(params, event, route) {
     event.stopPropagation(); // don't select this row after clicking
     console.log(params);
     const thisRow = this.getAllInfo(params);
@@ -126,13 +179,14 @@ class DTC_DataGrid extends React.Component {
   render() {
     // console.log(`<DTC_DataGrid ='${this.props.id}'> (${this.state.currentId})`);
     // console.log(this.state.value);
-    // console.log(this.state.actionList);
+    // console.log(this.state.actionList);overflow: "auto",
     return (
-      <Box sx={{ overflow: "auto" }}>
+      <Box sx={{ display: "flex" }}>
         <DataGrid
           autoHeight
           pagination
-          rows={this.props.rows}
+          density="compact"
+          rows={this.state.value}
           columns={this.state.columns}
           getRowId={(row) => row.id}
           components={{

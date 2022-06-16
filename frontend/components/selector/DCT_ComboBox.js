@@ -36,10 +36,10 @@ class DCT_ComboBox extends React.Component {
   }
 
   componentDidMount() {
-    console.log("COMBO componentDidMount");
-    console.log(this.props.selection);
+    // console.log("COMBO componentDidMount");
+    // console.log(this.props.selection);
     if (this.props.selection) {
-      console.log(this.props.list);
+      // console.log(this.props.list);
       console.log(
         this.props.list.findIndex((item) => item.id == this.props.selection)
       );

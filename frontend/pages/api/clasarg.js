@@ -5,11 +5,11 @@ import { fetchWithUser, getData } from "../../lib";
 const pi_cfg = require("../../components/form/pindi/config");
 
 export default withIronSessionApiRoute(async (req, res) => {
-  console.log("API COMBO CLASSE");
+  // console.log("API COMBO CLASSE");
   let id = 0;
 
   if (req.body) {
-    console.log(req.body);
+    // console.log(req.body);
     id = req.body.id;
   }
   const userLogin = req.session.user;
