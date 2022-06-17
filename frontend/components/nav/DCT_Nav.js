@@ -40,7 +40,7 @@ class DCT_Nav extends React.Component {
   }
 
   handleOnClick() {
-    console.log(this.props);
+    // console.log(this.props);
     this.props.handleOnClick(!this.state.open);
     this.setState({ open: !this.state.open });
   }

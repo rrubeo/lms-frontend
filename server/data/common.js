@@ -97,8 +97,8 @@ const getRiepilogoProgrammaBase = async (token) => {
   if (f.status) return [];
 
   const data = f.map((x, index) => {
-    return {      
-      id: x.idProgrammaBase + "_" + index,      
+    return {
+      id: x.idProgrammaBase + "_" + index,
       col1: x.annoFrequenza,
       col2: x.materia,
       col3: x.classeArgomento,
@@ -310,7 +310,8 @@ const getContenutoBread = async (token, id) => {
     data.push({ key: 1, text: f[0].materia });
     data.push({ key: 2, text: f[0].annoFrequenza });
     data.push({ key: 3, text: f[0].classeArgomento });
-    data.push({ key: 4, text: f[0].lezioneDesc });
+    data.push({ key: 4, text: f[0].argomento });
+    data.push({ key: 5, text: f[0].lezioneDesc });
   }
   // console.log(data);
   return data;

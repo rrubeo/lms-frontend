@@ -12,8 +12,8 @@ export default function Home() {
   const { user, mutateUser } = useUser({
     redirectTo: "/login",
   });
-  console.log("HOME");
-  console.log(user);
+  // console.log("HOME");
+  // console.log(user);
 
   const router = useRouter();
 
@@ -52,7 +52,7 @@ export default function Home() {
           >
             Login
           </Button>
-          <Button
+          {/* <Button
             id="logout"
             type="button"
             variant="contained"
@@ -68,7 +68,7 @@ export default function Home() {
             }}
           >
             Logout
-          </Button>
+          </Button> */}
         </Grid>
       </Grid>
     </>

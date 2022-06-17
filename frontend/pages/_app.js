@@ -31,11 +31,11 @@ export default function MyApp(props) {
   // console.log(user);
   React.useEffect(() => {
     const start = () => {
-      console.log("routeChangeStart");
+      // console.log("routeChangeStart");
       setLoading(true);
     };
     const end = () => {
-      console.log("finished");
+      // console.log("finished");
       setLoading(false);
     };
     Router.events.on("routeChangeStart", start);

@@ -162,6 +162,38 @@ class FetchError extends Error {
   }
 }
 
+function getPageIds(query) {
+  let ids = [];
+  if (query.param instanceof Array) {
+    if (query.param.length > 1) {
+      console.log(query);
+      for (let i = 1; i < query.param.length; i++) {
+        const myArray = query.param[i].split("_");
+        for (let j = 0; j < myArray.length; j++) {
+          ids.push(myArray[j]);
+        }
+      }
+    }
+  }
+  return ids;
+}
+
+function getBackLink(section, page, query) {
+  // console.log("Query:", query);
+  // console.log("Query Length:", query.param.length);
+  let linkBack = `/${section}/${page}`;
+  if (query.param.length > 1) {
+    query.param.shift();
+    query.param.shift();
+    let newParam = query.param.join("/");
+    // console.log("JOIN", newParam);
+
+    linkBack = `/${section}/${page}/${newParam}`;
+  }
+  console.log("LinkBack:", linkBack);
+  return linkBack;
+}
+
 module.exports = {
   fetchJson,
   fetchWithUser,
@@ -170,4 +202,6 @@ module.exports = {
   deleteData,
   fetcher,
   FetchError,
+  getPageIds,
+  getBackLink,
 };

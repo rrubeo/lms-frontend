@@ -53,6 +53,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   fallback.apiUrl = pi_cfg.getApiUrl(query);
   fallback.authenticated = true;
   fallback.userInfo = authSession;
+  fallback.subIndex = utils.getPageIds(query);
   fallback.pageQuery = query;
 
   return {
@@ -111,9 +112,8 @@ function Main() {
   };
 
   const handleNextStep = async (event, filter, route) => {
-    event.preventDefault();
-    if (!filter) console.log("MANCANO PARAMETRI");
-    forceNavigateUtil(route, filter);
+    event.preventDefault();    
+    forceNavigateUtil(route, filter, fallback.subIndex);
   };
 
   return (

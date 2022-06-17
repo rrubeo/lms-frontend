@@ -56,6 +56,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   fallback.apiUrl = pb_cfg.getApiUrl(query);
   fallback.authenticated = true;
   fallback.userInfo = authSession;
+  fallback.subIndex = utils.getPageIds(query);
   fallback.pageQuery = query;
 
   return {
@@ -69,14 +70,16 @@ sessionOptions);
 function Main() {
   //Recupera info utente
   const { fallback } = useSWRConfig();
-  const { userInfo, pageName, apiUrl, pageQuery } = fallback;
-  
+  const { userInfo, pageName, apiUrl, pageQuery, subIndex } = fallback;
+
+  // console.log(pageQuery);
+  // console.log(fallback.subIndex);
   //Carica dati
   // let { data, error } = useSWR(
   //   userInfo ? [apiUrl, userInfo] : null,
   //   utils.fetchWithUser
   // );
-  
+
   let { data, error } = useSWR(apiUrl, utils.getData);
 
   if (error) return <div>{error.message}</div>;
@@ -113,8 +116,7 @@ function Main() {
 
   const handleNextStep = async (event, filter, route) => {
     event.preventDefault();
-    if (!filter) console.log("MANCANO PARAMETRI");
-    forceNavigateUtil(route, filter);
+    forceNavigateUtil(route, filter, fallback.subIndex);
   };
 
   return (

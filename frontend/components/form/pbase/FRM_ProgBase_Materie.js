@@ -12,6 +12,7 @@ import DCT_Breadcrumbs from "../../DCT_Breadcrumbs";
 import DCT_LinkButton from "../../DCT_LinkButton";
 import jnStyles from "../../../styles/utils.module.css";
 
+const utils = require("../../../lib");
 const pb_cfg = require("./config");
 
 class FRM_ProgBase_Materie extends React.Component {
@@ -28,7 +29,7 @@ class FRM_ProgBase_Materie extends React.Component {
     this.onChangeForm = this.onChangeForm.bind(this);
     this.onDeleteRow = this.onDeleteRow.bind(this);
     this.handleReset = this.handleReset.bind(this);
-    
+
     this.changeChildAnnoId = React.createRef();
     this.changeChildSelectId = React.createRef();
   }
@@ -83,8 +84,13 @@ class FRM_ProgBase_Materie extends React.Component {
   }
 
   render() {
-    console.log(`<${pb_cfg.FRM_PBASE_STEP_1}='${this.props.id}'>`);
-
+    console.log("QUERY MATERIE");
+    console.log(this.props.query);
+    const linkBack = utils.getBackLink(
+      "pb",
+      pb_cfg.PBASE_STEP_0,
+      this.props.query
+    );
     return (
       <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
         <Box
@@ -97,7 +103,7 @@ class FRM_ProgBase_Materie extends React.Component {
             id={`bread_${pb_cfg.FRM_PBASE_STEP_1}`}
             list={this.props.data.bread}
           />
-          <DCT_LinkButton href={`/pb/${pb_cfg.PBASE_STEP_0}`} text="back" />          
+          <DCT_LinkButton href={linkBack} text="back" />
           <DCT_Stepper
             id="stepper"
             activeStep={this.props.activeStep}

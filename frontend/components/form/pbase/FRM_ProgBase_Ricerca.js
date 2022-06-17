@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import DTC_DataGrid from "../../grid/DTC_DataGrid";
 import jnStyles from "../../../styles/utils.module.css";
 
+const utils = require("../../../lib");
 const pb_cfg = require("./config");
 
 class FRM_ProgBase_Ricerca extends React.Component {
@@ -41,9 +42,9 @@ class FRM_ProgBase_Ricerca extends React.Component {
   }
 
   onDeleteRow(id, data) {
-    console.log("DELETE ROW");
-    console.log(id);
-    console.log(data);
+    // console.log("DELETE ROW");
+    // console.log(id);
+    // console.log(data);
 
     const rowData = {
       id: pb_cfg.FRM_PBASE_STEP_1,
@@ -53,7 +54,7 @@ class FRM_ProgBase_Ricerca extends React.Component {
   }
 
   render() {
-    console.log(`<${pb_cfg.FRM_PBASE_STEP_0}='${this.props.id}'>`);
+    // console.log(`<${pb_cfg.FRM_PBASE_STEP_0}='${this.props.id}'>`);
     return (
       <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
         <Box

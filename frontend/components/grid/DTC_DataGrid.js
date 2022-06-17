@@ -160,7 +160,7 @@ class DTC_DataGrid extends React.Component {
   }
 
   handleRouteClick(params, event, route) {
-    event.stopPropagation();
+    event.stopPropagation();    
     this.props.onNextStep(event, params, route);
   }
 

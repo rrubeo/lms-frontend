@@ -74,7 +74,7 @@ export default function DTC_Calendar() {
         },
       }}
       dayHeaderFormat={{ weekday: "long" }}
-      initialView="dayGridMonth"
+      initialView="listWeek"
       editable
       selectable
       initialEvents={INITIAL_EVENTS}

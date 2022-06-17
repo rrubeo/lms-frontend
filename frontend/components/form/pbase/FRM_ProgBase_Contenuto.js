@@ -11,6 +11,7 @@ import DCT_ComboBox from "../../selector/DCT_ComboBox";
 import DCT_LinkButton from "../../DCT_LinkButton";
 import jnStyles from "../../../styles/utils.module.css";
 
+const utils = require("../../../lib");
 const pb_cfg = require("./config");
 
 class FRM_ProgBase_Contenuto extends React.Component {
@@ -98,8 +99,14 @@ class FRM_ProgBase_Contenuto extends React.Component {
   }
 
   render() {
-    console.log(`<${pb_cfg.FRM_PBASE_STEP_5}='${this.props.id}'>`);
-    // console.log(this.props);
+    console.log("CONTENUTO LEZIONE");
+    console.log(this.props.query);
+    const linkBack = utils.getBackLink(
+      "pb",
+      pb_cfg.PBASE_STEP_4,
+      this.props.query
+    );
+
     return (
       <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
         <Box
@@ -112,11 +119,7 @@ class FRM_ProgBase_Contenuto extends React.Component {
             id={`bread_${pb_cfg.FRM_PBASE_STEP_5}`}
             list={this.props.data.bread}
           />
-          <DCT_LinkButton
-            href={`/pb/${pb_cfg.PBASE_STEP_4}`}
-            text={this.props.data.back_label}
-          />
-
+          <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
           <DCT_Stepper
             id="stepper"
             activeStep={this.props.activeStep}

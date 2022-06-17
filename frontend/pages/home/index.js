@@ -54,7 +54,7 @@ sessionOptions);
 
 function HomeMain() {
   const { user } = useUser({
-    redirectTo: "/login",
+    redirectTo: "/401",
   });
 
   const { fallback } = useSWRConfig();
