@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 
 import DCT_Breadcrumbs from "../../DCT_Breadcrumbs";
 import DTC_TextBox from "../../DTC_TextBox";
+import DCT_Upload from "../../DCT_Upload";
 import DTC_DataGrid from "../../grid/DTC_DataGrid";
 import DCT_Stepper from "../../DCT_Stepper";
 import DCT_ComboBox from "../../selector/DCT_ComboBox";
@@ -18,6 +19,7 @@ class FRM_ProgBase_Contenuto extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isVideo: true,
       tipoId: "cb_tipo",
       tipoValue: { label: "", id: 0 },
       nomeId: "tx_nome",
@@ -26,6 +28,8 @@ class FRM_ProgBase_Contenuto extends React.Component {
       percorsoValue: "",
       durataId: "tx_durata",
       durataValue: "",
+      uploadId: "tx_upload",
+      selectedFile: null,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,17 +41,23 @@ class FRM_ProgBase_Contenuto extends React.Component {
     this.changeChildNomeId = React.createRef();
     this.changeChildPercorsoId = React.createRef();
     this.changeChildDurataId = React.createRef();
+    this.changeChildUploadId = React.createRef();
   }
 
   async handleSubmit(event) {
     event.preventDefault();
+
     const data = {
       id: pb_cfg.FRM_PBASE_STEP_5,
       tipo: this.state.tipoValue,
       nome: this.state.nomeValue,
       percorso: this.state.percorsoValue,
       durata: this.state.durataValue,
+      file: this.state.selectedFile,
+      video: this.state.isVideo,
     };
+
+    // console.log(data);
     await this.props.onSubmit(event, data);
   }
 
@@ -57,18 +67,25 @@ class FRM_ProgBase_Contenuto extends React.Component {
     this.changeChildNomeId.current.handleReset();
     this.changeChildPercorsoId.current.handleReset();
     this.changeChildDurataId.current.handleReset();
+    this.changeChildUploadId.current.handleReset();
     this.setState({ tipoValue: { label: "", id: 0 } });
     this.setState({ nomeValue: "" });
     this.setState({ percorsoValue: "" });
     this.setState({ durataValue: "" });
+    this.setState({ selectedFile: null });
   }
 
   onChangeForm(id, data) {
-    console.log("CHANGE FORM");
+    // console.log("CHANGE FORM");
 
     switch (id) {
       case this.state.tipoId:
         this.setState({ tipoValue: data });
+        if (data.id == 1 || data.id == 0) {
+          this.setState({ isVideo: true });
+        } else {
+          this.setState({ isVideo: false });
+        }
         break;
       case this.state.nomeId:
         this.setState({ nomeValue: data });
@@ -78,6 +95,9 @@ class FRM_ProgBase_Contenuto extends React.Component {
         break;
       case this.state.durataId:
         this.setState({ durataValue: data });
+        break;
+      case this.state.uploadId:
+        this.setState({ selectedFile: data });
         break;
       default:
         console.log(id);
@@ -99,8 +119,8 @@ class FRM_ProgBase_Contenuto extends React.Component {
   }
 
   render() {
-    console.log("CONTENUTO LEZIONE");
-    console.log(this.props.query);
+    // console.log("CONTENUTO LEZIONE");
+    // console.log(this.props.query);
     const linkBack = utils.getBackLink(
       "pb",
       pb_cfg.PBASE_STEP_4,
@@ -125,7 +145,11 @@ class FRM_ProgBase_Contenuto extends React.Component {
             activeStep={this.props.activeStep}
             steps={this.props.data.stepper}
           />
-          <Stack direction="row" spacing={2}>
+          <Stack
+            direction={{ xs: "column", sm: "column", md: "row" }}
+            spacing={{ xs: 1, sm: 1, md: 2 }}
+            alignItems="center"
+          >
             <DCT_ComboBox
               id={this.state.tipoId}
               list={this.props.data.tipo}
@@ -142,14 +166,18 @@ class FRM_ProgBase_Contenuto extends React.Component {
               size={1 / 4}
               ref={this.changeChildNomeId}
             />
-            <DTC_TextBox
-              required
-              id={this.state.percorsoId}
-              label={this.props.data.percorso_label}
-              onChange={this.onChangeForm}
-              size={1 / 4}
-              ref={this.changeChildPercorsoId}
-            />
+            {/* {this.state.isVideo ? ( */}
+              <DTC_TextBox
+                required
+                id={this.state.percorsoId}
+                label={this.props.data.percorso_label}
+                onChange={this.onChangeForm}
+                size={1 / 4}
+                ref={this.changeChildPercorsoId}
+              />
+            {/* ) : (
+              <></>
+            )} */}
             <DTC_TextBox
               required
               id={this.state.durataId}
@@ -174,6 +202,15 @@ class FRM_ProgBase_Contenuto extends React.Component {
             </Button>
           </Stack>
         </Box>
+        {!this.state.isVideo ? (
+          <DCT_Upload
+            id={this.state.uploadId}
+            onChange={this.onChangeForm}
+            ref={this.changeChildUploadId}
+          />
+        ) : (
+          <></>
+        )}
         <DTC_DataGrid
           id="gd_contenuto"
           cols={this.props.data.cols}

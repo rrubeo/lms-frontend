@@ -12,6 +12,7 @@ class DTC_TextBox extends React.Component {
       value: "",
     };
     this.handleValueChange = this.handleValueChange.bind(this);
+    this.handleReset = this.handleReset.bind(this);
   }
 
   handleValueChange(event) {

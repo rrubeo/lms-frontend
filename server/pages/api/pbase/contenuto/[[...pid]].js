@@ -11,7 +11,16 @@ import {
   getContenutoBread,
   deleteContenuto,
   insertContenuto,
+  uploadContenuto,
 } from "../../../../data/common";
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "20mb",
+    },
+  },
+};
 
 export default async function handler(req, res) {
   // Run cors
@@ -63,7 +72,8 @@ export default async function handler(req, res) {
       break;
     case "POST":
       const postData = req.body;
-      // console.log(postData);
+      console.log(postData);
+
       let poba = {
         coleFlagAttiva: 1,
         coleSysuser: userLogin.userID,
@@ -75,13 +85,13 @@ export default async function handler(req, res) {
       };
       // console.log(poba);
       let p3 = await insertContenuto(userLogin.token, poba);
-      // console.log(p3);
+      console.log(p3);
       if (p3.status) {
         res
           .status(p3.status)
           .json({ status: p3.status, message: p3.statusText });
       } else {
-        res.status(200).json({ status: 200, message: "OK" });
+        res.status(200).json({ status: 200, message: "OK", id: p3.coleId });
       }
       break;
     case "DELETE":

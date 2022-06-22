@@ -62,6 +62,7 @@ export default function MyApp(props) {
             <Component {...pageProps} />
             <Toaster
               position="bottom-right"
+              duration={1000}
               containerStyle={{
                 top: 120,
                 left: 20,

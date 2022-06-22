@@ -3,16 +3,18 @@ import { fetchJson } from "./utils";
 async function getAuthSession(req) {
   return req.session.user;
 }
-
+//secure: process.env.NODE_ENV === "production",
 const sessionOptions = {
   password: process.env.SECRET_COOKIE_PASSWORD,
   cookieName: "jscred",
   cookieOptions: {
-    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: undefined,
+    secure: false,
   },
 };
 
-const CLOUD_BASE_URL = "http://lmswebapidev.cloudandpartners.com";
+const CLOUD_BASE_URL = process.env.API_SERVER;
 const CLOUD_API_TOKEN = "api/User/authenticate";
 const CLOUD_API_VALID_TOKEN = "api/User/ValidateToken";
 

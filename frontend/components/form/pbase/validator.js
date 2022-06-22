@@ -54,9 +54,9 @@ async function validateForm(formData) {
         durata: formData.durata,
       };
       schema = yup.object().shape({
-        percorso: yup
-          .string()
-          .required("Inserire un valore per Percorso file."),
+        // percorso: yup
+        //   .string()
+        //   .required("Inserire un valore per Percorso file."),
         nome: yup.string().required("Inserire un valore per Nome contenuto."),
         durata: yup
           .number()

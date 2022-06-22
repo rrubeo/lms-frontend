@@ -45,7 +45,64 @@ async function postData(url, postedData) {
   }
 }
 
+async function postFile(url, postedData, userInfo) {
+  console.log(url);
+  console.log("postFile");
+
+  let formData = new FormData();
+  formData.append("file", postedData.file, postedData.file.name);
+
+  // const formDataObj = {};
+  // postData.forEach((value, key) => (formDataObj[key] = value));
+
+  var myHeaders = new Headers();
+  myHeaders.append("Accept", "application/json");
+  myHeaders.append("Access-Control-Allow-Origin", "*");
+  myHeaders.append(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  // myHeaders.append("Content-Type", "multipart/form-data");
+  myHeaders.append("Authorization", "Bearer " + userInfo.token);
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: formData,
+    redirect: "follow",
+  };
+
+  let data = { url: url, message: "" };
+
+  try {
+    console.log("FETCH", url);
+    // const data = await fetchJson(url, requestOptions);
+
+    const response = await fetch(url, requestOptions);
+    const result = await response.json();
+    // console.log("FETCH", result);
+
+    if (result.status) {
+      data.message = result.title;
+    } else {
+      data.message = result.errDesc;
+      data.id = result.id;
+    }
+    return data;   
+  } catch (error) {
+    if (error instanceof FetchError) {
+      console.error(error);
+      console.error("postFile:", error.data.message);
+      return error.data;
+    } else {
+      console.error("An unexpected error happened:", error);
+      return error;
+    }
+  }
+}
+
 async function getData(url) {
+  console.log(url);
   const packBody = {
     extUrl: url,
   };
@@ -190,7 +247,7 @@ function getBackLink(section, page, query) {
 
     linkBack = `/${section}/${page}/${newParam}`;
   }
-  console.log("LinkBack:", linkBack);
+  // console.log("LinkBack:", linkBack);
   return linkBack;
 }
 
@@ -198,6 +255,7 @@ module.exports = {
   fetchJson,
   fetchWithUser,
   postData,
+  postFile,
   getData,
   deleteData,
   fetcher,

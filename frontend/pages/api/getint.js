@@ -19,7 +19,7 @@ async function getWithUser(url, userInfo) {
 }
 
 export default withIronSessionApiRoute(async (req, res) => {
-  console.log("API GET");
+  // console.log("API GET");
   const packBody = req.body;
   const userInfo = req.session.user;
 

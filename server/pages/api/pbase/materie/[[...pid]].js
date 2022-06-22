@@ -32,7 +32,7 @@ export default async function handler(req, res) {
   let { pid } = req.query;
   if (!pid) pid = 0;
   else pid = pid[0];
-  console.log(pid);
+  console.log("PID:", pid);
 
   const userLogin = await getToken("Romolo", "pass2");
 

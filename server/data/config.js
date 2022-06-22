@@ -1,5 +1,5 @@
 //Percorso di base API
-const CLOUD_BASE_URL = "http://lmswebapidev.cloudandpartners.com";
+const CLOUD_BASE_URL = process.env.API_SERVER;
 
 //API autorizzazione token
 const CLOUD_API_TOKEN = "api/User/authenticate";
@@ -34,7 +34,9 @@ const CLOUD_API_CLAS_ARGO = "api/ClarClasseArgomentoAnas";
 const CLOUD_API_TBL_PBASE_RIEPILOGO = "api/Tables/GetRiepilogoProgrammaBase";
 const CLOUD_API_CLAS_LEZIO = "api/LeziLezioneDats";
 const CLOUD_API_CLAS_CONTE = "api/ColeContenutoLezioneDats";
+const CLOUD_API_CLAS_CONTE_UPLOAD = "api/ColeContenutoLezioneDats/UploadFile";
 const CLOUD_API_TIPO_CONT = "api/TicoTipoContenutoTyps";
+const CLOUD_API_TIPO_CONT_COMBO = "api/Tables/GetTipoContenutoCombo";
 const CLOUD_API_BREAD_CLAS_ARGO = "api/Tables/GetBreadClasseArgomento";
 const CLOUD_API_BREAD_ARG = "api/Tables/GetBreadArgomento";
 const CLOUD_API_BREAD_LEZIO = "api/Tables/GetBreadLezione";
@@ -77,8 +79,9 @@ const ClarClasseArgomentoAnas = `${CLOUD_BASE_URL}/${CLOUD_API_CLAS_ARGO}`;
 const GetRiepilogoProgrammaBase = `${CLOUD_BASE_URL}/${CLOUD_API_TBL_PBASE_RIEPILOGO}`;
 const LeziLezioneDats = `${CLOUD_BASE_URL}/${CLOUD_API_CLAS_LEZIO}`;
 const ColeContenutoLezioneDats = `${CLOUD_BASE_URL}/${CLOUD_API_CLAS_CONTE}`;
+const ColeContenutoLezioneDatsUpload = `${CLOUD_BASE_URL}/${CLOUD_API_CLAS_CONTE_UPLOAD}`;
 const TicoTipoContenutoTyps = `${CLOUD_BASE_URL}/${CLOUD_API_TIPO_CONT}`;
-
+const TicoTipoContenutoCombo = `${CLOUD_BASE_URL}/${CLOUD_API_TIPO_CONT_COMBO}`;
 //API GET lettura programma indirizzo completo
 const CLOUD_API_TBL_PINDI = "api/Tables/GetIndirizzoIstituto";
 const CLOUD_API_TBL_LIST_ANNO_IST = "api/Tables/GetAnnoIndirizzoIstituto";
@@ -140,6 +143,7 @@ module.exports = {
   ClarClasseArgomentoAnas,
   ArgoArgomentoMateriaDats,
   TicoTipoContenutoTyps,
+  TicoTipoContenutoCombo,
   GetMenuNonStudenti,
   GetProgrammaBase,
   GetProgrammaBaseCombo,
@@ -155,6 +159,7 @@ module.exports = {
   GetRiepilogoProgrammaBase,
   ClarClasseArgomentoAnas,
   ColeContenutoLezioneDats,
+  ColeContenutoLezioneDatsUpload,
   LeziLezioneDats,
   GetIndirizzoIstituto,
   GetAnnoIndirizzoIstituto,

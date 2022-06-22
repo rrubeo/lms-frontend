@@ -18,7 +18,9 @@ import {
   ArgoArgomentoMateriaDats,
   LeziLezioneDats,
   ColeContenutoLezioneDats,
+  ColeContenutoLezioneDatsUpload,
   TicoTipoContenutoTyps,
+  TicoTipoContenutoCombo,
   GetRiepilogoProgrammaBase,
   GetIndirizzoIstituto,
   GetAnnoIndirizzo,
@@ -59,7 +61,7 @@ const getFunzioniForm = async (token, user, formName) => {
 const deleteObjectURL = async (token, url) => {
   const f = await utils.deleteFetch(token, url);
   console.log("delete-" + url);
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
   return f;
 };
@@ -261,7 +263,7 @@ const getLezioneBread = async (token, id) => {
   const f = await utils.getFetch(token, GetBreadArgomento(id));
 
   console.log("getLezioneBread");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
   let data = [];
   if (f.length == 1) {
@@ -303,7 +305,7 @@ const getContenutoBread = async (token, id) => {
   const f = await utils.getFetch(token, GetBreadLezione(id));
 
   console.log("getContenutoBread");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
   let data = [];
   if (f.length == 1) {
@@ -320,12 +322,20 @@ const insertContenuto = async (token, body) => {
   let res = await utils.postFetch(token, ColeContenutoLezioneDats, body);
   return res;
 };
+const uploadContenuto = async (token, id, body) => {
+  console.log("Upload contenuto id:", id);
+  return await utils.postFile(
+    token,
+    `${ColeContenutoLezioneDatsUpload}/${id}`,
+    body
+  );
+};
 const deleteContenuto = async (token, id) => {
   return await deleteObjectURL(token, `${ColeContenutoLezioneDats}/${id}`);
 };
 
 const getTipoContenuto = async (token) => {
-  const f = await utils.getFetch(token, TicoTipoContenutoTyps);
+  const f = await utils.getFetch(token, TicoTipoContenutoCombo);
 
   console.log("getTipoContenuto");
   // console.log(f);
@@ -333,8 +343,8 @@ const getTipoContenuto = async (token) => {
 
   const data = f.map((x) => {
     return {
-      id: x.ticoId,
-      label: x.ticoDescr,
+      id: x.idTipoContenuto,
+      label: x.descrizione,
     };
   });
   return data;
@@ -479,6 +489,7 @@ module.exports = {
   insertArgomento,
   insertLezione,
   insertContenuto,
+  uploadContenuto,
   deleteProgrammaBase,
   deleteClasseArgomento,
   deleteArgomento,

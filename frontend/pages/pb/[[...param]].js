@@ -88,14 +88,28 @@ function Main() {
 
   const handleSubmit = async (event, formData) => {
     event.preventDefault();
+
     const vres = await validateForm(formData);
 
     if (vres.valid) {
       const res = await utils.postData(apiUrl, formData);
-      // console.log(res.status);
+      // console.log("RISPOSTA");
+      // console.log(res);
       if (res.status != 200) {
         validationMessage(res.message, MSG_ERROR);
       } else {
+        if (formData.id == pb_cfg.FRM_PBASE_STEP_5) {
+          if (!formData.video) {
+            const CLOUD_BASE_URL = process.env.API_SERVER;
+            const CLOUD_API_CLAS_CONTE_UPLOAD =
+              "api/ColeContenutoLezioneDats/UploadFile";
+            const ColeContenutoLezioneDatsUpload = `${CLOUD_BASE_URL}/${CLOUD_API_CLAS_CONTE_UPLOAD}`;
+            const endpoint = `${ColeContenutoLezioneDatsUpload}/${res.id}`;
+
+            const res2 = await utils.postFile(endpoint, formData, userInfo);
+            validationMessage(res2.message, MSG_INFO);
+          }
+        }
         validationMessage(res.message, MSG_SUCCESS);
         forceReloadUtil();
       }

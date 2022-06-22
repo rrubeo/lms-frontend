@@ -34,5 +34,5 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 
-Build your container: docker build -t jnfrontend-docker .
+Build your container: docker build --no-cache -t jnfrontend-docker .
 Run your container: docker run -p 3000:3000 jnfrontend-docker

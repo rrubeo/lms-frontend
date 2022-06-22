@@ -25,7 +25,12 @@ yarn create next-app --example api-routes api-routes-app
 ```
 
 Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+ENV NODE_ENV production in docker
+npm run dev -- -H 192.168.x.x
 
+
+dockerd
 
 Build your container: docker build -t jnserver-docker .
+
 Run your container: docker run -p 3002:3002 jnserver-docker

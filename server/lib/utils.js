@@ -61,7 +61,7 @@ const getToken = async (url, mBody) => {
 };
 
 const getFetch = async (token, url) => {
-  console.log(url);
+  console.log("URL:", url);
   let f = await fetch(url, {
     headers: getAuthorization(token),
     method: "GET",
@@ -102,6 +102,27 @@ const postFetch = async (token, url, mBody) => {
   let resp = await f;
   console.log("************ POST **************");
   // console.log(resp);
+  let data = isJson(resp) ? resp.json() : resp;
+  return data;
+};
+
+const postFile = async (token, url, mBody) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Accept", "*/*");
+  myHeaders.append("Content-Type", "multipart/form-data");
+  myHeaders.append("Authorization", "Bearer " + token);
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: mBody,
+    redirect: "follow",
+  };
+
+  let f = await fetch(url, requestOptions);
+  let resp = await f;
+  console.log("************ POST **************");
+  console.log(resp);
   let data = isJson(resp) ? resp.json() : resp;
   return data;
 };
@@ -151,5 +172,6 @@ module.exports = {
   fetcher,
   getFetch,
   postFetch,
+  postFile,
   deleteFetch,
 };
