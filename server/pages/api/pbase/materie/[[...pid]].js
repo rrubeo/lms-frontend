@@ -1,4 +1,6 @@
 const utils = require("../../../../lib/utils");
+const apic = require("../../../../lib/apicommon");
+
 import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
 import { stepper, tornaIndietro } from "../../../../data/pbase/data_common";
 import {
@@ -8,10 +10,7 @@ import {
   cols,
 } from "../../../../data/pbase/data_materie";
 
-import { PobaProgrammaBaseAnas } from "../../../../data/config";
-
 import {
-  getToken,
   getFunzioniForm,
   getAnnoFrequenza,
   getMaterie,
@@ -21,35 +20,12 @@ import {
   deleteProgrammaBase,
 } from "../../../../data/common";
 
-export default async function handler(req, res) {
-  // Run cors
-  await utils.cors(req, res);
-
-  console.log("MATERIE");
-  // console.log(req.method);
-  // console.log(req.query);
-
-  let { pid } = req.query;
-  if (!pid) pid = 0;
-  else pid = pid[0];
-  console.log("PID:", pid);
-
-  const userLogin = await getToken("Romolo", "pass2");
-
-  // let userLogin = {
-  //   userID: "",
-  //   token: "",
-  // };
-
-  // if (req.headers.token) {
-  //   userLogin.userID = req.headers.userid;
-  //   userLogin.token = req.headers.token;
-  // }
-
-  // console.log(userLogin);
-
+async function getHandler(userLogin, pid) {
   const db_annofreq = await getAnnoFrequenza(userLogin.token);
   const db_materie = await getMaterie(userLogin.token);
+  const db_rows = await getProgrammaBase(userLogin.token, pid);
+  const db_bread = await getClasseArgomentoBread(userLogin.token, pid);
+
   const db_funzioni = await getFunzioniForm(
     userLogin.token,
     userLogin.userID,
@@ -67,52 +43,62 @@ export default async function handler(req, res) {
     materie_label: "Materie",
     materie: db_materie,
     back_label: tornaIndietro,
-    rows: [],
+    rows: db_rows,
     cols: cols,
     funzioni: db_funzioni,
-    bread: [],
+    bread: db_bread,
   };
+  return data;
+}
 
-  // console.log(req.method);
+async function deleteHandler(userLogin, deleteData) {
+  let d1 = await deleteProgrammaBase(userLogin.token, deleteData.key);
+  console.log(d1);
+  const res = { status: 200, message: "Materia eliminata" };
+  return res;
+}
+
+async function postHandler(userLogin, postData, response) {
+  for (let m of postData.materie) {
+    let poba = {
+      pobaFkMascId: m.id,
+      pobaSysuser: userLogin.userID,
+      pobaFlagAttiva: 1,
+      pobaFkAnfrId: postData.anno.id,
+    };
+    console.log(poba);
+    let p3 = await insertProgrammaBase(userLogin.token, poba);
+    console.log(p3);
+    if (p3.status) {
+      response
+        .status(p3.status)
+        .json({ status: p3.status, message: p3.statusText });
+    }
+  }
+  const res = { status: 200, message: "OK" };
+  return res;
+}
+
+export default async function handler(req, res) {
+  // Run cors
+  await utils.cors(req, res);
+
+  console.log("MATERIE");
+  const pid = apic.getPid(req);
+  const userLogin = await apic.getLogin(req);
+
   switch (req.method) {
     case "GET":
-      const db_rows = await getProgrammaBase(userLogin.token, pid);
-      const db_bread = await getClasseArgomentoBread(userLogin.token, pid);
-
-      data.rows = db_rows;
-      data.bread = db_bread;
-      res.status(200).json(data);
+      const dataGet = await getHandler(userLogin, pid);
+      res.status(200).json(dataGet);
       break;
     case "POST":
-      const postData = req.body;
-      for (let m of postData.materie) {
-        let poba = {
-          pobaFkMascId: m.id,
-          pobaSysuser: userLogin.userID,
-          pobaFlagAttiva: 1,
-          pobaFkAnfrId: postData.anno.id,
-        };
-        // console.log(poba);
-        let p3 = await insertProgrammaBase(userLogin.token, poba);
-        // console.log(p3);
-        if (p3.status) {
-          res
-            .status(p3.status)
-            .json({ status: p3.status, message: p3.statusText });
-        }
-      }
-      res.status(200).json({ status: 200, message: "OK" });
+      const dataPost = await postHandler(userLogin, req.body, res);
+      res.status(dataPost.status).json(dataPost);
       break;
     case "DELETE":
-      const deleteData = req.body;
-      // console.log(deleteData);
-      let d1 = await deleteProgrammaBase(userLogin.token, deleteData.key);
-      console.log(d1);
-      res.status(200).json({ status: 200, message: "Materia eliminata" });
-      break;
-    default:
-      // console.log(req.method);
-      // console.log(req.headers);
+      const dataDel = await deleteHandler(userLogin, req.body);
+      res.status(dataDel.status).json(dataDel);
       break;
   }
 }

@@ -1,10 +1,11 @@
 const utils = require("../../../../lib/utils");
+const apic = require("../../../../lib/apicommon");
+
 import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
 import { stepper, tornaIndietro } from "../../../../data/pbase/data_common";
 import { rows, cols } from "../../../../data/pbase/data_lezione";
 
 import {
-  getToken,
   getFunzioniForm,
   getLezione,
   getLezioneBread,
@@ -12,37 +13,14 @@ import {
   insertLezione,
 } from "../../../../data/common";
 
-export default async function handler(req, res) {
-  // Run cors
-  await utils.cors(req, res);
-
-  console.log("LEZIONE");
-  // console.log(req.method);
-  // console.log(req.query);
-
-  let { pid } = req.query;
-  if (!pid) pid = 0;
-  else pid = pid[0];
-  console.log(pid);
-
-  // let userLogin = {
-  //   userID: "",
-  //   token: "",
-  // };
-
-  // if (req.headers.token) {
-  //   userLogin.userID = req.headers.userid;
-  //   userLogin.token = req.headers.token;
-  // }
-
-  // console.log(userLogin);
-
-  const userLogin = await getToken("Romolo", "pass2");
+async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
     userLogin.token,
     userLogin.userID,
     "FRM_ProgBase_Ricerca"
   );
+  const db_rows = await getLezione(userLogin.token, pid);
+  const db_bread = await getLezioneBread(userLogin.token, pid);
   const data = {
     title: "Configurazione Programma Base",
     stepper: stepper,
@@ -52,51 +30,61 @@ export default async function handler(req, res) {
     usermenu: usermenu,
     lezione_label: "Lezione",
     back_label: tornaIndietro,
-    rows: [],
+    rows: db_rows,
     cols: cols,
-    bread: [],
+    funzioni: db_funzioni,
+    bread: db_bread,
   };
+  return data;
+}
+
+async function deleteHandler(userLogin, deleteData) {
+  let d1 = await deleteLezione(userLogin.token, deleteData.key);
+  console.log(d1);
+  const res = { status: 200, message: "Lezione eliminata" };
+  return res;
+}
+
+async function postHandler(userLogin, postData, pid) {
+  let poba = {
+    leziDescr: postData.lezione,
+    leziFlagAttiva: 1,
+    leziSysuser: userLogin.userID,
+    leziFkArgoId: pid,
+    leziPathVideo: "asasdasd",
+    leziPathDocumento: "asdasd",
+  };
+  // console.log(poba);
+  let p3 = await insertLezione(userLogin.token, poba);
+  console.log(p3);
+  let res = { status: 200, message: "OK" };
+  if (p3.status) {
+    res.status = p3.status;
+    res.message = p3.p3.statusText;
+  }
+  return res;
+}
+
+export default async function handler(req, res) {
+  // Run cors
+  await utils.cors(req, res);
+
+  console.log("LEZIONE");
+  const pid = apic.getPid(req);
+  const userLogin = await apic.getLogin(req);
 
   switch (req.method) {
     case "GET":
-      const db_rows = await getLezione(userLogin.token, pid);
-      const db_bread = await getLezioneBread(userLogin.token, pid);
-      console.log(db_bread);
-      data.rows = db_rows;
-      data.bread = db_bread;
-      res.status(200).json(data);
+      const dataGet = await getHandler(userLogin, pid);
+      res.status(200).json(dataGet);
       break;
     case "POST":
-      const postData = req.body;
-      // console.log(postData);
-      let poba = {
-        leziDescr: postData.lezione,
-        leziFlagAttiva: 1,
-        leziSysuser: userLogin.userID,
-        leziFkArgoId: pid,
-        leziPathVideo: "asasdasd",
-        leziPathDocumento: "asdasd",
-      };
-      // console.log(poba);
-      let p3 = await insertLezione(userLogin.token, poba);
-      console.log(p3);
-      if (p3.status) {
-        res
-          .status(p3.status)
-          .json({ status: p3.status, message: p3.statusText });
-      } else {
-        res.status(200).json({ status: 200, message: "OK" });
-      }
+      const dataPost = await postHandler(userLogin, req.body, pid);
+      res.status(dataPost.status).json(dataPost);
       break;
     case "DELETE":
-      const deleteData = req.body;
-      let d1 = await deleteLezione(userLogin.token, deleteData.key);
-      console.log(d1);
-      res.status(200).json({ status: 200, message: "Lezione eliminata" });
-      break;
-    default:
-      // console.log(req.method);
-      // console.log(req.headers);
+      const dataDel = await deleteHandler(userLogin, req.body);
+      res.status(dataDel.status).json(dataDel);
       break;
   }
 }

@@ -1,10 +1,11 @@
 const utils = require("../../../../lib/utils");
+const apic = require("../../../../lib/apicommon");
+
 import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
 import { stepper, tornaIndietro } from "../../../../data/pbase/data_common";
 import { rows, cols } from "../../../../data/pbase/data_argomento";
 
 import {
-  getToken,
   getFunzioniForm,
   getArgomento,
   getArgomentoBread,
@@ -12,25 +13,14 @@ import {
   insertArgomento,
 } from "../../../../data/common";
 
-export default async function handler(req, res) {
-  // Run cors
-  await utils.cors(req, res);
-
-  console.log("ARGOMENTO");
-  // console.log(req.method);
-  // console.log(req.query);
-
-  let { pid } = req.query;
-  if (!pid) pid = 0;
-  else pid = pid[0];
-  console.log(pid);
-
-  const userLogin = await getToken("Romolo", "pass2");
+async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
     userLogin.token,
     userLogin.userID,
     "FRM_ProgBase_Ricerca"
   );
+  const db_rows = await getArgomento(userLogin.token, pid);
+  const db_bread = await getArgomentoBread(userLogin.token, pid);
   const data = {
     title: "Configurazione Programma Base",
     stepper: stepper,
@@ -40,47 +30,58 @@ export default async function handler(req, res) {
     usermenu: usermenu,
     argomento_label: "Argomento",
     back_label: tornaIndietro,
-    rows: [],
+    rows: db_rows,
     cols: cols,
-    bread: [],
+    funzioni: db_funzioni,
+    bread: db_bread,
   };
-  // console.log(req.method);
+  return data;
+}
+
+async function deleteHandler(userLogin, deleteData) {
+  let d1 = await deleteArgomento(userLogin.token, deleteData.key);
+  console.log(d1);
+  const res = { status: 200, message: "Argomento eliminato" };
+  return res;
+}
+
+async function postHandler(userLogin, postData, pid) {
+  let poba = {
+    argoDescr: postData.argomento,
+    argoFlagAttiva: 1,
+    argoSysuser: userLogin.userID,
+    argoFkClarId: pid,
+  };
+  let p3 = await insertArgomento(userLogin.token, poba);
+  console.log(p3);
+  let res = { status: 200, message: "OK" };
+  if (p3.status) {
+    res.status = p3.status;
+    res.message = p3.p3.statusText;
+  }
+  return res;
+}
+
+export default async function handler(req, res) {
+  // Run cors
+  await utils.cors(req, res);
+
+  console.log("ARGOMENTO");
+  const pid = apic.getPid(req);
+  const userLogin = await apic.getLogin(req);
+
   switch (req.method) {
     case "GET":
-      const db_rows = await getArgomento(userLogin.token, pid);
-      const db_bread = await getArgomentoBread(userLogin.token, pid);
-      data.rows = db_rows;
-      data.bread = db_bread;
-      res.status(200).json(data);
+      const dataGet = await getHandler(userLogin, pid);
+      res.status(200).json(dataGet);
       break;
     case "POST":
-      const postData = req.body;
-      // console.log(postData);
-      let poba = {
-        argoDescr: postData.argomento,
-        argoFlagAttiva: 1,
-        argoSysuser: userLogin.userID,
-        argoFkClarId: pid,
-      };
-      let p3 = await insertArgomento(userLogin.token, poba);
-      console.log(p3);
-      if (p3.status) {
-        res
-          .status(p3.status)
-          .json({ status: p3.status, message: p3.statusText });
-      } else {
-        res.status(200).json({ status: 200, message: "OK" });
-      }
+      const dataPost = await postHandler(userLogin, req.body, pid);
+      res.status(dataPost.status).json(dataPost);
       break;
     case "DELETE":
-      const deleteData = req.body;
-      let d1 = await deleteArgomento(userLogin.token, deleteData.key);
-      console.log(d1);
-      res.status(200).json({ status: 200, message: "Argomento eliminato" });
-      break;
-    default:
-      // console.log(req.method);
-      // console.log(req.headers);
+      const dataDel = await deleteHandler(userLogin, req.body);
+      res.status(dataDel.status).json(dataDel);
       break;
   }
 }

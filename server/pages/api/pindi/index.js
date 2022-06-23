@@ -1,4 +1,6 @@
 const utils = require("../../../lib/utils");
+const apic = require("../../../lib/apicommon");
+
 import { sidemenu, navmenu, usermenu } from "../../../data/data_sidemenu";
 import {
   stepperIndirizzo,
@@ -12,8 +14,6 @@ import {
 } from "../../../data/pindi/data_indirizzo";
 
 import {
-  getToken,
-  getFunzioniForm,
   getIndirizzoIstituto,
   getProgrammaBaseCombo,
   insertAnnoIndIstituto,
@@ -21,15 +21,10 @@ import {
   deleteAnnoIndIstituto,
 } from "../../../data/common";
 
-export default async function handler(req, res) {
-  await utils.cors(req, res);
-  //   console.log(req.method);
-  console.log("PROGRAMMA INDIRIZZO");
-
-  const userLogin = await getToken("Romolo", "pass2");
-
+async function getHandler(userLogin, pid) {
   const db_indirizzo = await getIndirizzoIstituto(userLogin.token);
   const db_pbase = await getProgrammaBaseCombo(userLogin.token);
+  const db_rows = await getAnnoIndIstituto(userLogin.token);
   const data = {
     title: "Configurazione Programma Indirizzo",
     stepper: stepperIndirizzo,
@@ -40,48 +35,57 @@ export default async function handler(req, res) {
     indirizzo: db_indirizzo,
     programma_label: "Programma Base",
     programma: db_pbase,
-    rows: [],
+    rows: db_rows,
     cols: cols,
     bread: [],
   };
+  return data;
+}
+
+async function deleteHandler(userLogin, deleteData) {
+  let d1 = await deleteAnnoIndIstituto(userLogin.token, deleteData.key);
+  console.log(d1);
+  const res = { status: 200, message: "Programma Indirizzo eliminato" };
+  return res;
+}
+
+async function postHandler(userLogin, postData) {
+  let poba = {
+    aninFkInisId: postData.istituto.id,
+    aninSysuser: userLogin.userID,
+    aninFlagAttiva: 1,
+    aninFkPobaId: postData.programma.id,
+  };
+  console.log(poba);
+  let p3 = await insertAnnoIndIstituto(userLogin.token, poba);
+
+  let res = { status: 200, message: "OK" };
+  if (p3.status) {
+    res.status = p3.status;
+    res.message = p3.p3.statusText;
+  }
+  return res;
+}
+
+export default async function handler(req, res) {
+  await utils.cors(req, res);
+  //   console.log(req.method);
+  console.log("PROGRAMMA INDIRIZZO");
+  const pid = apic.getPid(req);
+  const userLogin = await apic.getLogin(req);
 
   switch (req.method) {
     case "GET":
-      const db_rows = await getAnnoIndIstituto(userLogin.token);
-      data.rows = db_rows;
-      // data.rows = rows;
-      res.status(200).json(data);
+      const dataGet = await getHandler(userLogin, pid);
+      res.status(200).json(dataGet);
       break;
     case "POST":
-      const postData = req.body;
-      console.log(postData);
-      let poba = {
-        aninFkInisId: postData.istituto.id,
-        aninSysuser: userLogin.userID,
-        aninFlagAttiva: 1,
-        aninFkPobaId: postData.programma.id,
-      };
-      console.log(poba);
-      let p3 = await insertAnnoIndIstituto(userLogin.token, poba);
-      // console.log(p3);
-      if (p3.status) {
-        res
-          .status(p3.status)
-          .json({ status: p3.status, message: p3.statusText });
-      } else {
-        res.status(200).json({ status: 200, message: "OK" });
-      }
+      const dataPost = await postHandler(userLogin, req.body);
+      res.status(dataPost.status).json(dataPost);
       break;
     case "DELETE":
-      const deleteData = req.body;
-      console.log(deleteData);
-      let d1 = await deleteAnnoIndIstituto(userLogin.token, deleteData.key);
-      console.log(d1);
-      res.status(200).json({ status: 200, message: "Programma Indirizzo eliminato" });
-      break;
-    default:
-      // console.log(req.method);
-      // console.log(req.headers);
+      const dataDel = await deleteHandler(userLogin, req.body);
+      res.status(dataDel.status).json(dataDel);
       break;
   }
 }

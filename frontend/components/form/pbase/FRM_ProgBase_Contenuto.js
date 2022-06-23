@@ -166,7 +166,7 @@ class FRM_ProgBase_Contenuto extends React.Component {
               size={1 / 4}
               ref={this.changeChildNomeId}
             />
-            {/* {this.state.isVideo ? ( */}
+            {this.state.isVideo ? (
               <DTC_TextBox
                 required
                 id={this.state.percorsoId}
@@ -175,9 +175,9 @@ class FRM_ProgBase_Contenuto extends React.Component {
                 size={1 / 4}
                 ref={this.changeChildPercorsoId}
               />
-            {/* ) : (
+            ) : (
               <></>
-            )} */}
+            )}
             <DTC_TextBox
               required
               id={this.state.durataId}

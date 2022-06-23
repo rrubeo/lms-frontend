@@ -117,7 +117,7 @@ const getProgrammaBase = async (token, id) => {
   const f = await utils.getFetch(token, GetProgrammaBase(id));
 
   console.log("getProgrammaBase");
-  // console.log(f);
+  console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {

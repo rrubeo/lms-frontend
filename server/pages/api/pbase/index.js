@@ -1,4 +1,6 @@
 const utils = require("../../../lib/utils");
+const apic = require("../../../lib/apicommon");
+
 import { sidemenu, navmenu, usermenu } from "../../../data/data_sidemenu";
 import { rows } from "../../../data/pbase/data_materie";
 
@@ -12,7 +14,8 @@ export default async function handler(req, res) {
   await utils.cors(req, res);
 
   console.log("RICERCA");
-  console.log(req.method);
+  const pid = apic.getPid(req);
+  const userLogin = await apic.getLogin(req);
 
   const cols = [
     { field: "col1", headerName: "Anno Frequenza", flex: 1, minWidth: 50 },
@@ -31,15 +34,13 @@ export default async function handler(req, res) {
     },
   ];
 
-  const userLogin = await getToken("Romolo", "pass2");
-  const db_funzioni = await getFunzioniForm(
-    userLogin.token,
-    userLogin.userID,
-    "FRM_ProgBase_Ricerca"
-  );
-
   switch (req.method) {
     case "GET":
+      const db_funzioni = await getFunzioniForm(
+        userLogin.token,
+        userLogin.userID,
+        "FRM_ProgBase_Ricerca"
+      );
       const db_rows = await getRiepilogoProgrammaBase(userLogin.token);
       const data = {
         title: "Ricerca Programma Base",
@@ -52,10 +53,6 @@ export default async function handler(req, res) {
         funzioni: db_funzioni,
       };
       res.status(200).json(data);
-      break;
-    default:
-      // console.log(req.method);
-      // console.log(req.headers);
       break;
   }
 }

@@ -1,4 +1,6 @@
 const utils = require("../../../../lib/utils");
+const apic = require("../../../../lib/apicommon");
+
 import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
 import {
   stepperIndirizzo,
@@ -7,37 +9,23 @@ import {
 import { rows, cols, classe_select } from "../../../../data/pindi/data_lezione";
 
 import {
-  getToken,
   getFunzioniForm,
-  getClasseArgomentoCombo,  
+  getClasseArgomentoCombo,
   getProgrammaIndi,
   getProgrammaIndiBread,
   insertProgrammaIndi,
   deleteProgrammaIndi,
 } from "../../../../data/common";
 
-export default async function handler(req, res) {
-  // Run cors
-  await utils.cors(req, res);
-  console.log("LEZIONE"); 
-  let id = 0;
-
-  let { pid } = req.query;
-  console.log(pid);
-  if (pid) {
-    id = pid[0];  
-  }
-  console.log(id);
-  
-
-  const userLogin = await getToken("Romolo", "pass2");
+async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
     userLogin.token,
     userLogin.userID,
     "FRM_ProgBase_Ricerca"
   );
-
-  const db_classe = await getClasseArgomentoCombo(userLogin.token);  
+  const db_classe = await getClasseArgomentoCombo(userLogin.token);
+  const db_rows = await getProgrammaIndi(userLogin.token, pid);
+  const db_bread = await getProgrammaIndiBread(userLogin.token, pid);
   const data = {
     title: "Configurazione Programma Indirizzo",
     stepper: stepperIndirizzo,
@@ -49,52 +37,62 @@ export default async function handler(req, res) {
     lezione_label: "Lezione",
     lezione: [],
     back_label: tornaIndietro,
-    rows: [],
+    rows: db_rows,
     cols: cols,
-    bread: [],
+    funzioni: db_funzioni,
+    bread: db_bread,
   };
+  return data;
+}
+
+async function deleteHandler(userLogin, deleteData) {
+  let d1 = await deleteProgrammaIndi(userLogin.token, deleteData.key);
+  console.log(d1);
+  const res = { status: 200, message: "Lezione eliminata" };
+  return res;
+}
+
+async function postHandler(userLogin, postData, response, pid) {
+  for (let m of postData.lezione) {
+    if (m != 0) {
+      let poba = {
+        prinFkAninId: pid,
+        prinSysuser: userLogin.userID,
+        prinFlagAttiva: 1,
+        prinFkLeziId: m.id,
+      };
+      console.log(poba);
+      let p3 = await insertProgrammaIndi(userLogin.token, poba);
+      if (p3.status) {
+        response
+          .status(p3.status)
+          .json({ status: p3.status, message: p3.statusText });
+      }
+    }
+  }
+  const res = { status: 200, message: "OK" };
+  return res;
+}
+
+export default async function handler(req, res) {
+  // Run cors
+  await utils.cors(req, res);
+  console.log("LEZIONE");
+  const pid = apic.getPid(req);
+  const userLogin = await apic.getLogin(req);
+
   switch (req.method) {
     case "GET":
-      const db_rows = await getProgrammaIndi(userLogin.token, id);
-      const db_bread = await getProgrammaIndiBread(userLogin.token, pid);
-
-      data.rows = db_rows;
-      data.bread = db_bread;
-      res.status(200).json(data);
+      const dataGet = await getHandler(userLogin, pid);
+      res.status(200).json(dataGet);
       break;
     case "POST":
-      const postData = req.body;
-      console.log(postData);
-
-      for (let m of postData.lezione) {
-        if (m != 0) {
-          let poba = {
-            prinFkAninId: id,
-            prinSysuser: userLogin.userID,
-            prinFlagAttiva: 1,
-            prinFkLeziId: m.id,
-          };
-          console.log(poba);
-          let p3 = await insertProgrammaIndi(userLogin.token, poba);
-          if (p3.status) {
-            res
-              .status(p3.status)
-              .json({ status: p3.status, message: p3.statusText });
-          }
-        }
-      }
-      res.status(200).json({ status: 200, message: "OK" });
+      const dataPost = await postHandler(userLogin, req.body, res, pid);
+      res.status(dataPost.status).json(dataPost);
       break;
     case "DELETE":
-      const deleteData = req.body;
-      console.log(deleteData);
-      let d1 = await deleteProgrammaIndi(userLogin.token, deleteData.key);
-      console.log(d1);
-      res.status(200).json({ status: 200, message: "Lezione eliminata" });
-      break;
-    default:
-      // console.log(req.method);
-      // console.log(req.headers);
+      const dataDel = await deleteHandler(userLogin, req.body);
+      res.status(dataDel.status).json(dataDel);
       break;
   }
 }

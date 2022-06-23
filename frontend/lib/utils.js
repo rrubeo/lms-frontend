@@ -45,6 +45,43 @@ async function postData(url, postedData) {
   }
 }
 
+async function postFileCors(url, postedData, userInfo) {
+  console.log("postFileCors 1");
+  console.log("TIPO", typeof postedData.file);
+  const endpoint = `${process.env.frontend}/api/apicors`;
+
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", "Bearer " + userInfo.token);
+  myHeaders.append("UserId", userInfo.login);
+  myHeaders.append("Token", userInfo.token);
+  myHeaders.append("Destination", url);
+  // myHeaders.append("Content-Type", "multipart/form-data");
+
+  let formData = new FormData();
+  formData.append("file", postedData.file, postedData.file.name);
+
+  // let myFiles = [];
+  // myFiles.push(postedData.file);
+
+  // const myBody = {
+  //   files: myFiles,
+  // };
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: formData,
+    // redirect: "follow",
+  };
+
+  const response = await fetch(endpoint, requestOptions);
+  const result = await response.json();
+  console.log("postFileCors 2");
+  console.log(result);
+
+  return result;
+}
+
 async function postFile(url, postedData, userInfo) {
   console.log(url);
   console.log("postFile");
@@ -88,7 +125,7 @@ async function postFile(url, postedData, userInfo) {
       data.message = result.errDesc;
       data.id = result.id;
     }
-    return data;   
+    return data;
   } catch (error) {
     if (error instanceof FetchError) {
       console.error(error);
@@ -256,6 +293,7 @@ module.exports = {
   fetchWithUser,
   postData,
   postFile,
+  postFileCors,
   getData,
   deleteData,
   fetcher,
