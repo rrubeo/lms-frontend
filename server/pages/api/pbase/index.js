@@ -31,6 +31,15 @@ export default async function handler(req, res) {
       flex: 1,
       minWidth: 50,
       maxWidth: 90,
+      type: "number",
+      align: "right",
+    },
+    {
+      field: "col9",
+      headerName: "Agg.",
+      flex: 1,
+      minWidth: 50,
+      maxWidth: 50,
     },
   ];
 

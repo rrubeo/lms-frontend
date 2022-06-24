@@ -8,6 +8,7 @@ import {
 //nomi di pagina
 const PBASE_STEP_0 = "pb_search";
 const PBASE_STEP_1 = "pb_1mt";
+const PBASE_STEP_1_1 = "pb_1mt_agg";
 const PBASE_STEP_2 = "pb_2cl";
 const PBASE_STEP_3 = "pb_3ar";
 const PBASE_STEP_4 = "pb_4le";
@@ -47,6 +48,17 @@ const PBASE_STEP_1_ACTION = [
   //   icon: "icon-arrow-right4",
   //   callBack: GRID_ADD_ACTION,
   // },
+];
+
+const FRM_PBASE_STEP_1_1 = "FRM_ProgBase_Aggregato";
+const PBASE_STEP_1_1_API = `${process.env.server}/pbase/aggregato`;
+const PBASE_STEP_1_1_ACTION = [
+  {
+    id: "1",
+    title: "Elimina",
+    icon: "icon-delete2",
+    callBack: GRID_DELETE_ACTION,
+  },
 ];
 
 const FRM_PBASE_STEP_2 = "FRM_ProgBase_Classe_Argomento";
@@ -130,6 +142,9 @@ function getApiUrl(query) {
     case PBASE_STEP_1:
       apiUrl = PBASE_STEP_1_API;
       break;
+    case PBASE_STEP_1_1:
+      apiUrl = PBASE_STEP_1_1_API;
+      break;
     case PBASE_STEP_2:
       apiUrl = PBASE_STEP_2_API;
       break;
@@ -185,18 +200,21 @@ module.exports = {
   GRID_ADD_ACTION,
   FRM_PBASE_STEP_0,
   FRM_PBASE_STEP_1,
+  FRM_PBASE_STEP_1_1,
   FRM_PBASE_STEP_2,
   FRM_PBASE_STEP_3,
   FRM_PBASE_STEP_4,
   FRM_PBASE_STEP_5,
   PBASE_STEP_0,
   PBASE_STEP_1,
+  PBASE_STEP_1_1,
   PBASE_STEP_2,
   PBASE_STEP_3,
   PBASE_STEP_4,
   PBASE_STEP_5,
   PBASE_STEP_0_API,
   PBASE_STEP_1_API,
+  PBASE_STEP_1_1_API,
   PBASE_STEP_2_API,
   PBASE_STEP_3_API,
   PBASE_STEP_4_API,
@@ -205,6 +223,7 @@ module.exports = {
   NO_DATA_DESC,
   PBASE_STEP_0_ACTION,
   PBASE_STEP_1_ACTION,
+  PBASE_STEP_1_1_ACTION,
   PBASE_STEP_2_ACTION,
   PBASE_STEP_3_ACTION,
   PBASE_STEP_4_ACTION,

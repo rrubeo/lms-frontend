@@ -8,7 +8,7 @@ import FRM_ProgBase_Classe_Argomento from "../../components/form/pbase/FRM_ProgB
 import FRM_ProgBase_Argomento from "../../components/form/pbase/FRM_ProgBase_Argomento";
 import FRM_ProgBase_Lezione from "../../components/form/pbase/FRM_ProgBase_Lezione";
 import FRM_ProgBase_Contenuto from "../../components/form/pbase/FRM_ProgBase_Contenuto";
-
+import FRM_ProgBase_Aggregato from "../../components/form/pbase/FRM_ProgBase_Aggregato";
 import { validateForm } from "../../components/form/pbase/validator";
 
 import {
@@ -130,7 +130,21 @@ function Main() {
 
   const handleNextStep = async (event, filter, route) => {
     event.preventDefault();
-    forceNavigateUtil(route, filter, fallback.subIndex);
+    console.log(route);
+    // console.log(fallback);
+    if (fallback.pageName == pb_cfg.PBASE_STEP_0) {
+      if (filter.row.col9) {
+        if (filter.row.col9 == "*") {
+          // console.log(filter);
+          // console.log(route);
+          forceNavigateUtil(pb_cfg.PBASE_STEP_1_1, filter, fallback.subIndex);
+        }
+      } else {
+        forceNavigateUtil(route, filter, fallback.subIndex);
+      }
+    } else {
+      forceNavigateUtil(route, filter, fallback.subIndex);
+    }
   };
 
   return (
@@ -146,6 +160,20 @@ function Main() {
             data={data}
             onNextStep={handleNextStep}
             action={pb_cfg.PBASE_STEP_0_ACTION}
+          />
+        ) : (
+          <></>
+        )}
+        {pageName === pb_cfg.PBASE_STEP_1_1 ? (
+          <FRM_ProgBase_Aggregato
+            id={pb_cfg.FRM_PBASE_STEP_1_1}
+            activeStep={4}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            data={data}
+            onNextStep={handleNextStep}
+            action={pb_cfg.PBASE_STEP_1_1_ACTION}
+            query={pageQuery}
           />
         ) : (
           <></>

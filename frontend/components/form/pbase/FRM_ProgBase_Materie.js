@@ -10,6 +10,7 @@ import DTC_DataGrid from "../../grid/DTC_DataGrid";
 import DCT_Stepper from "../../DCT_Stepper";
 import DCT_Breadcrumbs from "../../DCT_Breadcrumbs";
 import DCT_LinkButton from "../../DCT_LinkButton";
+import ButtonGroup from "@mui/material/ButtonGroup";
 import jnStyles from "../../../styles/utils.module.css";
 
 const utils = require("../../../lib");
@@ -84,8 +85,8 @@ class FRM_ProgBase_Materie extends React.Component {
   }
 
   render() {
-    console.log("QUERY MATERIE");
-    console.log(this.props.query);
+    // console.log("QUERY MATERIE");
+    // console.log(this.props.query);
     const linkBack = utils.getBackLink(
       "pb",
       pb_cfg.PBASE_STEP_0,
@@ -93,30 +94,42 @@ class FRM_ProgBase_Materie extends React.Component {
     );
     return (
       <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
+        <Stack
+          direction="row"
+          spacing={5}
+          justifyContent="flex-start"
+          alignItems="center"
+        >
+          <DCT_LinkButton href={linkBack} text="back" />{" "}
+          <DCT_Breadcrumbs
+            id={`bread_${pb_cfg.FRM_PBASE_STEP_1}`}
+            list={this.props.data.bread}
+          />
+        </Stack>
+        <DCT_Stepper
+          id="stepper"
+          activeStep={this.props.activeStep}
+          steps={this.props.data.stepper}
+        />
         <Box
           id={pb_cfg.FRM_PBASE_STEP_1}
           component="form"
           onSubmit={this.handleSubmit}
           onReset={this.handleReset}
+          sx={{ display: "inline" }}
         >
-          <DCT_Breadcrumbs
-            id={`bread_${pb_cfg.FRM_PBASE_STEP_1}`}
-            list={this.props.data.bread}
-          />
-          <DCT_LinkButton href={linkBack} text="back" />
-          <DCT_Stepper
-            id="stepper"
-            activeStep={this.props.activeStep}
-            steps={this.props.data.stepper}
-          />
-
-          <Stack direction="row" spacing={2}>
+          <Stack
+            direction={{ xs: "column", sm: "column", md: "row" }}
+            spacing={2}
+            justifyContent="center"
+            alignItems="center"
+          >
             <DCT_ComboBox
               id={this.state.annoId}
               list={this.props.data.annofreq}
               label={this.props.data.annofreq_label}
               onChange={this.onChangeForm}
-              size={300}
+              size={1}
               ref={this.changeChildAnnoId}
             />
             <DCT_MultipleCheckList
@@ -124,22 +137,29 @@ class FRM_ProgBase_Materie extends React.Component {
               list={this.props.data.materie}
               label={this.props.data.materie_label}
               onChange={this.onChangeForm}
+              size={1}
               ref={this.changeChildSelectId}
             />
-            <Button
-              type="submit"
+            <ButtonGroup
               variant="contained"
+              aria-label="outlined primary button group"
               classes={{ root: jnStyles.jnBT }}
             >
-              Salva
-            </Button>
-            <Button
-              type="reset"
-              variant="contained"
-              classes={{ root: jnStyles.jnBT }}
-            >
-              Reset
-            </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                classes={{ root: jnStyles.jnBT }}
+              >
+                Salva
+              </Button>
+              <Button
+                type="reset"
+                variant="contained"
+                classes={{ root: jnStyles.jnBT }}
+              >
+                Reset
+              </Button>
+            </ButtonGroup>
           </Stack>
         </Box>
         <DTC_DataGrid

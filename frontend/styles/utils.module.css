@@ -122,6 +122,13 @@
     box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.2);
 }
 
+.jnDCT_Text_BorderSm {
+    border-radius: 26px;
+    padding: 1px;
+    -webkit-box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
+}
+
 .jnDCT_Text_Input_Border {
     border: 0px;
     padding: 0 0 100 100;

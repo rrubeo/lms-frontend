@@ -95,7 +95,7 @@ const getRiepilogoProgrammaBase = async (token) => {
   const f = await utils.getFetch(token, GetRiepilogoProgrammaBase);
 
   console.log("getRiepilogoProgrammaBase");
-  // console.log(f);
+  console.log(f);
   if (f.status) return [];
 
   const data = f.map((x, index) => {
@@ -109,6 +109,7 @@ const getRiepilogoProgrammaBase = async (token) => {
       col6: x.nomeContenuto,
       col7: x.tipoContenuto,
       col8: x.durataMinuti,
+      col9: x.flagProgrammaAggregato ? "*" : "",
     };
   });
   return data;
@@ -133,7 +134,7 @@ const getProgrammaBaseCombo = async (token) => {
   const f = await utils.getFetch(token, GetProgrammaBaseCombo(0));
 
   console.log("getProgrammaBaseCombo");
-  // console.log(f);
+  console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {

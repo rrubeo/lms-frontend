@@ -13,7 +13,11 @@ class DCT_LinkButton extends React.Component {
   render() {
     return (
       <Link href={this.state.link}>
-        <Button variant="contained" classes={{ root: jnStyles.jnBT }}>
+        <Button
+          variant="contained"
+          classes={{ root: jnStyles.jnBT }}
+          size="small"
+        >
           {this.state.text}
         </Button>
       </Link>

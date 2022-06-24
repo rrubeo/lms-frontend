@@ -11,11 +11,12 @@ class DCT_Breadcrumbs extends React.Component {
   }
 
   render() {
-    console.log(
+    console
+      .log
       // `<DCT_Breadcrumbs ='${this.props.id}'> (${this.state.listaBread.length})`
-    );
+      ();
     return (
-      <Breadcrumbs aria-label="breadcrumb" sx={{ width: "100%", mt: 0, mb: 2 }}>
+      <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 0, mb: 2 }}>
         {this.state.listaBread.map((item, index) => (
           <Typography
             key={item.key}

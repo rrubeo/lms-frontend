@@ -160,7 +160,7 @@ class DTC_DataGrid extends React.Component {
   }
 
   handleRouteClick(params, event, route) {
-    event.stopPropagation();    
+    event.stopPropagation();
     this.props.onNextStep(event, params, route);
   }
 
@@ -181,7 +181,7 @@ class DTC_DataGrid extends React.Component {
     // console.log(this.state.value);
     // console.log(this.state.actionList);overflow: "auto",
     return (
-      <Box sx={{ display: "flex" }}>
+      <Box component="div" sx={{ display: "inline" }}>
         <DataGrid
           autoHeight
           pagination

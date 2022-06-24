@@ -61,25 +61,10 @@ class DCT_Upload extends React.Component {
       <FormControl sx={{ m: "0px", width: this.props.size, p: "0px" }}>
         <Stack
           direction={{ xs: "column", sm: "column", md: "row" }}
+          justifyContent="center"
           alignItems="center"
           spacing={{ xs: 1, sm: 1, md: 2 }}
         >
-          <label htmlFor="contained-button-file">
-            <Input
-              accept="application/pdf"
-              id="contained-button-file"
-              type="file"
-              name="file"
-              onChange={this.changeHandler}
-            />
-            <Button
-              variant="contained"
-              component="span"
-              classes={{ root: jnStyles.jnBT }}
-            >
-              Seleziona
-            </Button>
-          </label>
           {this.state.isSelected ? (
             <>
               <Chip
@@ -121,6 +106,22 @@ class DCT_Upload extends React.Component {
               }}
             />
           )}
+          <label htmlFor="contained-button-file">
+            <Input
+              accept="application/pdf"
+              id="contained-button-file"
+              type="file"
+              name="file"
+              onChange={this.changeHandler}
+            />
+            <Button
+              variant="contained"
+              component="span"
+              classes={{ root: jnStyles.jnBT }}
+            >
+              Seleziona
+            </Button>
+          </label>
         </Stack>
       </FormControl>
     );

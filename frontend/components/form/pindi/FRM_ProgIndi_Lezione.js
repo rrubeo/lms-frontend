@@ -145,44 +145,49 @@ class FRM_ProgIndi_Lezione extends React.Component {
     let comboClasseSelection = this.state.classeValue.id;
 
     return (
-      <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
-        <Box
-          id={pi_cfg.FRM_PINDI_STEP_1}
-          component="form"
-          onSubmit={this.handleSubmit}
-          onReset={this.handleReset}
-        >
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <DCT_Breadcrumbs
-                id={`bread_${pi_cfg.FRM_PINDI_STEP_1}`}
-                list={this.props.data.bread}
-              />
-            </Grid>
-            <Grid item xs={1}>
-              <DCT_LinkButton href={`/pi/${pi_cfg.PINDI_STEP_0}`} text="back" />
-            </Grid>
-            <Grid item xs={11}>
-              <DCT_Stepper
-                id="stepper"
-                activeStep={this.props.activeStep}
-                steps={this.props.data.stepper}
-              />
-            </Grid>
-            <Grid item xs={4} textAlign="center">
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
+      <>
+        <Stack direction="column" spacing={2}>
+          <Stack
+            direction="row"
+            spacing={5}
+            justifyContent="flex-start"
+            alignItems="center"
+          >
+            <DCT_LinkButton href={`/pi/${pi_cfg.PINDI_STEP_0}`} text="back" />
+            <DCT_Breadcrumbs
+              id={`bread_${pi_cfg.FRM_PINDI_STEP_1}`}
+              list={this.props.data.bread}
+            />
+          </Stack>
+          <Stack direction="column" spacing={2} justifyContent="center">
+            <DCT_Stepper
+              id="stepper"
+              activeStep={this.props.activeStep}
+              steps={this.props.data.stepper}
+            />
+            <Box
+              id={pi_cfg.FRM_PINDI_STEP_1}
+              component="form"
+              onSubmit={this.handleSubmit}
+              onReset={this.handleReset}
+              sx={{ display: "inline" }}
+            >
+              <Stack direction="column" spacing={2}>
+                <Stack
+                  direction={{ xs: "column", sm: "column", md: "row" }}
+                  spacing={2}
+                  justifyContent="center"
+                  alignItems="center"
+                >
                   <DCT_ComboBox
                     id={this.state.classeId}
                     list={this.props.data.classe}
                     label={this.props.data.classe_label}
                     onChange={this.onChangeForm}
-                    size={200}
+                    size={250}
                     ref={this.changeChildClasseId}
                     selection={comboClasseSelection}
                   />
-                </Grid>
-                <Grid item xs={12}>
                   <ButtonGroup
                     variant="contained"
                     aria-label="outlined primary button group"
@@ -204,19 +209,21 @@ class FRM_ProgIndi_Lezione extends React.Component {
                       Reset
                     </Button>
                   </ButtonGroup>
-                </Grid>
-                <Grid item xs={12}>
+                </Stack>
+                <Stack
+                  direction={{ xs: "column", sm: "column", md: "column" }}
+                  spacing={2}
+                  justifyContent="center"
+                  alignItems="center"
+                >
                   <DCT_CheckList
-                    id={this.state.listId}                    
+                    id={this.state.listId}
                     label={this.props.data.lezione_label}
                     list={this.state.lezioneValue}
                     ref={this.changeChildListId}
                     onChange={this.onChangeForm}
-                    size={400}
+                    size={270}
                   />
-                </Grid>
-                <Grid item xs={12}>
-                  {" "}
                   <ButtonGroup
                     variant="contained"
                     aria-label="outlined primary button group"
@@ -238,23 +245,21 @@ class FRM_ProgIndi_Lezione extends React.Component {
                       Salva
                     </Button>
                   </ButtonGroup>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={8}>
-              <DTC_DataGrid
-                id="gd_lezione"
-                cols={this.props.data.cols}
-                rows={this.state.rows}
-                onChange={this.onChangeForm}
-                onDelete={this.onDeleteRow}
-                onNextStep={this.props.onNextStep}
-                action={this.props.action}
-              />
-            </Grid>
-          </Grid>
-        </Box>
-      </Stack>
+                </Stack>
+              </Stack>
+            </Box>
+            <DTC_DataGrid
+              id="gd_lezione"
+              cols={this.props.data.cols}
+              rows={this.state.rows}
+              onChange={this.onChangeForm}
+              onDelete={this.onDeleteRow}
+              onNextStep={this.props.onNextStep}
+              action={this.props.action}
+            />
+          </Stack>
+        </Stack>
+      </>
     );
   }
 }

@@ -19,26 +19,28 @@ class DCT_Stepper extends React.Component {
   }
   render() {
     return (
-      <Box sx={{ width: "100%", mt: 2, mb: 6 }}>
-        <StyledStepper activeStep={this.props.activeStep} alternativeLabel>
-          {this.props.steps.map((label) => (
-            <Step key={label}>
-              <StepLabel
-                StepIconProps={{
-                  classes: {
-                    root: jnStyles.jnE2,
-                    active: jnStyles.jnE1,
-                    completed: jnStyles.jnE2,
-                  },
-                }}
-                classes={{ label: jnStyles.jnN8 }}
-              >
-                {label}
-              </StepLabel>
-            </Step>
-          ))}
-        </StyledStepper>
-      </Box>
+      <StyledStepper
+        activeStep={this.props.activeStep}
+        alternativeLabel
+        sx={{ width: "100%" }}
+      >
+        {this.props.steps.map((label) => (
+          <Step key={label}>
+            <StepLabel
+              StepIconProps={{
+                classes: {
+                  root: jnStyles.jnE2,
+                  active: jnStyles.jnE1,
+                  completed: jnStyles.jnE2,
+                },
+              }}
+              classes={{ label: jnStyles.jnN8 }}
+            >
+              {label}
+            </StepLabel>
+          </Step>
+        ))}
+      </StyledStepper>
     );
   }
 }

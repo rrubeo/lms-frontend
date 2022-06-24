@@ -71,17 +71,15 @@ class DCT_CheckList extends React.Component {
           p: 0,
           maxHeight: this.props.size,
           overflow: "auto",
-          width: "100%",
-          bgcolor: "#B34A9D",
+          // bgcolor: "#B34A9D",
         }}
-        classes={{ root: jnStyles.jnDCT_Text_Border }}
+        // classes={{ root: jnStyles.jnDCT_Text_Border }}
       >
         <List
-          sx={{}}
-          // classes={{
-          //   root: jnStyles.jnDCT_Text_Border,
-          //   input: jnStyles.jnDCT_Text,
-          // }}
+          sx={{ m: 1, p: 1, bgcolor: "#B34A9D" }}
+          classes={{
+            root: jnStyles.jnDCT_Text_BorderSm,
+          }}
         >
           {this.props.list.map((value) => {
             const labelId = `checkbox-list-label-${value.id}`;

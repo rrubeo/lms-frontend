@@ -66,7 +66,7 @@ class DCT_MultipleCheckList extends React.Component {
     // );
     // console.log(this.state.listaElenco);
     return (
-      <FormControl sx={{ m: 0, p: 0, width: 500 }}>
+      <FormControl sx={{ m: 0, p: 0, width: this.props.size }}>
         <InputLabel
           variant="outlined"
           id={`${this.props.id}-label`}

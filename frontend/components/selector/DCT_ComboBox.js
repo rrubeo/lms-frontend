@@ -75,7 +75,10 @@ class DCT_ComboBox extends React.Component {
     // }
 
     return (
-      <FormControl sx={{ m: 0, p: 0 }} classes={{ root: jnStyles.jnO2 }}>
+      <FormControl
+        sx={{ m: 0, p: 0, width: this.props.size }}
+        classes={{ root: jnStyles.jnO2 }}
+      >
         <StyledAutocomplete
           key={this.props.id}
           id={this.props.id}
@@ -83,12 +86,12 @@ class DCT_ComboBox extends React.Component {
           onChange={this.handleValueChange}
           onInputChange={this.handleInputChange}
           options={this.props.list}
-          value={this.state.value}          
+          value={this.state.value}
           classes={{
             inputRoot: jnStyles.jnComboInput,
             listbox: jnStyles.jnO2,
           }}
-          sx={{ width: this.props.size }}
+          // sx={{ width: this.props.size }}
           renderInput={(params) => (
             <TextField {...params} label={this.props.label} />
           )}

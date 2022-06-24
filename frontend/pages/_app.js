@@ -15,7 +15,7 @@ import createEmotionCache from "../src/createEmotionCache";
 import Loader from "../components/layout/loader";
 import { Toaster } from "react-hot-toast";
 import useUser from "../lib/useUser";
-
+import ErrorBoundary from "../components/ErrorBoundary";
 const clientSideEmotionCache = createEmotionCache();
 
 export default function MyApp(props) {
@@ -59,7 +59,9 @@ export default function MyApp(props) {
           <Loader id="app" />
         ) : (
           <>
-            <Component {...pageProps} />
+            <ErrorBoundary>
+              <Component {...pageProps} />
+            </ErrorBoundary>
             <Toaster
               position="bottom-right"
               duration={1000}

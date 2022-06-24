@@ -81,7 +81,7 @@ class FRM_ProgIndi_ProgBase extends React.Component {
     };
     this.props.onDelete(rowData);
   }
-  
+
   render() {
     console.log(`<${pi_cfg.FRM_PINDI_STEP_0}='${this.props.id}'>`);
 

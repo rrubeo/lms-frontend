@@ -10,6 +10,8 @@ import DTC_DataGrid from "../../grid/DTC_DataGrid";
 import DCT_Stepper from "../../DCT_Stepper";
 import DCT_ComboBox from "../../selector/DCT_ComboBox";
 import DCT_LinkButton from "../../DCT_LinkButton";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Divider from "@mui/material/Divider";
 import jnStyles from "../../../styles/utils.module.css";
 
 const utils = require("../../../lib");
@@ -129,25 +131,34 @@ class FRM_ProgBase_Contenuto extends React.Component {
 
     return (
       <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
+        <Stack
+          direction="row"
+          spacing={5}
+          justifyContent="flex-start"
+          alignItems="center"
+        >
+          <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
+          <DCT_Breadcrumbs
+            id={`bread_${pb_cfg.FRM_PBASE_STEP_5}`}
+            list={this.props.data.bread}
+          />
+        </Stack>
+        <DCT_Stepper
+          id="stepper"
+          activeStep={this.props.activeStep}
+          steps={this.props.data.stepper}
+        />
         <Box
           component="form"
           id={pb_cfg.FRM_PBASE_STEP_5}
           onSubmit={this.handleSubmit}
           onReset={this.handleReset}
+          sx={{ display: "inline" }}
         >
-          <DCT_Breadcrumbs
-            id={`bread_${pb_cfg.FRM_PBASE_STEP_5}`}
-            list={this.props.data.bread}
-          />
-          <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
-          <DCT_Stepper
-            id="stepper"
-            activeStep={this.props.activeStep}
-            steps={this.props.data.stepper}
-          />
           <Stack
             direction={{ xs: "column", sm: "column", md: "row" }}
-            spacing={{ xs: 1, sm: 1, md: 2 }}
+            spacing={2}
+            justifyContent="center"
             alignItems="center"
           >
             <DCT_ComboBox
@@ -155,7 +166,7 @@ class FRM_ProgBase_Contenuto extends React.Component {
               list={this.props.data.tipo}
               label={this.props.data.tipo_label}
               onChange={this.onChangeForm}
-              size={200}
+              size={1}
               ref={this.changeChildTipoId}
             />
             <DTC_TextBox
@@ -163,7 +174,7 @@ class FRM_ProgBase_Contenuto extends React.Component {
               id={this.state.nomeId}
               label={this.props.data.nome_label}
               onChange={this.onChangeForm}
-              size={1 / 4}
+              size={1}
               ref={this.changeChildNomeId}
             />
             {this.state.isVideo ? (
@@ -172,7 +183,7 @@ class FRM_ProgBase_Contenuto extends React.Component {
                 id={this.state.percorsoId}
                 label={this.props.data.percorso_label}
                 onChange={this.onChangeForm}
-                size={1 / 4}
+                size={1}
                 ref={this.changeChildPercorsoId}
               />
             ) : (
@@ -183,29 +194,36 @@ class FRM_ProgBase_Contenuto extends React.Component {
               id={this.state.durataId}
               label={this.props.data.durata_label}
               onChange={this.onChangeForm}
-              size={1 / 4}
+              size={1}
               ref={this.changeChildDurataId}
             />
-            <Button
-              type="submit"
+            <ButtonGroup
               variant="contained"
+              aria-label="outlined primary button group"
               classes={{ root: jnStyles.jnBT }}
             >
-              Salva
-            </Button>
-            <Button
-              type="reset"
-              variant="contained"
-              classes={{ root: jnStyles.jnBT }}
-            >
-              Reset
-            </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                classes={{ root: jnStyles.jnBT }}
+              >
+                Salva
+              </Button>
+              <Button
+                type="reset"
+                variant="contained"
+                classes={{ root: jnStyles.jnBT }}
+              >
+                Reset
+              </Button>
+            </ButtonGroup>
           </Stack>
         </Box>
         {!this.state.isVideo ? (
           <DCT_Upload
             id={this.state.uploadId}
             onChange={this.onChangeForm}
+            size={1}
             ref={this.changeChildUploadId}
           />
         ) : (
