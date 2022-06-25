@@ -139,7 +139,7 @@ async function postFile(url, postedData, userInfo) {
 }
 
 async function getData(url) {
-  console.log(url);
+  console.log("getData URL", url);
   const packBody = {
     extUrl: url,
   };

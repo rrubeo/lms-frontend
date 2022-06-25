@@ -46,8 +46,6 @@ class FRM_ProgBase_Classe_Argomento extends React.Component {
   }
 
   onChangeForm(id, data) {
-    console.log("CHANGE FORM");
-
     switch (id) {
       case this.state.classeId:
         this.setState({ classeValue: data });
@@ -72,8 +70,6 @@ class FRM_ProgBase_Classe_Argomento extends React.Component {
   }
 
   render() {
-    // console.log("CLASSE ARGOMENTO");
-    // console.log(this.props.query);
     const linkBack = utils.getBackLink(
       "pb",
       pb_cfg.PBASE_STEP_1,
@@ -88,12 +84,12 @@ class FRM_ProgBase_Classe_Argomento extends React.Component {
           justifyContent="flex-start"
           alignItems="center"
         >
-          <DCT_LinkButton href={linkBack} text="back" />{" "}
+          <DCT_LinkButton href={linkBack} text="back" />
           <DCT_Breadcrumbs
             id={`bread_${pb_cfg.FRM_PBASE_STEP_2}`}
             list={this.props.data.bread}
           />
-        </Stack>{" "}
+        </Stack>
         <DCT_Stepper
           id="stepper"
           activeStep={this.props.activeStep}

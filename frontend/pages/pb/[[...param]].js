@@ -69,22 +69,25 @@ sessionOptions);
 
 function Main() {
   //Recupera info utente
-  const { fallback } = useSWRConfig();
+  const { fallback, mutate } = useSWRConfig();
   const { userInfo, pageName, apiUrl, pageQuery, subIndex } = fallback;
-
-  // console.log(pageQuery);
-  // console.log(fallback.subIndex);
-  //Carica dati
-  // let { data, error } = useSWR(
-  //   userInfo ? [apiUrl, userInfo] : null,
-  //   utils.fetchWithUser
-  // );
 
   let { data, error } = useSWR(apiUrl, utils.getData);
 
   if (error) return <div>{error.message}</div>;
   if (!data) return <Loader id="pb" />;
   if (data.status != 200) return <div>{data.message}</div>;
+
+  const reloadData = async () => {
+    console.log("data changed");
+    const options = {
+      revalidate: true,
+      revalidateIfStale: true,
+      revalidateOnFocus: true,
+      revalidateOnReconnect: true,
+    };
+    await mutate(apiUrl, utils.getData(apiUrl), options);
+  };
 
   const handleSubmit = async (event, formData) => {
     event.preventDefault();
@@ -111,7 +114,7 @@ function Main() {
           }
         }
         validationMessage(res.message, MSG_SUCCESS);
-        forceReloadUtil();
+        await reloadData();
       }
     } else {
       // console.log(vres);
@@ -125,6 +128,7 @@ function Main() {
       validationMessage(res.message, MSG_ERROR);
     } else {
       validationMessage(res.message, MSG_INFO);
+      await reloadData();
     }
   };
 

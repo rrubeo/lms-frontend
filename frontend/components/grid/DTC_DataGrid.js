@@ -21,10 +21,7 @@ class DTC_DataGrid extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // columns: this.props.cols,
       columns: [],
-      // value: this.props.rows,
-      value: [],
       currentId: "-1",
       actionList: [],
     };
@@ -34,14 +31,10 @@ class DTC_DataGrid extends React.Component {
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.handleAddClick = this.handleAddClick.bind(this);
     this.handleRouteClick = this.handleRouteClick.bind(this);
-
-    // // this.state.actionList = alist;
   }
 
   componentDidMount() {
-    console.log("componentDidMount");
-    this.setState({ columns: [] });
-    this.setState({ value: [] });
+    // console.log("GRID componentDidMount");
     const alist = this.props.action.map((item) => {
       switch (item.callBack) {
         case gd_cfg.GRID_DELETE_ACTION:
@@ -55,7 +48,9 @@ class DTC_DataGrid extends React.Component {
           return item;
       }
     });
-    this.setState({ actionList: alist });
+
+    this.setState({ columns: [], actionList: alist });
+
     const buttonColumn = {
       field: "actions",
       type: "actions",
@@ -105,7 +100,15 @@ class DTC_DataGrid extends React.Component {
     allColumn.push(buttonColumn);
 
     this.setState({ columns: allColumn });
-    this.setState({ value: this.props.rows });
+  }
+
+  componentWillUnmount() {
+    // console.log("GRID componentWillUnmount");
+  }
+
+  componentDidUpdate() {
+    // console.log("GRID componentDidUpdate");
+    // console.log(this.props.rows);
   }
 
   createRandomRow(counter) {
@@ -118,14 +121,13 @@ class DTC_DataGrid extends React.Component {
   }
 
   handleAddClick(params, event, route) {
-    // console.log(params.api.state.rows);
     event.stopPropagation(); // don't select this row after clicking
     const newRow = this.createRandomRow(randomUnitPrice());
     params.api.updateRows([newRow]);
     const newData = params.api.state.rows.ids.map((x) => {
       return params.api.state.rows.idRowsLookup[x];
     });
-    this.setState({ value: newData });
+
     this.props.onChange(this.props.id, newData);
   }
 
@@ -142,20 +144,17 @@ class DTC_DataGrid extends React.Component {
 
   handleDeleteClick(params, event, route) {
     event.stopPropagation(); // don't select this row after clicking
-    console.log(params);
+
     const thisRow = this.getAllInfo(params);
     params.api.updateRows([{ id: params.id, _action: "delete" }]);
     const newData = params.api.state.rows.ids.map((x) => {
       return params.api.state.rows.idRowsLookup[x];
     });
 
-    this.setState({ value: newData });
     if (params.id == this.state.currentId) {
       this.setState({ currentId: "-1" });
     }
-    // // console.log(params.api.state.rows.idRowsLookup);
-    // // return alert(JSON.stringify(thisRow, null, 2));
-    // this.props.onChange(this.props.id, newData);
+
     this.props.onDelete(this.props.id, params.id);
   }
 
@@ -177,16 +176,13 @@ class DTC_DataGrid extends React.Component {
   }
 
   render() {
-    // console.log(`<DTC_DataGrid ='${this.props.id}'> (${this.state.currentId})`);
-    // console.log(this.state.value);
-    // console.log(this.state.actionList);overflow: "auto",
     return (
       <Box component="div" sx={{ display: "inline" }}>
         <DataGrid
           autoHeight
           pagination
           density="compact"
-          rows={this.state.value}
+          rows={this.props.rows}
           columns={this.state.columns}
           getRowId={(row) => row.id}
           components={{

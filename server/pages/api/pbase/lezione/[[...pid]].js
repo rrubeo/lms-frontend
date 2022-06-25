@@ -54,7 +54,7 @@ async function postHandler(userLogin, postData, pid) {
     leziPathVideo: "asasdasd",
     leziPathDocumento: "asdasd",
   };
-  // console.log(poba);
+  console.log(poba);
   let p3 = await insertLezione(userLogin.token, poba);
   console.log(p3);
   let res = { status: 200, message: "OK" };

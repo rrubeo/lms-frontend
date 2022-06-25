@@ -63,7 +63,7 @@ function GetBreadArgomento(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_BREAD_ARG}/${id}`;
 }
 function GetLezione(id) {
-  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_LEZ}/${id}`;
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_LEZ}/${id}/0`;
 }
 function GetBreadLezione(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_BREAD_LEZIO}/${id}`;

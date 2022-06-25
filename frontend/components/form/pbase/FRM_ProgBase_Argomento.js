@@ -30,6 +30,18 @@ class FRM_ProgBase_Argomento extends React.Component {
     this.changeChildArgomentoId = React.createRef();
   }
 
+  componentDidMount() {
+    // console.log("FRM_ProgBase_Argomento componentDidMount");
+  }
+
+  componentWillUnmount() {
+    // console.log("FRM_ProgBase_Argomento componentWillUnmount");
+  }
+
+  componentDidUpdate() {
+    // console.log("FRM_ProgBase_Argomento componentDidUpdate");
+  }
+
   async handleSubmit(event) {
     event.preventDefault();
     const data = {
@@ -40,7 +52,7 @@ class FRM_ProgBase_Argomento extends React.Component {
   }
 
   onChangeForm(id, data) {
-    console.log("CHANGE FORM");
+    // console.log("CHANGE FORM");
 
     switch (id) {
       case this.state.argomentoId:
@@ -54,9 +66,9 @@ class FRM_ProgBase_Argomento extends React.Component {
   }
 
   onDeleteRow(id, data) {
-    console.log("DELETE ROW");
-    console.log(id);
-    console.log(data);
+    // console.log("DELETE ROW");
+    // console.log(id);
+    // console.log(data);
 
     const rowData = {
       id: pb_cfg.FRM_PBASE_STEP_3,
@@ -71,14 +83,11 @@ class FRM_ProgBase_Argomento extends React.Component {
   }
 
   render() {
-    // console.log("ARGOMENTO");
-    // console.log(this.props.query);
     const linkBack = utils.getBackLink(
       "pb",
       pb_cfg.PBASE_STEP_2,
       this.props.query
     );
-    // console.log(linkBack);
     return (
       <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
         <Stack
@@ -87,12 +96,12 @@ class FRM_ProgBase_Argomento extends React.Component {
           justifyContent="flex-start"
           alignItems="center"
         >
-          <DCT_LinkButton href={linkBack} text="back" />{" "}
+          <DCT_LinkButton href={linkBack} text="back" />
           <DCT_Breadcrumbs
             id={`bread_${pb_cfg.FRM_PBASE_STEP_3}`}
             list={this.props.data.bread}
-          />
-        </Stack>{" "}
+          />          
+        </Stack>
         <DCT_Stepper
           id="stepper"
           activeStep={this.props.activeStep}
@@ -149,7 +158,7 @@ class FRM_ProgBase_Argomento extends React.Component {
           onChange={this.onChangeForm}
           onDelete={this.onDeleteRow}
           onNextStep={this.props.onNextStep}
-          action={this.props.action}
+          action={this.props.action}          
         />
       </Stack>
     );

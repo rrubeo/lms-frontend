@@ -109,10 +109,6 @@ class FRM_ProgBase_Contenuto extends React.Component {
   }
 
   onDeleteRow(id, data) {
-    console.log("DELETE ROW");
-    console.log(id);
-    console.log(data);
-
     const rowData = {
       id: pb_cfg.FRM_PBASE_STEP_5,
       key: data,

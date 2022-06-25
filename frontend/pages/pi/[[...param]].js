@@ -75,16 +75,15 @@ function Main() {
   if (!data) return <Loader id="pi" />;
   if (data.status != 200) return <div>{data.message}</div>;
 
-  const loadTableData = async () => {
-    const packBody = {
-      extUrl: apiUrl,
+  const reloadData = async () => {
+    console.log("data changed");
+    const options = {
+      revalidate: true,
+      revalidateIfStale: true,
+      revalidateOnFocus: true,
+      revalidateOnReconnect: true,
     };
-    const datatable = await utils.fetchJson("/api/gettable", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(packBody),
-    });
-    return datatable;
+    await mutate(apiUrl, utils.getData(apiUrl), options);
   };
 
   const handleSearch = async (event, formData) => {
@@ -98,7 +97,7 @@ function Main() {
       validationMessage(res.message, MSG_ERROR);
     } else {
       validationMessage(res.message, MSG_SUCCESS);
-      forceReloadUtil();
+      await reloadData();
     }
   };
 
@@ -108,6 +107,7 @@ function Main() {
       validationMessage(res.message, MSG_ERROR);
     } else {
       validationMessage(res.message, MSG_INFO);
+      await reloadData();
     }
   };
 
