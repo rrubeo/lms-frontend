@@ -118,6 +118,7 @@
 .accordionImgContainer{
     width: 10%;
     padding-right: 5%;
+    padding-top: 1.5%;
 }
 
 .accordionTitleContainer{
@@ -163,9 +164,6 @@
     padding: 1% 2%;
 }
 
-.css-o4b71y-MuiAccordionSummary-content{
-    align-items: center;
-}
 
 
 @media only screen and (max-width: 1199px){

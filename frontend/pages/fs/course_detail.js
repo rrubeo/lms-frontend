@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import useSWR, { useSWRConfig, SWRConfig } from "swr";
 import { withIronSessionSsr } from "iron-session/next";
-import { defaultLogin, sessionOptions, getAuthSession } from "../../lib/";
+import { defaultLogin, sessionOptions, getAuthSession } from "../../lib";
 import useUser from "../../lib/useUser";
 import FS_Accordion_Lesson from "../../components/fs/FS_Accordion_Lesson.js";
 import FS_Progress from "../../components/fs/FS_Progress.js";
