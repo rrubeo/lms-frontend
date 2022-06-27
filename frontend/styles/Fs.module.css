@@ -1,0 +1,175 @@
+.profileStudentBalloon{
+    align-items: center;
+}
+
+.profileStudentAvatarContainer{
+    margin-right: 3%;
+}
+
+.profileStudentAvatar{
+    display: inline-flex;
+    width: 180px;
+    height: 180px; 
+    
+}
+
+.profileStudentName{
+    font-weight: 600;
+    font-size: 2.3rem;
+}
+
+.profileStudentRole{
+    color: #888888;
+    font-size: 1.7rem;
+    padding-bottom: 5%;
+}
+
+.profileStudentCredit{
+    color: #B2499B;
+}
+
+.progressContentGrid{
+    text-align: right;
+}
+
+.progressContentContainer{
+    display: inline-flex; 
+    align-items: center;
+    justify-content: right;
+}
+
+.progressContainer{
+    position: relative;
+    float: left;
+    text-align: left;
+    padding-right: 15px;
+}
+
+.progressEmpty{
+    color: #EDEDED;
+}
+
+.progressFull{
+    position: absolute;
+    left: 0;
+    color: #B2499B;
+}
+
+.progressPercentage{
+    position: absolute;
+    top: 28%;
+    left: 17%;
+    bottom: 0;
+    right: 0;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.progressTitleContainer{
+    width: 50%;
+    text-align: left;
+}
+
+.progressTitle{
+    color: #B2499B;    
+}
+
+.generalTitle{
+    font-weight: 600;
+    height: 5vh;
+}
+
+.lessonsCard{
+    max-width: 80%;
+    padding: 0.5rem 1.5rem;
+    border-radius: 26px;
+    box-shadow: none;
+    transition: none;
+    overflow-y: scroll;
+}
+
+.lessonsCardItem{
+    color: #ffffff;
+    margin: 5% 0;
+    cursor: pointer; 
+}
+
+.lessonsCardItemTime{
+    font-size: 0.8rem;
+}
+
+.accordionContainer{
+    border-radius: 26px;
+    border: 2px solid #888888;
+    margin-bottom: 1%;
+    width: 99%;
+    margin-left: 0;
+    min-height: 15vh;
+}
+
+.accordionElement{
+    background: none;
+    box-shadow: none;
+    min-height: 15vh;
+}
+
+.accordionImgContainer{
+    width: 10%;
+    padding-right: 5%;
+}
+
+.accordionTitleContainer{
+    width: 90%;
+    padding-right: 5%;
+}
+
+.accordionTitleDivContainer{
+    width: 50%;
+}
+
+.accordionTitle{
+    color: #404040;
+    font-weight: 400;
+    padding-bottom: 2%;
+}
+
+.accordionPercentageContainer{
+    width: 50%;
+    text-align: right;  
+}
+
+.accordionPercentage{
+    color: #7E8BB2;
+    font-weight: 400;
+    padding-bottom: 2%;  
+}
+
+.accordionProgress{
+    background-color: #F1F1F1;
+    height: 10px;
+    border-radius: 30px;
+}
+
+.accordionProgress span{
+    background-color: #B2499B;
+}
+
+.accordionDetailContainer{
+    background-color: #F0F0F0;
+    margin: 1%;
+    border-radius: 27px;
+    padding: 1% 2%;
+}
+
+.css-o4b71y-MuiAccordionSummary-content{
+    align-items: center;
+}
+
+
+@media only screen and (max-width: 1199px){
+    .progressContentGrid{
+        text-align: left;
+    }
+}
