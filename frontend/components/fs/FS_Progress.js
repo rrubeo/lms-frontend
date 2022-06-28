@@ -3,6 +3,8 @@ import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import fsStyle from '../../styles/Fs.module.css';
+import jnStyles from "../../styles/utils.module.css";
+
 
 class FS_ProfileStudent extends React.Component {
     constructor(props) {
@@ -17,16 +19,16 @@ class FS_ProfileStudent extends React.Component {
       return (
         <Box className={fsStyle.progressContentContainer}>
           <Box className={fsStyle.progressContainer}>
-            <CircularProgress className={fsStyle.progressEmpty} variant='determinate' size={80} value={100}/>
-            <CircularProgress className={fsStyle.progressFull} variant='determinate' size={80} value={this.state.percentage}/>
+            <CircularProgress className={fsStyle.progressEmpty} variant='determinate' size={150} value={100}/>
+            <CircularProgress className={fsStyle.progressFull} variant='determinate' size={150} value={this.state.percentage}/>
             <Box className={fsStyle.progressPercentage}>
-              <Typography variant='h6'>
+              <Typography className={jnStyles.jnC1} variant='h6'>
                 {`${Math.round(parseInt(this.props.percentage))}%`}
               </Typography>
             </Box>
           </Box>
           <Box className={fsStyle.progressTitleContainer}>
-            <Typography className={fsStyle.progressTitle}>{this.state.title}</Typography>
+            <Typography className={jnStyles.jnD6}>{this.state.title}</Typography>
           </Box>
         </Box>
       );

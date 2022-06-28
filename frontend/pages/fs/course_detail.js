@@ -15,6 +15,7 @@ import useUser from "../../lib/useUser";
 import FS_Accordion_Lesson from "../../components/fs/FS_Accordion_Lesson.js";
 import FS_Progress from "../../components/fs/FS_Progress.js";
 import fsStyle from '../../styles/Fs.module.css';
+import jnStyles from "../../styles/utils.module.css";
 
 const utils = require("../../lib/utils");
 const API = `${process.env.server}/menu`;
@@ -79,8 +80,8 @@ function LessonDetail() {
   }
 
   const breadcrumbs = [
-    <Link underline='hover' key='1' color='#A7A7A7' href='/fs' onClick={handleClick}>HOME</Link>,
-    <Link underline='none' key='2' color='#A7A7A7'>INFORMATICA</Link>
+    <Link className={jnStyles.jnP1} underline='hover' key='1' href='/fs' onClick={handleClick}>HOME</Link>,
+    <Link className={jnStyles.jnP1} underline='none' key='2'>INFORMATICA</Link>
   ];
 
 
@@ -94,7 +95,7 @@ function LessonDetail() {
           <Container disableGutters maxWidth='false'>
             <Grid container style={{alignItems: 'center'}}>
               <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-              <Typography variant='h4'>Informatica (n)</Typography>  
+              <Typography variant='h1' className={jnStyles.jnA1}>Informatica (n)</Typography>  
               </Grid>
               <Grid item xs={12} sm={12} md={12} lg={6} xl={6} className={fsStyle.progressContentGrid}>
                 <FS_Progress title='Completato' percentage='100'/>
@@ -103,13 +104,13 @@ function LessonDetail() {
           </Container>
           <Container disableGutters maxWidth='false'>
             <Grid container spacing={6}>
-              <Grid item xs={12} sm={12} md={12} lg={3} xl={2}>
+              <Grid item xs={12} sm={12} md={12} lg={3} xl={3}>
                 <FS_Accordion_Lesson/> 
               </Grid>
-              <Grid item xs={12} sm={12} md={12} lg={4} xl={5}>
+              <Grid item xs={12} sm={12} md={12} lg={5} xl={5}>
                 Ciao
               </Grid>
-              <Grid item xs={12} sm={12} md={12} lg={5} xl={5}>
+              <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
                 Ciao
               </Grid>
             </Grid>

@@ -5,7 +5,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import fsStyle from '../../styles/Fs.module.css';
-import { color } from '@mui/system';
+import jnStyles from "../../styles/utils.module.css";
 
 
 class FS_LastLessons extends React.Component {
@@ -21,15 +21,15 @@ class FS_LastLessons extends React.Component {
  
     render() {
       return (
-        <Container disableGutters maxWidth='false' sx={{height: this.props.height}}>
-          <Typography variant='h6' className={fsStyle.generalTitle}>{this.state.title}</Typography>
-          <List className={fsStyle.lessonsCard} sx={{backgroundColor: this.state.background, height: this.props.heightCard}} dense={true}>
+        <Container disableGutters maxWidth='false'>
+          <Typography variant='h6' className={jnStyles.jnD1}>{this.state.title}</Typography>
+          <List className={fsStyle.lessonsCard} sx={{backgroundColor: this.state.background}} dense={true}>
             {this.state.list.map(item =>
               <ListItem key={item.id}>
                 <ListItemText 
-                  primaryTypographyProps={{color: '#ffffff', fontSize: '1rem'}}
+                  primaryTypographyProps={{color: '#ffffff', fontSize: '21pt', fontWeight: '300'}}
                   primary="Single-line item"
-                  secondaryTypographyProps={{color: '#ffffff'}}
+                  secondaryTypographyProps={{color: '#ffffff', fontSize: '16pt', fontWeight: '300'}}
                   secondary={this.props.secondary ? 'Secondary text' : null}
                 />
                 </ListItem>

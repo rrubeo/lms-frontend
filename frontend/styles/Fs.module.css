@@ -8,24 +8,10 @@
 
 .profileStudentAvatar{
     display: inline-flex;
-    width: 180px;
-    height: 180px; 
-    
-}
-
-.profileStudentName{
-    font-weight: 600;
-    font-size: 2.3rem;
-}
-
-.profileStudentRole{
-    color: #888888;
-    font-size: 1.7rem;
-    padding-bottom: 5%;
-}
-
-.profileStudentCredit{
-    color: #B2499B;
+    max-width: 180px;
+    max-height: 180px; 
+    width: 100vh;
+    height: 100vh;
 }
 
 .progressContentGrid{
@@ -72,15 +58,6 @@
     text-align: left;
 }
 
-.progressTitle{
-    color: #B2499B;    
-}
-
-.generalTitle{
-    font-weight: 600;
-    height: 5vh;
-}
-
 .lessonsCard{
     max-width: 80%;
     padding: 0.5rem 1.5rem;
@@ -88,6 +65,7 @@
     box-shadow: none;
     transition: none;
     overflow-y: scroll;
+    margin-bottom: 5%;
 }
 
 .lessonsCardItem{
@@ -100,24 +78,33 @@
     font-size: 0.8rem;
 }
 
+.accordion{
+    height: 1012px;
+    overflow-y: scroll;
+}
+
 .accordionContainer{
     border-radius: 26px;
     border: 2px solid #888888;
     margin-bottom: 1%;
     width: 99%;
     margin-left: 0;
-    min-height: 15vh;
+    min-height: 110px;
+    padding: 0 1%;
+}
+
+.accordionSummary{
+    align-items: center;
 }
 
 .accordionElement{
     background: none;
     box-shadow: none;
-    min-height: 15vh;
+    min-height: 110px;
 }
 
 .accordionImgContainer{
-    width: 10%;
-    padding-right: 5%;
+    padding-right: 3%;
     padding-top: 1.5%;
 }
 
@@ -159,9 +146,34 @@
 
 .accordionDetailContainer{
     background-color: #F0F0F0;
-    margin: 1%;
-    border-radius: 27px;
-    padding: 1% 2%;
+    margin: 2% 1%;
+    border-radius: 20px;
+    padding: 2%;
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.accordion::-webkit-scrollbar{
+    width: 10px;
+    background-color: transparent;
+}
+  
+.accordion::-webkit-scrollbar-thumb{
+    background-color: #ffffff;
+}
+
+.accordionDetailContainer::-webkit-scrollbar{
+    width: 25px;
+    background-color: transparent;
+    border-radius: 10px;
+}
+  
+.accordionDetailContainer::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    border: 8px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    border-radius: 9999px;
+    background-color: #ffffff;
 }
 
 

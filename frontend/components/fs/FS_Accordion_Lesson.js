@@ -7,6 +7,8 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from "@mui/material/Box";
 import fsStyle from '../../styles/Fs.module.css';
+import jnStyles from "../../styles/utils.module.css";
+
 
 export default function ControlledAccordions() {
   const [expanded, setExpanded] = React.useState(false);
@@ -32,31 +34,6 @@ export default function ControlledAccordions() {
         id: 3,
         title: "Accordion3",
         contentText: "Text3"
-      },
-      {
-        id: 4,
-        title: "Accordion4",
-        contentText: "Text4"
-      },
-      {
-        id: 5,
-        title: "Accordion5",
-        contentText: "Text5"
-      },
-      {
-        id: 6,
-        title: "Accordion6",
-        contentText: "Text6"
-      },
-      {
-        id: 7,
-        title: "Accordion7",
-        contentText: "Text7"
-      },
-      {
-        id: 8,
-        title: "Accordion8",
-        contentText: "Text8"
       }
     ]
   }
@@ -65,24 +42,38 @@ export default function ControlledAccordions() {
     <Container disableGutters maxWidth='false'>
         <Container disableGutters maxWidth='false'>
             {accordionElements.subjects.map(item =>
-                <Container disableGutters maxWidth='false' className={fsStyle.accordionContainer} key={item.id} sx={{backgroundColor: '#B34B9E', border: 'none!important', marginBottom:'3%!important', minHeight: 'unset!important'}}>
-                    <Accordion className={fsStyle.accordionElement} expanded={expanded === item.id} onChange={handleChange(item.id)} sx={{minHeight: 'unset!important'}}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                        >
-                            <Box className={fsStyle.accordionTitleContainer}>
-                                <Box className={fsStyle.accordionTitleDivContainer} sx={{width: '100%!important'}}>
-                                    <Typography variant='h6' sx={{color: '#ffffff', fontSize: '1rem'}}>I linguaggi del web</Typography>
-                                </Box>    
-                            </Box>
-                        </AccordionSummary>
-                        <AccordionDetails className={fsStyle.accordionDetailContainer} sx={{backgroundColor: '#B34B9E!important', padding: '10%!important', paddingTop: '0!important'}}>
-                            <Typography sx={{color: '#ffffff', borderBottom: '1px solid #ffffff', paddingTop: '10px', paddingBottom: '10px'}}>{item.contentText}</Typography>
-                            <Typography sx={{color: '#ffffff', borderBottom: '1px solid #ffffff', paddingTop: '10px', paddingBottom: '10px'}}>{item.contentText}</Typography>
-                            <Typography sx={{color: '#ffffff', paddingTop: '10px', paddingBottom: '10px'}}>{item.contentText}</Typography>
-                        </AccordionDetails>
-                    </Accordion>
-                </Container>
+              <Container disableGutters maxWidth='false' className={fsStyle.accordionContainer} key={item.id} sx={{backgroundColor: '#B34B9E', border: 'none!important', marginBottom:'3%!important', minHeight: 'unset!important'}}>
+                <Accordion className={fsStyle.accordionElement} sx={{minHeight: 'unset!important'}}   expanded={expanded === item.id} onChange={handleChange(item.id)}>
+                  <AccordionSummary className={fsStyle.accordionSummary}
+                    expandIcon={expanded === item.id?<Typography variant='h4' className='icon-arrow-down3' sx={{color: '#ffffff'}}></Typography>:<Typography variant='h4' className='icon-arrow-down3' sx={{color: '#ffffff'}}></Typography>}
+                  >
+                    <Box className={fsStyle.accordionTitleContainer}>
+                      <Box className={fsStyle.accordionTitleDivContainer} sx={{width: '100%!important'}}>
+                        <Typography variant='h6' className={jnStyles.jnL4}>I linguaggi del web</Typography>
+                      </Box>    
+                    </Box>
+                  </AccordionSummary>
+                  <AccordionDetails className={fsStyle.accordionDetailContainer} 
+                  sx={{backgroundColor: '#B34B9E!important', 
+                    padding: '10%!important', 
+                    paddingTop: '0!important', 
+                    height: 'auto!important', 
+                    overflowY: 'hidden!important'}}>
+                    <Box sx={{borderBottom: '1px solid #ffffff', padding: '10px 0'}}>
+                      <Typography className={jnStyles.jnM1}>{item.contentText}</Typography>
+                      <Typography className={jnStyles.jnP2}>Stimato 45 m</Typography>
+                    </Box>
+                    <Box sx={{borderBottom: '1px solid #ffffff', padding: '10px 0'}}>
+                      <Typography className={jnStyles.jnM1}>{item.contentText}</Typography>
+                      <Typography className={jnStyles.jnP2}>Stimato 45 m</Typography>
+                    </Box>
+                    <Box sx={{padding: '10px 0'}}>
+                      <Typography className={jnStyles.jnM1}>{item.contentText}</Typography>
+                      <Typography className={jnStyles.jnP2}>Stimato 45 m</Typography>
+                    </Box>
+                  </AccordionDetails>
+                </Accordion>
+              </Container>
             )}
         </Container>
     </Container>

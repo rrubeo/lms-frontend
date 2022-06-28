@@ -128,16 +128,15 @@ function HomepageStudent() {
       {id: 1, name: "La struttura delle pagine web", time: 50},{id: 2, name: "La struttura delle pagine web", time:45},
       {id: 3, name: "La struttura delle pagine web", time: 50},{id: 4, name: "La struttura delle pagine web", time:45},
       {id: 5, name: "La struttura delle pagine web", time: 50},{id: 6, name: "La struttura delle pagine web", time:45},
-      {id: 7, name: "La struttura delle pagine web", time: 50},{id: 8, name: "La struttura delle pagine web", time:45},
-      {id: 9, name: "La struttura delle pagine web", time: 50},{id: 10, name: "La struttura delle pagine web", time:45}
+      {id: 7, name: "La struttura delle pagine web", time: 50},{id: 8, name: "La struttura delle pagine web", time:45}
     ]
   }
 
   return (
     <>
       <DCT_Layout id='Layout' data={data}>
-        <Container disableGutters maxWidth='false' sx={{minHeight: '30vh'}}>
-          <Grid container style={{alignItems: 'center'}}>
+        <Container disableGutters maxWidth='false'>
+          <Grid container sx={{alignItems: 'center'}}>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
               <FS_ProfileStudent/>
             </Grid>
@@ -147,11 +146,11 @@ function HomepageStudent() {
           </Grid>
         </Container>
 
-        <Container disableGutters maxWidth='false' sx={{paddingTop: '2%', minHeight: '70vh'}}>
+        <Container disableGutters maxWidth='false' sx={{paddingTop: '2%'}}>
           <Grid container>
             <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
-              <FS_LastLessons secondary={false} height={'30vh'} elementNumber={activeCourses.courses.length} background='#B2499B' title={activeCourses.title} array={activeCourses.courses}/>
-              <FS_LastLessons secondary={true} height={'70vh'} heightCard={'65vh'} background='#798CB4' title={recentLessons.title} array={recentLessons.lessons}/>
+              <FS_LastLessons secondary={false} elementNumber={activeCourses.courses.length} background='#B2499B' title={activeCourses.title} array={activeCourses.courses}/>
+              <FS_LastLessons secondary={true} background='#798CB4' title={recentLessons.title} array={recentLessons.lessons}/>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
               <FS_Accordion_Home title={accordionElements.title} array={accordionElements.subjects}/>
