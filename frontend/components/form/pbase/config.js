@@ -188,13 +188,8 @@ function getAPI(page) {
   }
 }
 
-function getPageName(query) {
-  return query.param[0];
-}
-
 module.exports = {
   getAPI,
-  getPageName,
   getApiUrl,
   GRID_ROUTE_ACTION,
   GRID_DELETE_ACTION,

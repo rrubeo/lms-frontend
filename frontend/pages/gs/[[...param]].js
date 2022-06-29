@@ -20,7 +20,7 @@ const gs_cfg = require("../../components/form/gstu/config");
 
 export async function getServerSideProps(context) {
   // console.dir(context);
-  const mask = gs_cfg.getPageName(context.query);
+  const mask = utils.getPageName(context.query);
   const PAGE_API = gs_cfg.getAPI(mask);
 
   let ssdata = {
@@ -45,7 +45,7 @@ export async function getServerSideProps(context) {
 
 function Main() {
   const router = useRouter();
-  const mask = gs_cfg.getPageName(router.query);
+  const mask = utils.getPageName(router.query);
   const PAGE_API = gs_cfg.getAPI(mask);
 
   console.log(`<Main ='${mask}'>`);

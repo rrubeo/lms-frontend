@@ -12,254 +12,20 @@ import ListItem from "@mui/material/ListItem";
 import fsStyle from "../../../styles/Fs.module.css";
 import jnStyles from "../../../styles/utils.module.css";
 
-export default function ControlledAccordions() {
+export default function ControlledAccordions(props) {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
-  const accordionElements = {
-    title: "Materie Anno II",
-    subjects: [
-      {
-        id: 1,
-        title: "Accordion1",
-        contentText: [
-          {
-            id: 1,
-            arg: "I linguaggi del web",
-            list: [
-              {
-                id: 1,
-                title: "Introduzione ai linguaggi del Web",
-                time: 45,
-              },
-              {
-                id: 2,
-                title: "La struttura delle pagine Web",
-                time: 35,
-              },
-              {
-                id: 3,
-                title: "Introduzione ai fogli di stile con CSS3",
-                time: 60,
-              },
-            ],
-          },
-          {
-            id: 2,
-            arg: "HTML 5",
-            list: [
-              {
-                id: 1,
-                title: "Introduzione all'HTML 5",
-                time: 45,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 2,
-        title: "Accordion2",
-        contentText: [
-          {
-            id: 1,
-            arg: "I linguaggi del web",
-            list: [
-              {
-                id: 1,
-                title: "Introduzione ai linguaggi del Web",
-                time: 45,
-              },
-              {
-                id: 2,
-                title: "La struttura delle pagine Web",
-                time: 35,
-              },
-              {
-                id: 3,
-                title: "Introduzione ai fogli di stile con CSS3",
-                time: 60,
-              },
-            ],
-          },
-          {
-            id: 2,
-            arg: "HTML 5",
-            list: [
-              {
-                id: 1,
-                title: "Introduzione all'HTML 5",
-                time: 45,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 3,
-        title: "Accordion3",
-        contentText: [
-          {
-            id: 1,
-            arg: "I linguaggi del web",
-            list: [
-              {
-                id: 1,
-                title: "Introduzione ai linguaggi del Web",
-                time: 45,
-              },
-              {
-                id: 2,
-                title: "La struttura delle pagine Web",
-                time: 35,
-              },
-              {
-                id: 3,
-                title: "Introduzione ai fogli di stile con CSS3",
-                time: 60,
-              },
-            ],
-          },
-          {
-            id: 2,
-            arg: "HTML 5",
-            list: [
-              {
-                id: 1,
-                title: "Introduzione all'HTML 5",
-                time: 45,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 4,
-        title: "Accordion4",
-        contentText: [
-          {
-            id: 1,
-            arg: "I linguaggi del web",
-            list: [
-              {
-                id: 1,
-                title: "Introduzione ai linguaggi del Web",
-                time: 45,
-              },
-              {
-                id: 2,
-                title: "La struttura delle pagine Web",
-                time: 35,
-              },
-              {
-                id: 3,
-                title: "Introduzione ai fogli di stile con CSS3",
-                time: 60,
-              },
-            ],
-          },
-          {
-            id: 2,
-            arg: "HTML 5",
-            list: [
-              {
-                id: 1,
-                title: "Introduzione all'HTML 5",
-                time: 45,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 5,
-        title: "Accordion5",
-        contentText: [
-          {
-            id: 1,
-            arg: "I linguaggi del web",
-            list: [
-              {
-                id: 1,
-                title: "Introduzione ai linguaggi del Web",
-                time: 45,
-              },
-              {
-                id: 2,
-                title: "La struttura delle pagine Web",
-                time: 35,
-              },
-              {
-                id: 3,
-                title: "Introduzione ai fogli di stile con CSS3",
-                time: 60,
-              },
-            ],
-          },
-          {
-            id: 2,
-            arg: "HTML 5",
-            list: [
-              {
-                id: 1,
-                title: "Introduzione all'HTML 5",
-                time: 45,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 6,
-        title: "Accordion6",
-        contentText: [
-          {
-            id: 1,
-            arg: "I linguaggi del web",
-            list: [
-              {
-                id: 1,
-                title: "Introduzione ai linguaggi del Web",
-                time: 45,
-              },
-              {
-                id: 2,
-                title: "La struttura delle pagine Web",
-                time: 35,
-              },
-              {
-                id: 3,
-                title: "Introduzione ai fogli di stile con CSS3",
-                time: 60,
-              },
-            ],
-          },
-          {
-            id: 2,
-            arg: "HTML 5",
-            list: [
-              {
-                id: 1,
-                title: "Introduzione all'HTML 5",
-                time: 45,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  };
-
   return (
     <Container disableGutters maxWidth="false">
       <Typography variant="h6" className={jnStyles.jnD1}>
-        {accordionElements.title}
+        {props.title}
       </Typography>
       <Container disableGutters maxWidth="false" className={fsStyle.accordion}>
-        {accordionElements.subjects.map((item) => (
+        {props.array.map((item) => (
           <Container
             disableGutters
             maxWidth="false"
@@ -298,7 +64,7 @@ export default function ControlledAccordions() {
                   <Stack direction="row">
                     <Box className={fsStyle.accordionTitleDivContainer}>
                       <Typography variant="h6" className={jnStyles.jnD4}>
-                        Fisica fondamenti
+                        {item.title}
                       </Typography>
                     </Box>
                     <Box className={fsStyle.accordionPercentageContainer}>

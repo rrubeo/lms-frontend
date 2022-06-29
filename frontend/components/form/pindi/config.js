@@ -63,10 +63,6 @@ function getApiUrl(query) {
   return apiUrl;
 }
 
-function getPageName(query) {
-  return query.param[0];
-}
-
 const MENU_API = `${process.env.server}/menu`;
 const NO_DATA_DESC = "Nessun dato";
 
@@ -76,7 +72,6 @@ module.exports = {
   PINDI_STEP_1_API_CLASSE,
   PINDI_STEP_1_API_COMBO_CLASSE,
   getApiUrl,
-  getPageName,
   GRID_ROUTE_ACTION,
   GRID_DELETE_ACTION,
   FRM_PINDI_STEP_0,

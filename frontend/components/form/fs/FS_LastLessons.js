@@ -37,13 +37,13 @@ class FS_LastLessons extends React.Component {
                   fontSize: "21pt",
                   fontWeight: "300",
                 }}
-                primary="Single-line item"
+                primary={item.name ? item.name : "Single-line item"}
                 secondaryTypographyProps={{
                   color: "#ffffff",
                   fontSize: "16pt",
                   fontWeight: "300",
                 }}
-                secondary={this.props.secondary ? "Secondary text" : null}
+                secondary={item.name ? item.name : "Secondary text"}
               />
             </ListItem>
           ))}

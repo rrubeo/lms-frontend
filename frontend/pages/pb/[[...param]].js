@@ -52,7 +52,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     };
   }
 
-  fallback.pageName = pb_cfg.getPageName(query);
+  fallback.pageName = utils.getPageName(query);
   fallback.apiUrl = pb_cfg.getApiUrl(query);
   fallback.authenticated = true;
   fallback.userInfo = authSession;
@@ -119,7 +119,7 @@ function Main() {
           }
         }
         await reloadData();
-        validationMessage(res.message, MSG_SUCCESS);        
+        validationMessage(res.message, MSG_SUCCESS);
       }
     } else {
       // console.log(vres);
@@ -131,7 +131,7 @@ function Main() {
     const res = await utils.deleteData(apiUrl, rowData);
     if (res.status != 200) {
       validationMessage(res.message, MSG_ERROR);
-    } else {      
+    } else {
       await reloadData();
       validationMessage(res.message, MSG_INFO);
     }

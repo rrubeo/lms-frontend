@@ -290,6 +290,10 @@ function getBackLink(section, page, query) {
   return linkBack;
 }
 
+function getPageName(query) {
+  return query.param[0];
+}
+
 module.exports = {
   fetchJson,
   fetchWithUser,
@@ -302,4 +306,5 @@ module.exports = {
   FetchError,
   getPageIds,
   getBackLink,
+  getPageName,
 };

@@ -36,13 +36,8 @@ function getAPI(page) {
   }
 }
 
-function getPageName(query) {
-  return query.param[0];
-}
-
 module.exports = {
   getAPI,
-  getPageName,
   GRID_ROUTE_ACTION,
   GRID_DELETE_ACTION,
   GRID_ADD_ACTION,

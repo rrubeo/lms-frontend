@@ -49,7 +49,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     };
   }
 
-  fallback.pageName = pi_cfg.getPageName(query);
+  fallback.pageName = utils.getPageName(query);
   fallback.apiUrl = pi_cfg.getApiUrl(query);
   fallback.authenticated = true;
   fallback.userInfo = authSession;
