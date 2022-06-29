@@ -12,7 +12,7 @@ class DCT_LinkButton extends React.Component {
 
   render() {
     return (
-      <Link href={this.state.link}>
+      <Link href={this.state.link} underline="hover">
         <Button
           variant="contained"
           classes={{ root: jnStyles.jnBT }}

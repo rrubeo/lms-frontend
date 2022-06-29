@@ -7,11 +7,12 @@ import useSWR, { useSWRConfig, SWRConfig } from "swr";
 import { withIronSessionSsr } from "iron-session/next";
 import { defaultLogin, sessionOptions, getAuthSession } from "../../lib/";
 import useUser from "../../lib/useUser";
-import FS_ProfileStudent from "../../components/fs/FS_ProfileStudent.js";
-import FS_Progress from "../../components/fs/FS_Progress.js";
-import FS_Accordion_Home from "../../components/fs/FS_Accordion_Home.js";
-import FS_LastLessons from "../../components/fs/FS_LastLessons";
-import fsStyle from '../../styles/Fs.module.css';
+import FS_ProfileStudent from "../../components/form/fs/FS_ProfileStudent";
+import FS_Progress from "../../components/form/fs/FS_Progress.js";
+import FS_Accordion_Home from "../../components/form/fs/FS_Accordion_Home.js";
+import FS_LastLessons from "../../components/form/fs/FS_LastLessons";
+
+import fsStyle from "../../styles/Fs.module.css";
 
 const utils = require("../../lib/utils");
 const API = `${process.env.server}/menu`;
@@ -75,87 +76,115 @@ function HomepageStudent() {
       {
         id: 1,
         title: "Accordion1",
-        contentText: "Text1"
+        contentText: "Text1",
       },
       {
         id: 2,
         title: "Accordion2",
-        contentText: "Text2"
+        contentText: "Text2",
       },
       {
         id: 3,
         title: "Accordion3",
-        contentText: "Text3"
+        contentText: "Text3",
       },
       {
         id: 4,
         title: "Accordion4",
-        contentText: "Text4"
+        contentText: "Text4",
       },
       {
         id: 5,
         title: "Accordion5",
-        contentText: "Text5"
+        contentText: "Text5",
       },
       {
         id: 6,
         title: "Accordion6",
-        contentText: "Text6"
+        contentText: "Text6",
       },
       {
         id: 7,
         title: "Accordion7",
-        contentText: "Text7"
+        contentText: "Text7",
       },
       {
         id: 8,
         title: "Accordion8",
-        contentText: "Text8"
-      }
-    ]
-  }
+        contentText: "Text8",
+      },
+    ],
+  };
 
   const activeCourses = {
     title: "Corsi attivi",
     courses: [
-      {id: 1, name: "Corsi anno I"},{id: 2, name: "Corsi anno II"},{id: 3, name: "Corsi anno III"}
-    ]
-  }
+      { id: 1, name: "Corsi anno I" },
+      { id: 2, name: "Corsi anno II" },
+      { id: 3, name: "Corsi anno III" },
+    ],
+  };
 
   const recentLessons = {
     title: "Ultime lezioni viste",
     lessons: [
-      {id: 1, name: "La struttura delle pagine web", time: 50},{id: 2, name: "La struttura delle pagine web", time:45},
-      {id: 3, name: "La struttura delle pagine web", time: 50},{id: 4, name: "La struttura delle pagine web", time:45},
-      {id: 5, name: "La struttura delle pagine web", time: 50},{id: 6, name: "La struttura delle pagine web", time:45},
-      {id: 7, name: "La struttura delle pagine web", time: 50},{id: 8, name: "La struttura delle pagine web", time:45}
-    ]
-  }
+      { id: 1, name: "La struttura delle pagine web", time: 50 },
+      { id: 2, name: "La struttura delle pagine web", time: 45 },
+      { id: 3, name: "La struttura delle pagine web", time: 50 },
+      { id: 4, name: "La struttura delle pagine web", time: 45 },
+      { id: 5, name: "La struttura delle pagine web", time: 50 },
+      { id: 6, name: "La struttura delle pagine web", time: 45 },
+      { id: 7, name: "La struttura delle pagine web", time: 50 },
+      { id: 8, name: "La struttura delle pagine web", time: 45 },
+    ],
+  };
 
   return (
     <>
-      <DCT_Layout id='Layout' data={data}>
-        <Container disableGutters maxWidth='false'>
-          <Grid container sx={{alignItems: 'center'}}>
+      <DCT_Layout id="Layout" data={data}>
+        <Container disableGutters maxWidth="false">
+          <Grid container sx={{ alignItems: "center" }}>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
-              <FS_ProfileStudent/>
+              <FS_ProfileStudent />
             </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={4} xl={4} className={fsStyle.progressContentGrid}>
-              <FS_Progress title='Avanzamento corso' percentage='100'/>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={12}
+              lg={4}
+              xl={4}
+              className={fsStyle.progressContentGrid}
+            >
+              <FS_Progress title="Avanzamento corso" percentage="100" />
             </Grid>
           </Grid>
         </Container>
 
-        <Container disableGutters maxWidth='false' sx={{paddingTop: '2%'}}>
+        <Container disableGutters maxWidth="false" sx={{ paddingTop: "2%" }}>
           <Grid container>
             <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
-              <FS_LastLessons secondary={false} elementNumber={activeCourses.courses.length} background='#B2499B' title={activeCourses.title} array={activeCourses.courses}/>
-              <FS_LastLessons secondary={true} background='#798CB4' title={recentLessons.title} array={recentLessons.lessons}/>
+              <FS_LastLessons
+                secondary={false}
+                elementNumber={activeCourses.courses.length}
+                background="#B2499B"
+                title={activeCourses.title}
+                array={activeCourses.courses}
+              />
+              <FS_LastLessons
+                secondary={true}
+                background="#798CB4"
+                title={recentLessons.title}
+                array={recentLessons.lessons}
+              />
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
-              <FS_Accordion_Home title={accordionElements.title} array={accordionElements.subjects}/>
+              <FS_Accordion_Home
+                title={accordionElements.title}
+                array={accordionElements.subjects}
+              />
             </Grid>
-          </Grid>  
+          </Grid>
         </Container>
       </DCT_Layout>
     </>

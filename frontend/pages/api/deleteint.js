@@ -1,5 +1,5 @@
 import { withIronSessionApiRoute } from "iron-session/next";
-import { getToken, validateToken, sessionOptions } from "../../lib/session";
+import { validateToken, sessionOptions } from "../../lib/session";
 import { fetchJson } from "../../lib";
 
 async function deleteWithUser(url, userInfo, postedData) {

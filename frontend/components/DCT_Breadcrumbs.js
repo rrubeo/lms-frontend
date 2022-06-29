@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import jnStyles from "../styles/utils.module.css";
@@ -16,14 +16,19 @@ class DCT_Breadcrumbs extends React.Component {
       // `<DCT_Breadcrumbs ='${this.props.id}'> (${this.state.listaBread.length})`
       ();
     return (
-      <Breadcrumbs aria-label="breadcrumb" sx={{ mt: 0, mb: 2 }}>
+      <Breadcrumbs
+        aria-label="breadcrumb"
+        sx={{ mt: 0, mb: 2 }}
+        separator={<NavigateNextIcon fontSize="small" />}
+      >
         {this.state.listaBread.map((item, index) => (
           <Typography
             key={item.key}
             variant="body2"
             classes={{
-              body2: jnStyles.jnO2,
+              body2: jnStyles.jnO2grey,
             }}
+            sx={{ m: 0, p: 0 }}
             color="text.primary"
           >
             {item.text}

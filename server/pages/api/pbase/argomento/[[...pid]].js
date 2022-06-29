@@ -47,14 +47,19 @@ async function deleteHandler(userLogin, deleteData) {
 
 async function postHandler(userLogin, postData, pid) {
   let poba = {
-    argoDescr: postData.argomento,
-    argoFlagAttiva: 1,
+    argoDescr: postData.argomento,    
     argoSysuser: userLogin.userID,
     argoFkClarId: pid,
   };
   let p3 = await insertArgomento(userLogin.token, poba);
+
+  const msg =
+    process.env.NODE_ENV === "production"
+      ? "OK"
+      : JSON.stringify(poba) + " RESULT:" + JSON.stringify(p3);
+
   console.log(p3);
-  let res = { status: 200, message: "OK" };
+  let res = { status: 200, message: msg };
   if (p3.status) {
     res.status = p3.status;
     res.message = p3.p3.statusText;

@@ -1,6 +1,6 @@
 import { withIronSessionApiRoute } from "iron-session/next";
-import { getToken, validateToken, sessionOptions } from "../../lib/session";
-import { fetchJson, FetchError } from "../../lib";
+import { validateToken, sessionOptions } from "../../lib/session";
+import { fetchJson } from "../../lib";
 
 async function getWithUser(url, userInfo) {
   //   console.log("postWithUser");
@@ -37,7 +37,7 @@ export default withIronSessionApiRoute(async (req, res) => {
     if (validation.status != 200) {
       req.session.destroy();
       res.status(401).json({ status: 401, message: "Invalid Token." });
-      res.end();      
+      res.end();
       return;
     }
 

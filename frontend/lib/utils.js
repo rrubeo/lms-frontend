@@ -144,7 +144,9 @@ async function getData(url) {
     extUrl: url,
   };
   try {
-    const data = await fetchJson("/api/getint", {
+    const apife = `${process.env.frontend}/api/getint`;
+    // const apife = "/api/getint";
+    const data = await fetchJson(apife, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(packBody),
@@ -189,7 +191,7 @@ async function deleteData(url, postedData) {
 }
 
 async function fetchWithUser(url, userInfo) {
-  console.log("fetchWithUser");
+  console.log("fetchWithUser", url);
   // console.log(url);
   // console.log(userInfo);
   const data = await fetchJson(url, {

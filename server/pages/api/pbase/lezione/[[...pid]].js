@@ -47,8 +47,7 @@ async function deleteHandler(userLogin, deleteData) {
 
 async function postHandler(userLogin, postData, pid) {
   let poba = {
-    leziDescr: postData.lezione,
-    leziFlagAttiva: 1,
+    leziDescr: postData.lezione,   
     leziSysuser: userLogin.userID,
     leziFkArgoId: pid,
     leziPathVideo: "asasdasd",
@@ -57,7 +56,13 @@ async function postHandler(userLogin, postData, pid) {
   console.log(poba);
   let p3 = await insertLezione(userLogin.token, poba);
   console.log(p3);
-  let res = { status: 200, message: "OK" };
+
+  const msg =
+    process.env.NODE_ENV === "production"
+      ? "OK"
+      : JSON.stringify(poba) + " RESULT:" + JSON.stringify(p3);
+
+  let res = { status: 200, message: msg };
   if (p3.status) {
     res.status = p3.status;
     res.message = p3.p3.statusText;

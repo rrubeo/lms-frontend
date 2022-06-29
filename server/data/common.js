@@ -10,6 +10,7 @@ import {
   GetArgomento,
   GetBreadArgomento,
   GetLezione,
+  GetLezioneAggr,
   GetBreadLezione,
   GetContenuto,
   GetFunzioniForm,
@@ -17,11 +18,13 @@ import {
   ClarClasseArgomentoAnas,
   ArgoArgomentoMateriaDats,
   LeziLezioneDats,
+  LezaLezioneAggrDats,
   ColeContenutoLezioneDats,
   ColeContenutoLezioneDatsUpload,
   TicoTipoContenutoTyps,
   TicoTipoContenutoCombo,
   GetRiepilogoProgrammaBase,
+  GetPindiClasseArgomentoCombo,
   GetIndirizzoIstituto,
   GetAnnoIndirizzo,
   AninAnnoIndirizzoAnas,
@@ -95,7 +98,7 @@ const getRiepilogoProgrammaBase = async (token) => {
   const f = await utils.getFetch(token, GetRiepilogoProgrammaBase);
 
   console.log("getRiepilogoProgrammaBase");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   const data = f.map((x, index) => {
@@ -118,7 +121,7 @@ const getProgrammaBase = async (token, id) => {
   const f = await utils.getFetch(token, GetProgrammaBase(id));
 
   console.log("getProgrammaBase");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -126,6 +129,7 @@ const getProgrammaBase = async (token, id) => {
       id: x.idProgrammaBase,
       col1: x.annoFrequenza,
       col2: x.materia,
+      col3: x.flagAggregato ? "*" : "",
     };
   });
   return data;
@@ -134,7 +138,7 @@ const getProgrammaBaseCombo = async (token) => {
   const f = await utils.getFetch(token, GetProgrammaBaseCombo(0));
 
   console.log("getProgrammaBaseCombo");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -152,11 +156,10 @@ const insertProgrammaBase = async (token, body) => {
 const deleteProgrammaBase = async (token, id) => {
   return await deleteObjectURL(token, `${PobaProgrammaBaseAnas}/${id}`);
 };
+const getClasseArgomentoCombo = async (token, id) => {
+  const f = await utils.getFetch(token, GetClasseArgomentoCombo(id));
 
-const getClasseArgomentoCombo = async (token) => {
-  const f = await utils.getFetch(token, GetClasseArgomentoCombo(0));
-
-  console.log("getClasseArgomentoCombo");
+  console.log("getClasseArgomentoCombo", id);
   // console.log(f);
   if (f.status) return [];
 
@@ -186,7 +189,6 @@ const getClasseArgomentoBread = async (token, id) => {
   }
   return data;
 };
-
 const getClasseArgomento = async (token, id) => {
   const f = await utils.getFetch(token, GetClasseArgomento(id));
 
@@ -203,7 +205,6 @@ const getClasseArgomento = async (token, id) => {
   });
   return data;
 };
-
 const getArgomento = async (token, id) => {
   const f = await utils.getFetch(token, GetArgomento(id));
 
@@ -242,7 +243,6 @@ const insertArgomento = async (token, body) => {
 const deleteArgomento = async (token, id) => {
   return await deleteObjectURL(token, `${ArgoArgomentoMateriaDats}/${id}`);
 };
-
 const getLezione = async (token, id) => {
   const f = await utils.getFetch(token, GetLezione(id));
   console.log("getLezione");
@@ -253,6 +253,23 @@ const getLezione = async (token, id) => {
     return {
       id: x.idLezione,
       col1: x.lezioneDesc,
+      col2: x.materia + "-" + x.annoFrequenza,
+      col3: x.classeArgomento,
+      col4: x.argomento,
+    };
+  });
+  return data;
+};
+const getLezioneAggr = async (token, id) => {
+  const f = await utils.getFetch(token, GetLezioneAggr(id));
+  console.log("getLezioneAggr");
+  // console.log(f);
+  if (f.status) return [];
+
+  const data = f.map((x) => {
+    return {
+      id: x.idLezione,
+      col1: x.lezioneDescr,
       col2: x.materia + "-" + x.annoFrequenza,
       col3: x.classeArgomento,
       col4: x.argomento,
@@ -279,10 +296,19 @@ const insertLezione = async (token, body) => {
   let res = await utils.postFetch(token, LeziLezioneDats, body);
   return res;
 };
+const insertLezioneAggr = async (token, body) => {
+  let res = await utils.postFetch(token, LezaLezioneAggrDats, body);
+  return res;
+};
 const deleteLezione = async (token, id) => {
   return await deleteObjectURL(token, `${LeziLezioneDats}/${id}`);
 };
-
+const deleteLezioneAggr = async (token, id, pbaseid) => {
+  return await deleteObjectURL(
+    token,
+    `${LezaLezioneAggrDats}/${pbaseid}/${id}`
+  );
+};
 const getContenuto = async (token, id) => {
   const f = await utils.getFetch(token, GetContenuto(id));
 
@@ -334,7 +360,6 @@ const uploadContenuto = async (token, id, body) => {
 const deleteContenuto = async (token, id) => {
   return await deleteObjectURL(token, `${ColeContenutoLezioneDats}/${id}`);
 };
-
 const getTipoContenuto = async (token) => {
   const f = await utils.getFetch(token, TicoTipoContenutoCombo);
 
@@ -350,7 +375,6 @@ const getTipoContenuto = async (token) => {
   });
   return data;
 };
-
 const getIndirizzoIstituto = async (token) => {
   const f = await utils.getFetch(token, GetIndirizzoIstituto(0));
 
@@ -421,11 +445,23 @@ const getLezClasseArgomentoId = async (token, id) => {
   return data;
 };
 
+const getClasseArgomentoIndiCombo = async (token, id) => {
+  const f = await utils.getFetch(token, GetPindiClasseArgomentoCombo(id));
+
+  console.log("getClasseArgomentoIndiCombo", id);
+  // console.log(f);
+  if (f.status) return [];
+
+  const data = f.map((x) => {
+    return { label: x.classeArgomento, id: x.idClasseArgomento };
+  });
+  return data;
+};
 const getProgrammaIndi = async (token, id) => {
   const f = await utils.getFetch(token, GetProgrammaIndirizzo(id));
 
   console.log("getProgrammaIndi");
-  // console.log(f);
+  console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -480,6 +516,7 @@ module.exports = {
   getArgomento,
   getArgomentoBread,
   getLezione,
+  getLezioneAggr,
   getLezioneBread,
   getContenuto,
   getContenutoBread,
@@ -489,18 +526,21 @@ module.exports = {
   insertClasseArgomento,
   insertArgomento,
   insertLezione,
+  insertLezioneAggr,
   insertContenuto,
   uploadContenuto,
   deleteProgrammaBase,
   deleteClasseArgomento,
   deleteArgomento,
   deleteLezione,
+  deleteLezioneAggr,
   deleteContenuto,
   getAnnoIndIstituto,
   insertAnnoIndIstituto,
   deleteAnnoIndIstituto,
   getLezClasseArgomento,
   getLezClasseArgomentoId,
+  getClasseArgomentoIndiCombo,
   getProgrammaIndi,
   getProgrammaIndiBread,
   insertProgrammaIndi,

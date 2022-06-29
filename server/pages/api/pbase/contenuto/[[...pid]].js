@@ -62,8 +62,7 @@ async function deleteHandler(userLogin, deleteData) {
 }
 
 async function postHandler(userLogin, postData, pid) {
-  let poba = {
-    coleFlagAttiva: 1,
+  let poba = {    
     coleSysuser: userLogin.userID,
     coleFkTicoId: postData.tipo.id,
     coleFkLeziId: pid,

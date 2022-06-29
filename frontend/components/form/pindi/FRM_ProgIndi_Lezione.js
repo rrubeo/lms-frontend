@@ -50,7 +50,10 @@ class FRM_ProgIndi_Lezione extends React.Component {
     const data = await utils.fetchJson("/api/clasarg", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(this.state.classeValue),
+      body: JSON.stringify({
+        form: pi_cfg.FRM_PINDI_STEP_1,
+        combo: this.state.classeValue,
+      }),
     });
     // console.log(data);
     this.setState({ lezioneValue: data });
@@ -80,7 +83,6 @@ class FRM_ProgIndi_Lezione extends React.Component {
 
     this.setState({ classeValue: { label: "", id: 0 } }, () => {
       this.loadComboClasseArg();
-      // console.log(this.state.lezioneValue);
     });
   }
 
@@ -251,7 +253,7 @@ class FRM_ProgIndi_Lezione extends React.Component {
             <DTC_DataGrid
               id="gd_lezione"
               cols={this.props.data.cols}
-              rows={this.state.rows}
+              rows={this.props.data.rows}
               onChange={this.onChangeForm}
               onDelete={this.onDeleteRow}
               onNextStep={this.props.onNextStep}

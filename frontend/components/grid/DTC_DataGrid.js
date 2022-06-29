@@ -180,7 +180,7 @@ class DTC_DataGrid extends React.Component {
       <Box component="div" sx={{ display: "inline" }}>
         <DataGrid
           autoHeight
-          pagination
+          pagination          
           density="compact"
           rows={this.props.rows}
           columns={this.state.columns}

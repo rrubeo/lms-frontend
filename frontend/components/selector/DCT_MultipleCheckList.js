@@ -33,13 +33,13 @@ class DCT_MultipleCheckList extends React.Component {
     const {
       target: { value },
     } = event;
-    // console.log(value);
-
+    console.log(value);
+    console.log("preventDuplicate");
     const preventDuplicate = value.filter(
       (v, i, a) => a.findIndex((t) => t.id === v.id) === i
     );
-    // console.log(preventDuplicate);
-
+    console.log(preventDuplicate);
+    console.log("newList");
     const newList =
       typeof preventDuplicate === "string"
         ? preventDuplicate.split(",")
@@ -64,7 +64,7 @@ class DCT_MultipleCheckList extends React.Component {
     // console.log(
     //   // `<DCT_MultipleCheckList ='${this.props.id}'> (${this.state.listaElenco.length})`
     // );
-    // console.log(this.state.listaElenco);
+    console.log(this.state.listaElenco);
     return (
       <FormControl sx={{ m: 0, p: 0, width: this.props.size }}>
         <InputLabel

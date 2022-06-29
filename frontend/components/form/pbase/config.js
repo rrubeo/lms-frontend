@@ -52,6 +52,7 @@ const PBASE_STEP_1_ACTION = [
 
 const FRM_PBASE_STEP_1_1 = "FRM_ProgBase_Aggregato";
 const PBASE_STEP_1_1_API = `${process.env.server}/pbase/aggregato`;
+const PBASE_STEP_1_1_API_COMBO_CLASSE = `${process.env.server}/pbase/cbclasse`;
 const PBASE_STEP_1_1_ACTION = [
   {
     id: "1",
@@ -215,6 +216,7 @@ module.exports = {
   PBASE_STEP_0_API,
   PBASE_STEP_1_API,
   PBASE_STEP_1_1_API,
+  PBASE_STEP_1_1_API_COMBO_CLASSE,
   PBASE_STEP_2_API,
   PBASE_STEP_3_API,
   PBASE_STEP_4_API,

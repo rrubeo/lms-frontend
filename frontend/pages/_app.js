@@ -64,7 +64,7 @@ export default function MyApp(props) {
             </ErrorBoundary>
             <Toaster
               position="bottom-right"
-              duration={1000}
+              duration={100}
               containerStyle={{
                 top: 120,
                 left: 20,

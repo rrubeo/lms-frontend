@@ -10,7 +10,7 @@ import { rows, cols, classe_select } from "../../../../data/pindi/data_lezione";
 
 import {
   getFunzioniForm,
-  getClasseArgomentoCombo,
+  getClasseArgomentoIndiCombo,
   getProgrammaIndi,
   getProgrammaIndiBread,
   insertProgrammaIndi,
@@ -23,7 +23,7 @@ async function getHandler(userLogin, pid) {
     userLogin.userID,
     "FRM_ProgBase_Ricerca"
   );
-  const db_classe = await getClasseArgomentoCombo(userLogin.token);
+  const db_classe = await getClasseArgomentoIndiCombo(userLogin.token, pid);
   const db_rows = await getProgrammaIndi(userLogin.token, pid);
   const db_bread = await getProgrammaIndiBread(userLogin.token, pid);
   const data = {
@@ -53,24 +53,32 @@ async function deleteHandler(userLogin, deleteData) {
 }
 
 async function postHandler(userLogin, postData, response, pid) {
+  let res = { status: 200, message: "" };
   for (let m of postData.lezione) {
     if (m != 0) {
       let poba = {
         prinFkAninId: pid,
-        prinSysuser: userLogin.userID,
-        prinFlagAttiva: 1,
+        prinSysuser: userLogin.userID,        
         prinFkLeziId: m.id,
       };
       console.log(poba);
       let p3 = await insertProgrammaIndi(userLogin.token, poba);
+
+      const msg =
+        process.env.NODE_ENV === "production"
+          ? "OK"
+          : JSON.stringify(poba) + " RESULT:" + JSON.stringify(p3);
+
+      res = { status: 200, message: msg };
+
       if (p3.status) {
-        response
-          .status(p3.status)
-          .json({ status: p3.status, message: p3.statusText });
+        res.status = p3.status;
+        res.message = p3.statusText;
+        break;
       }
     }
   }
-  const res = { status: 200, message: "OK" };
+
   return res;
 }
 

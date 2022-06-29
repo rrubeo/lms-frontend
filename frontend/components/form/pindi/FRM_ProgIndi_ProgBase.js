@@ -87,17 +87,17 @@ class FRM_ProgIndi_ProgBase extends React.Component {
 
     return (
       <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
+        <DCT_Stepper
+          id="stepper"
+          activeStep={this.props.activeStep}
+          steps={this.props.data.stepper}
+        />
         <Box
           id={pi_cfg.FRM_PINDI_STEP_0}
           component="form"
           onSubmit={this.handleSubmit}
           onReset={this.handleReset}
         >
-          <DCT_Stepper
-            id="stepper"
-            activeStep={this.props.activeStep}
-            steps={this.props.data.stepper}
-          />
           <Stack direction="row" spacing={2}>
             <DCT_ComboBox
               id={this.state.istitutoId}

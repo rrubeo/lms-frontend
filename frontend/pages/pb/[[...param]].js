@@ -71,7 +71,8 @@ function Main() {
   //Recupera info utente
   const { fallback, mutate } = useSWRConfig();
   const { userInfo, pageName, apiUrl, pageQuery, subIndex } = fallback;
-
+  // console.log("pageQuery", pageQuery);
+  // console.log("subIndex", subIndex);
   let { data, error } = useSWR(apiUrl, utils.getData);
 
   if (error) return <div>{error.message}</div>;
@@ -87,6 +88,10 @@ function Main() {
       revalidateOnReconnect: true,
     };
     await mutate(apiUrl, utils.getData(apiUrl), options);
+  };
+
+  const handleSearch = async (event, formData) => {
+    data.lezione = formData.lezione;
   };
 
   const handleSubmit = async (event, formData) => {
@@ -113,8 +118,8 @@ function Main() {
             validationMessage(res2.message, MSG_INFO);
           }
         }
-        validationMessage(res.message, MSG_SUCCESS);
         await reloadData();
+        validationMessage(res.message, MSG_SUCCESS);        
       }
     } else {
       // console.log(vres);
@@ -126,23 +131,34 @@ function Main() {
     const res = await utils.deleteData(apiUrl, rowData);
     if (res.status != 200) {
       validationMessage(res.message, MSG_ERROR);
-    } else {
-      validationMessage(res.message, MSG_INFO);
+    } else {      
       await reloadData();
+      validationMessage(res.message, MSG_INFO);
     }
+  };
+
+  const isAggregato = (col) => {
+    if (col) {
+      if (col == "*") {
+        return true;
+      }
+    }
+    return false;
   };
 
   const handleNextStep = async (event, filter, route) => {
     event.preventDefault();
     console.log(route);
-    // console.log(fallback);
+
     if (fallback.pageName == pb_cfg.PBASE_STEP_0) {
-      if (filter.row.col9) {
-        if (filter.row.col9 == "*") {
-          // console.log(filter);
-          // console.log(route);
-          forceNavigateUtil(pb_cfg.PBASE_STEP_1_1, filter, fallback.subIndex);
-        }
+      if (isAggregato(filter.row.col9)) {
+        forceNavigateUtil(pb_cfg.PBASE_STEP_1_1, filter, fallback.subIndex);
+      } else {
+        forceNavigateUtil(route, filter, fallback.subIndex);
+      }
+    } else if (fallback.pageName == pb_cfg.PBASE_STEP_1) {
+      if (isAggregato(filter.row.col3)) {
+        forceNavigateUtil(pb_cfg.PBASE_STEP_1_1, filter, fallback.subIndex);
       } else {
         forceNavigateUtil(route, filter, fallback.subIndex);
       }
@@ -171,13 +187,15 @@ function Main() {
         {pageName === pb_cfg.PBASE_STEP_1_1 ? (
           <FRM_ProgBase_Aggregato
             id={pb_cfg.FRM_PBASE_STEP_1_1}
-            activeStep={4}
+            activeStep={1}
             onSubmit={handleSubmit}
             onDelete={handleDelete}
+            onSearch={handleSearch}
             data={data}
             onNextStep={handleNextStep}
             action={pb_cfg.PBASE_STEP_1_1_ACTION}
             query={pageQuery}
+            pbaseId={subIndex}
           />
         ) : (
           <></>

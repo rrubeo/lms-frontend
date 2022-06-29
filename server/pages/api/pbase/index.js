@@ -18,8 +18,20 @@ export default async function handler(req, res) {
   const userLogin = await apic.getLogin(req);
 
   const cols = [
-    { field: "col1", headerName: "Anno Frequenza", flex: 1, minWidth: 50 },
-    { field: "col2", headerName: "Materia", flex: 1, minWidth: 50 },
+    {
+      field: "col1",
+      headerName: "Anno Frequenza",
+      flex: 1,
+      minWidth: 110,
+      maxWidth: 110,
+    },
+    {
+      field: "col2",
+      headerName: "Materia",
+      flex: 1,
+      minWidth: 110,
+      maxWidth: 110,
+    },
     { field: "col3", headerName: "Classe Argomento", flex: 1, minWidth: 50 },
     { field: "col4", headerName: "Argomento", flex: 1, minWidth: 50 },
     { field: "col5", headerName: "Lezione", flex: 1, minWidth: 50 },
@@ -38,8 +50,8 @@ export default async function handler(req, res) {
       field: "col9",
       headerName: "Agg.",
       flex: 1,
-      minWidth: 50,
-      maxWidth: 50,
+      minWidth: 70,
+      maxWidth: 70,
     },
   ];
 

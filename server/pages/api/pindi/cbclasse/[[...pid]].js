@@ -1,23 +1,21 @@
 const utils = require("../../../../lib/utils");
+const apic = require("../../../../lib/apicommon");
 
 import { getToken, getLezClasseArgomentoId } from "../../../../data/common";
 
 export default async function handler(req, res) {
   await utils.cors(req, res);
-  console.log("COMBO CLASSE");
 
-  let id = 0;
+  const pid = apic.getPid(req);
+  console.log(req.query);
+  const userLogin = await apic.getLogin(req);
 
-  let { pid } = req.query;
-  console.log(pid);
-  if (pid) {
-    id = pid[0];
-    if (pid[1]) carg = pid[1];
-  }
-  console.log(id);
+  console.log(
+    "COMBO PROGRAMMA INDIRIZZO /Tables/GetLezionePerClasseArgomento",
+    pid
+  );
 
-  const userLogin = await getToken("Romolo", "pass2");
-  const db_rows = await getLezClasseArgomentoId(userLogin.token, id);
+  const db_rows = await getLezClasseArgomentoId(userLogin.token, pid);
   // console.log(db_rows);
   res.status(200).json(db_rows);
 }

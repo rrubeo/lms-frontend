@@ -132,6 +132,15 @@
     padding: 0px;
 }
 
+.jnO2grey {
+    font-size: 11pt;
+    font-weight: 400;
+    color: #A7A7A7;
+    border: 0px;
+    padding: 0px;
+    text-transform: uppercase;
+}
+
 .jnP1 {
     font-size: 16pt;
     font-weight: 300;
@@ -154,6 +163,14 @@
     font-size: 16pt;
     font-weight: 800;
     color: #ffffff;
+}
+
+.jnO2sm {
+    font-size: 10pt;
+    font-weight: 800;
+    color: #ffffff;
+    border: 0px;
+    padding: 0px;
 }
 
 .jnBD {

@@ -53,7 +53,6 @@ async function postHandler(userLogin, postData) {
   let poba = {
     aninFkInisId: postData.istituto.id,
     aninSysuser: userLogin.userID,
-    aninFlagAttiva: 1,
     aninFkPobaId: postData.programma.id,
   };
   console.log(poba);

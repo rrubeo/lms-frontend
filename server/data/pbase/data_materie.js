@@ -31,6 +31,13 @@ const rows = [
 const cols = [
   { field: "col1", headerName: "Anno Frequenza", flex: 1, minWidth: 50 },
   { field: "col2", headerName: "Materia", flex: 1, minWidth: 50 },
+  {
+    field: "col3",
+    headerName: "Agg.",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 50,
+  },
 ];
 
 module.exports = { anno_frequenza, materie, rows, cols };

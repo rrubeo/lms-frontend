@@ -22,35 +22,124 @@ class FRM_ProgBase_Aggregato extends React.Component {
       classeId: "cb_classe",
       classeValue: { label: "", id: 0 },
       listId: "lst_lezione",
-      // lezioneValue: this.props.data.lezione,
+      lezioneValue: this.props.data.lezione,
       selectedValue: [],
       rows: this.props.data.rows,
     };
 
-    // this.handleSubmit = this.handleSubmit.bind(this);
-    // this.onChangeForm = this.onChangeForm.bind(this);
-    // this.onDeleteRow = this.onDeleteRow.bind(this);
-    // this.handleReset = this.handleReset.bind(this);
-    // this.handleBack = this.handleBack.bind(this);
-    // this.handleAddAll = this.handleAddAll.bind(this);
-    // this.handleSearch = this.handleSearch.bind(this);
-    // this.loadComboClasseArg = this.loadComboClasseArg.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.onChangeForm = this.onChangeForm.bind(this);
+    this.onDeleteRow = this.onDeleteRow.bind(this);
+    this.handleReset = this.handleReset.bind(this);
+    this.handleBack = this.handleBack.bind(this);
+    this.handleAddAll = this.handleAddAll.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+    this.loadComboClasseArg = this.loadComboClasseArg.bind(this);
 
-    // this.changeChildClasseId = React.createRef();
-    // this.changeChildListId = React.createRef();
+    this.changeChildClasseId = React.createRef();
+    this.changeChildListId = React.createRef();
   }
-  async handleSubmit(event) {}
 
-  async handleReset(event) {}
+  async componentDidMount() {
+    await this.loadComboClasseArg();
+  }
+
+  async loadComboClasseArg() {
+    const data = await utils.fetchJson("/api/clasarg", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        form: pb_cfg.FRM_PBASE_STEP_1_1,
+        combo: this.state.classeValue,
+      }),
+    });
+    // console.log(data);
+    this.setState({ lezioneValue: data });
+    this.setState({ selectedValue: [] });
+  }
+
+  handleBack(event) {
+    event.preventDefault();
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault();
+    const data = {
+      id: pb_cfg.FRM_PBASE_STEP_1_1,
+      classe: this.state.classeValue,
+      lezione: this.state.selectedValue,
+    };
+
+    if (this.state.selectedValue.length > 0) {
+      await this.props.onSubmit(event, data);
+    }
+  }
+
+  async handleReset(event) {
+    this.changeChildClasseId.current.handleReset();
+    this.changeChildListId.current.handleReset();
+
+    this.setState({ classeValue: { label: "", id: 0 } }, () => {
+      this.loadComboClasseArg();
+    });
+  }
+
+  async handleSearch(event) {
+    await this.loadComboClasseArg();
+
+    const data = {
+      id: pb_cfg.FRM_PBASE_STEP_1_1,
+      classe: this.state.classeValue,
+      lezione: this.state.lezioneValue,
+    };
+    await this.props.onSearch(event, data);
+  }
+
+  handleAddAll(event) {
+    event.preventDefault();
+    this.changeChildListId.current.handleAddAll();
+  }
+
+  onChangeForm(id, data) {
+    // console.log("CHANGE FORM");
+    // console.log(id);
+    // console.log(data);
+    switch (id) {
+      case this.state.classeId:
+        this.setState({ classeValue: data });
+        break;
+      case this.state.listId:
+        this.setState({ selectedValue: data });
+        break;
+      default:
+        console.log(id);
+        console.log(data);
+        break;
+    }
+  }
+
+  async onDeleteRow(id, data) {
+    // console.log("DELETE ROW");
+    // console.log(id);
+    // console.log(data);
+
+    const rowData = {
+      id: pb_cfg.FRM_PBASE_STEP_1_1,
+      key: data,
+      pbaseId: this.props.pbaseId,
+    };
+    this.props.onDelete(rowData);
+  }
 
   render() {
-    console.log("AGGREGATO");
+    console.log("AGGREGATO PBASE:", this.props.pbaseId);
     console.log(this.props.query);
     const linkBack = utils.getBackLink(
       "pb",
       pb_cfg.PBASE_STEP_0,
       this.props.query
     );
+    let comboClasseSelection = this.state.classeValue.id;
 
     return (
       <Stack direction="column" spacing={2}>
@@ -85,16 +174,86 @@ class FRM_ProgBase_Aggregato extends React.Component {
                 spacing={2}
                 justifyContent="center"
                 alignItems="center"
-              ></Stack>
+              >
+                <DCT_ComboBox
+                  id={this.state.classeId}
+                  list={this.props.data.classe}
+                  label={this.props.data.classe_label}
+                  onChange={this.onChangeForm}
+                  size={250}
+                  ref={this.changeChildClasseId}
+                  selection={comboClasseSelection}
+                />
+                <ButtonGroup
+                  variant="contained"
+                  aria-label="outlined primary button group"
+                  classes={{ root: jnStyles.jnBT }}
+                >
+                  <Button
+                    type="button"
+                    variant="contained"
+                    classes={{ root: jnStyles.jnBT }}
+                    onClick={(event) => this.handleSearch(event)}
+                  >
+                    Cerca
+                  </Button>
+                  <Button
+                    type="reset"
+                    variant="contained"
+                    classes={{ root: jnStyles.jnBT }}
+                  >
+                    Reset
+                  </Button>
+                </ButtonGroup>
+              </Stack>
               <Stack
                 direction={{ xs: "column", sm: "column", md: "column" }}
                 spacing={2}
                 justifyContent="center"
                 alignItems="center"
-              ></Stack>
+              >
+                <DCT_CheckList
+                  id={this.state.listId}
+                  label={this.props.data.lezione_label}
+                  list={this.state.lezioneValue}
+                  ref={this.changeChildListId}
+                  onChange={this.onChangeForm}
+                  size={270}
+                />
+                <ButtonGroup
+                  variant="contained"
+                  aria-label="outlined primary button group"
+                  classes={{ root: jnStyles.jnBT }}
+                >
+                  <Button
+                    type="button"
+                    variant="contained"
+                    classes={{ root: jnStyles.jnBT }}
+                    onClick={(event) => this.handleAddAll(event)}
+                  >
+                    Aggiungi tutto
+                  </Button>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    classes={{ root: jnStyles.jnBT }}
+                  >
+                    Salva
+                  </Button>
+                </ButtonGroup>
+              </Stack>
             </Stack>
           </Box>
         </Stack>
+        <DTC_DataGrid
+          id="gd_aggregato"
+          cols={this.props.data.cols}
+          rows={this.props.data.rows}
+          onChange={this.onChangeForm}
+          onDelete={this.onDeleteRow}
+          onNextStep={this.props.onNextStep}
+          action={this.props.action}
+        />
       </Stack>
     );
   }

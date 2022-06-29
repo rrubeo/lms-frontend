@@ -33,6 +33,10 @@ const CLOUD_API_ARGO_MAT = "api/ArgoArgomentoMateriaDats";
 const CLOUD_API_CLAS_ARGO = "api/ClarClasseArgomentoAnas";
 const CLOUD_API_TBL_PBASE_RIEPILOGO = "api/Tables/GetRiepilogoProgrammaBase";
 const CLOUD_API_CLAS_LEZIO = "api/LeziLezioneDats";
+const CLOUD_API_CLAS_LEZIO_AGGR = "api/LezaLezioneAggrDats";
+const CLOUD_API_TBL_LEZIO_PBASE_AGGR =
+  "api/Tables/GetPossibiliLezioniPGMAggregato";
+
 const CLOUD_API_CLAS_CONTE = "api/ColeContenutoLezioneDats";
 const CLOUD_API_CLAS_CONTE_UPLOAD = "api/ColeContenutoLezioneDats/UploadFile";
 const CLOUD_API_TIPO_CONT = "api/TicoTipoContenutoTyps";
@@ -65,6 +69,9 @@ function GetBreadArgomento(id) {
 function GetLezione(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_LEZ}/${id}/0`;
 }
+function GetLezioneAggr(id) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LEZIO_PBASE_AGGR}/${id}/0`;
+}
 function GetBreadLezione(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_BREAD_LEZIO}/${id}`;
 }
@@ -78,6 +85,7 @@ const ArgoArgomentoMateriaDats = `${CLOUD_BASE_URL}/${CLOUD_API_ARGO_MAT}`;
 const ClarClasseArgomentoAnas = `${CLOUD_BASE_URL}/${CLOUD_API_CLAS_ARGO}`;
 const GetRiepilogoProgrammaBase = `${CLOUD_BASE_URL}/${CLOUD_API_TBL_PBASE_RIEPILOGO}`;
 const LeziLezioneDats = `${CLOUD_BASE_URL}/${CLOUD_API_CLAS_LEZIO}`;
+const LezaLezioneAggrDats = `${CLOUD_BASE_URL}/${CLOUD_API_CLAS_LEZIO_AGGR}`;
 const ColeContenutoLezioneDats = `${CLOUD_BASE_URL}/${CLOUD_API_CLAS_CONTE}`;
 const ColeContenutoLezioneDatsUpload = `${CLOUD_BASE_URL}/${CLOUD_API_CLAS_CONTE_UPLOAD}`;
 const TicoTipoContenutoTyps = `${CLOUD_BASE_URL}/${CLOUD_API_TIPO_CONT}`;
@@ -86,15 +94,18 @@ const TicoTipoContenutoCombo = `${CLOUD_BASE_URL}/${CLOUD_API_TIPO_CONT_COMBO}`;
 const CLOUD_API_TBL_PINDI = "api/Tables/GetIndirizzoIstituto";
 const CLOUD_API_TBL_LIST_ANNO_IST = "api/Tables/GetAnnoIndirizzoIstituto";
 const CLOUD_API_TBL_LIST_ANNO_IND = "api/Tables/GetAnnoIndirizzo";
-const CLOUD_API_TBL_LIST_CLAS_ARG_PB =
-  "api/Tables/GetClasseArgomentoXProgrammaBase";
 const CLOUD_API_TBL_LIST_LEZ_CLAS_ARG =
   "api/Tables/GetLezionePerClasseArgomento";
 const CLOUD_API_TBL_LIST_PINDI = "api/Tables/GetProgrammaIndirizzo";
 const CLOUD_API_PINDI = "api/PrinProgrammaIndirizzoDats";
 const CLOUD_API_IND_IST = "api/AninAnnoIndirizzoAnas";
+const CLOUD_API_TBL_PINDI_CLAS_ARG_COMBO =
+  "api/Tables/GetClasseArgomentoXProgrammaIndirizzoCombo";
 
 //Endpoint
+function GetPindiClasseArgomentoCombo(id) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_PINDI_CLAS_ARG_COMBO}/${id}`;
+}
 function GetIndirizzoIstituto(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_PINDI}/${id}`;
 }
@@ -103,9 +114,6 @@ function GetAnnoIndirizzoIstituto(IdIndirizzoIstituto, IdProgrammaBase) {
 }
 function GetAnnoIndirizzo(idAnnoIndirizzoIstituto) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_ANNO_IND}/${idAnnoIndirizzoIstituto}`;
-}
-function GetClasseArgomentoXProgrammaBase(id) {
-  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_CLAS_ARG_PB}/${id}`;
 }
 function GetLezionePerClasseArgomento(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_LEZ_CLAS_ARG}/${id}`;
@@ -153,6 +161,7 @@ module.exports = {
   GetArgomento,
   GetBreadArgomento,
   GetLezione,
+  GetLezioneAggr,
   GetBreadLezione,
   GetContenuto,
   GetFunzioniForm,
@@ -161,10 +170,11 @@ module.exports = {
   ColeContenutoLezioneDats,
   ColeContenutoLezioneDatsUpload,
   LeziLezioneDats,
+  LezaLezioneAggrDats,
+  GetPindiClasseArgomentoCombo,
   GetIndirizzoIstituto,
   GetAnnoIndirizzoIstituto,
   GetAnnoIndirizzo,
-  GetClasseArgomentoXProgrammaBase,
   GetLezionePerClasseArgomento,
   GetProgrammaIndirizzo,
   PrinProgrammaIndirizzoDats,

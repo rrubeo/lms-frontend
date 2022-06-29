@@ -62,9 +62,9 @@ async function postHandler(userLogin, postData, response) {
   for (let m of postData.materie) {
     let poba = {
       pobaFkMascId: m.id,
-      pobaSysuser: userLogin.userID,
-      pobaFlagAttiva: 1,
+      pobaSysuser: userLogin.userID,     
       pobaFkAnfrId: postData.anno.id,
+      pobaFlagAggregato: 1,
     };
     console.log(poba);
     let p3 = await insertProgrammaBase(userLogin.token, poba);
