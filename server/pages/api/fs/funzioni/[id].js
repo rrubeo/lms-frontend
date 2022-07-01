@@ -3,7 +3,12 @@ const apic = require("../../../../lib/apicommon");
 
 import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
 
-import { getFunzioniForm } from "../../../../data/common";
+import { 
+  getFunzioniForm,
+  getIscrizioneStudente, 
+  getLezioniDaSeguire
+} from "../../../../data/fs/common";
+
 
 const accordionElements = {
   title: "Materie Anno II",
@@ -239,26 +244,12 @@ const accordionElements = {
   ],
 };
 
-const activeCourses = {
-  title: "Corsi attivi",
-  courses: [
-    { id: 1, name: "Corsi anno I" },
-    { id: 2, name: "Corsi anno II" },
-    { id: 3, name: "Corsi anno III" },
-  ],
-};
-
 const recentLessons = {
   title: "Ultime lezioni viste",
   lessons: [
     { id: 1, name: "La struttura delle pagine web", time: 50 },
     { id: 2, name: "La struttura delle pagine web", time: 45 },
     { id: 3, name: "La struttura delle pagine web", time: 50 },
-    { id: 4, name: "La struttura delle pagine web", time: 45 },
-    { id: 5, name: "La struttura delle pagine web", time: 50 },
-    { id: 6, name: "La struttura delle pagine web", time: 45 },
-    { id: 7, name: "La struttura delle pagine web", time: 50 },
-    { id: 8, name: "La struttura delle pagine web", time: 45 },
   ],
 };
 
@@ -266,18 +257,21 @@ async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
     userLogin.token,
     userLogin.userID,
-    "FRM_ProgBase_Ricerca"
+    ""
   );
 
+  const profileStudent = await getIscrizioneStudente(userLogin.token, userLogin.userID);
+  //const accordionElements = await getLezioniDaSeguire(userLogin.token, profileStudent.idIscrizione);
+
   const data = {
-    title: "Configurazione Programma Base Aggregato",
+    title: "Configurazione Iscrizione studente",
     // login: false,
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,
     funzioni: db_funzioni,
+    profileDats: profileStudent,
     accordionElements: accordionElements,
-    activeCourses: activeCourses,
     recentLessons: recentLessons,
     // bread: db_bread,
   };
@@ -288,7 +282,6 @@ export default async function handler(req, res) {
   // Run cors
   await utils.cors(req, res);
 
-  console.log("FUNZIONI STUDENTE");
   const pid = apic.getPid(req);
   const userLogin = await apic.getLogin(req);
 

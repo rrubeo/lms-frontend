@@ -59,7 +59,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 },
 sessionOptions);
 
-function LessonDetail() {
+function DettaglioLezione() {
   const { user } = useUser({
     redirectTo: "/401",
   });
@@ -146,7 +146,7 @@ function LessonDetail() {
 export default function Home({ fallback }) {
   return (
     <SWRConfig value={{ fallback }}>
-      <LessonDetail />
+      <DettaglioLezione />
     </SWRConfig>
   );
 }

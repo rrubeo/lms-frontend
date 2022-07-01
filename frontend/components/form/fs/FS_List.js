@@ -3,7 +3,9 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from "@mui/material/ListItemText";
+import Avatar from '@mui/material/Avatar';
 import fsStyle from "../../../styles/Fs.module.css";
 import jnStyles from "../../../styles/utils.module.css";
 
@@ -19,6 +21,41 @@ class FS_LastLessons extends React.Component {
   }
 
   render() {
+    const contenuto = '';
+
+    if (this.props.type == 'text'){
+      this.contenuto = this.state.list.map((item) =>
+        <ListItem key={item.id}>
+          <ListItemText
+            primaryTypographyProps={{
+              color: "#ffffff",
+              fontSize: "21pt",
+              fontWeight: "300",
+            }}
+            primary={item.name ? item.name : "Single-line item"}
+            secondaryTypographyProps={{
+              color: "#ffffff",
+              fontSize: "16pt",
+              fontWeight: "300",
+            }}
+            secondary={item.name ? item.name : "Secondary text"}
+          />
+        </ListItem>
+      );
+    } else {
+      this.contenuto = this.state.list.map((item) =>
+        <ListItem key={item.id}>
+          <ListItemAvatar>
+            <Avatar
+              alt={`Avatar n°${item.id}`}
+            />
+          </ListItemAvatar>
+          <ListItemText primary={`Line item ${item.id}`} />
+        </ListItem>
+      );
+    }
+    
+
     return (
       <Container disableGutters maxWidth="false">
         <Typography variant="h6" className={jnStyles.jnD1}>
@@ -29,24 +66,7 @@ class FS_LastLessons extends React.Component {
           sx={{ backgroundColor: this.state.background }}
           dense={true}
         >
-          {this.state.list.map((item) => (
-            <ListItem key={item.id}>
-              <ListItemText
-                primaryTypographyProps={{
-                  color: "#ffffff",
-                  fontSize: "21pt",
-                  fontWeight: "300",
-                }}
-                primary={item.name ? item.name : "Single-line item"}
-                secondaryTypographyProps={{
-                  color: "#ffffff",
-                  fontSize: "16pt",
-                  fontWeight: "300",
-                }}
-                secondary={item.name ? item.name : "Secondary text"}
-              />
-            </ListItem>
-          ))}
+          {this.contenuto}
         </List>
       </Container>
     );

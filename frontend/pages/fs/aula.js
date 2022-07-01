@@ -3,17 +3,11 @@ import DCT_Layout from "../../components/layout/DCT_Layout";
 import Loader from "../../components/layout/loader";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
 import useSWR, { useSWRConfig, SWRConfig } from "swr";
 import { withIronSessionSsr } from "iron-session/next";
 import { defaultLogin, sessionOptions, getAuthSession } from "../../lib";
 import useUser from "../../lib/useUser";
-import FS_ProfileStudent from "../../components/form/fs/FS_ProfileStudent";
-import FS_Progress from "../../components/form/fs/FS_Progress.js";
-import FS_Accordion_Home from "../../components/form/fs/FS_Accordion_Home.js";
 import FS_List from "../../components/form/fs/FS_List";
-import fsStyle from "../../styles/Fs.module.css";
-import jnStyles from "../../styles/utils.module.css";
 
 
 const utils = require("../../lib/utils");
@@ -56,7 +50,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 },
 sessionOptions);
 
-function HomepageStudente() {
+function Aula() {
   const { user } = useUser({
     redirectTo: "/401",
   });
@@ -75,40 +69,21 @@ function HomepageStudente() {
       <DCT_Layout id="Layout" data={data}>
         <Container disableGutters maxWidth="false">
           <Grid container sx={{ alignItems: "center" }}>
-            <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
-              <FS_ProfileStudent />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={12}
-              lg={4}
-              xl={4}
-              className={fsStyle.progressContentGrid}
-            >
-              <FS_Progress title="Avanzamento corso" percentage="100" />
-            </Grid>
-          </Grid>
-        </Container>
-
-        <Container disableGutters maxWidth="false" sx={{ paddingTop: "2%" }}>
-          <Grid container>
             <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
-              <FS_List
-                background="#798CB4"
-                title={data.recentLessons.title}
-                array={data.recentLessons.lessons}
-                type="text"
-              />
-
-              <Button variant="contained" classes={{ root: jnStyles.jnBT }}>Classe virtuale</Button>
+                <FS_List
+                    title={data.recentLessons.title}
+                    array={data.recentLessons.lessons}
+                    type="avatar"
+                />
             </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
-              <FS_Accordion_Home
-                title={data.accordionElements.title}
-                array={data.accordionElements.subjects}
-              />
+            <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
+                <FS_List
+                    title={data.recentLessons.title}
+                    array={data.recentLessons.lessons}
+                    type="avatar"
+                />
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
             </Grid>
           </Grid>
         </Container>
@@ -120,7 +95,7 @@ function HomepageStudente() {
 export default function Home({ fallback }) {
   return (
     <SWRConfig value={{ fallback }}>
-      <HomepageStudente />
+      <Aula />
     </SWRConfig>
   );
 }
