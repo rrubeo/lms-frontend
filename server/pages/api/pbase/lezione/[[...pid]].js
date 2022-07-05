@@ -6,12 +6,13 @@ import { stepper, tornaIndietro } from "../../../../data/pbase/data_common";
 import { rows, cols } from "../../../../data/pbase/data_lezione";
 
 import {
-  getFunzioniForm,
   getLezione,
   getLezioneBread,
   deleteLezione,
   insertLezione,
-} from "../../../../data/common";
+} from "../../../../data/pbase/common";
+
+import { getFunzioniForm } from "../../../../data/common";
 
 async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
@@ -47,7 +48,7 @@ async function deleteHandler(userLogin, deleteData) {
 
 async function postHandler(userLogin, postData, pid) {
   let poba = {
-    leziDescr: postData.lezione,   
+    leziDescr: postData.lezione,
     leziSysuser: userLogin.userID,
     leziFkArgoId: pid,
     leziPathVideo: "asasdasd",

@@ -5,7 +5,6 @@ import { sidemenu, navmenu, usermenu } from "../../../data/data_sidemenu";
 import { rows } from "../../../data/pbase/data_materie";
 
 import { getRiepilogoProgrammaBase } from "../../../data/pbase/common";
-
 import { getFunzioniForm } from "../../../data/common";
 
 export default async function handler(req, res) {
@@ -62,7 +61,7 @@ export default async function handler(req, res) {
       );
       const db_rows = await getRiepilogoProgrammaBase(userLogin.token);
       const data = {
-        title: "Ricerca Programma Base",
+        title: "Ricerca Esercitazione",
         menu: sidemenu,
         navmenu: navmenu,
         usermenu: usermenu,

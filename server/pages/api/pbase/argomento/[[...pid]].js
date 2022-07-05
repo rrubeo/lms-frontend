@@ -6,12 +6,13 @@ import { stepper, tornaIndietro } from "../../../../data/pbase/data_common";
 import { rows, cols } from "../../../../data/pbase/data_argomento";
 
 import {
-  getFunzioniForm,
   getArgomento,
   getArgomentoBread,
   deleteArgomento,
   insertArgomento,
-} from "../../../../data/common";
+} from "../../../../data/pbase/common";
+
+import { getFunzioniForm } from "../../../../data/common";
 
 async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
@@ -47,7 +48,7 @@ async function deleteHandler(userLogin, deleteData) {
 
 async function postHandler(userLogin, postData, pid) {
   let poba = {
-    argoDescr: postData.argomento,    
+    argoDescr: postData.argomento,
     argoSysuser: userLogin.userID,
     argoFkClarId: pid,
   };

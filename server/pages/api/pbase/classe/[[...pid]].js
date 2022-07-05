@@ -6,12 +6,13 @@ import { stepper, tornaIndietro } from "../../../../data/pbase/data_common";
 import { rows, cols } from "../../../../data/pbase/data_classe";
 
 import {
-  getFunzioniForm,
-  getClasseArgomento,
   getClasseArgomentoBread,
+  getClasseArgomento,
   deleteClasseArgomento,
   insertClasseArgomento,
-} from "../../../../data/common";
+} from "../../../../data/pbase/common";
+
+import { getFunzioniForm } from "../../../../data/common";
 
 async function getHandler(userLogin, pid) {
   const db_rows = await getClasseArgomento(userLogin.token, pid);
@@ -41,7 +42,7 @@ async function getHandler(userLogin, pid) {
 
 async function postHandler(userLogin, postData, pid) {
   let poba = {
-    clarDescr: postData.classe,    
+    clarDescr: postData.classe,
     clarSysuser: userLogin.userID,
     clarFkPobaId: pid,
   };

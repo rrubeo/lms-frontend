@@ -1,110 +1,32 @@
-import {
-  UserAuthenticate,
-  GetFunzioniForm,
-  GetIscrizioneStudente,
-<<<<<<< HEAD
-  GetStudenteMaterie,
-  GetLezioniSeguite,
-  GetLezioniDaSeguire
-=======
-  GetLezioniDaSeguire,
->>>>>>> 51ecd65a2d72a8d9f134ada00fb57a449897f5f6
-} from "../../data/fs/config";
-
+const commMain = require("../common");
 const utils = require("../../lib/utils");
 
-const getToken = async (user, password) => {
-  const c = {
-    utntUserName: user,
-    utntPasswordHash: password,
-  };
-
-  const data = await utils.getToken(UserAuthenticate, c);
-  // console.log(data);
-  return data;
-};
-
-const getFunzioniForm = async (token, user, formName) => {
-  const f = await utils.getFetch(token, GetFunzioniForm(user, formName));
-
-  if (f.status) return [];
-
-  const data = f.map((x) => {
-    return {
-      id: x.idFunzione,
-      funzione: x.funzione,
-      form: x.form,
-    };
-  });
-  return data;
-};
-
-const deleteObjectURL = async (token, url) => {
-  const f = await utils.deleteFetch(token, url);
-  console.log("delete-" + url);
-  // console.log(f);
-  if (f.status) return [];
-  return f;
-};
-
-const getIscrizioneStudente = async (token, username) => {
-  const f = await utils.getFetch(token, GetIscrizioneStudente(username));
-
-  console.log("getIscrizione");
-  if (f.status) return [];
-
-  const data = f.map((x) => {
-    console.log(x);
-  });
-  return data;
-};
-
-<<<<<<< HEAD
-
-const getStudenteMaterie = async (token, username, idIscrizione) => {
-  const f = await utils.getFetch(token, GetStudenteMaterie(username, idIscrizione));
-
-  console.log("getStudenteMaterie");
-  if (f.status) return [];
-
-  const data = f.map((x) => {
-    console.log(x)
-  });
-  return data;
-};
-
-
-const getLezioniSeguite = async (token, username, idIscrizione) => {
-  const f = await utils.getFetch(token, GetLezioniSeguite(username, idIscrizione));
-
-  console.log("getLezioniSeguite");
-  if (f.status) return [];
-
-  const data = f.map((x) => {
-    console.log(x)
-  });
-  return data;
-};
-
-
-=======
->>>>>>> 51ecd65a2d72a8d9f134ada00fb57a449897f5f6
-const getLezioniDaSeguire = async (token, idIscrizione) => {
-  const f = await utils.getFetch(token, GetLezioniDaSeguire(idIscrizione));
-
-  console.log("getLezioniDaSeguire");
-  if (f.status) return [];
-
-  const data = f.map((x) => {
-<<<<<<< HEAD
-    console.log(x)
-  });
-  return data;
-};
-
-
-
-/*
+import {
+  AnfrAnnoFrequenzaAnas,
+  GetAnnoAggregatoCombo,
+  MascMateriaScolasticaAnas,
+  GetRiepilogoProgrammaBase,
+  GetProgrammaBase,
+  GetProgrammaBaseCombo,
+  PobaProgrammaBaseAnas,
+  GetClasseArgomentoCombo,
+  GetClasseArgomentoComboAggr,
+  ClarClasseArgomentoAnas,
+  GetClasseArgomento,
+  GetArgomento,
+  GetBreadClasseArgomento,
+  ArgoArgomentoMateriaDats,
+  GetLezione,
+  GetLezioneAggr,
+  GetBreadArgomento,
+  LeziLezioneDats,
+  LezaLezioneAggrDats,
+  GetContenuto,
+  GetBreadLezione,
+  ColeContenutoLezioneDats,
+  ColeContenutoLezioneDatsUpload,
+  TicoTipoContenutoCombo,
+} from "./config";
 //Programma Base
 const getAnnoFrequenza = async (token) => {
   const f = await utils.getFetch(token, AnfrAnnoFrequenzaAnas);
@@ -116,6 +38,19 @@ const getAnnoFrequenza = async (token) => {
   const data = f.map((x) => {
     return { label: x.anfrDescr, id: x.anfrId };
   });
+  return data;
+};
+const getAnnoFrequenzaAggr = async (token, id) => {
+  const f = await utils.getFetch(token, GetAnnoAggregatoCombo(id));
+
+  console.log("getAnnoFrequenzaAggr");
+  // console.log(f);
+  if (f.status) return [];
+
+  const data = f.map((x) => {
+    return { label: x.anno, id: x.idAnnoPgmConcatenato };
+  });
+  // console.log(data);
   return data;
 };
 const getMaterie = async (token) => {
@@ -190,7 +125,10 @@ const insertProgrammaBase = async (token, body) => {
   return res;
 };
 const deleteProgrammaBase = async (token, id) => {
-  return await deleteObjectURL(token, `${PobaProgrammaBaseAnas}/${id}`);
+  return await commMain.deleteObjectURL(
+    token,
+    `${PobaProgrammaBaseAnas}/${id}`
+  );
 };
 const getClasseArgomentoCombo = async (token, id) => {
   const f = await utils.getFetch(token, GetClasseArgomentoCombo(id));
@@ -204,13 +142,27 @@ const getClasseArgomentoCombo = async (token, id) => {
   });
   return data;
 };
+const getClasseArgomentoComboAggr = async (token, id) => {
+  const f = await utils.getFetch(token, GetClasseArgomentoComboAggr(id));
+
+  console.log("getClasseArgomentoComboAggr", id);
+  // console.log(f);
+  if (f.status) return [];
+
+  const data = f.map((x) => {
+    return { label: x.classeArgomento, id: x.idClasseArgomento };
+  });
+  return data;
+};
 const insertClasseArgomento = async (token, body) => {
-  //PobaProgrammaBaseAnas
   let res = await utils.postFetch(token, ClarClasseArgomentoAnas, body);
   return res;
 };
 const deleteClasseArgomento = async (token, id) => {
-  return await deleteObjectURL(token, `${ClarClasseArgomentoAnas}/${id}`);
+  return await commMain.deleteObjectURL(
+    token,
+    `${ClarClasseArgomentoAnas}/${id}`
+  );
 };
 const getClasseArgomentoBread = async (token, id) => {
   const f = await utils.getFetch(token, GetProgrammaBase(id));
@@ -277,7 +229,10 @@ const insertArgomento = async (token, body) => {
   return res;
 };
 const deleteArgomento = async (token, id) => {
-  return await deleteObjectURL(token, `${ArgoArgomentoMateriaDats}/${id}`);
+  return await commMain.deleteObjectURL(
+    token,
+    `${ArgoArgomentoMateriaDats}/${id}`
+  );
 };
 const getLezione = async (token, id) => {
   const f = await utils.getFetch(token, GetLezione(id));
@@ -337,10 +292,10 @@ const insertLezioneAggr = async (token, body) => {
   return res;
 };
 const deleteLezione = async (token, id) => {
-  return await deleteObjectURL(token, `${LeziLezioneDats}/${id}`);
+  return await commMain.deleteObjectURL(token, `${LeziLezioneDats}/${id}`);
 };
 const deleteLezioneAggr = async (token, id, pbaseid) => {
-  return await deleteObjectURL(
+  return await commMain.deleteObjectURL(
     token,
     `${LezaLezioneAggrDats}/${pbaseid}/${id}`
   );
@@ -394,7 +349,10 @@ const uploadContenuto = async (token, id, body) => {
   );
 };
 const deleteContenuto = async (token, id) => {
-  return await deleteObjectURL(token, `${ColeContenutoLezioneDats}/${id}`);
+  return await commMain.deleteObjectURL(
+    token,
+    `${ColeContenutoLezioneDats}/${id}`
+  );
 };
 const getTipoContenuto = async (token) => {
   const f = await utils.getFetch(token, TicoTipoContenutoCombo);
@@ -411,101 +369,37 @@ const getTipoContenuto = async (token) => {
   });
   return data;
 };
-const getIndirizzoIstituto = async (token) => {
-  const f = await utils.getFetch(token, GetIndirizzoIstituto(0));
-
-  console.log("getIndirizzoIstituto");
-  // console.log(f);
-  if (f.status) return [];
-
-  const data = f.map((x) => {
-    return {
-      label: x.tipoIstituto + "-" + x.indirizzoIstitutoDesc,
-      id: x.idIndirizzoIstituto,
-    };
-  });
-  return data;
-};
-const getAnnoIndIstituto = async (token) => {
-  const f = await utils.getFetch(token, GetAnnoIndirizzo(0));
-
-  console.log("getAnnoIndIstituto");
-  // console.log(f);
-  if (f.status) return [];
-
-  const data = f.map((x) => {
-    return {
-      id: x.idAnnoIndirizzoIstituto,
-      col1: x.tipoIstituto + "-" + x.indirizzoIstituto,
-      col2: x.materia + "-" + x.anno,
-    };
-  });
-  return data;
-};
-const insertAnnoIndIstituto = async (token, body) => {
-  let res = await utils.postFetch(token, AninAnnoIndirizzoAnas, body);
-  return res;
-};
-const deleteAnnoIndIstituto = async (token, id) => {
-  return await deleteObjectURL(token, `${AninAnnoIndirizzoAnas}/${id}`);
-};
-
-const getLezClasseArgomento = async (token) => {
-  const f = await utils.getFetch(token, GetLezionePerClasseArgomento(0));
-
-  console.log("getLezClasseArgomento");
-  // console.log(f);
-  if (f.status) return [];
-
-  const data = f.map((x) => {
-    return {
-      label: x.classeArgomento + "-" + x.argomento + "-" + x.lezioneDesc,
-      id: x.idLezione,
-    };
-  });
-  return data;
-};
-const getLezClasseArgomentoId = async (token, id) => {
-  const f = await utils.getFetch(token, GetLezionePerClasseArgomento(id));
-
-  console.log("getLezClasseArgomentoId");
-  // console.log(f);
-  if (f.status) return [];
-
-  const data = f.map((x) => {
-    return {
-      label: x.classeArgomento + "-" + x.argomento + "-" + x.lezioneDesc,
-      id: x.idLezione,
-    };
-  });
-  return data;
-};
-
-const getClasseArgomentoIndiCombo = async (token, id) => {
-  const f = await utils.getFetch(token, GetPindiClasseArgomentoCombo(id));
-
-  console.log("getClasseArgomentoIndiCombo", id);
-  // console.log(f);
-  if (f.status) return [];
-
-  const data = f.map((x) => {
-    return { label: x.classeArgomento, id: x.idClasseArgomento };
-=======
-    console.log(x);
->>>>>>> 51ecd65a2d72a8d9f134ada00fb57a449897f5f6
-  });
-  return data;
-};
 
 module.exports = {
-  getToken,
-  getFunzioniForm,
-  getIscrizioneStudente,
-<<<<<<< HEAD
-  getStudenteMaterie,
-  getLezioniSeguite,
-  getLezioniDaSeguire
-=======
-  getLezioniDaSeguire,
->>>>>>> 51ecd65a2d72a8d9f134ada00fb57a449897f5f6
+  getAnnoFrequenza,
+  getAnnoFrequenzaAggr,
+  getMaterie,
+  getRiepilogoProgrammaBase,
+  getProgrammaBase,
+  getProgrammaBaseCombo,
+  insertProgrammaBase,
+  deleteProgrammaBase,
+  getClasseArgomentoCombo,
+  getClasseArgomentoComboAggr,
+  insertClasseArgomento,
+  deleteClasseArgomento,
+  getClasseArgomentoBread,
+  getClasseArgomento,
+  getArgomento,
+  getArgomentoBread,
+  insertArgomento,
+  deleteArgomento,
+  getLezione,
+  getLezioneAggr,
+  getLezioneBread,
+  insertLezione,
+  insertLezioneAggr,
+  deleteLezione,
+  deleteLezioneAggr,
+  getContenuto,
+  getContenutoBread,
+  insertContenuto,
+  uploadContenuto,
+  deleteContenuto,
+  getTipoContenuto,
 };

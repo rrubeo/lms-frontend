@@ -11,14 +11,15 @@ import {
 } from "../../../../data/pbase/data_materie";
 
 import {
-  getFunzioniForm,
   getAnnoFrequenza,
   getMaterie,
-  getProgrammaBase,
   getClasseArgomentoBread,
+  getProgrammaBase,
   insertProgrammaBase,
   deleteProgrammaBase,
-} from "../../../../data/common";
+} from "../../../../data/pbase/common";
+
+import { getFunzioniForm } from "../../../../data/common";
 
 async function getHandler(userLogin, pid) {
   const db_annofreq = await getAnnoFrequenza(userLogin.token);
@@ -62,7 +63,7 @@ async function postHandler(userLogin, postData, response) {
   for (let m of postData.materie) {
     let poba = {
       pobaFkMascId: m.id,
-      pobaSysuser: userLogin.userID,     
+      pobaSysuser: userLogin.userID,
       pobaFkAnfrId: postData.anno.id,
       pobaFlagAggregato: 1,
     };
