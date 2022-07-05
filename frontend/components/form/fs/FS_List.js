@@ -10,6 +10,7 @@ import fsStyle from "../../../styles/Fs.module.css";
 import jnStyles from "../../../styles/utils.module.css";
 
 class FS_LastLessons extends React.Component {
+  contenuto = '';
   constructor(props) {
     super(props);
     this.state = {
@@ -21,8 +22,6 @@ class FS_LastLessons extends React.Component {
   }
 
   render() {
-    const contenuto = '';
-
     if (this.props.type == 'text'){
       this.contenuto = this.state.list.map((item) =>
         <ListItem key={item.id}>

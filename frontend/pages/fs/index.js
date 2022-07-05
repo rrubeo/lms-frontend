@@ -12,6 +12,7 @@ import FS_ProfileStudent from "../../components/form/fs/FS_ProfileStudent";
 import FS_Progress from "../../components/form/fs/FS_Progress.js";
 import FS_Accordion_Home from "../../components/form/fs/FS_Accordion_Home.js";
 import FS_List from "../../components/form/fs/FS_List";
+import FS_TodoLesson from "../../components/form/fs/FS_TodoLesson";
 
 import { PAGE_401 } from "../../lib/redirect";
 import fsStyle from "../../styles/Fs.module.css";
@@ -72,6 +73,16 @@ function HomepageStudente() {
   if (!data) return <Loader id="home" />;
   if (data.status != 200) return <div>{data.message}</div>;
 
+
+  const handleSubmit = async (event, formData) => {
+  };
+
+  const handleDelete = async (rowData) => {
+  };
+
+  const handleNextStep = async (event, filter, route) => {
+  };
+
   return (
     <>
       <DCT_Layout id="Layout" data={data}>
@@ -110,6 +121,15 @@ function HomepageStudente() {
               <FS_Accordion_Home
                 title={data.accordionElements.title}
                 array={data.accordionElements.subjects}
+              />
+
+              <FS_TodoLesson
+                id={"FS_TodoLesson"}
+                activeStep={0}
+                onSubmit={handleSubmit}
+                data={data}
+                onNextStep={handleNextStep}
+                action={fs_cfg.FS_STEP_5_ACTION}
               />
             </Grid>
           </Grid>

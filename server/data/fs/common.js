@@ -2,6 +2,8 @@ import {
   UserAuthenticate,
   GetFunzioniForm,
   GetIscrizioneStudente,
+  GetStudenteMaterie,
+  GetLezioniSeguite,
   GetLezioniDaSeguire
 } from "../../data/fs/config";
 
@@ -54,10 +56,10 @@ const getIscrizioneStudente = async (token, username) => {
 };
 
 
-const getLezioniDaSeguire = async (token, idIscrizione) => {
-  const f = await utils.getFetch(token, GetLezioniDaSeguire(idIscrizione));
+const getStudenteMaterie = async (token, username, idIscrizione) => {
+  const f = await utils.getFetch(token, GetStudenteMaterie(username, idIscrizione));
 
-  console.log("getIscrizione");
+  console.log("getStudenteMaterie");
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -65,6 +67,34 @@ const getLezioniDaSeguire = async (token, idIscrizione) => {
   });
   return data;
 };
+
+
+const getLezioniSeguite = async (token, username, idIscrizione) => {
+  const f = await utils.getFetch(token, GetLezioniSeguite(username, idIscrizione));
+
+  console.log("getLezioniSeguite");
+  if (f.status) return [];
+
+  const data = f.map((x) => {
+    console.log(x)
+  });
+  return data;
+};
+
+
+const getLezioniDaSeguire = async (token, idIscrizione) => {
+  const f = await utils.getFetch(token, GetLezioniDaSeguire(idIscrizione));
+
+  console.log("getLezioniDaSeguire");
+  if (f.status) return [];
+
+  const data = f.map((x) => {
+    console.log(x)
+  });
+  return data;
+};
+
+
 
 /*
 //Programma Base
@@ -505,5 +535,7 @@ module.exports = {
   getToken,
   getFunzioniForm,
   getIscrizioneStudente,
+  getStudenteMaterie,
+  getLezioniSeguite,
   getLezioniDaSeguire
 };

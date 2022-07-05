@@ -6,8 +6,51 @@ import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
 import { 
   getFunzioniForm,
   getIscrizioneStudente, 
+  getStudenteMaterie,
+  getLezioniSeguite,
   getLezioniDaSeguire
 } from "../../../../data/fs/common";
+
+
+const colums = [
+  {
+    field: "col1",
+    headerName: "Argomento",
+    flex: 1,
+    minWidth: 110,
+    maxWidth: 110,
+  },
+  {
+    field: "col2",
+    headerName: "Lezione",
+    flex: 1,
+    minWidth: 110,
+    maxWidth: 110,
+  },
+  {
+    field: "col3",
+    headerName: "Durata",
+    flex: 1,
+    minWidth: 110,
+    maxWidth: 110,
+    type: "number",
+    align: "right",
+  },
+  {
+    field: "col4",
+    headerName: "Tempo residuo",
+    flex: 1,
+    minWidth: 110,
+    maxWidth: 110,
+  },
+  {
+    field: "col5",
+    headerName: "Esercizi da controllare",
+    flex: 1,
+    minWidth: 110,
+    maxWidth: 110,
+  }
+];
 
 
 const accordionElements = {
@@ -261,7 +304,10 @@ async function getHandler(userLogin, pid) {
   );
 
   const profileStudent = await getIscrizioneStudente(userLogin.token, userLogin.userID);
-  //const accordionElements = await getLezioniDaSeguire(userLogin.token, profileStudent.idIscrizione);
+  //const accordionElements = await getStudenteMaterie(userLogin.token, userLogin.userID, profileStudent.idScrizione);
+  //const recentLessons = await getLezioniSeguite(userLogin.token, userLogin.userID, profileStudent.idScrizione);
+  //const todoLessons = await getLezioniDaSeguire(userLogin.token, profileStudent.idIscrizione);
+  const todoLessons = [];
 
   const data = {
     title: "Configurazione Iscrizione studente",
@@ -273,6 +319,8 @@ async function getHandler(userLogin, pid) {
     profileDats: profileStudent,
     accordionElements: accordionElements,
     recentLessons: recentLessons,
+    rows: todoLessons,
+    cols: colums,
     // bread: db_bread,
   };
   return data;
