@@ -12,6 +12,10 @@ const PINDI_STEP_1 = "pi_2le";
 const GSTU_STEP_0 = "gs_search";
 const GSTU_STEP_1 = "gs_new";
 
+const ESE_STEP_0 = "ese_search";
+const ESE_STEP_1 = "ese_dett";
+
+
 const HOME_0 = "home";
 const HOME_STUDENT = "fs";
 const CALENDAR = "calendar";
@@ -30,4 +34,6 @@ module.exports = {
   PINDI_STEP_1,
   GSTU_STEP_0,
   GSTU_STEP_1,
+  ESE_STEP_0,
+  ESE_STEP_1
 };

@@ -1,7 +1,7 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { getLezClasseArgomentoId } from "../../../../data/common";
+import { getLezClasseArgomentoId } from "../../../../data/pindi/common";
 
 export default async function handler(req, res) {
   await utils.cors(req, res);

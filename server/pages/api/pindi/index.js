@@ -15,11 +15,12 @@ import {
 
 import {
   getIndirizzoIstituto,
-  getProgrammaBaseCombo,
   insertAnnoIndIstituto,
   getAnnoIndIstituto,
   deleteAnnoIndIstituto,
-} from "../../../data/common";
+} from "../../../data/pindi/common";
+
+import { getProgrammaBaseCombo } from "../../../data/pbase/common";
 
 async function getHandler(userLogin, pid) {
   const db_indirizzo = await getIndirizzoIstituto(userLogin.token);

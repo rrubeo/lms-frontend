@@ -9,14 +9,15 @@ import {
 import { rows, cols } from "../../../../data/pbase/data_lezione";
 
 import {
-  getFunzioniForm,
   getAnnoFrequenzaAggr,
+  getClasseArgomentoBread,
   getClasseArgomentoCombo,
   getLezioneAggr,
-  getClasseArgomentoBread,
   deleteLezioneAggr,
   insertLezioneAggr,
-} from "../../../../data/common";
+} from "../../../../data/pbase/common";
+
+import { getFunzioniForm } from "../../../../data/common";
 
 async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
@@ -38,8 +39,8 @@ async function getHandler(userLogin, pid) {
     usermenu: usermenu,
     anno_label: "Anno Frequenza",
     anno: db_anno,
-    classe_label: "Classe Argomento",   
-    lezione_label: "Lezione",    
+    classe_label: "Classe Argomento",
+    lezione_label: "Lezione",
     argomento_label: "Argomento",
     back_label: tornaIndietro,
     rows: db_rows,

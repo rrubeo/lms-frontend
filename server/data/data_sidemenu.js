@@ -85,7 +85,7 @@ const sidemenu = [
     id: utils.getUID(),
     text: "Gestione Esercitazioni",
     icon: "icon-lesson-management",
-    link: `${process.env.frontend}/${cfg.HOME_0}`,
+    link: `${process.env.frontend}/ese/${cfg.ESE_STEP_0}`,
   },
   {
     id: utils.getUID(),

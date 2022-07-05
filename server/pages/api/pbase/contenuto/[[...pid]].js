@@ -6,15 +6,14 @@ import { stepper, tornaIndietro } from "../../../../data/pbase/data_common";
 import { contenuto, rows, cols } from "../../../../data/pbase/data_contenuto";
 
 import {
-  getToken,
-  getFunzioniForm,
   getTipoContenuto,
   getContenuto,
   getContenutoBread,
   deleteContenuto,
   insertContenuto,
-  uploadContenuto,
-} from "../../../../data/common";
+} from "../../../../data/pbase/common";
+
+import { getFunzioniForm, uploadContenuto } from "../../../../data/common";
 
 export const config = {
   api: {
@@ -62,7 +61,7 @@ async function deleteHandler(userLogin, deleteData) {
 }
 
 async function postHandler(userLogin, postData, pid) {
-  let poba = {    
+  let poba = {
     coleSysuser: userLogin.userID,
     coleFkTicoId: postData.tipo.id,
     coleFkLeziId: pid,

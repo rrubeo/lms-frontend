@@ -9,13 +9,14 @@ import {
 import { rows, cols, classe_select } from "../../../../data/pindi/data_lezione";
 
 import {
-  getFunzioniForm,
   getClasseArgomentoIndiCombo,
   getProgrammaIndi,
   getProgrammaIndiBread,
   insertProgrammaIndi,
   deleteProgrammaIndi,
-} from "../../../../data/common";
+} from "../../../../data/pindi/common";
+
+import { getFunzioniForm } from "../../../../data/common";
 
 async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
@@ -58,7 +59,7 @@ async function postHandler(userLogin, postData, response, pid) {
     if (m != 0) {
       let poba = {
         prinFkAninId: pid,
-        prinSysuser: userLogin.userID,        
+        prinSysuser: userLogin.userID,
         prinFkLeziId: m.id,
       };
       console.log(poba);
