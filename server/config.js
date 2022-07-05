@@ -13,9 +13,13 @@ const GSTU_STEP_0 = "gs_search";
 const GSTU_STEP_1 = "gs_new";
 
 const HOME_0 = "home";
+const HOME_STUDENT = "fs";
+const CALENDAR = "calendar";
 
 module.exports = {
   HOME_0,
+  HOME_STUDENT,
+  CALENDAR,
   PBASE_STEP_0,
   PBASE_STEP_1,
   PBASE_STEP_2,

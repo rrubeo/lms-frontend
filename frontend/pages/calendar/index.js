@@ -5,7 +5,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import safeJsonStringify from "safe-json-stringify";
 import useSWR, { useSWRConfig, SWRConfig } from "swr";
-import Image from "next/image";
+import DTC_Calendar from "../../components/calendar/calendar";
 import { withIronSessionSsr } from "iron-session/next";
 import { defaultLogin, sessionOptions, getAuthSession } from "../../lib/";
 import useUser from "../../lib/useUser";
@@ -13,8 +13,6 @@ import { PAGE_401 } from "../../lib/redirect";
 
 const utils = require("../../lib/utils");
 const API = `${process.env.server}/menu`;
-
-export const pageTitle = "Home";
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
@@ -72,14 +70,7 @@ function HomeMain() {
       <DCT_Layout id="Layout" data={data}>
         <Container component="span" maxWidth="lg" disableGutters={true}>
           <Box sx={{ flexGrow: 1, bgcolor: "#ffffff" }}>
-            <Image
-              alt="home"
-              src="/images/search_bkg.png"
-              layout="responsive"
-              width={1200}
-              height={650}
-              priority
-            />
+            <DTC_Calendar />
           </Box>
         </Container>
       </DCT_Layout>

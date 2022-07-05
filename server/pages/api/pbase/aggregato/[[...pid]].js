@@ -10,6 +10,7 @@ import { rows, cols } from "../../../../data/pbase/data_lezione";
 
 import {
   getFunzioniForm,
+  getAnnoFrequenzaAggr,
   getClasseArgomentoCombo,
   getLezioneAggr,
   getClasseArgomentoBread,
@@ -23,6 +24,8 @@ async function getHandler(userLogin, pid) {
     userLogin.userID,
     "FRM_ProgBase_Ricerca"
   );
+
+  const db_anno = await getAnnoFrequenzaAggr(userLogin.token, pid);
   const db_classe = await getClasseArgomentoCombo(userLogin.token, pid);
   const db_rows = await getLezioneAggr(userLogin.token, pid);
   const db_bread = await getClasseArgomentoBread(userLogin.token, pid);
@@ -33,10 +36,10 @@ async function getHandler(userLogin, pid) {
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,
-    classe_label: "Classe Argomento",
-    classe: db_classe,
-    lezione_label: "Lezione",
-    lezione: [],
+    anno_label: "Anno Frequenza",
+    anno: db_anno,
+    classe_label: "Classe Argomento",   
+    lezione_label: "Lezione",    
     argomento_label: "Argomento",
     back_label: tornaIndietro,
     rows: db_rows,

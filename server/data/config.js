@@ -22,6 +22,8 @@ const CLOUD_API_TBL_LIST_CLAS_ARG =
   "api/Tables/GetClasseArgomentoXProgrammaBase";
 const CLOUD_API_TBL_LIST_CLAS_ARG_COMBO =
   "api/Tables/GetClasseArgomentoXProgrammaBaseCombo";
+  const CLOUD_API_TBL_LIST_CLAS_ARG_COMBO_AGG =
+  "api/Tables/GetClasseArgomentoXProgrammaBaseAggregatoCombo";
 const CLOUD_API_TBL_LIST_ARG = "api/Tables/GetArgomentoXClasseArgomento";
 const CLOUD_API_TBL_LIST_LEZ = "api/Tables/GetLezione";
 const CLOUD_API_TBL_LIST_CONT = "api/Tables/GetContenutoLezione";
@@ -36,6 +38,8 @@ const CLOUD_API_CLAS_LEZIO = "api/LeziLezioneDats";
 const CLOUD_API_CLAS_LEZIO_AGGR = "api/LezaLezioneAggrDats";
 const CLOUD_API_TBL_LEZIO_PBASE_AGGR =
   "api/Tables/GetPossibiliLezioniPGMAggregato";
+const CLOUD_API_TBL_PBASE_AGGR_ANNO =
+  "api/Tables/GetAnnoXProgrammaBaseAggregatoCombo";
 
 const CLOUD_API_CLAS_CONTE = "api/ColeContenutoLezioneDats";
 const CLOUD_API_CLAS_CONTE_UPLOAD = "api/ColeContenutoLezioneDats/UploadFile";
@@ -44,12 +48,16 @@ const CLOUD_API_TIPO_CONT_COMBO = "api/Tables/GetTipoContenutoCombo";
 const CLOUD_API_BREAD_CLAS_ARGO = "api/Tables/GetBreadClasseArgomento";
 const CLOUD_API_BREAD_ARG = "api/Tables/GetBreadArgomento";
 const CLOUD_API_BREAD_LEZIO = "api/Tables/GetBreadLezione";
+
 //Endpoint
 function GetProgrammaBase(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_PBASE}/${id}`;
 }
 function GetProgrammaBaseCombo(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_PBASE_COMBO}/${id}`;
+}
+function GetAnnoAggregatoCombo(id) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_PBASE_AGGR_ANNO}/${id}`;
 }
 function GetClasseArgomento(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_CLAS_ARG}/${id}`;
@@ -59,6 +67,9 @@ function GetBreadClasseArgomento(id) {
 }
 function GetClasseArgomentoCombo(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_CLAS_ARG_COMBO}/${id}`;
+}
+function GetClasseArgomentoComboAggr(id) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_CLAS_ARG_COMBO_AGG}/${id}`;
 }
 function GetArgomento(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_ARG}/${id}`;
@@ -138,6 +149,11 @@ const CamaCategoriaMateriaAnas = `${CLOUD_BASE_URL}/${CLOUD_API_CAT_MAT}`;
 const CateCategoriaIstitutoAnas = `${CLOUD_BASE_URL}/${CLOUD_API_CAT_IST}`;
 const ContContestoAnas = `${CLOUD_BASE_URL}/${CLOUD_API_CONTEST}`;
 
+const CLOUD_API_TBL_ISCR_STUD = "api/Tables/GetIscrizioneStudente";
+function GetIscrizioneStudente(id) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_ISCR_STUD}/${id}`;
+}
+
 function GetMenuNonStudenti(utenza) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_MENU_NONSTU}/${utenza}`;
 }
@@ -155,9 +171,11 @@ module.exports = {
   GetMenuNonStudenti,
   GetProgrammaBase,
   GetProgrammaBaseCombo,
+  GetAnnoAggregatoCombo,
   GetClasseArgomento,
   GetBreadClasseArgomento,
   GetClasseArgomentoCombo,
+  GetClasseArgomentoComboAggr,
   GetArgomento,
   GetBreadArgomento,
   GetLezione,
@@ -179,4 +197,5 @@ module.exports = {
   GetProgrammaIndirizzo,
   PrinProgrammaIndirizzoDats,
   AninAnnoIndirizzoAnas,
+  GetIscrizioneStudente,
 };

@@ -74,6 +74,7 @@ class DCT_SideMenu extends React.Component {
       direction: this.props.direction,
     };
 
+    this.getContent = this.getContent.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
     this.handleOpenSubClick = this.handleOpenSubClick.bind(this);
     this.handleListItemClick = this.handleListItemClick.bind(this);
@@ -96,6 +97,163 @@ class DCT_SideMenu extends React.Component {
     this.setState({ selectedIndex: index });
   }
 
+  getContent() {
+    const drawer = (
+      <>
+        <DrawerHeader>
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+            {this.props.open ? "Menu" : ""}
+          </Typography>
+          <IconButton onClick={this.handleOnClick}>
+            {this.state.direction === "ltr" ? (
+              <ChevronRightIcon />
+            ) : (
+              <ChevronLeftIcon />
+            )}
+          </IconButton>
+        </DrawerHeader>
+        <List>
+          {this.props.sideMenu.map((item, index) =>
+            item.link === "#" ? (
+              <ListItemButton
+                onClick={this.handleOpenSubClick}
+                key={item.id}
+                sx={{
+                  minHeight: 30,
+                  justifyContent: this.props.open ? "initial" : "center",
+                  ml: 1.3,
+                  mr: 1,
+                  px: 0,
+                  py: 1,
+                }}
+              >
+                {this.state.collapsed ? (
+                  <>
+                    <span className="icon-arrow-up-small"></span>
+                    {this.props.open ? (
+                      <ListItemText
+                        classes={{
+                          primary: jnStyles.jnTextSide1,
+                        }}
+                        primary={item.text}
+                        sx={{
+                          ml: 2,
+                        }}
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <Tooltip
+                      TransitionComponent={Zoom}
+                      title={item.text}
+                      placement="right-end"
+                    >
+                      {this.props.open ? (
+                        <></>
+                      ) : (
+                        <ListItemIcon
+                          classes={{
+                            root: jnStyles.jnIconSide1,
+                          }}
+                          sx={{
+                            minWidth: 0,
+                            mr: this.props.open ? 1 : 1,
+                            justifyContent: "center",
+                            color: "primary.main",
+                          }}
+                        >
+                          <span className={item.icon}></span>
+                        </ListItemIcon>
+                      )}
+                    </Tooltip>
+                    <span className="icon-arrow-down-small"></span>
+                    {this.props.open ? (
+                      <ListItemText
+                        classes={{
+                          primary: jnStyles.jnTextSide1,
+                        }}
+                        primary={item.text}
+                        sx={{
+                          opacity: this.props.open ? 1 : 0,
+                          ml: 2,
+                        }}
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </>
+                )}
+              </ListItemButton>
+            ) : item.link === "br" ? (
+              <Divider key={item.id} />
+            ) : (
+              <Collapse
+                key={item.id}
+                in={this.state.collapsed}
+                timeout="auto"
+                unmountOnExit
+              >
+                <List component="div" disablePadding>
+                  <ListItemButton
+                    selected={this.state.selectedIndex === index}
+                    onClick={(event) => this.handleListItemClick(event, index)}
+                    key={item.id}
+                    component="a"
+                    href={item.link}
+                    sx={{
+                      minHeight: 30,
+                      justifyContent: this.props.open ? "initial" : "center",
+                      px: 1,
+                      py: 0.6,
+                    }}
+                  >
+                    <Tooltip
+                      TransitionComponent={Zoom}
+                      title={item.text}
+                      placement="right-end"
+                    >
+                      <ListItemIcon
+                        classes={{
+                          root: jnStyles.jnIconSide2,
+                        }}
+                        sx={{
+                          minWidth: 40,
+                          mr: this.props.open ? 1 : "auto",
+                          ml: this.props.open ? 3 : "auto",
+                          justifyContent: "center",
+                          color: "primary.main",
+                        }}
+                      >
+                        <span className={item.icon}></span>
+                      </ListItemIcon>
+                    </Tooltip>
+                    {this.props.open ? (
+                      <ListItemText
+                        classes={{
+                          primary: jnStyles.jnTextSide2,
+                        }}
+                        primary={item.text}
+                        sx={{
+                          mx: 0,
+                          opacity: this.props.open ? 1 : 0,
+                        }}
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </ListItemButton>
+                </List>
+              </Collapse>
+            )
+          )}
+        </List>
+      </>
+    );
+    return drawer;
+  }
   render() {
     // console.log(
     //   `<DCT_SideMenu ='${this.props.id}' ${this.props.open} ${this.state.open}>`
@@ -104,171 +262,31 @@ class DCT_SideMenu extends React.Component {
     return (
       <>
         {this.props.loaded ? (
-          <Drawer
-            variant="permanent"
-            open={this.props.open}
-            drawerwidth={this.state.drawerwidth}
-          >
-            <DrawerHeader>
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                sx={{ flexGrow: 1 }}
-              >
-                {this.props.open ? "Menu" : ""}
-              </Typography>
-              <IconButton onClick={this.handleOnClick}>
-                {this.state.direction === "ltr" ? (
-                  <ChevronRightIcon />
-                ) : (
-                  <ChevronLeftIcon />
-                )}
-              </IconButton>
-            </DrawerHeader>
-            <List>
-              {this.props.sideMenu.map((item, index) =>
-                item.link === "#" ? (
-                  <ListItemButton
-                    onClick={this.handleOpenSubClick}
-                    key={item.id}
-                    sx={{
-                      minHeight: 30,
-                      justifyContent: this.props.open ? "initial" : "center",
-                      ml: 1.3,
-                      mr: 1,
-                      px: 0,
-                      py: 1,
-                    }}
-                  >
-                    {this.state.collapsed ? (
-                      <>
-                        <span className="icon-arrow-up-small"></span>
-                        {this.props.open ? (
-                          <ListItemText
-                            classes={{
-                              primary: jnStyles.jnTextSide1,
-                            }}
-                            primary={item.text}
-                            sx={{
-                              ml: 2,
-                            }}
-                          />
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        <Tooltip
-                          TransitionComponent={Zoom}
-                          title={item.text}
-                          placement="right-end"
-                        >
-                          {this.props.open ? (
-                            <></>
-                          ) : (
-                            <ListItemIcon
-                              classes={{
-                                root: jnStyles.jnIconSide1,
-                              }}
-                              sx={{
-                                minWidth: 0,
-                                mr: this.props.open ? 1 : 1,
-                                justifyContent: "center",
-                                color: "primary.main",
-                              }}
-                            >
-                              <span className={item.icon}></span>
-                            </ListItemIcon>
-                          )}
-                        </Tooltip>
-                        <span className="icon-arrow-down-small"></span>
-                        {this.props.open ? (
-                          <ListItemText
-                            classes={{
-                              primary: jnStyles.jnTextSide1,
-                            }}
-                            primary={item.text}
-                            sx={{
-                              opacity: this.props.open ? 1 : 0,
-                              ml: 2,
-                            }}
-                          />
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    )}
-                  </ListItemButton>
-                ) : item.link === "br" ? (
-                  <Divider key={item.id} />
-                ) : (
-                  <Collapse
-                    key={item.id}
-                    in={this.state.collapsed}
-                    timeout="auto"
-                    unmountOnExit
-                  >
-                    <List component="div" disablePadding>
-                      <ListItemButton
-                        selected={this.state.selectedIndex === index}
-                        onClick={(event) =>
-                          this.handleListItemClick(event, index)
-                        }
-                        key={item.id}
-                        component="a"
-                        href={item.link}
-                        sx={{
-                          minHeight: 30,
-                          justifyContent: this.props.open
-                            ? "initial"
-                            : "center",
-                          px: 1,
-                          py: 0.6,
-                        }}
-                      >
-                        <Tooltip
-                          TransitionComponent={Zoom}
-                          title={item.text}
-                          placement="right-end"
-                        >
-                          <ListItemIcon
-                            classes={{
-                              root: jnStyles.jnIconSide2,
-                            }}
-                            sx={{
-                              minWidth: 40,
-                              mr: this.props.open ? 1 : "auto",
-                              ml: this.props.open ? 3 : "auto",
-                              justifyContent: "center",
-                              color: "primary.main",
-                            }}
-                          >
-                            <span className={item.icon}></span>
-                          </ListItemIcon>
-                        </Tooltip>
-                        {this.props.open ? (
-                          <ListItemText
-                            classes={{
-                              primary: jnStyles.jnTextSide2,
-                            }}
-                            primary={item.text}
-                            sx={{
-                              mx: 0,
-                              opacity: this.props.open ? 1 : 0,
-                            }}
-                          />
-                        ) : (
-                          <></>
-                        )}
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                )
-              )}
-            </List>
-          </Drawer>
+          <>
+            <Drawer
+              variant={this.props.open ? "permanent" : "temporary"}
+              open={this.props.open}
+              drawerwidth={this.state.drawerwidth}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+              sx={{
+                display: { xs: "block", sm: "none" },
+              }}
+            >
+              {this.getContent()}
+            </Drawer>
+            <Drawer
+              variant="permanent"
+              open={this.props.open}
+              drawerwidth={this.state.drawerwidth}
+              sx={{
+                display: { xs: "none", sm: "block" },
+              }}
+            >
+              {this.getContent()}
+            </Drawer>
+          </>
         ) : (
           <></>
         )}

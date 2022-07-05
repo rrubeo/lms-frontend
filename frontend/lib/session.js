@@ -29,7 +29,7 @@ const defaultLogin = {
   token: "",
   role: "",
   idRole: 0,
-  isStudent: false,
+  isStudent: 0,
 };
 
 const getRoles = async (userInfo) => {

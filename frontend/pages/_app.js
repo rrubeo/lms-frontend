@@ -16,6 +16,8 @@ import Loader from "../components/layout/loader";
 import { Toaster } from "react-hot-toast";
 import useUser from "../lib/useUser";
 import ErrorBoundary from "../components/ErrorBoundary";
+import { PAGE_LOGIN } from "../lib/redirect";
+
 const clientSideEmotionCache = createEmotionCache();
 
 export default function MyApp(props) {
@@ -24,7 +26,7 @@ export default function MyApp(props) {
   const [loading, setLoading] = React.useState(false);
 
   const { user } = useUser({
-    redirectTo: "/login",
+    redirectTo: PAGE_LOGIN,
   });
 
   // console.log("APP");

@@ -4,9 +4,11 @@ import {
   MascMateriaScolasticaAnas,
   GetProgrammaBase,
   GetProgrammaBaseCombo,
+  GetAnnoAggregatoCombo,
   GetClasseArgomento,
   GetBreadClasseArgomento,
   GetClasseArgomentoCombo,
+  GetClasseArgomentoComboAggr,
   GetArgomento,
   GetBreadArgomento,
   GetLezione,
@@ -80,6 +82,19 @@ const getAnnoFrequenza = async (token) => {
   const data = f.map((x) => {
     return { label: x.anfrDescr, id: x.anfrId };
   });
+  return data;
+};
+const getAnnoFrequenzaAggr = async (token, id) => {
+  const f = await utils.getFetch(token, GetAnnoAggregatoCombo(id));
+
+  console.log("getAnnoFrequenzaAggr");
+  // console.log(f);
+  if (f.status) return [];
+
+  const data = f.map((x) => {
+    return { label: x.anno, id: x.idAnnoPgmConcatenato };
+  });
+  // console.log(data);
   return data;
 };
 const getMaterie = async (token) => {
@@ -160,6 +175,18 @@ const getClasseArgomentoCombo = async (token, id) => {
   const f = await utils.getFetch(token, GetClasseArgomentoCombo(id));
 
   console.log("getClasseArgomentoCombo", id);
+  // console.log(f);
+  if (f.status) return [];
+
+  const data = f.map((x) => {
+    return { label: x.classeArgomento, id: x.idClasseArgomento };
+  });
+  return data;
+};
+const getClasseArgomentoComboAggr = async (token, id) => {
+  const f = await utils.getFetch(token, GetClasseArgomentoComboAggr(id));
+
+  console.log("getClasseArgomentoComboAggr", id);
   // console.log(f);
   if (f.status) return [];
 
@@ -507,12 +534,14 @@ module.exports = {
   getToken,
   getFunzioniForm,
   getAnnoFrequenza,
+  getAnnoFrequenzaAggr,
   getMaterie,
   getProgrammaBase,
   getProgrammaBaseCombo,
   getClasseArgomento,
   getClasseArgomentoBread,
   getClasseArgomentoCombo,
+  getClasseArgomentoComboAggr,
   getArgomento,
   getArgomentoBread,
   getLezione,

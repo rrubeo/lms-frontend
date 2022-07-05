@@ -9,8 +9,6 @@ import {
 } from "@mui/x-data-grid-generator";
 import Box from "@mui/material/Box";
 import jnStyles from "../../styles/utils.module.css";
-import ActionGrid from "./actionGrid";
-import ActionButton from "./actionButton";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
@@ -26,6 +24,7 @@ class DTC_DataGrid extends React.Component {
       actionList: [],
     };
 
+    this.getActiveAction = this.getActiveAction.bind(this);
     this.handleRowClick = this.handleRowClick.bind(this);
     this.handleRowDoubleClick = this.handleRowDoubleClick.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
@@ -33,23 +32,35 @@ class DTC_DataGrid extends React.Component {
     this.handleRouteClick = this.handleRouteClick.bind(this);
   }
 
-  componentDidMount() {
-    // console.log("GRID componentDidMount");
-    const alist = this.props.action.map((item) => {
-      switch (item.callBack) {
-        case gd_cfg.GRID_DELETE_ACTION:
-          item.callBack = this.handleDeleteClick;
-          return item;
-        case gd_cfg.GRID_ROUTE_ACTION:
-          item.callBack = this.handleRouteClick;
-          return item;
-        case gd_cfg.GRID_ADD_ACTION:
-          item.callBack = this.handleAddClick;
-          return item;
+  getActiveAction(cfgAction) {
+    // console.log("getActiveAction");
+    // console.log(cfgAction);
+    const btList = cfgAction.map((elem) => {
+      // console.log("TYPE:", typeof elem.callBack);
+      if (typeof elem.callBack === "string") {
+        switch (elem.callBack) {
+          case gd_cfg.GRID_DELETE_ACTION:
+            elem.callBack = this.handleDeleteClick;
+            return elem;
+          case gd_cfg.GRID_ROUTE_ACTION:
+            elem.callBack = this.handleRouteClick;
+            return elem;
+          case gd_cfg.GRID_ADD_ACTION:
+            elem.callBack = this.handleAddClick;
+            return elem;
+        }
+      } else {
+        // console.log("Already");
+        return elem;
       }
     });
+    // console.log("getActiveAction");
+    // console.log(btList);
+    return btList;
+  }
 
-    this.setState({ columns: [], actionList: alist });
+  componentDidMount() {
+    const alist = this.getActiveAction(this.props.action);
 
     const buttonColumn = {
       field: "actions",
@@ -58,18 +69,9 @@ class DTC_DataGrid extends React.Component {
       flex: 1,
       align: "center",
       renderCell: (params) => {
-        // return <ActionGrid params={params} action={alist} />;
         return (
           <Box>
-            {this.state.actionList.map((item) => (
-              // <ActionButton
-              //   key={item.id}
-              //   title={item.title}
-              //   icon={item.icon}
-              //   params={params}
-              //   callBack={item.callBack}
-              //   route={item.route}
-              // />
+            {alist.map((item) => (
               <Tooltip
                 key={item.id}
                 TransitionComponent={Zoom}
@@ -100,15 +102,6 @@ class DTC_DataGrid extends React.Component {
     allColumn.push(buttonColumn);
 
     this.setState({ columns: allColumn });
-  }
-
-  componentWillUnmount() {
-    // console.log("GRID componentWillUnmount");
-  }
-
-  componentDidUpdate() {
-    // console.log("GRID componentDidUpdate");
-    // console.log(this.props.rows);
   }
 
   createRandomRow(counter) {
@@ -180,7 +173,7 @@ class DTC_DataGrid extends React.Component {
       <Box component="div" sx={{ display: "inline" }}>
         <DataGrid
           autoHeight
-          pagination          
+          pagination
           density="compact"
           rows={this.props.rows}
           columns={this.state.columns}

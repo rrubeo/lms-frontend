@@ -13,10 +13,11 @@ import DCT_Login from "../../components/login/DCT_Login";
 import DTC_TextBox from "../../components/DTC_TextBox";
 import { fetchJson, FetchError, validationMessage, MSG_ERROR } from "../../lib";
 import useUser from "../../lib/useUser";
+import { PAGE_HOME } from "../../lib/redirect";
 
 export default function Login(props) {
   const { mutateUser } = useUser({
-    redirectTo: "/home",
+    redirectTo: PAGE_HOME,
     redirectIfFound: true,
   });
 

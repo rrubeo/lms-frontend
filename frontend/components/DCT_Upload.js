@@ -35,8 +35,8 @@ class DCT_Upload extends React.Component {
   }
 
   changeHandler(event) {
-    console.log(event.target.files);
-    console.log(event.target.files[0]);
+    // console.log(event.target.files);
+    // console.log(event.target.files[0]);
 
     if (!event.target.files[0]) return;
 

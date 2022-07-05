@@ -108,6 +108,12 @@ const sidemenu = [
 const navmenu = [
   {
     id: utils.getUID(),
+    text: "Student",
+    icon: "icon-student-teacher-assignment",
+    link: `${process.env.frontend}/${cfg.HOME_STUDENT}`,
+  },
+  {
+    id: utils.getUID(),
     text: "Profile",
     icon: "icon-headphones",
     link: `${process.env.frontend}/${cfg.HOME_0}`,
@@ -116,7 +122,7 @@ const navmenu = [
     id: utils.getUID(),
     text: "Calendario",
     icon: "icon-calendar",
-    link: `${process.env.frontend}/${cfg.HOME_0}`,
+    link: `${process.env.frontend}/${cfg.CALENDAR}`,
   },
   {
     id: utils.getUID(),

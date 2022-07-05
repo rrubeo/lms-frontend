@@ -4,7 +4,7 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import Grid from "@mui/material/Grid";
+import DCT_Loader from "../../DCT_Loader";
 
 import DCT_ComboBox from "../../selector/DCT_ComboBox";
 import DTC_DataGrid from "../../grid/DTC_DataGrid";
@@ -25,6 +25,7 @@ class FRM_ProgIndi_Lezione extends React.Component {
       classeValue: { label: "", id: 0 },
       listId: "lst_lezione",
       lezioneValue: this.props.data.lezione,
+      lezioneLoading: false,
       selectedValue: [],
       rows: this.props.data.rows,
     };
@@ -47,12 +48,14 @@ class FRM_ProgIndi_Lezione extends React.Component {
   }
 
   async loadComboClasseArg() {
-    const data = await utils.fetchJson("/api/clasarg", {
+    const data = await utils.fetchJson("/api/loadcomboasync", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         form: pi_cfg.FRM_PINDI_STEP_1,
         combo: this.state.classeValue,
+        api: pi_cfg.PINDI_STEP_1_API_COMBO_CLASSE,
+        isCheckList: true,
       }),
     });
     // console.log(data);
@@ -87,6 +90,7 @@ class FRM_ProgIndi_Lezione extends React.Component {
   }
 
   async handleSearch(event) {
+    this.setState({ lezioneLoading: true });
     await this.loadComboClasseArg();
 
     const data = {
@@ -95,6 +99,7 @@ class FRM_ProgIndi_Lezione extends React.Component {
       lezione: this.state.lezioneValue,
     };
     await this.props.onSearch(event, data);
+    this.setState({ lezioneLoading: false });
   }
 
   handleAddAll(event) {
@@ -218,35 +223,41 @@ class FRM_ProgIndi_Lezione extends React.Component {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <DCT_CheckList
-                    id={this.state.listId}
-                    label={this.props.data.lezione_label}
-                    list={this.state.lezioneValue}
-                    ref={this.changeChildListId}
-                    onChange={this.onChangeForm}
-                    size={270}
-                  />
-                  <ButtonGroup
-                    variant="contained"
-                    aria-label="outlined primary button group"
-                    classes={{ root: jnStyles.jnBT }}
-                  >
-                    <Button
-                      type="button"
-                      variant="contained"
-                      classes={{ root: jnStyles.jnBT }}
-                      onClick={(event) => this.handleAddAll(event)}
-                    >
-                      Aggiungi tutto
-                    </Button>
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      classes={{ root: jnStyles.jnBT }}
-                    >
-                      Salva
-                    </Button>
-                  </ButtonGroup>
+                  {this.state.lezioneLoading ? (
+                    <DCT_Loader />
+                  ) : (
+                    <>
+                      <DCT_CheckList
+                        id={this.state.listId}
+                        label={this.props.data.lezione_label}
+                        list={this.state.lezioneValue}
+                        ref={this.changeChildListId}
+                        onChange={this.onChangeForm}
+                        size={270}
+                      />
+                      <ButtonGroup
+                        variant="contained"
+                        aria-label="outlined primary button group"
+                        classes={{ root: jnStyles.jnBT }}
+                      >
+                        <Button
+                          type="button"
+                          variant="contained"
+                          classes={{ root: jnStyles.jnBT }}
+                          onClick={(event) => this.handleAddAll(event)}
+                        >
+                          Aggiungi tutto
+                        </Button>
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          classes={{ root: jnStyles.jnBT }}
+                        >
+                          Salva
+                        </Button>
+                      </ButtonGroup>
+                    </>
+                  )}
                 </Stack>
               </Stack>
             </Box>

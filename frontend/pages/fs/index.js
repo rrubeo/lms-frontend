@@ -12,6 +12,8 @@ import FS_ProfileStudent from "../../components/form/fs/FS_ProfileStudent";
 import FS_Progress from "../../components/form/fs/FS_Progress.js";
 import FS_Accordion_Home from "../../components/form/fs/FS_Accordion_Home.js";
 import FS_List from "../../components/form/fs/FS_List";
+
+import { PAGE_401 } from "../../lib/redirect";
 import fsStyle from "../../styles/Fs.module.css";
 import jnStyles from "../../styles/utils.module.css";
 
@@ -58,7 +60,7 @@ sessionOptions);
 
 function HomepageStudente() {
   const { user } = useUser({
-    redirectTo: "/401",
+    redirectTo: PAGE_401,
   });
 
   const { fallback, mutate } = useSWRConfig();

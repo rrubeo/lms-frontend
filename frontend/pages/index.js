@@ -5,12 +5,12 @@ import { fetchJson, FetchError } from "../lib";
 import Image from "next/image";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-
+import { PAGE_LOGIN } from "../lib/redirect";
 
 import jnStyles from "../styles/utils.module.css";
 export default function Home() {
   const { user, mutateUser } = useUser({
-    redirectTo: "/login",
+    redirectTo: PAGE_LOGIN,
   });
   // console.log("HOME");
   // console.log(user);

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Router from "next/router";
 import useSWR from "swr";
 import { fetchJson } from "../lib";
+import { PAGE_HOME, PAGE_HOME_STUDENT } from "../lib/redirect";
 
 export default function useUser({
   redirectTo = "",
@@ -19,7 +20,11 @@ export default function useUser({
       // If redirectIfFound is also set, redirect if the user was found
       (redirectIfFound && user?.isLoggedIn)
     ) {
-      Router.push(redirectTo);
+      if (redirectTo == PAGE_HOME && user?.isStudent == 1) {
+        Router.push(PAGE_HOME_STUDENT);
+      } else {
+        Router.push(redirectTo);
+      }
     }
   }, [user, redirectIfFound, redirectTo]);
 

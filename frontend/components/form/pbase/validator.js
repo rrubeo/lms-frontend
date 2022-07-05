@@ -49,20 +49,49 @@ async function validateForm(formData) {
       break;
     case pb_cfg.FRM_PBASE_STEP_5:
       data = {
+        tipo: formData.tipo.id,
         percorso: formData.percorso,
         nome: formData.nome,
         durata: formData.durata,
+        file: formData.file?.name,
+      };
+      // console.log(data);
+      if (data.tipo == 1) {
+        schema = yup.object().shape({
+          percorso: yup
+            .string()
+            .required("Inserire un valore per Percorso file."),
+          nome: yup.string().required("Inserire un valore per Nome contenuto."),
+          durata: yup
+            .number()
+            .typeError("Inserire la durata in minuti.")
+            .moreThan(0, "Inserire un valore maggiore di zero per Durata.")
+            .required("Inserire un valore per Durata."),
+        });
+      } else if (data.tipo == 0) {
+        schema = yup.object().shape({
+          tipo: yup
+            .number()
+            .moreThan(0, "Inserire un valore per Tipo Contenuto."),
+        });
+      } else {
+        schema = yup.object().shape({
+          nome: yup.string().required("Inserire un valore per Nome contenuto."),
+          file: yup.string().required("Alleagare un file."),
+        });
+      }
+
+      break;
+    case pb_cfg.FRM_PBASE_STEP_1_1:
+      data = {
+        anno: formData.anno.id,
+        classe: formData.classe.id,
       };
       schema = yup.object().shape({
-        // percorso: yup
-        //   .string()
-        //   .required("Inserire un valore per Percorso file."),
-        nome: yup.string().required("Inserire un valore per Nome contenuto."),
-        durata: yup
+        anno: yup.string().required("Inserire un valore per Anno Frequenza"),
+        classe: yup
           .number()
-          .typeError("Inserire la durata in minuti")
-          .moreThan(0, "Inserire un valore maggiore di zero")
-          .required("Inserire un valore per Durata."),
+          .moreThan(0, "Inserire un valore per Classe Argomento"),
       });
       break;
   }

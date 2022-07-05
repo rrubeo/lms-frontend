@@ -2,6 +2,7 @@ import * as React from "react";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 
 import DCT_Breadcrumbs from "../../DCT_Breadcrumbs";
 import DTC_TextBox from "../../DTC_TextBox";
@@ -10,8 +11,8 @@ import DTC_DataGrid from "../../grid/DTC_DataGrid";
 import DCT_Stepper from "../../DCT_Stepper";
 import DCT_ComboBox from "../../selector/DCT_ComboBox";
 import DCT_LinkButton from "../../DCT_LinkButton";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Divider from "@mui/material/Divider";
+import DCT_Loader from "../../DCT_Loader";
+
 import jnStyles from "../../../styles/utils.module.css";
 
 const utils = require("../../../lib");
@@ -29,9 +30,11 @@ class FRM_ProgBase_Contenuto extends React.Component {
       percorsoId: "tx_percorso",
       percorsoValue: "",
       durataId: "tx_durata",
-      durataValue: "",
+      durataValue: "0",
       uploadId: "tx_upload",
       selectedFile: null,
+      uploadLoading: false,
+      action: this.props.action,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,7 +51,7 @@ class FRM_ProgBase_Contenuto extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-
+    this.setState({ uploadLoading: true });
     const data = {
       id: pb_cfg.FRM_PBASE_STEP_5,
       tipo: this.state.tipoValue,
@@ -61,20 +64,28 @@ class FRM_ProgBase_Contenuto extends React.Component {
 
     // console.log(data);
     await this.props.onSubmit(event, data);
+    this.setState({ uploadLoading: false });
   }
 
   handleReset(event) {
     // console.log("RESET");
     this.changeChildTipoId.current.handleReset();
     this.changeChildNomeId.current.handleReset();
-    this.changeChildPercorsoId.current.handleReset();
-    this.changeChildDurataId.current.handleReset();
-    this.changeChildUploadId.current.handleReset();
-    this.setState({ tipoValue: { label: "", id: 0 } });
-    this.setState({ nomeValue: "" });
-    this.setState({ percorsoValue: "" });
-    this.setState({ durataValue: "" });
-    this.setState({ selectedFile: null });
+    if (this.state.isVideo) {
+      this.changeChildPercorsoId.current.handleReset();
+      this.changeChildDurataId.current.handleReset();
+    } else {
+      this.changeChildUploadId.current.handleReset();
+    }
+
+    this.setState({
+      tipoValue: { label: "", id: 0 },
+      percorsoValue: "",
+      nomeValue: "",
+      durataValue: "",
+      selectedFile: null,
+      isVideo: true,
+    });
   }
 
   onChangeForm(id, data) {
@@ -185,14 +196,18 @@ class FRM_ProgBase_Contenuto extends React.Component {
             ) : (
               <></>
             )}
-            <DTC_TextBox
-              required
-              id={this.state.durataId}
-              label={this.props.data.durata_label}
-              onChange={this.onChangeForm}
-              size={1}
-              ref={this.changeChildDurataId}
-            />
+            {this.state.isVideo ? (
+              <DTC_TextBox
+                required
+                id={this.state.durataId}
+                label={this.props.data.durata_label}
+                onChange={this.onChangeForm}
+                size={1}
+                ref={this.changeChildDurataId}
+              />
+            ) : (
+              <></>
+            )}
             <ButtonGroup
               variant="contained"
               aria-label="outlined primary button group"
@@ -215,6 +230,7 @@ class FRM_ProgBase_Contenuto extends React.Component {
             </ButtonGroup>
           </Stack>
         </Box>
+
         {!this.state.isVideo ? (
           <DCT_Upload
             id={this.state.uploadId}
@@ -225,15 +241,19 @@ class FRM_ProgBase_Contenuto extends React.Component {
         ) : (
           <></>
         )}
-        <DTC_DataGrid
-          id="gd_contenuto"
-          cols={this.props.data.cols}
-          rows={this.props.data.rows}
-          onChange={this.onChangeForm}
-          onDelete={this.onDeleteRow}
-          onNextStep={this.props.onNextStep}
-          action={this.props.action}
-        />
+        {this.state.uploadLoading ? (
+          <DCT_Loader />
+        ) : (
+          <DTC_DataGrid
+            id="gd_contenuto"
+            cols={this.props.data.cols}
+            rows={this.props.data.rows}
+            onChange={this.onChangeForm}
+            onDelete={this.onDeleteRow}
+            onNextStep={this.props.onNextStep}
+            action={this.props.action}
+          />
+        )}
       </Stack>
     );
   }

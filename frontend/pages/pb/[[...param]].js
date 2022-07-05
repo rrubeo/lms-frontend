@@ -98,7 +98,8 @@ function Main() {
     event.preventDefault();
 
     const vres = await validateForm(formData);
-
+    // validationMessage(vres.data.message, MSG_ERROR);
+    // return;
     if (vres.valid) {
       const res = await utils.postData(apiUrl, formData);
       // console.log("RISPOSTA");

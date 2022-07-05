@@ -10,4 +10,8 @@ const stepperIndirizzo = ["seleziona programma base", "seleziona lezione"];
 
 const tornaIndietro = "Back";
 
-module.exports = { stepper, tornaIndietro, stepperIndirizzo };
+module.exports = {
+  stepper,
+  tornaIndietro,
+  stepperIndirizzo,
+};

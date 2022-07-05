@@ -2,10 +2,11 @@ import React from "react";
 import useUser from "../../lib/useUser";
 import { useRouter } from "next/router";
 import { fetchJson, FetchError } from "../../lib";
+import { PAGE_LOGIN } from "../../lib/redirect";
 
 export default function SgProfile() {
   const { user, mutateUser } = useUser({
-    redirectTo: "/login",
+    redirectTo: PAGE_LOGIN,
   });
   // console.log("PAGE");
   // console.log(user);
