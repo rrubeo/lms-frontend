@@ -13,6 +13,7 @@ import fsStyle from "../../../styles/Fs.module.css";
 import jnStyles from "../../../styles/utils.module.css";
 
 export default function ControlledAccordions(props) {
+  console.log(props)
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -30,94 +31,55 @@ export default function ControlledAccordions(props) {
             disableGutters
             maxWidth="false"
             className={fsStyle.accordionContainer}
-            key={item.id}
+            key={item.idMateria}
           >
             <Accordion
               className={fsStyle.accordionElement}
-              expanded={expanded === item.id}
-              onChange={handleChange(item.id)}
+              expanded={expanded === item.idMateria}
+              onChange={handleChange(item.idMateria)}
             >
               <AccordionSummary
+                classes={{content: fsStyle.accordionSummaryContent}}
                 className={fsStyle.accordionSummary}
-                sx={{ minHeight: "110px" }}
+                sx={{ minHeight: "90px" }}
                 expandIcon={
-                  expanded === item.id ? (
+                  expanded === item.idMateria ? (
                     <Typography
                       variant="h4"
                       className="icon-arrow-down3"
-                      sx={{ color: "#000000" }}
+                      sx={{ color: "#000000", fontSize: '30px' }}
                     ></Typography>
                   ) : (
                     <Typography
                       variant="h4"
                       className="icon-arrow-down3"
-                      sx={{ color: "#000000" }}
+                      sx={{ color: "#000000", fontSize: '30px' }}
                     ></Typography>
                   )
                 }
               >
                 <Box className={fsStyle.accordionImgContainer}>
-                  <Typography variant="h3" className="icon-sport"></Typography>
+                  <Typography variant="h3" className={item.percorsoImmagineMateria}>IMG</Typography>
                 </Box>
 
                 <Box className={fsStyle.accordionTitleContainer}>
                   <Stack direction="row">
                     <Box className={fsStyle.accordionTitleDivContainer}>
-                      <Typography variant="h6" className={jnStyles.jnD4}>
-                        {item.title}
-                      </Typography>
+                      <Typography variant="h6" className={jnStyles.jnD4}>{item.materia}</Typography>
                     </Box>
                     <Box className={fsStyle.accordionPercentageContainer}>
-                      <Typography variant="h6" className={jnStyles.jnD5}>
-                        30%
-                      </Typography>
+                      <Typography variant="h6" className={jnStyles.jnD5}>{item.percentualeAvanzamento}%</Typography>
                     </Box>
                   </Stack>
                   <Stack>
                     <LinearProgress
                       className={fsStyle.accordionProgress}
                       variant="determinate"
-                      value={30}
+                      value={item.percentualeAvanzamento}
                     />
                   </Stack>
                 </Box>
               </AccordionSummary>
-              <AccordionDetails className={fsStyle.accordionDetailContainer}>
-                {item.contentText.map((itemContent) => (
-                  <Container
-                    key={itemContent.id}
-                    disableGutters
-                    maxWidth="false"
-                    sx={{ paddingBottom: "50px" }}
-                  >
-                    <Typography variant="h6" className={jnStyles.jnD1}>
-                      {itemContent.arg}
-                    </Typography>
-                    <List dense={true}>
-                      {itemContent.list.map((itemObjectList) => (
-                        <ListItem key={itemObjectList.id} sx={{ padding: "0" }}>
-                          <Box
-                            sx={{
-                              width: "70%",
-                              borderBottom: "1px solid #ffffff",
-                              padding: "15px 0",
-                            }}
-                          >
-                            <Typography variant="p" className={jnStyles.jnI2}>
-                              {itemObjectList.title}
-                            </Typography>
-                          </Box>
-                          <Box sx={{ width: "30%", textAlign: "right" }}>
-                            <Typography variant="p" className={jnStyles.jnL2}>
-                              Stimato {itemObjectList.time} m
-                            </Typography>
-                          </Box>
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Container>
-                ))}
-              </AccordionDetails>
             </Accordion>
           </Container>
         ))}

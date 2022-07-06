@@ -8,6 +8,12 @@ import jnStyles from "../../../styles/utils.module.css";
 class FS_ProfileStudent extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      name: this.props.profile.nome ? this.props.profile.nome : ' ',
+      surname: this.props.profile.cognome ? this.props.profile.cognome : ' ',
+      credits: this.props.profile.creditiResidui ? this.props.profile.creditiResidui : 0,
+      image: this.props.profile.percorsoImmagineStudente ? ''+this.props.profile.percorsoImmagineStudente+'' : ' '
+    }
   }
 
   render() {
@@ -16,20 +22,14 @@ class FS_ProfileStudent extends React.Component {
         <Grid item className={fsStyle.profileStudentAvatarContainer}>
           <Avatar
             className={fsStyle.profileStudentAvatar}
-            alt="Jack Sparrow"
-            src="https://images.pexels.com/photos/6386956/pexels-photo-6386956.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-          ></Avatar>
+            alt="Profile"
+            src= {this.state.image}
+          >{this.state.name.slice(0, 1)+this.state.surname.slice(0, 1)}</Avatar>
         </Grid>
         <Grid item>
-          <Typography className={jnStyles.jnA1} variant="h1">
-            Alessio Cecchetti
-          </Typography>
-          <Typography className={jnStyles.jnB1} variant="h3">
-            Studente
-          </Typography>
-          <Typography className={jnStyles.jnH3} variant="p">
-            40 crediti
-          </Typography>
+          <Typography sx={{paddingBottom: '1%'}} className={jnStyles.jnA1} variant="h1">{this.state.name+' '+this.state.surname}</Typography>
+          <Typography sx={{paddingBottom: '1%'}} className={jnStyles.jnB1} variant="h3">Studente</Typography>
+          <Typography className={jnStyles.jnH3} variant="p">{this.state.credits} crediti</Typography>
         </Grid>
       </Grid>
     );

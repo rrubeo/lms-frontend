@@ -8,8 +8,8 @@
 
 .profileStudentAvatar{
     display: inline-flex;
-    max-width: 180px;
-    max-height: 180px; 
+    max-width: 130px;
+    max-height: 130px; 
     width: 100vh;
     height: 100vh;
 }
@@ -28,7 +28,7 @@
     position: relative;
     float: left;
     text-align: left;
-    padding-right: 15px;
+    margin-right: 15px;
 }
 
 .progressEmpty{
@@ -42,15 +42,17 @@
 }
 
 .progressPercentage{
+    display: flex;
     position: absolute;
-    top: 28%;
-    left: 17%;
+    top: 0;
+    left: 0;
     bottom: 0;
     right: 0;
     align-items: center;
     justify-content: center;
     font-size: 1.1rem;
     font-weight: 600;
+    text-align: center;
 }
 
 .progressTitleContainer{
@@ -60,6 +62,8 @@
 
 .lessonsCard{
     max-width: 80%;
+    min-height: 410px;
+    max-height: 410px;
     padding: 0.5rem 1.5rem;
     border-radius: 26px;
     box-shadow: none;
@@ -79,7 +83,8 @@
 }
 
 .accordion{
-    height: 1012px;
+    min-height: 410px;
+    max-height: 410px;
     overflow-y: scroll;
 }
 
@@ -89,7 +94,7 @@
     margin-bottom: 1%;
     width: 99%;
     margin-left: 0;
-    min-height: 110px;
+    min-height: 90px;
     padding: 0 1%;
 }
 
@@ -100,12 +105,11 @@
 .accordionElement{
     background: none;
     box-shadow: none;
-    min-height: 110px;
+    min-height: 90px;
 }
 
 .accordionImgContainer{
     padding-right: 3%;
-    padding-top: 1.5%;
 }
 
 .accordionTitleContainer{
@@ -174,6 +178,10 @@
     background-clip: padding-box;
     border-radius: 9999px;
     background-color: #ffffff;
+}
+
+.accordionSummaryContent{
+    align-items: center;
 }
 
 

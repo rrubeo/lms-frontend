@@ -3,11 +3,13 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from "@mui/material/ListItemText";
+import Avatar from '@mui/material/Avatar';
 import fsStyle from "../../../styles/Fs.module.css";
 import jnStyles from "../../../styles/utils.module.css";
 
-class FS_List extends React.Component {
+class FS_List_Teacher extends React.Component {
   contenuto = '';
   constructor(props) {
     super(props);
@@ -20,33 +22,34 @@ class FS_List extends React.Component {
   }
 
   render() {
+    /*
+    if (this.props.type == 'text'){
+    } else {
+      this.contenuto = this.state.list.map((item) =>
+        
+      );
+    }
+    */
+    
+
     return (
       <Container disableGutters maxWidth="false">
         <Typography variant="h6" className={jnStyles.jnD1}>
           {this.state.title}
         </Typography>
         <List
-          className={fsStyle.lessonsCard}
           sx={{ backgroundColor: this.state.background }}
           dense={true}
         >
         {
           this.state.list.map((item) =>
-            <ListItem key={item.idLezione}>
-              <ListItemText
-                primaryTypographyProps={{
-                  color: "#ffffff",
-                  fontSize: "15pt",
-                  fontWeight: "300",
-                }}
-                primary={item.name ? item.name : "Single-line item"}
-                secondaryTypographyProps={{
-                  color: "#ffffff",
-                  fontSize: "10pt",
-                  fontWeight: "300",
-                }}
-                secondary={item.hint ? item.hint : ""}
-              />
+            <ListItem sx={{padding: 0}} key={item.idMateria}>
+              <ListItemAvatar>
+                <Avatar
+                  alt={`Avatar n°${item.idMateria}`}
+                />
+              </ListItemAvatar>
+              <ListItemText primary={`Line item ${item.idMateria}`} />
             </ListItem>
           )
         }
@@ -56,4 +59,4 @@ class FS_List extends React.Component {
   }
 }
 
-export default FS_List;
+export default FS_List_Teacher;

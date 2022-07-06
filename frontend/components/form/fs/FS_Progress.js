@@ -9,7 +9,7 @@ class FS_ProfileStudent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      percentage: 60,
+      percentage: this.props.profile.percentualeAvanzamento ? this.props.profile.percentualeAvanzamento : 0,
       title: this.props.title,
     };
   }
@@ -21,18 +21,18 @@ class FS_ProfileStudent extends React.Component {
           <CircularProgress
             className={fsStyle.progressEmpty}
             variant="determinate"
-            size={150}
+            size={100}
             value={100}
           />
           <CircularProgress
             className={fsStyle.progressFull}
             variant="determinate"
-            size={150}
+            size={100}
             value={this.state.percentage}
           />
           <Box className={fsStyle.progressPercentage}>
             <Typography className={jnStyles.jnC1} variant="h6">
-              {`${Math.round(parseInt(this.props.percentage))}%`}
+              {`${Math.round(parseInt(this.state.percentage))}%`}
             </Typography>
           </Box>
         </Box>

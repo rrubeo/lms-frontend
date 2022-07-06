@@ -8,6 +8,7 @@ import { withIronSessionSsr } from "iron-session/next";
 import { defaultLogin, sessionOptions, getAuthSession } from "../../lib";
 import useUser from "../../lib/useUser";
 import FS_List from "../../components/form/fs/FS_List";
+import FS_List_Teacher from "../../components/form/fs/FS_List_Teacher";
 
 
 const utils = require("../../lib/utils");
@@ -36,8 +37,8 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     };
   }
 
-  fallback.pageName = "home";
-  fallback.apiUrl = fs_cfg.FS_FUNZIONI_API;
+  fallback.pageName = "aula";
+  fallback.apiUrl = fs_cfg.FS_FUNZIONI_AULA;
   fallback.authenticated = true;
   fallback.userInfo = authSession;
   fallback.pageQuery = query;
@@ -61,26 +62,31 @@ function Aula() {
   let { data, error } = useSWR(apiUrl, utils.getData);
 
   if (error) return <div>{error.message}</div>;
-  if (!data) return <Loader id="home" />;
+  if (!data) return <Loader id="aula" />;
   if (data.status != 200) return <div>{data.message}</div>;
+
+  //console.log(data)
 
   return (
     <>
       <DCT_Layout id="Layout" data={data}>
-        <Container disableGutters maxWidth="false">
+        <Container disableGutters maxWidth="false" sx={{minHeight: '800px'}}>
           <Grid container sx={{ alignItems: "center" }}>
             <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
-                <FS_List
-                    title={data.recentLessons.title}
-                    array={data.recentLessons.lessons}
+                <FS_List_Teacher
+                    title="I miei insegnanti"
+                    array={data.docenti}
                     type="avatar"
+                    padding= '0!important'
                 />
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
-                <FS_List
-                    title={data.recentLessons.title}
-                    array={data.recentLessons.lessons}
+                <FS_List_Teacher
+                    id= "idMateria"
+                    title="Il mio tutor"
+                    array={data.tutor}
                     type="avatar"
+                    padding= '0!important'
                 />
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>

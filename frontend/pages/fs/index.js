@@ -13,7 +13,6 @@ import FS_Progress from "../../components/form/fs/FS_Progress.js";
 import FS_Accordion_Home from "../../components/form/fs/FS_Accordion_Home.js";
 import FS_List from "../../components/form/fs/FS_List";
 import FS_TodoLesson from "../../components/form/fs/FS_TodoLesson";
-
 import { PAGE_401 } from "../../lib/redirect";
 import fsStyle from "../../styles/Fs.module.css";
 import jnStyles from "../../styles/utils.module.css";
@@ -46,7 +45,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   }
 
   fallback.pageName = "home";
-  fallback.apiUrl = fs_cfg.FS_FUNZIONI_API;
+  fallback.apiUrl = fs_cfg.FS_FUNZIONI_HOME_STUDENTE;
   fallback.authenticated = true;
   fallback.userInfo = authSession;
   fallback.pageQuery = query;
@@ -89,7 +88,7 @@ function HomepageStudente() {
         <Container disableGutters maxWidth="false">
           <Grid container sx={{ alignItems: "center" }}>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
-              <FS_ProfileStudent />
+              <FS_ProfileStudent profile={data.profileDats}/>
             </Grid>
             <Grid
               item
@@ -100,7 +99,7 @@ function HomepageStudente() {
               xl={4}
               className={fsStyle.progressContentGrid}
             >
-              <FS_Progress title="Avanzamento corso" percentage="100" />
+              <FS_Progress title="Avanzamento corso" profile={data.profileDats}/>
             </Grid>
           </Grid>
         </Container>
@@ -110,7 +109,7 @@ function HomepageStudente() {
             <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
               <FS_List
                 background="#798CB4"
-                title={data.recentLessons.title}
+                title="Ultime lezioni viste"
                 array={data.recentLessons.lessons}
                 type="text"
               />
@@ -119,8 +118,8 @@ function HomepageStudente() {
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
               <FS_Accordion_Home
-                title={data.accordionElements.title}
-                array={data.accordionElements.subjects}
+                title={data.profileDats.iscrizione}
+                array={data.accordionElements}
               />
 
               <FS_TodoLesson
