@@ -148,6 +148,15 @@ class FRM_ProgBase_Contenuto extends React.Component {
           <DCT_Breadcrumbs
             id={`bread_${pb_cfg.FRM_PBASE_STEP_5}`}
             list={this.props.data.bread}
+            page={[
+              pb_cfg.PBASE_STEP_1,
+              pb_cfg.PBASE_STEP_2,
+              pb_cfg.PBASE_STEP_3,
+              pb_cfg.PBASE_STEP_4,
+              pb_cfg.PBASE_STEP_5,
+            ]}
+            pageId={this.props.pbaseId}
+            path={`${process.env.frontend}/pb`}
           />
         </Stack>
         <DCT_Stepper

@@ -100,7 +100,10 @@ class FRM_ProgBase_Argomento extends React.Component {
           <DCT_Breadcrumbs
             id={`bread_${pb_cfg.FRM_PBASE_STEP_3}`}
             list={this.props.data.bread}
-          />          
+            page={[pb_cfg.PBASE_STEP_1, pb_cfg.PBASE_STEP_2]}
+            pageId={this.props.pbaseId}
+            path={`${process.env.frontend}/pb`}
+          />
         </Stack>
         <DCT_Stepper
           id="stepper"
@@ -158,7 +161,7 @@ class FRM_ProgBase_Argomento extends React.Component {
           onChange={this.onChangeForm}
           onDelete={this.onDeleteRow}
           onNextStep={this.props.onNextStep}
-          action={this.props.action}          
+          action={this.props.action}
         />
       </Stack>
     );

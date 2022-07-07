@@ -7,7 +7,7 @@ export default withIronSessionApiRoute(async (req, res) => {
 
   try {
     const userLogin = await getToken(username, password);
-    console.log(userLogin);
+    // console.log(userLogin);
     let user = {
       isLoggedIn: true,
       login: userLogin.userID,
@@ -15,7 +15,7 @@ export default withIronSessionApiRoute(async (req, res) => {
     };
 
     const userRole = await getRoles(user);
-    console.log(userRole[0]);
+    // console.log(userRole[0]);
     if (userRole[0]) {
       user.role = userRole[0].ruolo;
       user.idRole = userRole[0].idRuoloUtente;
@@ -24,7 +24,7 @@ export default withIronSessionApiRoute(async (req, res) => {
     req.session.user = user;
     await req.session.save();
 
-    console.log(user);
+    // console.log(user);
     res.json(user);
   } catch (error) {
     res.status(500).json({ message: error.message });

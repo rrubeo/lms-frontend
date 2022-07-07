@@ -12,7 +12,7 @@ import useUser from "../../lib/useUser";
 import { PAGE_401 } from "../../lib/redirect";
 
 const utils = require("../../lib/utils");
-const API = `${process.env.server}/menu`;
+const API = `${process.env.server}/calendar`;
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
@@ -37,7 +37,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     };
   }
 
-  fallback.pageName = "home";
+  fallback.pageName = "calendar";
   fallback.apiUrl = API;
   fallback.authenticated = true;
   fallback.userInfo = authSession;
@@ -70,7 +70,7 @@ function HomeMain() {
       <DCT_Layout id="Layout" data={data}>
         <Container component="span" maxWidth="lg" disableGutters={true}>
           <Box sx={{ flexGrow: 1, bgcolor: "#ffffff" }}>
-            <DTC_Calendar />
+            <DTC_Calendar data={data} />
           </Box>
         </Container>
       </DCT_Layout>

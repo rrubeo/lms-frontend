@@ -9,8 +9,8 @@ export default function Loader({ id }) {
     <>
       <Backdrop
         sx={{
-          bgcolor: "primary.main",
-          color: "text.secondary",
+          // bgcolor: "primary.main",
+          // color: "text.secondary",
           zIndex: (theme) => theme.zIndex.drawer + 1,
         }}
         open={true}

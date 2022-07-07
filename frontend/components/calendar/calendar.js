@@ -8,32 +8,34 @@ import listPlugin from "@fullcalendar/list";
 import itLocale from "@fullcalendar/core/locales/it";
 
 let eventGuid = 0;
-let todayStr = new Date().toISOString().replace(/T.*$/, ""); // YYYY-MM-DD of today
+// let todayStr = new Date().toISOString().replace(/T.*$/, ""); // YYYY-MM-DD of today
 
-export const INITIAL_EVENTS = [
-  {
-    id: createEventId(),
-    title: "All-day event",
-    start: todayStr,
-  },
-  {
-    id: createEventId(),
-    title: "Timed event",
-    start: todayStr + "T12:00:00",
-  },
-  {
-    id: createEventId(),
-    title: "Timed event",
-    start: "2022-05-18T12:00:00",
-    end: "2022-05-18T18:00:00",
-  },
-];
+// export const INITIAL_EVENTS = [
+//   {
+//     id: createEventId(),
+//     title: "All-day event",
+//     start: todayStr,
+//   },
+//   {
+//     id: createEventId(),
+//     title: "Timed event",
+//     start: todayStr + "T12:00:00",
+//   },
+//   {
+//     id: createEventId(),
+//     title: "Timed event",
+//     start: "2022-05-18T12:00:00",
+//     end: "2022-05-18T18:00:00",
+//   },
+// ];
 
 export function createEventId() {
   return String(eventGuid++);
 }
 
-export default function DTC_Calendar() {
+export default function DTC_Calendar(props) {
+  console.log(props);
+
   const handleDateSelect = (selectInfo) => {
     let title = prompt("Please enter a new title for your event");
     let calendarApi = selectInfo.view.calendar;
@@ -77,7 +79,7 @@ export default function DTC_Calendar() {
       initialView="listWeek"
       editable
       selectable
-      initialEvents={INITIAL_EVENTS}
+      initialEvents={props.data.inevents}
       weekends={true}
       //   height="auto"
       aspectRatio="2.7"

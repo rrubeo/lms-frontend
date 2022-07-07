@@ -5,14 +5,14 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import jnStyles from "../../styles/utils.module.css";
-import Image from "next/image";
 import Grid from "@mui/material/Grid";
+import styles from "./DCT_Login.module.css";
 
 function Copyright() {
   return (
     <Typography
       elevation={1}
-      minWidth="150pt"
+      // minWidth="150pt"
       align="center"
       noWrap={true}
       variant="body2"
@@ -22,7 +22,7 @@ function Copyright() {
       sx={{ zIndex: "tooltip" }}
     >
       {"© Copyright  "}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href={process.env.frontend}>
         Janus
       </Link>{" "}
       {new Date().getFullYear()}
@@ -35,7 +35,7 @@ function FooterText({ text }) {
   return (
     <Typography
       elevation={1}
-      minWidth="90pt"
+      // minWidth="90pt"
       align="center"
       noWrap={true}
       variant="body2"
@@ -58,14 +58,8 @@ export default function DCT_Login({ children }) {
         <title>{process.env.component}</title>
       </Head>
       <CssBaseline />
-      <Image
-        alt="home"
-        src="/images/login_bkg.png"
-        layout="fill"
-        objectFit="cover"
-        quality={100}
-      />
       <Grid
+        className={styles.container}
         container
         spacing={0}
         direction="column"
@@ -82,6 +76,8 @@ export default function DCT_Login({ children }) {
             sx={{
               alignItems: "center",
             }}
+            justifyContent="flex-start"
+            spacing={{ xs: 0, sm: 2, md: 5 }}
           >
             <FooterText text="Termini e condizioni" />
             <FooterText text="Privacy" />

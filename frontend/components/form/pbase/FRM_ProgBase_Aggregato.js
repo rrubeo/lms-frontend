@@ -189,6 +189,8 @@ class FRM_ProgBase_Aggregato extends React.Component {
           <DCT_Breadcrumbs
             id={`bread_${pb_cfg.FRM_PBASE_STEP_1_1}`}
             list={this.props.data.bread}
+            pageId={this.props.pbaseId}
+            path={`${process.env.frontend}/pb`}
           />
         </Stack>
         <Stack direction="column" spacing={2} justifyContent="center">

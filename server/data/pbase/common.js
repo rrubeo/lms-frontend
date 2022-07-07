@@ -172,8 +172,8 @@ const getClasseArgomentoBread = async (token, id) => {
   if (f.status) return [];
   let data = [];
   if (f.length == 1) {
-    data.push({ key: 1, text: f[0].materia });
-    data.push({ key: 2, text: f[0].annoFrequenza });
+    data.push({ key: 1, text: f[0].materia + "-" + f[0].annoFrequenza });
+    // data.push({ key: 2, text: f[0].annoFrequenza });
   }
   return data;
 };
@@ -218,9 +218,8 @@ const getArgomentoBread = async (token, id) => {
   if (f.status) return [];
   let data = [];
   if (f.length == 1) {
-    data.push({ key: 1, text: f[0].materia });
-    data.push({ key: 2, text: f[0].annoFrequenza });
-    data.push({ key: 3, text: f[0].classeArgomento });
+    data.push({ key: 1, text: f[0].materia + "-" + f[0].annoFrequenza });
+    data.push({ key: 2, text: f[0].classeArgomento });
   }
   return data;
 };
@@ -276,10 +275,9 @@ const getLezioneBread = async (token, id) => {
   if (f.status) return [];
   let data = [];
   if (f.length == 1) {
-    data.push({ key: 1, text: f[0].materia });
-    data.push({ key: 2, text: f[0].annoFrequenza });
-    data.push({ key: 3, text: f[0].classeArgomento });
-    data.push({ key: 4, text: f[0].argomento });
+    data.push({ key: 1, text: f[0].materia + "-" + f[0].annoFrequenza });
+    data.push({ key: 2, text: f[0].classeArgomento });
+    data.push({ key: 3, text: f[0].argomento });
   }
   return data;
 };
@@ -327,11 +325,10 @@ const getContenutoBread = async (token, id) => {
   if (f.status) return [];
   let data = [];
   if (f.length == 1) {
-    data.push({ key: 1, text: f[0].materia });
-    data.push({ key: 2, text: f[0].annoFrequenza });
-    data.push({ key: 3, text: f[0].classeArgomento });
-    data.push({ key: 4, text: f[0].argomento });
-    data.push({ key: 5, text: f[0].lezioneDesc });
+    data.push({ key: 1, text: f[0].materia + "-" + f[0].annoFrequenza });
+    data.push({ key: 2, text: f[0].classeArgomento });
+    data.push({ key: 3, text: f[0].argomento });
+    data.push({ key: 4, text: f[0].lezioneDesc });
   }
   // console.log(data);
   return data;

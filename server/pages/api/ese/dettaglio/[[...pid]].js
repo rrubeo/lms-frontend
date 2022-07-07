@@ -2,11 +2,8 @@ const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
 import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
-import {
-  stepperIndirizzo,
-  tornaIndietro,
-} from "../../../../data/pbase/data_common";
-import { rows, cols } from "../../../../data/pbase/data_lezione";
+
+import { rows, cols } from "../../../../data/ese/data_dettaglio";
 
 import { getFunzioniForm } from "../../../../data/common";
 
@@ -18,23 +15,15 @@ async function getHandler(userLogin, pid) {
   );
 
   const data = {
-    title: "Configurazione Programma Base Aggregato",
-    stepper: stepperIndirizzo,
-    login: false,
+    title: "Gestione Esercitazione",
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,
-    anno_label: "Anno Frequenza",
-    anno: [],
-    classe_label: "Classe Argomento",
-    lezione_label: "Lezione",
-    argomento_label: "Argomento",
-    back_label: tornaIndietro,
-    rows: [],
+    rows: rows,
     cols: cols,
     funzioni: db_funzioni,
-    bread: [],
   };
+
   return data;
 }
 
