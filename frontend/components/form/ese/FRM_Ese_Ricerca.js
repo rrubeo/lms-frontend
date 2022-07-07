@@ -49,7 +49,19 @@ class FRM_Ese_Ricerca extends React.Component {
   }
 
   render() {
-    return <Stack direction="column" spacing={4} mt={0} mb={2} p={0}></Stack>;
+    return (
+      <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
+        <DTC_DataGrid
+          id="gd_ricerca"
+          cols={this.props.data.cols}
+          rows={this.props.data.rows}
+          onChange={this.onChangeForm}
+          onDelete={this.onDeleteRow}
+          onNextStep={this.props.onNextStep}
+          action={this.props.action}
+        />
+      </Stack>
+    );
   }
 }
 

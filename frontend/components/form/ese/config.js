@@ -16,9 +16,9 @@ const ESE_STEP_0_ACTION = [
   {
     id: "1",
     title: "Esercitazione",
-    icon: "icon-arrow-right4",
+    icon: "icon-arrow-right3",
     callBack: GRID_ROUTE_ACTION,
-    route: ESE_STEP_2,
+    route: ESE_STEP_3,
   },
   {
     id: "2",
@@ -30,19 +30,19 @@ const ESE_STEP_0_ACTION = [
 ];
 
 const FRM_ESE_STEP_1 = "FRM_Ese_Dettaglio";
-const ESE_STEP_1_API = `${process.env.server}/ese`;
+const ESE_STEP_1_API = `${process.env.server}/ese/dettaglio`;
 const ESE_STEP_1_ACTION = [
   {
     id: "1",
     title: "Visualizza",
     icon: "icon-arrow-right4",
     callBack: GRID_ROUTE_ACTION,
-    route: ESE_STEP_1,
+    route: ESE_STEP_3,
   },
 ];
 
 const FRM_ESE_STEP_2 = "FRM_Ese_Esercitazione";
-const ESE_STEP_2_API = `${process.env.server}/ese`;
+const ESE_STEP_2_API = `${process.env.server}/ese/view`;
 const ESE_STEP_2_ACTION = [
   {
     id: "1",
@@ -53,13 +53,20 @@ const ESE_STEP_2_ACTION = [
 ];
 
 const FRM_ESE_STEP_3 = "FRM_Ese_Visualizza";
-const ESE_STEP_3_API = `${process.env.server}/ese`;
+const ESE_STEP_3_API = `${process.env.server}/ese/view`;
 const ESE_STEP_3_ACTION = [
   {
     id: "1",
     title: "Elimina",
     icon: "icon-delete2",
     callBack: GRID_DELETE_ACTION,
+  },
+  {
+    id: "2",
+    title: "Gruppo",
+    icon: "icon-arrow-right4",
+    callBack: GRID_ROUTE_ACTION,
+    route: ESE_STEP_2,
   },
 ];
 

@@ -10,6 +10,7 @@ import { withIronSessionSsr } from "iron-session/next";
 import { defaultLogin, sessionOptions, getAuthSession } from "../../lib/";
 import useUser from "../../lib/useUser";
 import { PAGE_401 } from "../../lib/redirect";
+import DTC_Player from "../../components/video/DTC_Player";
 
 const utils = require("../../lib/utils");
 const API = `${process.env.server}/menu`;
@@ -80,6 +81,7 @@ function HomeMain() {
               height={650}
               priority
             />
+            {/* <DTC_Player video="59777392" /> */}
           </Box>
         </Container>
       </DCT_Layout>

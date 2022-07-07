@@ -138,7 +138,9 @@ function Main() {
   const handleNextStep = async (event, filter, route) => {
     event.preventDefault();
     console.log(route);
+    forceNavigateUtil(route, filter, fallback.subIndex);
 
+    
     // if (fallback.pageName == ese_cfg.PBASE_STEP_0) {
     //   if (isAggregato(filter.row.col9)) {
     //     forceNavigateUtil(ese_cfg.PBASE_STEP_1_1, filter, fallback.subIndex);
@@ -190,7 +192,7 @@ function Main() {
         {pageName === ese_cfg.ESE_STEP_2 ? (
           <FRM_Ese_Esercitazione
             id={ese_cfg.FRM_ESE_STEP_2}
-            activeStep={0}
+            activeStep={1}
             onSubmit={handleSubmit}
             onDelete={handleDelete}
             data={data}

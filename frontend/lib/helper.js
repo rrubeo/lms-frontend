@@ -5,8 +5,8 @@ export const forceReloadUtil = () => {
 };
 
 export const forceNavigateUtil = (route, filter, subIndex) => {
-  console.log("forceNavigateUtil");
-  console.log(route);
+  // console.log("forceNavigateUtil");
+  // console.log(route);
   if (!filter) console.log("MANCANO PARAMETRI");
   if (filter.id.toString().search("_") != -1) {
     const myArray = filter.id.split("_");
@@ -21,7 +21,7 @@ export const forceNavigateUtil = (route, filter, subIndex) => {
     // console.log("JOIN", subIndex.join("/"));
     // buildRoute = `${buildRoute}/${subIndex[0]}`;
     buildRoute = `${buildRoute}/${subIndex.join("/")}`;
-    console.log("Route next:", buildRoute);
+    // console.log("Route next:", buildRoute);
   }
 
   Router.push(buildRoute);

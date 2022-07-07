@@ -75,7 +75,6 @@ class FRM_ProgBase_Classe_Argomento extends React.Component {
       pb_cfg.PBASE_STEP_1,
       this.props.query
     );
-    // console.log(linkBack);
     return (
       <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
         <Stack
@@ -88,6 +87,9 @@ class FRM_ProgBase_Classe_Argomento extends React.Component {
           <DCT_Breadcrumbs
             id={`bread_${pb_cfg.FRM_PBASE_STEP_2}`}
             list={this.props.data.bread}
+            page={[pb_cfg.PBASE_STEP_1, pb_cfg.PBASE_STEP_2]}
+            pageId={this.props.pbaseId}
+            path={`${process.env.frontend}/pb`}
           />
         </Stack>
         <DCT_Stepper

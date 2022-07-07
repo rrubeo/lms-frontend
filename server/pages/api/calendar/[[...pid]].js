@@ -1,11 +1,27 @@
-const utils = require("../../../../lib/utils");
-const apic = require("../../../../lib/apicommon");
+const utils = require("../../../lib/utils");
+const apic = require("../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
-import { stepper, tornaIndietro } from "../../../../data/ese/data_common";
-import { rows, cols } from "../../../../data/ese/data_esercita";
+import { sidemenu, navmenu, usermenu } from "../../../data/data_sidemenu";
 
-import { getFunzioniForm } from "../../../../data/common";
+import { getFunzioniForm } from "../../../data/common";
+
+let todayStr = new Date().toISOString().replace(/T.*$/, ""); // YYYY-MM-DD of today
+
+const INITIAL_EVENTS = [
+  {
+    id: 1,
+    title: "All-day event",
+    start: todayStr,
+  },
+  { id: 2, title: "Timed event", start: todayStr + "T12:00:00" },
+  {
+    id: 3,
+    title: "Timed event",
+    start: "2022-05-18T12:00:00",
+    end: "2022-05-18T18:00:00",
+  },
+  { id: 4, title: "Colloquio", start: todayStr + "T18:00:00", allDay: false },
+];
 
 async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
@@ -15,23 +31,14 @@ async function getHandler(userLogin, pid) {
   );
 
   const data = {
-    title: "Esercitazioni",
+    title: "Calendario",
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,
-    rows: rows,
-    cols: cols,
-    tipo_label: "Tipo Esercitazione",
-    tipo: [],
-    livello_label: "Livello Difficoltà",
-    livello: [],
-    nome_label: "Nome Esercitazione",
-    limite_label: "Limite Temporale",
-    punteggio_label: "Punteggio Minimo",
-    back_label: tornaIndietro,
-    stepper: stepper,
     funzioni: db_funzioni,
+    inevents: INITIAL_EVENTS,
   };
+
   return data;
 }
 
@@ -83,7 +90,7 @@ export default async function handler(req, res) {
   // Run cors
   await utils.cors(req, res);
 
-  console.log("ESERCITAZIONE VIEW");
+  console.log("CALENDARIO");
   const pid = apic.getPid(req);
   const userLogin = await apic.getLogin(req);
 

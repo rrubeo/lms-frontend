@@ -2,7 +2,7 @@ import * as React from "react";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-
+import DCT_LinkButton from "../../DCT_LinkButton";
 import DTC_DataGrid from "../../grid/DTC_DataGrid";
 import jnStyles from "../../../styles/utils.module.css";
 
@@ -49,7 +49,32 @@ class FRM_Ese_Dettaglio extends React.Component {
   }
 
   render() {
-    return <Stack direction="column" spacing={4} mt={0} mb={2} p={0}></Stack>;
+    const linkBack = utils.getBackLink(
+      "ese",
+      ese_cfg.ESE_STEP_0,
+      this.props.query
+    );
+    return (
+      <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
+        <Stack
+          direction="row"
+          spacing={5}
+          justifyContent="flex-start"
+          alignItems="center"
+        >
+          <DCT_LinkButton href={linkBack} text="back" />
+        </Stack>
+        <DTC_DataGrid
+          id="gd_dettaglio"
+          cols={this.props.data.cols}
+          rows={this.props.data.rows}
+          onChange={this.onChangeForm}
+          onDelete={this.onDeleteRow}
+          onNextStep={this.props.onNextStep}
+          action={this.props.action}
+        />
+      </Stack>
+    );
   }
 }
 

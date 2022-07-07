@@ -80,7 +80,7 @@ function Main() {
   if (data.status != 200) return <div>{data.message}</div>;
 
   const reloadData = async () => {
-    console.log("data changed");
+    // console.log("data changed");
     const options = {
       revalidate: true,
       revalidateIfStale: true,
@@ -149,7 +149,7 @@ function Main() {
 
   const handleNextStep = async (event, filter, route) => {
     event.preventDefault();
-    console.log(route);
+    // console.log(route);
 
     if (fallback.pageName == pb_cfg.PBASE_STEP_0) {
       if (isAggregato(filter.row.col9)) {
@@ -211,6 +211,7 @@ function Main() {
             onNextStep={handleNextStep}
             action={pb_cfg.PBASE_STEP_1_ACTION}
             query={pageQuery}
+            pbaseId={subIndex}
           />
         ) : (
           <></>
@@ -225,6 +226,7 @@ function Main() {
             onNextStep={handleNextStep}
             action={pb_cfg.PBASE_STEP_2_ACTION}
             query={pageQuery}
+            pbaseId={subIndex}
           />
         ) : (
           <></>
@@ -239,6 +241,7 @@ function Main() {
             onNextStep={handleNextStep}
             action={pb_cfg.PBASE_STEP_3_ACTION}
             query={pageQuery}
+            pbaseId={subIndex}
           />
         ) : (
           <></>
@@ -253,6 +256,7 @@ function Main() {
             onNextStep={handleNextStep}
             action={pb_cfg.PBASE_STEP_4_ACTION}
             query={pageQuery}
+            pbaseId={subIndex}
           />
         ) : (
           <></>
@@ -267,6 +271,7 @@ function Main() {
             onNextStep={handleNextStep}
             action={pb_cfg.PBASE_STEP_5_ACTION}
             query={pageQuery}
+            pbaseId={subIndex}
           />
         ) : (
           <></>

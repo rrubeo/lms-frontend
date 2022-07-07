@@ -75,8 +75,8 @@ export default function Login(props) {
             component="form"
             onSubmit={handleSubmit}
             sx={{
-              minWidth: 275,
-              maxWidth: 355,
+              // minWidth: 275,
+              // maxWidth: 355,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -90,12 +90,15 @@ export default function Login(props) {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
               }}
             >
               <Stack
                 direction={{ xs: "column", sm: "column" }}
                 spacing={{ xs: 1, sm: 2, md: 3 }}
+                sx={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               >
                 <Typography
                   variant="h5"
@@ -114,7 +117,7 @@ export default function Login(props) {
                   autoFocus
                   id="userName"
                   label="Username"
-                  size={270}
+                  size={{ xs: 100, sm: 150, md: 270 }}
                   onChange={onChangeForm}
                   // ref={this.changeChildLezioneId}
                 />
@@ -122,7 +125,7 @@ export default function Login(props) {
                   required
                   id="password"
                   label="Password"
-                  size={270}
+                  size={{ xs: 100, sm: 150, md: 270 }}
                   onChange={onChangeForm}
                   // ref={this.changeChildLezioneId}
                 />
@@ -137,14 +140,15 @@ export default function Login(props) {
               }}
             >
               <Stack
+                component="div"
                 direction={{ xs: "column", sm: "column" }}
                 spacing={{ xs: 1, sm: 2, md: 3 }}
                 sx={{
-                  minWidth: 275,
-                  maxWidth: 375,
+                  minWidth: { xs: 120, sm: 170, md: 290 },
+                  maxWidth: { xs: 120, sm: 170, md: 290 },
                   m: 0,
                   mt: 5,
-                  p: 0,
+                  p: 1.5,
                   alignItems: "center",
                 }}
               >
@@ -155,6 +159,7 @@ export default function Login(props) {
                   variant="contained"
                   sx={{ borderRadius: 26 }}
                   className={jnStyles.shadow}
+                  size="small"
                 >
                   Accedi
                 </Button>

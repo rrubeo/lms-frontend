@@ -7,7 +7,7 @@ async function validateForm(formData) {
   let schema = yup.object().shape({});
 
   switch (id) {
-    case pb_cfg.FRM_ESE_STEP_0:
+    case ese_cfg.FRM_ESE_STEP_0:
       break;
   }
   let vres = {};

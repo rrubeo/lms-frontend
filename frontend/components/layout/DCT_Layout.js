@@ -1,12 +1,10 @@
 import * as React from "react";
-import useSWR, { SWRConfig } from "swr";
 import Head from "next/head";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import styles from "./DCT_Layout.module.css";
 import jnStyles from "../../styles/utils.module.css";
 import { styled, useTheme } from "@mui/material/styles";
-import Loader from "./loader";
 import DCT_SideMenu from "../nav/DCT_SideMenu";
 import DCT_Nav from "../nav/DCT_Nav";
 
