@@ -12,47 +12,6 @@ import {
 } from "../../../../data/fs/common";
 
 
-const colums = [
-  {
-    field: "col1",
-    headerName: "Argomento",
-    flex: 1,
-    minWidth: 110,
-    maxWidth: 110,
-  },
-  {
-    field: "col2",
-    headerName: "Lezione",
-    flex: 1,
-    minWidth: 110,
-    maxWidth: 110,
-  },
-  {
-    field: "col3",
-    headerName: "Durata",
-    flex: 1,
-    minWidth: 110,
-    maxWidth: 110,
-    type: "number",
-    align: "right",
-  },
-  {
-    field: "col4",
-    headerName: "Tempo residuo",
-    flex: 1,
-    minWidth: 110,
-    maxWidth: 110,
-  },
-  {
-    field: "col5",
-    headerName: "Esercizi da controllare",
-    flex: 1,
-    minWidth: 110,
-    maxWidth: 110,
-  }
-];
-
-
 async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
     userLogin.token,
@@ -65,6 +24,50 @@ async function getHandler(userLogin, pid) {
   const recentLessons = await getLezioniSeguite(userLogin.token, userLogin.userID, profile.idIscrizione);
   const todoLessons = await getLezioniDaSeguire(userLogin.token, profile.idIscrizione);
 
+
+  const colums = [
+    {
+      field: "col1",
+      headerName: "Argomento",
+      flex: 1,
+    },
+    {
+      field: "col2",
+      headerName: "Lezione",
+      flex: 1,
+    },
+    {
+      field: "col3",
+      headerName: "Durata",
+      flex: 1,
+    },
+    {
+      field: "col4",
+      headerName: "Tempo residuo",
+      flex: 1,
+    },
+    {
+      field: "col5",
+      headerName: "Esercizi da controllare",
+      flex: 1,
+    }
+  ];
+
+
+  var rows = [];
+  todoLessons.map((x) => {
+    var item = {
+      id: utils.getUID(),
+      col1: "ASDGFT76H56F343F",
+      col2: "Carlo Bianchi",
+      col3: "22/11/22",
+      col4: "Roma",
+      col5: "Esercizi",
+    }
+
+    rows.push(item);
+  });
+
   const data = {
     title: "Configurazione Iscrizione studente",
     // login: false,
@@ -75,7 +78,7 @@ async function getHandler(userLogin, pid) {
     profileDats: profile,
     accordionElements: accordionElements,
     recentLessons: recentLessons,
-    rows: todoLessons,
+    rows: rows,
     cols: colums,
     // bread: db_bread,
   };

@@ -13,7 +13,6 @@ import fsStyle from "../../../styles/Fs.module.css";
 import jnStyles from "../../../styles/utils.module.css";
 
 export default function ControlledAccordions(props) {
-  console.log(props)
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {

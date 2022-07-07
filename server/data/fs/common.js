@@ -79,10 +79,7 @@ const getLezioniDaSeguire = async (token, idIscrizione) => {
   const f = await utils.getFetch(token, GetLezioniDaSeguire(idIscrizione));
 
   if (f.status) return [];
-
-  const data = f.map((x) => {
-    console.log(x);
-  });
+  const data = f;
   return data;
 };
 

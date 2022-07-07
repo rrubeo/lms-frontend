@@ -16,40 +16,28 @@ class FS_List_Teacher extends React.Component {
     this.state = {
       title: this.props.title ? this.props.title : ' ',
       list: this.props.array ? this.props.array : [{name: "Nessuna lezione recente"}],
-      background: this.props.background ? this.props.background : null,
-      elementNumber: this.props.elementNumber ? this.props.elementNumber : 0,
     };
   }
 
   render() {
-    /*
-    if (this.props.type == 'text'){
-    } else {
-      this.contenuto = this.state.list.map((item) =>
-        
-      );
-    }
-    */
-    
-
     return (
       <Container disableGutters maxWidth="false">
         <Typography variant="h6" className={jnStyles.jnD1}>
           {this.state.title}
         </Typography>
         <List
-          sx={{ backgroundColor: this.state.background }}
           dense={true}
         >
         {
           this.state.list.map((item) =>
             <ListItem sx={{padding: 0}} key={item.idMateria}>
               <ListItemAvatar>
-                <Avatar
-                  alt={`Avatar n°${item.idMateria}`}
-                />
+              <Avatar
+                alt="Profile"
+                src= {item.pathImmagineDocenteTutor}
+                >{item.nomeDocenteTutor.slice(0, 1)+item.cognomeDocenteTutor.slice(0, 1)}</Avatar>
               </ListItemAvatar>
-              <ListItemText primary={`Line item ${item.idMateria}`} />
+              <ListItemText primary={item.idRuolo == 5 ? item.materia+" - "+item.nomeDocenteTutor+" "+item.cognomeDocenteTutor : item.nomeDocenteTutor+" "+item.cognomeDocenteTutor}/>
             </ListItem>
           )
         }

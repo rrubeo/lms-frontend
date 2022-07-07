@@ -114,7 +114,7 @@ function HomepageStudente() {
                 type="text"
               />
 
-              <Button variant="contained" classes={{ root: jnStyles.jnBT }}>Classe virtuale</Button>
+              <Button variant="contained" classes={{ root: jnStyles.jnBT }} href="../fs/aula">Classe virtuale</Button>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
               <FS_Accordion_Home
