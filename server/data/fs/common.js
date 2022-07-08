@@ -2,9 +2,8 @@ import {
   UserAuthenticate,
   GetFunzioniForm,
   GetIscrizioneStudente,
-  GetStudenteMaterie,
+  GetLezioni,
   GetLezioniSeguite,
-  GetLezioniDaSeguire,
   GetDocentiAula,
   GetTutorAula
 } from "../../data/fs/config";
@@ -53,33 +52,32 @@ const getIscrizioneStudente = async (token, username) => {
   return data;
 };
 
-
-const getStudenteMaterie = async (token, username, idIscrizione) => {
-  const f = await utils.getFetch(token, GetStudenteMaterie(username, idIscrizione));
-
-  if (f.status) return [];
-  const data = f;
-  return data;
-};
-
-
-const getLezioniSeguite = async (token, username, idIscrizione) => {
-  const f = await utils.getFetch(token, GetLezioniSeguite(username, idIscrizione));
+const getLezioni = async (token, username) => {
+  const f = await utils.getFetch(token, GetLezioni(username));
 
   if (f.status) return [];
 
   const data = f.map((x) => {
-    console.log(x)
+    return {
+      id: utils.getUID(),
+      lezioni: x.datiLezione,
+    };
   });
   return data;
 };
 
 
-const getLezioniDaSeguire = async (token, idIscrizione) => {
-  const f = await utils.getFetch(token, GetLezioniDaSeguire(idIscrizione));
+const getLezioniSeguite = async (token, username, idIscrizione, maxNumber) => {
+  const f = await utils.getFetch(token, GetLezioniSeguite(username, idIscrizione, maxNumber));
 
   if (f.status) return [];
-  const data = f;
+
+  const data = f.map((x) => {
+    return {
+      id: x.idLezione,
+      name: x.lezione,
+    };
+  });
   return data;
 };
 
@@ -88,7 +86,17 @@ const getDocentiAula = async (token, idRuolo, idIscrizione, username) => {
   const f = await utils.getFetch(token, GetDocentiAula(idRuolo, idIscrizione, username));
 
   if (f.status) return [];
-  const data = f;
+
+  const data = f.map((x) => {
+    return {
+      id: x.idMateria,
+      name: x.nomeDocenteTutor,
+      surname: x.cognomeDocenteTutor,
+      subject: x.materia,
+      roleId: x.idRuolo,
+      imagePath: x.pathImmagineDocenteTutor
+    };
+  });
   return data;
 };
 
@@ -97,7 +105,16 @@ const getTutorAula = async (token, idRuolo, idIscrizione, username) => {
   const f = await utils.getFetch(token, GetTutorAula(idRuolo, idIscrizione, username));
 
   if (f.status) return [];
-  const data = f;
+
+  const data = f.map((x) => {
+    return {
+      id: x.idMateria,
+      name: x.nomeDocenteTutor,
+      surname: x.cognomeDocenteTutor,
+      roleId: x.idRuolo,
+      imagePath: x.pathImmagineDocenteTutor
+    };
+  });
   return data;
 };
 
@@ -107,9 +124,8 @@ module.exports = {
   getToken,
   getFunzioniForm,
   getIscrizioneStudente,
-  getStudenteMaterie,
+  getLezioni,
   getLezioniSeguite,
-  getLezioniDaSeguire,
   getDocentiAula,
   getTutorAula
 };

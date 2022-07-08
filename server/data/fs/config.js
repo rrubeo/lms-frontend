@@ -17,9 +17,8 @@ function GetFunzioniForm(user, formName) {
 
 //API GET lettura profilo studente
 const CLOUD_API_TBL_LIST_ISCRIZIONE_STUDENTE = "api/Tables/GetIscrizioneStudente";
-const CLOUD_API_TBL_LIST_STUDENTE_MATERIE = "api/Tables/GetStudenteMaterie";
+const CLOUD_API_TBL_LIST_LEZIONI = "api/Tables/GetLezioniStudente";
 const CLOUD_API_TBL_LIST_LEZIONI_SEGUITE = "api/Tables/GetStudenteLezioniSeguite";
-const CLOUD_API_TBL_LIST_LEZIONI_DASEGUIRE = "api/Tables/GetLezioniDaSeguirexStudente";
 const CLOUD_API_TBL_LIST_DOCENTI_AULA = "api/Tables/GetTUtorDocentexStudente";
 
 //Endpoint
@@ -27,16 +26,12 @@ function GetIscrizioneStudente(username) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_ISCRIZIONE_STUDENTE}/${username}`;
 }
 
-function GetStudenteMaterie(username, idIscrizione) {
-  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_STUDENTE_MATERIE}/${username}/${idIscrizione}`;
+function GetLezioni(username) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_LEZIONI}/${username}`;
 }
 
-function GetLezioniSeguite(username, idIscrizione) {
-  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_LEZIONI_SEGUITE}/${username}/${idIscrizione}`;
-}
-
-function GetLezioniDaSeguire(idIscrizione) {
-  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_LEZIONI_DASEGUIRE}/${idIscrizione}`;
+function GetLezioniSeguite(username, idIscrizione, maxNumber) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_LEZIONI_SEGUITE}/${username}/${idIscrizione}/${maxNumber}`;
 }
 
 function GetDocentiAula(idRuolo, idIscrizione, username) {
@@ -56,9 +51,8 @@ module.exports = {
   UserValidate,
   GetFunzioniForm,
   GetIscrizioneStudente,
-  GetStudenteMaterie,
+  GetLezioni,
   GetLezioniSeguite,
-  GetLezioniDaSeguire,
   GetDocentiAula,
   GetTutorAula
 };

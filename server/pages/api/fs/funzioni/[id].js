@@ -5,10 +5,9 @@ import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
 
 import { 
   getFunzioniForm,
-  getIscrizioneStudente, 
-  getStudenteMaterie,
+  getIscrizioneStudente,
+  getLezioni,
   getLezioniSeguite,
-  getLezioniDaSeguire
 } from "../../../../data/fs/common";
 
 
@@ -20,53 +19,8 @@ async function getHandler(userLogin, pid) {
   );
 
   const profile = await getIscrizioneStudente(userLogin.token, userLogin.userID);
-  const accordionElements = await getStudenteMaterie(userLogin.token, userLogin.userID, profile.idIscrizione);
-  const recentLessons = await getLezioniSeguite(userLogin.token, userLogin.userID, profile.idIscrizione);
-  const todoLessons = await getLezioniDaSeguire(userLogin.token, profile.idIscrizione);
-
-
-  const colums = [
-    {
-      field: "col1",
-      headerName: "Argomento",
-      flex: 1,
-    },
-    {
-      field: "col2",
-      headerName: "Lezione",
-      flex: 1,
-    },
-    {
-      field: "col3",
-      headerName: "Durata",
-      flex: 1,
-    },
-    {
-      field: "col4",
-      headerName: "Tempo residuo",
-      flex: 1,
-    },
-    {
-      field: "col5",
-      headerName: "Esercizi da controllare",
-      flex: 1,
-    }
-  ];
-
-
-  var rows = [];
-  todoLessons.map((x) => {
-    var item = {
-      id: utils.getUID(),
-      col1: "ASDGFT76H56F343F",
-      col2: "Carlo Bianchi",
-      col3: "22/11/22",
-      col4: "Roma",
-      col5: "Esercizi",
-    }
-
-    rows.push(item);
-  });
+  const subjects = await getLezioni(userLogin.token, userLogin.userID);
+  const recentLessons = await getLezioniSeguite(userLogin.token, userLogin.userID, profile.idIscrizione, 0);
 
   const data = {
     title: "Configurazione Iscrizione studente",
@@ -75,11 +29,9 @@ async function getHandler(userLogin, pid) {
     navmenu: navmenu,
     usermenu: usermenu,
     funzioni: db_funzioni,
-    profileDats: profile,
-    accordionElements: accordionElements,
-    recentLessons: recentLessons,
-    rows: rows,
-    cols: colums,
+    profilo: profile,
+    materie: subjects,
+    lezioniViste: recentLessons,
     // bread: db_bread,
   };
   return data;

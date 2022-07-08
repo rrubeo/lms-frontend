@@ -12,7 +12,6 @@ import FS_ProfileStudent from "../../components/form/fs/FS_ProfileStudent";
 import FS_Progress from "../../components/form/fs/FS_Progress.js";
 import FS_Accordion_Home from "../../components/form/fs/FS_Accordion_Home.js";
 import FS_List from "../../components/form/fs/FS_List";
-import FS_TodoLesson from "../../components/form/fs/FS_TodoLesson";
 import { PAGE_401 } from "../../lib/redirect";
 import fsStyle from "../../styles/Fs.module.css";
 import jnStyles from "../../styles/utils.module.css";
@@ -88,7 +87,7 @@ function HomepageStudente() {
         <Container disableGutters maxWidth="false">
           <Grid container sx={{ alignItems: "center" }}>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
-              <FS_ProfileStudent profile={data.profileDats}/>
+              <FS_ProfileStudent profile={data.profilo}/>
             </Grid>
             <Grid
               item
@@ -99,7 +98,7 @@ function HomepageStudente() {
               xl={4}
               className={fsStyle.progressContentGrid}
             >
-              <FS_Progress title="Avanzamento corso" profile={data.profileDats}/>
+              <FS_Progress title="Avanzamento corso" profile={data.profilo}/>
             </Grid>
           </Grid>
         </Container>
@@ -108,28 +107,35 @@ function HomepageStudente() {
           <Grid container>
             <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
               <FS_List
-                background="#798CB4"
-                title="Ultime lezioni viste"
-                array={data.recentLessons.lessons}
+                background="#B34B9E"
+                class="lessonsCard"
+                title="Corsi attivi"
+                array={[{'id': 1, 'name': data.profilo.iscrizione}]}
                 type="text"
               />
 
-              <Button variant="contained" classes={{ root: jnStyles.jnBT }} href="../fs/aula">Classe virtuale</Button>
-            </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
-              <FS_Accordion_Home
-                title={data.profileDats.iscrizione}
-                array={data.accordionElements}
+              <FS_List
+                background="#798CB4"
+                class="lessonsCard"
+                title="Ultime lezioni viste"
+                array={data.lezioniViste}
+                type="text"
               />
 
-              <FS_TodoLesson
-                id={"FS_TodoLesson"}
-                activeStep={0}
-                onSubmit={handleSubmit}
-                data={data}
-                onNextStep={handleNextStep}
-                action={fs_cfg.FS_STEP_5_ACTION}
-              />
+              <Button sx={{marginTop: '3%'}} variant="contained" classes={{ root: jnStyles.jnBT }} href="../fs/aula">Classe virtuale</Button>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
+            {
+              data.materie.map((item) =>
+                item.lezioni.map((subitem) =>
+                  <FS_Accordion_Home
+                    key={subitem.anno.id}
+                    title={subitem.anno.descr}
+                    array={subitem.materiA1}
+                  />
+                )  
+              )
+            }  
             </Grid>
           </Grid>
         </Container>

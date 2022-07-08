@@ -20,7 +20,7 @@ export default function ControlledAccordions(props) {
   };
 
   return (
-    <Container disableGutters maxWidth="false">
+    <Container disableGutters maxWidth="false" sx={{paddingBottom: '2.5%'}}>
       <Typography variant="h6" className={jnStyles.jnD1}>
         {props.title}
       </Typography>
@@ -30,19 +30,19 @@ export default function ControlledAccordions(props) {
             disableGutters
             maxWidth="false"
             className={fsStyle.accordionContainer}
-            key={item.idMateria}
+            key={item.materia.materia.id}
           >
             <Accordion
               className={fsStyle.accordionElement}
-              expanded={expanded === item.idMateria}
-              onChange={handleChange(item.idMateria)}
+              expanded={expanded === item.materia.materia.id}
+              onChange={handleChange(item.materia.materia.id)}
             >
               <AccordionSummary
                 classes={{content: fsStyle.accordionSummaryContent}}
                 className={fsStyle.accordionSummary}
                 sx={{ minHeight: "90px" }}
                 expandIcon={
-                  expanded === item.idMateria ? (
+                  expanded === item.materia.materia.id ? (
                     <Typography
                       variant="h4"
                       className="icon-arrow-down3"
@@ -64,21 +64,57 @@ export default function ControlledAccordions(props) {
                 <Box className={fsStyle.accordionTitleContainer}>
                   <Stack direction="row">
                     <Box className={fsStyle.accordionTitleDivContainer}>
-                      <Typography variant="h6" className={jnStyles.jnD4}>{item.materia}</Typography>
+                      <Typography variant="h6" className={jnStyles.jnD4}>{item.materia.materia.descr}</Typography>
                     </Box>
                     <Box className={fsStyle.accordionPercentageContainer}>
-                      <Typography variant="h6" className={jnStyles.jnD5}>{item.percentualeAvanzamento}%</Typography>
+                      <Typography variant="h6" className={jnStyles.jnD5}>{100}%</Typography>
                     </Box>
                   </Stack>
                   <Stack>
                     <LinearProgress
                       className={fsStyle.accordionProgress}
                       variant="determinate"
-                      value={item.percentualeAvanzamento}
+                      value={100}
                     />
                   </Stack>
                 </Box>
               </AccordionSummary>
+              <AccordionDetails className={fsStyle.accordionDetailContainer}>
+                {item.classE1.map((subitem) => (
+                  <Container
+                    key={subitem.classe.id}
+                    disableGutters
+                    maxWidth="false"
+                    sx={{ paddingBottom: "30px" }}
+                  >
+                    <Typography variant="h6" className={jnStyles.jnD1}>
+                      {subitem.classe.descr}
+                    </Typography>
+                    <List dense={true}>
+                      {subitem.lezione1.map((lezionItem) => (
+                        <ListItem key={lezionItem.idLezione} sx={{ padding: "0" }}>
+                          <Box
+                            sx={{
+                              width: "70%",
+                              borderBottom: "1px solid #ffffff",
+                              padding: "10px 0",
+                            }}
+                          >
+                            <Typography variant="p" className={jnStyles.jnI2}>
+                              {lezionItem.lezione}
+                            </Typography>
+                          </Box>
+                          <Box sx={{ width: "30%", textAlign: "right" }}>
+                            <Typography variant="p" className={jnStyles.jnL2}>
+                              Stimato {lezionItem.time ? lezionItem.lezione : 0} m
+                            </Typography>
+                          </Box>
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Container>
+                ))}
+              </AccordionDetails>
             </Accordion>
           </Container>
         ))}
