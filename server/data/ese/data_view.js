@@ -5,6 +5,7 @@ const rows = [
     col2: "Verifica",
     col3: "120 minuti",
     col4: "60%",
+    col5: "",
   },
   {
     id: "2",
@@ -12,6 +13,7 @@ const rows = [
     col2: "Verifica",
     col3: "120 minuti",
     col4: "60%",
+    col5: "",
   },
   {
     id: "3",
@@ -19,14 +21,34 @@ const rows = [
     col2: "Esercitazione",
     col3: "",
     col4: "",
+    col5: "",
   },
 ];
 
 const cols = [
   { field: "col1", headerName: "Nome", flex: 1, minWidth: 50 },
-  { field: "col2", headerName: "Tipo", flex: 1, minWidth: 50 },
-  { field: "col3", headerName: "Limite Temporale", flex: 1, minWidth: 50 },
-  { field: "col4", headerName: "Punteggio Minimo", flex: 1, minWidth: 50 },
+  { field: "col2", headerName: "Tipo", flex: 1, minWidth: 50, maxWidth: 150 },
+  {
+    field: "col3",
+    headerName: "Limite Temporale",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 150,
+  },
+  {
+    field: "col4",
+    headerName: "Punteggio Minimo",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 150,
+  },
+  {
+    field: "col5",
+    headerName: "Difficoltà",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 150,
+  },
 ];
 
 module.exports = { rows, cols };

@@ -160,7 +160,10 @@ class FRM_ProgIndi_Lezione extends React.Component {
             justifyContent="flex-start"
             alignItems="center"
           >
-            <DCT_LinkButton href={`/pi/${pi_cfg.PINDI_STEP_0}`} text="back" />
+            <DCT_LinkButton
+              href={`/pi/${pi_cfg.PINDI_STEP_0}`}
+              text={this.props.data.back_label}
+            />
             <DCT_Breadcrumbs
               id={`bread_${pi_cfg.FRM_PINDI_STEP_1}`}
               list={this.props.data.bread}

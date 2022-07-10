@@ -19,6 +19,7 @@ async function fetchJson(input, init) {
 }
 
 async function postData(url, postedData) {
+  console.log("postData URL", url);
   const packBody = {
     extUrl: url,
     data: postedData,

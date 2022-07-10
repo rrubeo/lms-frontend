@@ -7,10 +7,11 @@ import { rows, cols } from "../../../../data/ese/data_esercita";
 
 import { getFunzioniForm } from "../../../../data/common";
 import {
+  getEsercitazioneLezione,
   getBreadEsercita,
-  getGruppoDomande,
-  deleteGruppoDomande,
-  insertGruppoDomande,
+  insertDomanda,
+  deleteDomanda,
+  getTipoDomandaCombo,
 } from "../../../../data/ese/common";
 
 async function getHandler(userLogin, pid, pidLezione) {
@@ -19,22 +20,20 @@ async function getHandler(userLogin, pid, pidLezione) {
     userLogin.userID,
     "FRM_ProgBase_Ricerca"
   );
-  const db_rows = await getGruppoDomande(userLogin.token, pid);
   const db_bread = await getBreadEsercita(userLogin.token, pidLezione, pid);
-
+  const db_tipo = await getTipoDomandaCombo(userLogin.token);
   const data = {
-    title: "Esercitazioni - Gruppo Domande",
+    title: "Esercitazioni - Domande",
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,
-    rows: db_rows,
+    rows: rows,
     cols: cols,
-    tipo_label: "Tipo Esercitazione",
-    tipo: [],
-    livello_label: "Livello Difficoltà",
-    livello: [],
-    testo_gruppo_label: "Testo Gruppo",
-    nome_gruppo_label: "Nome Gruppo Domande",
+    domanda_label: "Testo Domanda",
+    tipo_label: "Tipologia Domanda",
+    tipo: db_tipo,
+    n_domanda_label: "Numero Domanda",
+    pt_domanda_label: "Punteggio Domanda (%)",
     punteggio_label: "Punteggio Minimo",
     back_label: tornaIndietro,
     stepper: stepper,
@@ -46,25 +45,29 @@ async function getHandler(userLogin, pid, pidLezione) {
 
 async function deleteHandler(userLogin, deleteData) {
   console.log("deleteHandler");
-  // console.log(deleteData);
-  let d1 = await deleteGruppoDomande(userLogin.token, deleteData.key);
-  const res = { status: 200, message: "Gruppo eliminato" };
+  console.log(deleteData);
+  let d1 = await deleteDomanda(userLogin.token, deleteData.key);
+  // console.log(d1);
+  const res = { status: 200, message: "Domanda eliminata" };
   return res;
 }
 
-async function postHandler(userLogin, postData, pid) {
+async function postHandler(userLogin, postData, pid, pidGruppo) {
   console.log(postData);
   let poba = {
-    grudNome: postData.nomeGruppo,
-    grudSysuser: userLogin.userID,
-    grudPathFile: "",
-    grudTesto: postData.testoGruppo,
-    grudFkTifiId: 0,
-    grudFkEserId: pid,
+    doesSysuser: userLogin.userID,
+    doesFkTidoId: postData.tipo.id,
+    doesFkEserId: pid,
+    doesTestoDomanda: postData.domanda,
+    doesPercentualePunteggio: postData.punteggio,
+    doesPathFile: "",
+    doesNumeroDomanda: postData.numero,
+    doesFkGrudId: pidGruppo == 0 ? null : pidGruppo,
+    doesFkTifiId: 0,
   };
   console.log("########################################################");
   console.log(poba);
-  let p3 = await insertGruppoDomande(userLogin.token, poba);
+  let p3 = await insertDomanda(userLogin.token, poba);
   console.log(p3);
 
   let res = { status: 200, message: "OK" };
@@ -82,9 +85,21 @@ export default async function handler(req, res) {
   // Run cors
   await utils.cors(req, res);
 
-  console.log("ESERCITAZIONE GRUPPI");
+  console.log("DOMANDE");
   const pid = apic.getPid(req);
-  const pidLezione = apic.getParentPid(req, 1);
+
+  let pidLezione = 0;
+  let pidGruppo = 0;
+
+  if (pid != 0) {
+    pidLezione =
+      req.query.length > 2
+        ? apic.getParentPid(req, 2)
+        : apic.getParentPid(req, 1);
+    pidGruppo = req.query.length > 2 ? apic.getParentPid(req, 1) : 0;
+  }
+  console.log("pidLezione", pidLezione);
+  console.log("pidGruppo", pidGruppo);
   const userLogin = await apic.getLogin(req);
 
   switch (req.method) {
@@ -93,7 +108,7 @@ export default async function handler(req, res) {
       res.status(200).json(dataGet);
       break;
     case "POST":
-      const dataPost = await postHandler(userLogin, req.body, pid);
+      const dataPost = await postHandler(userLogin, req.body, pid, pidGruppo);
       res.status(dataPost.status).json(dataPost);
       break;
     case "DELETE":

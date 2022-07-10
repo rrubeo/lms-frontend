@@ -2,24 +2,26 @@ import * as React from "react";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-
-import DTC_TextBox from "../../DTC_TextBox";
-import DTC_DataGrid from "../../grid/DTC_DataGrid";
-import DCT_Stepper from "../../DCT_Stepper";
-import DCT_Breadcrumbs from "../../DCT_Breadcrumbs";
-import DCT_LinkButton from "../../DCT_LinkButton";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import DCT_LinkButton from "../../DCT_LinkButton";
+import DCT_Stepper from "../../DCT_Stepper";
+import DTC_DataGrid from "../../grid/DTC_DataGrid";
+import DTC_TextMultiline from "../../DTC_TextMultiline";
+import DTC_TextBox from "../../DTC_TextBox";
+import DCT_ComboBox from "../../selector/DCT_ComboBox";
 import jnStyles from "../../../styles/utils.module.css";
 
 const utils = require("../../../lib");
-const pb_cfg = require("./config");
+const ese_cfg = require("./config");
 
-class FRM_ProgBase_Classe_Argomento extends React.Component {
+class FRM_Ese_Check extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      classeId: "tx_classe",
-      classeValue: "",
+      testoGruppoId: "tx_gruppo",
+      testoGruppoValue: "",
+      nomeGruppoId: "tx_nome_gruppo",
+      nomeGruppoValue: "",
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,29 +29,24 @@ class FRM_ProgBase_Classe_Argomento extends React.Component {
     this.onDeleteRow = this.onDeleteRow.bind(this);
     this.handleReset = this.handleReset.bind(this);
 
-    this.changeChildClasseId = React.createRef();
+    this.changeChildTestoGruppoId = React.createRef();
+    this.changeChildNomeGruppoId = React.createRef();
   }
 
-  async handleSubmit(event) {
+  handleSubmit(event) {
     event.preventDefault();
-    const data = {
-      id: pb_cfg.FRM_PBASE_STEP_2,
-      classe: this.state.classeValue,
-    };
-    await this.props.onSubmit(event, data);
+    // const data = {
+    //   id: ese_cfg.FRM_PBASE_STEP_0,
+    // };
+    // // this.props.onSubmit(event, data);
+    // this.props.onNextStep(event, null, ese_cfg.PBASE_STEP_1);
   }
 
-  handleReset(event) {
-    // console.log("RESET");
-    this.changeChildClasseId.current.handleReset();
-    this.setState({ classeValue: "" });
-  }
+  handleReset(event) {}
 
   onChangeForm(id, data) {
+    // console.log("CHANGE");
     switch (id) {
-      case this.state.classeId:
-        this.setState({ classeValue: data });
-        break;
       default:
         console.log(id);
         console.log(data);
@@ -58,12 +55,8 @@ class FRM_ProgBase_Classe_Argomento extends React.Component {
   }
 
   onDeleteRow(id, data) {
-    console.log("DELETE ROW");
-    console.log(id);
-    console.log(data);
-
     const rowData = {
-      id: pb_cfg.FRM_PBASE_STEP_2,
+      id: ese_cfg.FRM_ESE_STEP_6,
       key: data,
     };
     this.props.onDelete(rowData);
@@ -71,8 +64,8 @@ class FRM_ProgBase_Classe_Argomento extends React.Component {
 
   render() {
     const linkBack = utils.getBackLink(
-      "pb",
-      pb_cfg.PBASE_STEP_1,
+      "ese",
+      ese_cfg.ESE_STEP_3,
       this.props.query
     );
     return (
@@ -84,13 +77,6 @@ class FRM_ProgBase_Classe_Argomento extends React.Component {
           alignItems="center"
         >
           <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
-          <DCT_Breadcrumbs
-            id={`bread_${pb_cfg.FRM_PBASE_STEP_2}`}
-            list={this.props.data.bread}
-            page={[pb_cfg.PBASE_STEP_1, pb_cfg.PBASE_STEP_2]}
-            pageId={this.props.pbaseId}
-            path={`${process.env.frontend}/pb`}
-          />
         </Stack>
         <DCT_Stepper
           id="stepper"
@@ -99,7 +85,7 @@ class FRM_ProgBase_Classe_Argomento extends React.Component {
         />
         <Box
           component="form"
-          id={pb_cfg.FRM_PBASE_STEP_2}
+          id={ese_cfg.FRM_ESE_STEP_6}
           onSubmit={this.handleSubmit}
           onReset={this.handleReset}
           sx={{ display: "inline" }}
@@ -110,49 +96,37 @@ class FRM_ProgBase_Classe_Argomento extends React.Component {
             justifyContent="center"
             alignItems="center"
           >
-            <DTC_TextBox
+            <DTC_TextMultiline
               required
-              autoFocus
-              id={this.state.classeId}
-              label={this.props.data.classe_label}
+              id={this.state.testoGruppoId}
+              label={this.props.data.testo_gruppo_label}
               onChange={this.onChangeForm}
               size={1}
-              ref={this.changeChildClasseId}
+              ref={this.changeChildTestoGruppoId}
             />
-            <ButtonGroup
-              variant="contained"
-              aria-label="outlined primary button group"
-              classes={{ root: jnStyles.jnBT }}
-            >
-              <Button
-                type="submit"
-                variant="contained"
-                classes={{ root: jnStyles.jnBT }}
-              >
-                Salva
-              </Button>
-              <Button
-                type="reset"
-                variant="contained"
-                classes={{ root: jnStyles.jnBT }}
-              >
-                Reset
-              </Button>
-            </ButtonGroup>
+            <DTC_TextBox
+              required
+              id={this.state.nomeGruppoId}
+              label={this.props.data.nome_gruppo_label}
+              onChange={this.onChangeForm}
+              size={1}
+              ref={this.changeChildNomeGruppoId}
+            />
           </Stack>
         </Box>
         <DTC_DataGrid
-          id="gd_classe"
+          id="gd_visualizza"
           cols={this.props.data.cols}
           rows={this.props.data.rows}
           onChange={this.onChangeForm}
           onDelete={this.onDeleteRow}
           onNextStep={this.props.onNextStep}
           action={this.props.action}
+          actionWidth={150}
         />
       </Stack>
     );
   }
 }
 
-export default FRM_ProgBase_Classe_Argomento;
+export default FRM_Ese_Check;

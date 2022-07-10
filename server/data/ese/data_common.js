@@ -1,6 +1,6 @@
 const stepper = ["esercitazione", "gruppo", "domande", "risposte", "check"];
 
-const tornaIndietro = "Back";
+const tornaIndietro = "Torna indietro";
 
 module.exports = {
   stepper,

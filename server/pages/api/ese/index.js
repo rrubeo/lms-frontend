@@ -5,6 +5,7 @@ import { sidemenu, navmenu, usermenu } from "../../../data/data_sidemenu";
 import { cols, rows } from "../../../data/ese/data_ricerca";
 
 import { getFunzioniForm } from "../../../data/common";
+import { getRicercaLezioni } from "../../../data/ese/common";
 
 export default async function handler(req, res) {
   await utils.cors(req, res);
@@ -20,13 +21,13 @@ export default async function handler(req, res) {
         userLogin.userID,
         "FRM_ProgBase_Ricerca"
       );
-      // const db_rows = await getRiepilogoProgrammaBase(userLogin.token);
+      const db_rows = await getRicercaLezioni(userLogin.token);
       const data = {
         title: "Ricerca Esercitazione",
         menu: sidemenu,
         navmenu: navmenu,
-        usermenu: usermenu,        
-        rows: rows,
+        usermenu: usermenu,
+        rows: db_rows,
         cols: cols,
         funzioni: db_funzioni,
       };

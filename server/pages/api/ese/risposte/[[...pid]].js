@@ -2,8 +2,8 @@ const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
 import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
-import { tornaIndietro } from "../../../../data/ese/data_common";
-import { rows, cols } from "../../../../data/ese/data_dettaglio";
+import { stepper, tornaIndietro } from "../../../../data/ese/data_common";
+import { rows, cols } from "../../../../data/ese/data_esercita";
 
 import { getFunzioniForm } from "../../../../data/common";
 
@@ -15,16 +15,23 @@ async function getHandler(userLogin, pid) {
   );
 
   const data = {
-    title: "Gestione Esercitazione",
+    title: "Esercitazioni",
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,
-    back_label: tornaIndietro,
     rows: rows,
     cols: cols,
+    tipo_label: "Tipo Esercitazione",
+    tipo: [],
+    livello_label: "Livello Difficoltà",
+    livello: [],
+    testo_gruppo_label: "Testo Gruppo",
+    nome_gruppo_label: "Nome Gruppo Domande",
+    punteggio_label: "Punteggio Minimo",
+    back_label: tornaIndietro,
+    stepper: stepper,
     funzioni: db_funzioni,
   };
-
   return data;
 }
 
@@ -76,7 +83,7 @@ export default async function handler(req, res) {
   // Run cors
   await utils.cors(req, res);
 
-  console.log("ESERCITAZIONE DETTAGLIO");
+  console.log("RISPOSTE");
   const pid = apic.getPid(req);
   const userLogin = await apic.getLogin(req);
 

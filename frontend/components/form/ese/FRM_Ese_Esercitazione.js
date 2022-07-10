@@ -6,8 +6,12 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import DCT_LinkButton from "../../DCT_LinkButton";
 import DCT_Stepper from "../../DCT_Stepper";
 import DTC_DataGrid from "../../grid/DTC_DataGrid";
+import DTC_TextMultiline from "../../DTC_TextMultiline";
 import DTC_TextBox from "../../DTC_TextBox";
 import DCT_ComboBox from "../../selector/DCT_ComboBox";
+import DCT_Upload from "../../DCT_Upload";
+import DCT_Loader from "../../DCT_Loader";
+import DCT_Breadcrumbs from "../../DCT_Breadcrumbs";
 import jnStyles from "../../../styles/utils.module.css";
 
 const utils = require("../../../lib");
@@ -16,32 +20,64 @@ const ese_cfg = require("./config");
 class FRM_Ese_Esercitazione extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { nomeId: "tx_nome", nomeValue: "" };
+    this.state = {
+      testoGruppoId: "tx_gruppo",
+      testoGruppoValue: "",
+      nomeGruppoId: "tx_nome_gruppo",
+      nomeGruppoValue: "",
+      uploadId: "tx_upload",
+      selectedFile: null,
+      uploadLoading: false,
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onChangeForm = this.onChangeForm.bind(this);
     this.onDeleteRow = this.onDeleteRow.bind(this);
     this.handleReset = this.handleReset.bind(this);
 
-    this.changeChildNomeId = React.createRef();
+    this.changeChildTestoGruppoId = React.createRef();
+    this.changeChildNomeGruppoId = React.createRef();
+    this.changeChildUploadId = React.createRef();
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
-    // const data = {
-    //   id: ese_cfg.FRM_PBASE_STEP_0,
-    // };
-    // // this.props.onSubmit(event, data);
-    // this.props.onNextStep(event, null, ese_cfg.PBASE_STEP_1);
+    this.setState({ uploadLoading: true });
+    const data = {
+      id: ese_cfg.FRM_ESE_STEP_2,
+      testoGruppo: this.state.testoGruppoValue,
+      nomeGruppo: this.state.nomeGruppoValue,
+      file: this.state.selectedFile,
+    };
+    await this.props.onSubmit(event, data);
+    this.setState({ uploadLoading: false });
   }
 
-  handleReset(event) {}
+  handleReset(event) {
+    this.changeChildTestoGruppoId.current.handleReset();
+    this.changeChildNomeGruppoId.current.handleReset();
+    this.changeChildUploadId.current.handleReset();
+    this.setState({
+      testoGruppoValue: "",
+      nomeGruppoValue: "",
+      selectedFile: null,
+    });
+  }
 
   onChangeForm(id, data) {
     switch (id) {
+      case this.state.testoGruppoId:
+        this.setState({ testoGruppoValue: data });
+        break;
+      case this.state.nomeGruppoId:
+        this.setState({ nomeGruppoValue: data });
+        break;
+      case this.state.uploadId:
+        this.setState({ selectedFile: data });
+        break;
       default:
-        // console.log(id);
-        // console.log(data);
+        console.log(id);
+        console.log(data);
         break;
     }
   }
@@ -68,7 +104,14 @@ class FRM_Ese_Esercitazione extends React.Component {
           justifyContent="flex-start"
           alignItems="center"
         >
-          <DCT_LinkButton href={linkBack} text="back" />
+          <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
+          <DCT_Breadcrumbs
+            id={`bread_${ese_cfg.FRM_ESE_STEP_2}`}
+            list={this.props.data.bread}
+            page={[ese_cfg.ESE_STEP_2]}
+            pageId={this.props.pbaseId}
+            path={`${process.env.frontend}/ese`}
+          />
         </Stack>
         <DCT_Stepper
           id="stepper"
@@ -86,27 +129,73 @@ class FRM_Ese_Esercitazione extends React.Component {
             direction={{ xs: "column", sm: "column", md: "row" }}
             spacing={2}
             justifyContent="center"
-            alignItems="center"
+            alignItems={{ xs: "center", sm: "center", md: "flex-start" }}
           >
-            <DTC_TextBox
+            <Stack
+              direction="column"
+              spacing={2}
+              justifyContent="center"
+              alignItems="center"
+            >
+              <DTC_TextBox
+                required
+                id={this.state.nomeGruppoId}
+                label={this.props.data.nome_gruppo_label}
+                onChange={this.onChangeForm}
+                size={1}
+                ref={this.changeChildNomeGruppoId}
+              />
+              <DCT_Upload
+                id={this.state.uploadId}
+                onChange={this.onChangeForm}
+                size={1}
+                ref={this.changeChildUploadId}
+              />
+            </Stack>
+            <DTC_TextMultiline
               required
-              id={this.state.nomeId}
-              label={this.props.data.nome_label}
+              id={this.state.testoGruppoId}
+              label={this.props.data.testo_gruppo_label}
               onChange={this.onChangeForm}
               size={1}
-              ref={this.changeChildNomeId}
+              ref={this.changeChildTestoGruppoId}
             />
+            <ButtonGroup
+              variant="contained"
+              aria-label="outlined primary button group"
+              classes={{ root: jnStyles.jnBT }}
+            >
+              <Button
+                type="submit"
+                variant="contained"
+                classes={{ root: jnStyles.jnBT }}
+              >
+                Salva
+              </Button>
+              <Button
+                type="reset"
+                variant="contained"
+                classes={{ root: jnStyles.jnBT }}
+              >
+                Reset
+              </Button>
+            </ButtonGroup>
           </Stack>
         </Box>
-        <DTC_DataGrid
-          id="gd_visualizza"
-          cols={this.props.data.cols}
-          rows={this.props.data.rows}
-          onChange={this.onChangeForm}
-          onDelete={this.onDeleteRow}
-          onNextStep={this.props.onNextStep}
-          action={this.props.action}
-        />
+        {this.state.uploadLoading ? (
+          <DCT_Loader />
+        ) : (
+          <DTC_DataGrid
+            id="gd_gruppi"
+            cols={this.props.data.cols}
+            rows={this.props.data.rows}
+            onChange={this.onChangeForm}
+            onDelete={this.onDeleteRow}
+            onNextStep={this.props.onNextStep}
+            action={this.props.action}
+            actionWidth={150}
+          />
+        )}
       </Stack>
     );
   }

@@ -8,6 +8,7 @@ import DCT_Stepper from "../../DCT_Stepper";
 import DTC_DataGrid from "../../grid/DTC_DataGrid";
 import DTC_TextBox from "../../DTC_TextBox";
 import DCT_ComboBox from "../../selector/DCT_ComboBox";
+import DCT_Breadcrumbs from "../../DCT_Breadcrumbs";
 import jnStyles from "../../../styles/utils.module.css";
 
 const utils = require("../../../lib");
@@ -44,7 +45,7 @@ class FRM_Ese_Visualizza extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
     const data = {
-      id: ese_cfg.FRM_ESE_STEP_2,
+      id: ese_cfg.FRM_ESE_STEP_3,
       nome: this.state.nomeValue,
       limite: this.state.limiteValue,
       punteggio: this.state.punteggioValue,
@@ -73,9 +74,24 @@ class FRM_Ese_Visualizza extends React.Component {
 
   onChangeForm(id, data) {
     switch (id) {
+      case this.state.nomeId:
+        this.setState({ nomeValue: data });
+        break;
+      case this.state.limiteId:
+        this.setState({ limiteValue: data });
+        break;
+      case this.state.punteggioId:
+        this.setState({ punteggioValue: data });
+        break;
+      case this.state.tipoId:
+        this.setState({ tipoValue: data });
+        break;
+      case this.state.livelloId:
+        this.setState({ livelloValue: data });
+        break;
       default:
-        // console.log(id);
-        // console.log(data);
+        console.log(id);
+        console.log(data);
         break;
     }
   }
@@ -91,7 +107,7 @@ class FRM_Ese_Visualizza extends React.Component {
   render() {
     const linkBack = utils.getBackLink(
       "ese",
-      ese_cfg.ESE_STEP_1,
+      ese_cfg.ESE_STEP_0,
       this.props.query
     );
     return (
@@ -102,7 +118,14 @@ class FRM_Ese_Visualizza extends React.Component {
           justifyContent="flex-start"
           alignItems="center"
         >
-          <DCT_LinkButton href={linkBack} text="back" />
+          <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
+          <DCT_Breadcrumbs
+            id={`bread_${ese_cfg.FRM_ESE_STEP_3}`}
+            list={this.props.data.bread}
+            page={[ese_cfg.ESE_STEP_3]}
+            pageId={this.props.pbaseId}
+            path={`${process.env.frontend}/ese`}
+          />
         </Stack>
         <DCT_Stepper
           id="stepper"
@@ -111,7 +134,7 @@ class FRM_Ese_Visualizza extends React.Component {
         />
         <Box
           component="form"
-          id={ese_cfg.FRM_ESE_STEP_2}
+          id={ese_cfg.FRM_ESE_STEP_3}
           onSubmit={this.handleSubmit}
           onReset={this.handleReset}
           sx={{ display: "inline" }}
@@ -139,7 +162,6 @@ class FRM_Ese_Visualizza extends React.Component {
               ref={this.changeChildTipoId}
             />
             <DTC_TextBox
-              required
               id={this.state.limiteId}
               label={this.props.data.limite_label}
               onChange={this.onChangeForm}
@@ -147,7 +169,6 @@ class FRM_Ese_Visualizza extends React.Component {
               ref={this.changeChildLimiteId}
             />
             <DTC_TextBox
-              required
               id={this.state.punteggioId}
               label={this.props.data.punteggio_label}
               onChange={this.onChangeForm}
@@ -192,6 +213,7 @@ class FRM_Ese_Visualizza extends React.Component {
           onDelete={this.onDeleteRow}
           onNextStep={this.props.onNextStep}
           action={this.props.action}
+          actionWidth={200}
         />
       </Stack>
     );

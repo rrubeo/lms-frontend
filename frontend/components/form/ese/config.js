@@ -6,35 +6,18 @@ import {
 
 //nomi di pagina
 const ESE_STEP_0 = "ese_search";
-const ESE_STEP_1 = "ese_dett";
 const ESE_STEP_2 = "ese_eserc";
 const ESE_STEP_3 = "ese_view";
+const ESE_STEP_4 = "ese_domande";
+const ESE_STEP_5 = "ese_risposte";
+const ESE_STEP_6 = "ese_check";
 
 const FRM_ESE_STEP_0 = "FRM_Ese_Ricerca";
 const ESE_STEP_0_API = `${process.env.server}/ese`;
 const ESE_STEP_0_ACTION = [
   {
     id: "1",
-    title: "Esercitazione",
-    icon: "icon-arrow-right3",
-    callBack: GRID_ROUTE_ACTION,
-    route: ESE_STEP_3,
-  },
-  {
-    id: "2",
-    title: "Dettaglio",
-    icon: "icon-arrow-right4",
-    callBack: GRID_ROUTE_ACTION,
-    route: ESE_STEP_1,
-  },
-];
-
-const FRM_ESE_STEP_1 = "FRM_Ese_Dettaglio";
-const ESE_STEP_1_API = `${process.env.server}/ese/dettaglio`;
-const ESE_STEP_1_ACTION = [
-  {
-    id: "1",
-    title: "Visualizza",
+    title: "Esercitazioni",
     icon: "icon-arrow-right4",
     callBack: GRID_ROUTE_ACTION,
     route: ESE_STEP_3,
@@ -42,13 +25,20 @@ const ESE_STEP_1_ACTION = [
 ];
 
 const FRM_ESE_STEP_2 = "FRM_Ese_Esercitazione";
-const ESE_STEP_2_API = `${process.env.server}/ese/view`;
+const ESE_STEP_2_API = `${process.env.server}/ese/esercita`;
 const ESE_STEP_2_ACTION = [
   {
     id: "1",
     title: "Elimina",
     icon: "icon-delete2",
     callBack: GRID_DELETE_ACTION,
+  },
+  {
+    id: "2",
+    title: "Domande",
+    icon: "icon-arrow-right4",
+    callBack: GRID_ROUTE_ACTION,
+    route: ESE_STEP_4,
   },
 ];
 
@@ -63,10 +53,64 @@ const ESE_STEP_3_ACTION = [
   },
   {
     id: "2",
-    title: "Gruppo",
+    title: "Gruppo domande",
     icon: "icon-arrow-right4",
     callBack: GRID_ROUTE_ACTION,
     route: ESE_STEP_2,
+  },
+  {
+    id: "3",
+    title: "Domande",
+    icon: "icon-arrow-right4",
+    callBack: GRID_ROUTE_ACTION,
+    route: ESE_STEP_4,
+  },
+  {
+    id: "4",
+    title: "Check",
+    icon: "icon-arrow-right3",
+    callBack: GRID_ROUTE_ACTION,
+    route: ESE_STEP_6,
+  },
+];
+
+const FRM_ESE_STEP_4 = "FRM_Ese_Domande";
+const ESE_STEP_4_API = `${process.env.server}/ese/domande`;
+const ESE_STEP_4_ACTION = [
+  {
+    id: "1",
+    title: "Elimina",
+    icon: "icon-delete2",
+    callBack: GRID_DELETE_ACTION,
+  },
+  {
+    id: "2",
+    title: "Risposte",
+    icon: "icon-arrow-right4",
+    callBack: GRID_ROUTE_ACTION,
+    route: ESE_STEP_2,
+  },
+];
+
+const FRM_ESE_STEP_5 = "FRM_Ese_Risposte";
+const ESE_STEP_5_API = `${process.env.server}/ese/risposte`;
+const ESE_STEP_5_ACTION = [
+  {
+    id: "1",
+    title: "Elimina",
+    icon: "icon-delete2",
+    callBack: GRID_DELETE_ACTION,
+  },
+];
+
+const FRM_ESE_STEP_6 = "FRM_Ese_Check";
+const ESE_STEP_6_API = `${process.env.server}/ese/check`;
+const ESE_STEP_6_ACTION = [
+  {
+    id: "1",
+    title: "Elimina",
+    icon: "icon-delete2",
+    callBack: GRID_DELETE_ACTION,
   },
 ];
 
@@ -77,14 +121,20 @@ function getApiUrl(query) {
     case ESE_STEP_0:
       apiUrl = ESE_STEP_0_API;
       break;
-    case ESE_STEP_1:
-      apiUrl = ESE_STEP_1_API;
-      break;
     case ESE_STEP_2:
       apiUrl = ESE_STEP_2_API;
       break;
     case ESE_STEP_3:
       apiUrl = ESE_STEP_3_API;
+      break;
+    case ESE_STEP_4:
+      apiUrl = ESE_STEP_4_API;
+      break;
+    case ESE_STEP_5:
+      apiUrl = ESE_STEP_5_API;
+      break;
+    case ESE_STEP_6:
+      apiUrl = ESE_STEP_6_API;
       break;
   }
 
@@ -105,10 +155,6 @@ module.exports = {
   FRM_ESE_STEP_0,
   ESE_STEP_0_API,
   ESE_STEP_0_ACTION,
-  ESE_STEP_1,
-  FRM_ESE_STEP_1,
-  ESE_STEP_1_API,
-  ESE_STEP_1_ACTION,
   ESE_STEP_2,
   FRM_ESE_STEP_2,
   ESE_STEP_2_API,
@@ -117,4 +163,16 @@ module.exports = {
   FRM_ESE_STEP_3,
   ESE_STEP_3_API,
   ESE_STEP_3_ACTION,
+  ESE_STEP_4,
+  FRM_ESE_STEP_4,
+  ESE_STEP_4_API,
+  ESE_STEP_4_ACTION,
+  ESE_STEP_5,
+  FRM_ESE_STEP_5,
+  ESE_STEP_5_API,
+  ESE_STEP_5_ACTION,
+  ESE_STEP_6,
+  FRM_ESE_STEP_6,
+  ESE_STEP_6_API,
+  ESE_STEP_6_ACTION,
 };

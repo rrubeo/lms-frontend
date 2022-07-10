@@ -141,6 +141,22 @@
     text-transform: uppercase;
 }
 
+.jnO2greyBread {
+    background-color: #B34A9D;
+    border-radius: 26px;
+    font-size: 8pt;
+    font-weight: 400;
+    color: #ffffff;
+    border: 0px;
+    padding: 5px 10px 5px 10px;
+    margin: 2px;
+    text-transform: uppercase;
+    text-shadow: 1px 1px #5f638d;
+    font-style: normal;
+    -webkit-box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.3);
+}
+
 .jnP1 {
     font-size: 16pt;
     font-weight: 300;
@@ -167,10 +183,12 @@
 
 .jnO2sm {
     font-size: 10pt;
-    font-weight: 800;
+    font-weight: 400;
     color: #ffffff;
     border: 0px;
     padding: 0px;
+    text-shadow: 1px 1px #5f638d;
+
 }
 
 .jnBD {
@@ -208,13 +226,6 @@
 
 }
 
-.jnDCT_Text_Border {
-    border-radius: 26px;
-    padding: 7px;
-    -webkit-box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.2);
-    box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.2);
-}
-
 .jnDCT_Text_BorderSm {
     border-radius: 26px;
     padding: 1px;
@@ -225,18 +236,6 @@
 .jnDCT_Text_Input_Border {
     border: 0px;
     padding: 0 0 100 100;
-}
-
-.jnDCT_Text_Input {
-    font-size: 11pt;
-    font-weight: 800;
-    color: #000000;
-    border: 0px;
-    padding: 0 0 0 0;
-    position: absolute;
-    top: -24%;
-    transform-origin: 10px 40px;
-
 }
 
 .jnDCT_Multi_Input {
@@ -299,6 +298,17 @@
     color: #ffffff;
 }
 
+.jnBTLink {
+    border-radius: 26px;
+    font-size: 8pt;
+    font-weight: 800;
+    color: #ffffff;
+    background-color: #798DB4;
+    font-style: normal;
+    line-height: 0.9;
+    text-shadow: 1px 1px #252846;
+}
+
 .jnL1 {
     font-size: 12pt;
     font-weight: 400;
@@ -318,6 +328,58 @@
     border: 0px;
     padding: 0 0 0 10px;
 
+}
+
+.jnDCT_Text_Input {
+    font-size: 11pt;
+    font-weight: 800;
+    color: #000000;
+    border: 0px;
+    padding: 0 0 0 0;
+    position: absolute;
+    top: -24%;
+    transform-origin: 10px 40px;
+
+}
+
+.jnDCT_Text_Border {
+    border-radius: 26px;
+    padding: 7px;
+    -webkit-box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.2);
+}
+
+.jnDCT_Notched {
+    border: 0.1px dotted #B34A9D;
+}
+
+.jnDCT_TextMulti {
+    font-size: 11pt;
+    font-weight: 800;
+    color: #000000;
+    border: 0px;
+    padding: 0px 10px 0px 10px;
+    margin: 0px;
+    text-align: justify;
+}
+
+.jnDCT_TextMultiLabel {
+    font-size: 11pt;
+    font-weight: 800;
+    color: #000000;
+    /* border: 0.1px solid #b3ac4a; */
+    border: 0px;
+    margin: 0px;
+    padding: 0 0 0 0;
+}
+
+.jnDCT_TextMultiOutline {
+    border: 0px;
+    border-radius: 26px;
+    padding: 7px;
+    margin: 0px;
+    -webkit-box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.2);
 }
 
 .jnF1 {

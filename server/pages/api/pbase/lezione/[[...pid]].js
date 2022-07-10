@@ -66,7 +66,7 @@ async function postHandler(userLogin, postData, pid) {
   let res = { status: 200, message: msg };
   if (p3.status) {
     res.status = p3.status;
-    res.message = p3.p3.statusText;
+    res.message = p3.statusText;
   }
   return res;
 }

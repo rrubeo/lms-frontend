@@ -75,7 +75,7 @@ async function postHandler(userLogin, postData, pid) {
   let res = { status: 200, message: "OK" };
   if (p3.status) {
     res.status = p3.status;
-    res.message = p3.p3.statusText;
+    res.message = p3.statusText;
   } else {
     res.id = p3.coleId;
   }

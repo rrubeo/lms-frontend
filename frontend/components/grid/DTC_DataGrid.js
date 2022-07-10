@@ -65,7 +65,7 @@ class DTC_DataGrid extends React.Component {
     const buttonColumn = {
       field: "actions",
       type: "actions",
-      maxWidth: 100,
+      maxWidth: this.props.actionWidth ? this.props.actionWidth : 100,
       flex: 1,
       align: "center",
       renderCell: (params) => {

@@ -44,8 +44,9 @@ class DCT_Breadcrumbs extends React.Component {
     return (
       <Breadcrumbs
         aria-label="breadcrumb"
-        sx={{ mt: 0, mb: 2 }}
-        separator={<NavigateNextIcon fontSize="small" />}
+        sx={{ mt: 0, mb: 0 }}
+        // separator={<NavigateNextIcon fontSize="small" />}
+        separator=""
       >
         {this.state.navigable
           ? this.state.listaBread.map((item, index) => (
@@ -63,7 +64,7 @@ class DCT_Breadcrumbs extends React.Component {
                 key={item.key}
                 variant="body2"
                 classes={{
-                  body2: jnStyles.jnO2grey,
+                  body2: jnStyles.jnO2greyBread,
                 }}
                 sx={{ m: 0, p: 0 }}
                 color="text.primary"

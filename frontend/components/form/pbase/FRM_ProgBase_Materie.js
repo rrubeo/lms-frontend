@@ -100,7 +100,7 @@ class FRM_ProgBase_Materie extends React.Component {
           justifyContent="flex-start"
           alignItems="center"
         >
-          <DCT_LinkButton href={linkBack} text="back" />
+          <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
           <DCT_Breadcrumbs
             id={`bread_${pb_cfg.FRM_PBASE_STEP_1}`}
             list={this.props.data.bread}
