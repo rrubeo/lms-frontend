@@ -5,11 +5,12 @@ import Typography from "@mui/material/Typography";
 import fsStyle from "../../../styles/Fs.module.css";
 import jnStyles from "../../../styles/utils.module.css";
 
-class FS_ProfileStudent extends React.Component {
+
+class FS_Progress extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      percentage: this.props.profile.percentualeAvanzamento ? this.props.profile.percentualeAvanzamento : 0,
+      percentage: this.props.type == "home" ? this.props.profile.percentualeAvanzamento : this.props.percentage,
       title: this.props.title,
     };
   }
@@ -44,4 +45,4 @@ class FS_ProfileStudent extends React.Component {
   }
 }
 
-export default FS_ProfileStudent;
+export default FS_Progress;

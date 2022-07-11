@@ -30,7 +30,7 @@ async function getHandler(userLogin, pid) {
     usermenu: usermenu,
     funzioni: db_funzioni,
     profilo: profile,
-    materie: subjects,
+    materie: subjects[0].lezioni,
     lezioniViste: recentLessons,
     // bread: db_bread,
   };

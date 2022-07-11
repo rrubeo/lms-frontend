@@ -98,7 +98,7 @@ function HomepageStudente() {
               xl={4}
               className={fsStyle.progressContentGrid}
             >
-              <FS_Progress title="Avanzamento corso" profile={data.profilo}/>
+              <FS_Progress type="home" title="Avanzamento corso" profile={data.profilo}/>
             </Grid>
           </Grid>
         </Container>
@@ -127,13 +127,11 @@ function HomepageStudente() {
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
             {
               data.materie.map((item) =>
-                item.lezioni.map((subitem) =>
-                  <FS_Accordion_Home
-                    key={subitem.anno.id}
-                    title={subitem.anno.descr}
-                    array={subitem.materiA1}
-                  />
-                )  
+                <FS_Accordion_Home
+                  key={item.anno.id}
+                  title={item.anno.descr}
+                  array={item.materiA1}
+                />
               )
             }  
             </Grid>

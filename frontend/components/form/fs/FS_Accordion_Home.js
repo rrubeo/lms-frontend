@@ -19,6 +19,13 @@ export default function ControlledAccordions(props) {
     setExpanded(isExpanded ? panel : false);
   };
 
+
+  var handleClick = function(event, itemId){
+    window.location.href = "../fs/dettaglio?idLezione="+itemId;
+  };
+
+  console.log(props)
+
   return (
     <Container disableGutters maxWidth="false" sx={{paddingBottom: '2.5%'}}>
       <Typography variant="h6" className={jnStyles.jnD1}>
@@ -58,7 +65,7 @@ export default function ControlledAccordions(props) {
                 }
               >
                 <Box className={fsStyle.accordionImgContainer}>
-                  <Typography variant="h3" className={item.percorsoImmagineMateria}>IMG</Typography>
+                  <Typography variant="h3" className={item.classE1[0].lezione1[0].percorsoImmagineMateria}></Typography>
                 </Box>
 
                 <Box className={fsStyle.accordionTitleContainer}>
@@ -91,8 +98,8 @@ export default function ControlledAccordions(props) {
                       {subitem.classe.descr}
                     </Typography>
                     <List dense={true}>
-                      {subitem.lezione1.map((lezionItem) => (
-                        <ListItem key={lezionItem.idLezione} sx={{ padding: "0" }}>
+                      {subitem.lezione1.map((lezioneItem) => (
+                        <ListItem key={lezioneItem.idLezione} sx={{ padding: "0" }}>
                           <Box
                             sx={{
                               width: "70%",
@@ -100,13 +107,13 @@ export default function ControlledAccordions(props) {
                               padding: "10px 0",
                             }}
                           >
-                            <Typography variant="p" className={jnStyles.jnI2}>
-                              {lezionItem.lezione}
+                            <Typography variant="p" className={jnStyles.jnI2} onClick={event => handleClick(event, lezioneItem.idLezione)}>
+                              {lezioneItem.lezione}
                             </Typography>
                           </Box>
                           <Box sx={{ width: "30%", textAlign: "right" }}>
                             <Typography variant="p" className={jnStyles.jnL2}>
-                              Stimato {lezionItem.time ? lezionItem.lezione : 0} m
+                              Stimato {lezioneItem.tempoStimatoLezione ? lezioneItem.tempoStimatoLezione : 0} m
                             </Typography>
                           </Box>
                         </ListItem>
