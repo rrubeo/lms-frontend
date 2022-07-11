@@ -88,7 +88,7 @@ const ESE_STEP_4_ACTION = [
     title: "Risposte",
     icon: "icon-arrow-right4",
     callBack: GRID_ROUTE_ACTION,
-    route: ESE_STEP_2,
+    route: ESE_STEP_5,
   },
 ];
 

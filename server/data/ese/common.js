@@ -45,7 +45,7 @@ const getBreadView = async (token, IdLezione) => {
   // console.log(f);
   if (f.status) return [];
   let data = [];
-  if (f.length == 1) {
+  if (f.length > 0) {
     data.push({ key: 1, text: f[0].materia + "-" + f[0].anno });
     data.push({ key: 2, text: f[0].classeArgomento });
     data.push({ key: 3, text: f[0].argomento });
@@ -64,13 +64,14 @@ const getBreadEsercita = async (token, IdLezione, IdEsercitazione) => {
   // console.log(f);
   if (f.status) return [];
   let data = [];
-  if (f.length == 1) {
+  if (f.length > 0) {
     data.push({ key: 1, text: f[0].materia + "-" + f[0].anno });
     data.push({ key: 2, text: f[0].classeArgomento });
     data.push({ key: 3, text: f[0].argomento });
     data.push({ key: 4, text: f[0].lezione });
     data.push({ key: 5, text: f[0].nomeEsercitazione });
   }
+  // console.log(data);
   return data;
 };
 

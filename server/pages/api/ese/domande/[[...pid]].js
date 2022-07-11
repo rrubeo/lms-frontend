@@ -7,7 +7,6 @@ import { rows, cols } from "../../../../data/ese/data_esercita";
 
 import { getFunzioniForm } from "../../../../data/common";
 import {
-  getEsercitazioneLezione,
   getBreadEsercita,
   insertDomanda,
   deleteDomanda,
@@ -22,6 +21,7 @@ async function getHandler(userLogin, pid, pidLezione) {
   );
   const db_bread = await getBreadEsercita(userLogin.token, pidLezione, pid);
   const db_tipo = await getTipoDomandaCombo(userLogin.token);
+
   const data = {
     title: "Esercitazioni - Domande",
     menu: sidemenu,
@@ -44,10 +44,9 @@ async function getHandler(userLogin, pid, pidLezione) {
 }
 
 async function deleteHandler(userLogin, deleteData) {
-  console.log("deleteHandler");
-  console.log(deleteData);
+  // console.log("deleteHandler");
+  // console.log(deleteData);
   let d1 = await deleteDomanda(userLogin.token, deleteData.key);
-  // console.log(d1);
   const res = { status: 200, message: "Domanda eliminata" };
   return res;
 }
@@ -85,7 +84,7 @@ export default async function handler(req, res) {
   // Run cors
   await utils.cors(req, res);
 
-  console.log("DOMANDE");
+  console.log("DOMANDE");  
   const pid = apic.getPid(req);
 
   let pidLezione = 0;
@@ -93,10 +92,10 @@ export default async function handler(req, res) {
 
   if (pid != 0) {
     pidLezione =
-      req.query.length > 2
+      req.query.pid.length > 2
         ? apic.getParentPid(req, 2)
         : apic.getParentPid(req, 1);
-    pidGruppo = req.query.length > 2 ? apic.getParentPid(req, 1) : 0;
+    pidGruppo = req.query.pid.length > 2 ? apic.getParentPid(req, 1) : 0;
   }
   console.log("pidLezione", pidLezione);
   console.log("pidGruppo", pidGruppo);

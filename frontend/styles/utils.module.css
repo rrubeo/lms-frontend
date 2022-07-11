@@ -282,7 +282,29 @@
     margin: 0px;
     border: 0.1px solid #ffffff;
     border-radius: 26px 26px 0px 0px;
-    background-color: #F0F0F0;
+    background-color: #798DB4;
+    text-transform: uppercase;
+    text-shadow: 1px 1px #5f638d;
+    color: #ffffff;
+    font-style: normal;
+
+}
+
+.jnGridVirtual {
+    overflow: hidden
+}
+
+.jnGridFooter {
+    padding: 0px;
+    margin: 0px;
+    border: 0.1px solid #ffffff;
+    border-radius: 0px 0px 26px 26px;
+    background-color: #F5F5F5;
+    text-transform: uppercase;
+    text-shadow: 1px 1px #ffffff;
+    color: #252846;
+    font-style: normal;
+
 }
 
 .jnGridSelect {

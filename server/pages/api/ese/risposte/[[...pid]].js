@@ -15,7 +15,7 @@ async function getHandler(userLogin, pid) {
   );
 
   const data = {
-    title: "Esercitazioni",
+    title: "Esercitazioni - Risposte",
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,

@@ -96,6 +96,7 @@ class FRM_Ese_Esercitazione extends React.Component {
       ese_cfg.ESE_STEP_3,
       this.props.query
     );
+    // console.log(linkBack);
     return (
       <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
         <Stack

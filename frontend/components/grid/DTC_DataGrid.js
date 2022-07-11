@@ -170,8 +170,9 @@ class DTC_DataGrid extends React.Component {
 
   render() {
     return (
-      <Box component="div" sx={{ display: "inline" }}>
+      <Box component="div" sx={{ display: "inline", overflow: "hidden" }}>
         <DataGrid
+          scrollbarSize={1000}
           autoHeight
           pagination
           density="compact"
@@ -188,7 +189,8 @@ class DTC_DataGrid extends React.Component {
             row: jnStyles.jnGridCell,
             columnHeadersInner: jnStyles.jnGridColumn,
             toolbarContainer: jnStyles.jnGridRoot,
-            footerContainer: jnStyles.jnGridRoot,
+            footerContainer: jnStyles.jnGridFooter,
+            virtualScroller: jnStyles.jnGridVirtual,
           }}
         />
       </Box>
