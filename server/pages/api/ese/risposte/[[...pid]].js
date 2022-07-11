@@ -3,15 +3,31 @@ const apic = require("../../../../lib/apicommon");
 
 import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
 import { stepper, tornaIndietro } from "../../../../data/ese/data_common";
-import { rows, cols } from "../../../../data/ese/data_esercita";
+import { cols } from "../../../../data/ese/data_risposte";
 
 import { getFunzioniForm } from "../../../../data/common";
+import {
+  getBreadEsercita,
+  insertRisposta,
+  deleteRisposta,
+  getRisposte,
+  getTipoRispostaCombo,
+  getDomande,
+} from "../../../../data/ese/common";
 
-async function getHandler(userLogin, pid) {
+async function getHandler(userLogin, pid, pidEsercitazione, pidGruppo) {
   const db_funzioni = await getFunzioniForm(
     userLogin.token,
     userLogin.userID,
     "FRM_ProgBase_Ricerca"
+  );
+  const db_rows = await getRisposte(userLogin.token, pid, 0, 0, 0);
+  const db_tipo = await getTipoRispostaCombo(userLogin.token);
+  const db_domanda = await getDomande(
+    userLogin.token,
+    pid,
+    pidEsercitazione,
+    pidGruppo
   );
 
   const data = {
@@ -19,15 +35,14 @@ async function getHandler(userLogin, pid) {
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,
-    rows: rows,
+    rows: db_rows,
     cols: cols,
-    tipo_label: "Tipo Esercitazione",
-    tipo: [],
-    livello_label: "Livello Difficoltà",
-    livello: [],
-    testo_gruppo_label: "Testo Gruppo",
-    nome_gruppo_label: "Nome Gruppo Domande",
-    punteggio_label: "Punteggio Minimo",
+    n_domanda_label: "Numero Domanda",
+    tipo_label: "Risposta Corretta",
+    tipo: db_tipo,
+    domanda_label: "Domanda",
+    domanda: db_domanda,
+    testo_gruppo_label: "Testo Risposta",
     back_label: tornaIndietro,
     stepper: stepper,
     funzioni: db_funzioni,
@@ -36,45 +51,35 @@ async function getHandler(userLogin, pid) {
 }
 
 async function deleteHandler(userLogin, deleteData) {
-  //   console.log("deleteHandler");
-  //   console.log(deleteData);
-  //   let d1 = await deleteLezioneAggr(
-  //     userLogin.token,
-  //     deleteData.key,
-  //     deleteData.pbaseId
-  //   );
-  //   // console.log(d1);
-  //   const res = { status: 200, message: "Aggregato eliminato" };
-  //   return res;
+  console.log("#################### deleteHandler #################");
+  console.log(deleteData);
+  let d1 = await deleteRisposta(userLogin.token, deleteData.key);
+  console.log(d1);
+  const res = { status: 200, message: "Risposta eliminata" };
+  return res;
 }
 
-async function postHandler(userLogin, postData, response, pid) {
-  //   let res = { status: 200, message: "" };
-  //   for (let m of postData.lezione) {
-  //     if (m != 0) {
-  //       let poba = {
-  //         lezaFkPobaId: parseInt(pid),
-  //         lezaFkLeziId: m.id,
-  //         lezaSysuser: userLogin.userID,
-  //       };
-  //       console.log(poba);
-  //       let p3 = await insertLezioneAggr(userLogin.token, poba);
-  //       console.log(p3);
+async function postHandler(userLogin, postData, pid) {
+  console.log(postData);
+  let poba = {
+    ridoFkDoesId: pid,
+    ridoSysuser: userLogin.userID,
+    ridoTestoRisposta: postData.risposta,
+    ridoFlagRispostaCorretta: postData.tipo.id == 1 ? 1 : 0,
+    numeroRisposta: postData.numero,
+  };
+  console.log("########################################################");
+  console.log(poba);
+  let p3 = await insertRisposta(userLogin.token, poba);
+  console.log(p3);
 
-  //       const msg =
-  //         process.env.NODE_ENV === "production"
-  //           ? "OK"
-  //           : JSON.stringify(poba) + " RESULT:" + JSON.stringify(p3);
-
-  //       res = { status: 200, message: msg };
-
-  //       if (p3.status) {
-  //         res.status = p3.status;
-  //         res.message = p3.statusText;
-  //         break;
-  //       }
-  //     }
-  //   }
+  let res = { status: 200, message: "OK" };
+  if (p3.status) {
+    res.status = p3.status;
+    res.message = p3.statusText;
+  } else {
+    res.id = p3.eserId;
+  }
 
   return res;
 }
@@ -85,20 +90,48 @@ export default async function handler(req, res) {
 
   console.log("RISPOSTE");
   const pid = apic.getPid(req);
+
+  let pidLezione = 0;
+  let pidGruppo = 0;
+  let pidEsercitazione = 0;
+  let pidDomanda = 0;
+
+  if (pid != 0) {
+    pidLezione =
+      req.query.pid.length > 3
+        ? apic.getParentPid(req, 3)
+        : apic.getParentPid(req, 2);
+    pidGruppo = req.query.pid.length > 3 ? apic.getParentPid(req, 1) : 0;
+    pidEsercitazione =
+      req.query.pid.length > 3
+        ? apic.getParentPid(req, 2)
+        : apic.getParentPid(req, 1);
+    pidDomanda = apic.getParentPid(req, 0);
+  }
+  console.log("pidLezione", pidLezione);
+  console.log("pidEsercitazione", pidEsercitazione);
+  console.log("pidGruppo", pidGruppo);
+  console.log("pidDomanda", pidDomanda);
+
   const userLogin = await apic.getLogin(req);
 
   switch (req.method) {
     case "GET":
-      const dataGet = await getHandler(userLogin, pid);
+      const dataGet = await getHandler(
+        userLogin,
+        pid,
+        pidEsercitazione,
+        pidGruppo
+      );
       res.status(200).json(dataGet);
       break;
     case "POST":
-      //   const dataPost = await postHandler(userLogin, req.body, res, pid);
-      //   res.status(dataPost.status).json(dataPost);
+      const dataPost = await postHandler(userLogin, req.body, pid);
+      res.status(dataPost.status).json(dataPost);
       break;
     case "DELETE":
-      //   const dataDel = await deleteHandler(userLogin, req.body);
-      //   res.status(dataDel.status).json(dataDel);
+      const dataDel = await deleteHandler(userLogin, req.body);
+      res.status(dataDel.status).json(dataDel);
       break;
   }
 }

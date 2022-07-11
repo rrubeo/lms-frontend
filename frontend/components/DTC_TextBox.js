@@ -47,7 +47,7 @@ class DTC_TextBox extends React.Component {
         <OutlinedInput
           id={this.props.id}
           name={this.props.id}
-          type="text"
+          type={this.props.type ? this.props.type : "text"}
           value={this.state.value}
           label={this.props.label}
           onChange={this.handleValueChange}

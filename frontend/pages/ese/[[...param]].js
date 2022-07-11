@@ -189,7 +189,7 @@ function Main() {
         {pageName === ese_cfg.ESE_STEP_5 ? (
           <FRM_Ese_Risposte
             id={ese_cfg.FRM_ESE_STEP_5}
-            activeStep={0}
+            activeStep={3}
             onSubmit={handleSubmit}
             onDelete={handleDelete}
             data={data}

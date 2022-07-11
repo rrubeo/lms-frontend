@@ -14,13 +14,15 @@ import {
   GetGruppoDomande,
   GrudGruppoDomandeDats,
   GetTipologiaDomanda,
+  RidoRispostaDomandaDats,
+  GetRispostaDomanda,
 } from "./config";
 
 const getRicercaLezioni = async (token) => {
   const f = await utils.getFetch(token, GetLezioneConEsercitazione(0, 0, 0));
 
   console.log("getRicercaLezioni");
-  // console.log(f);
+  console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -148,7 +150,7 @@ const getGruppoDomande = async (token, IdEsercitazione) => {
   const f = await utils.getFetch(token, GetGruppoDomande(0, IdEsercitazione));
 
   console.log("getGruppoDomande");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -172,6 +174,34 @@ const deleteGruppoDomande = async (token, id) => {
     token,
     `${GrudGruppoDomandeDats}/${id}`
   );
+};
+
+const getDomande = async (
+  token,
+  IdDomanda,
+  IdEsercitazione,
+  IdGruppoDomande
+) => {
+  const f = await utils.getFetch(
+    token,
+    GetDomandaEsercitazione(IdDomanda, IdEsercitazione, IdGruppoDomande)
+  );
+
+  console.log("getDomande");
+  console.log(f);
+  if (f.status) return [];
+
+  const data = f.map((x) => {
+    return {
+      id: x.idDomandaEsercitazione,
+      col1: x.numDomanda,
+      col2: x.tipologiaDomanda,
+      col3: x.testoDomanda,
+      col4: x.punteggio,
+      col5: x.nomeGruppoDomande,
+    };
+  });
+  return data;
 };
 
 const insertDomanda = async (token, body) => {
@@ -202,6 +232,59 @@ const getTipoDomandaCombo = async (token) => {
   return data;
 };
 
+const insertRisposta = async (token, body) => {
+  let res = await utils.postFetch(token, RidoRispostaDomandaDats, body);
+  return res;
+};
+
+const deleteRisposta = async (token, id) => {
+  return await commMain.deleteObjectURL(
+    token,
+    `${RidoRispostaDomandaDats}/${id}`
+  );
+};
+
+const getRisposte = async (
+  token,
+  IdDomanda,
+  IdEsercitazione,
+  IdGruppoDomande,
+  IdRisposta
+) => {
+  const f = await utils.getFetch(
+    token,
+    GetRispostaDomanda(IdDomanda, IdEsercitazione, IdGruppoDomande, IdRisposta)
+  );
+
+  console.log("getRisposte");
+  // console.log(f);
+  if (f.status) return [];
+
+  const data = f.map((x) => {
+    return {
+      id: x.idRisposta,
+      col1: x.numeroRisposta,
+      col2: x.testoRisposta,
+      col3: x.rispostaCorretta == 0 ? "No" : "Si",
+      col4: x.tipologiaDomanda,
+    };
+  });
+  return data;
+};
+
+const getTipoRispostaCombo = async (token) => {
+  console.log("getTipoRispostaCombo");
+  // console.log(f);
+
+  const data = [
+    { label: "Seleziona", id: 0 },
+    { label: "Si", id: 1 },
+    { label: "No", id: 2 },
+  ];
+
+  return data;
+};
+
 module.exports = {
   getRicercaLezioni,
   getEsercitazioneLezione,
@@ -215,7 +298,12 @@ module.exports = {
   getGruppoDomande,
   insertGruppoDomande,
   deleteGruppoDomande,
+  getDomande,
   insertDomanda,
   deleteDomanda,
   getTipoDomandaCombo,
+  insertRisposta,
+  deleteRisposta,
+  getRisposte,
+  getTipoRispostaCombo,
 };

@@ -58,6 +58,19 @@ function GetTipologiaDomanda(IdTipoDomanda) {
   return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TIPO_DOM}/${IdTipoDomanda}`;
 }
 
+const CLOUD_API_RIS_DOM = "api/RidoRispostaDomandaDats";
+const RidoRispostaDomandaDats = `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_RIS_DOM}`;
+
+const CLOUD_API_TBL_RIS_DOM = "api/Tables/GetRispostaDomanda";
+function GetRispostaDomanda(
+  IdDomanda,
+  IdEsercitazione,
+  IdGruppoDomande,
+  IdRisposta
+) {
+  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_RIS_DOM}/${IdDomanda}/${IdEsercitazione}/${IdGruppoDomande}/${IdRisposta}`;
+}
+
 module.exports = {
   DoesDomandaEsercitazioneDats,
   EserEsercitazioneDats,
@@ -71,4 +84,6 @@ module.exports = {
   GetGruppoDomande,
   GrudGruppoDomandeDats,
   GetTipologiaDomanda,
+  RidoRispostaDomandaDats,
+  GetRispostaDomanda,
 };

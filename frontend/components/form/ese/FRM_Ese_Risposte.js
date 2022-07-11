@@ -3,6 +3,8 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import TextField from "@mui/material/TextField";
+import FormControl from "@mui/material/FormControl";
 import DCT_LinkButton from "../../DCT_LinkButton";
 import DCT_Stepper from "../../DCT_Stepper";
 import DTC_DataGrid from "../../grid/DTC_DataGrid";
@@ -18,10 +20,12 @@ class FRM_Ese_Risposte extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      testoGruppoId: "tx_gruppo",
-      testoGruppoValue: "",
-      nomeGruppoId: "tx_nome_gruppo",
-      nomeGruppoValue: "",
+      numDomandaId: "tx_numero",
+      numDomandaValue: "",
+      rispostaId: "tx_gruppo",
+      rispostaValue: "",
+      tipoId: "cb_tipo",
+      tipoValue: { label: "", id: 0 },
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,24 +33,44 @@ class FRM_Ese_Risposte extends React.Component {
     this.onDeleteRow = this.onDeleteRow.bind(this);
     this.handleReset = this.handleReset.bind(this);
 
-    this.changeChildTestoGruppoId = React.createRef();
-    this.changeChildNomeGruppoId = React.createRef();
+    this.changeChildRispostaId = React.createRef();
+    this.changeChildTipoId = React.createRef();
+    this.changeChildNumDomandaId = React.createRef();
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
-    // const data = {
-    //   id: ese_cfg.FRM_PBASE_STEP_0,
-    // };
-    // // this.props.onSubmit(event, data);
-    // this.props.onNextStep(event, null, ese_cfg.PBASE_STEP_1);
+    const data = {
+      id: ese_cfg.FRM_ESE_STEP_5,
+      numero: this.state.numDomandaValue,
+      risposta: this.state.rispostaValue,
+      tipo: this.state.tipoValue,
+    };
+    await this.props.onSubmit(event, data);
   }
 
-  handleReset(event) {}
+  handleReset(event) {
+    this.changeChildRispostaId.current.handleReset();
+    this.changeChildTipoId.current.handleReset();
+    this.changeChildNumDomandaId.current.handleReset();
+    this.setState({
+      tipoValue: { label: "", id: 0 },
+      numDomandaValue: "",
+      rispostaValue: "",
+    });
+  }
 
   onChangeForm(id, data) {
-    // console.log("CHANGE");
     switch (id) {
+      case this.state.numDomandaId:
+        this.setState({ numDomandaValue: data });
+        break;
+      case this.state.rispostaId:
+        this.setState({ rispostaValue: data });
+        break;
+      case this.state.tipoId:
+        this.setState({ tipoValue: data });
+        break;
       default:
         console.log(id);
         console.log(data);
@@ -63,6 +87,7 @@ class FRM_Ese_Risposte extends React.Component {
   }
 
   render() {
+    console.log(this.props.data.domanda[0]);
     const linkBack = utils.getBackLink(
       "ese",
       ese_cfg.ESE_STEP_4,
@@ -94,28 +119,88 @@ class FRM_Ese_Risposte extends React.Component {
             direction={{ xs: "column", sm: "column", md: "row" }}
             spacing={2}
             justifyContent="center"
-            alignItems="center"
+            alignItems={{ xs: "center", sm: "center", md: "flex-start" }}
           >
-            <DTC_TextMultiline
-              required
-              id={this.state.testoGruppoId}
-              label={this.props.data.testo_gruppo_label}
-              onChange={this.onChangeForm}
-              size={1}
-              ref={this.changeChildTestoGruppoId}
-            />
-            <DTC_TextBox
-              required
-              id={this.state.nomeGruppoId}
-              label={this.props.data.nome_gruppo_label}
-              onChange={this.onChangeForm}
-              size={1}
-              ref={this.changeChildNomeGruppoId}
-            />
+            <Stack
+              direction="column"
+              spacing={2}
+              justifyContent="center"
+              alignItems="center"
+              sx={{ m: "0px", width: "20%", p: "0px" }}
+            >
+              <DTC_TextBox
+                type="number"
+                required
+                id={this.state.numDomandaId}
+                label={this.props.data.n_domanda_label}
+                onChange={this.onChangeForm}
+                size={1}
+                ref={this.changeChildNumDomandaId}
+              />
+              <DCT_ComboBox
+                id={this.state.tipoId}
+                list={this.props.data.tipo}
+                label={this.props.data.tipo_label}
+                onChange={this.onChangeForm}
+                size={1}
+                ref={this.changeChildTipoId}
+              />
+            </Stack>
+            <Stack
+              direction="column"
+              spacing={2}
+              justifyContent="center"
+              alignItems="center"
+              sx={{ m: "0px", width: "80%", p: "0px" }}
+            >
+              <FormControl sx={{ m: "0px", width: "100%", p: "0px" }}>
+                <TextField
+                  disabled
+                  multiline
+                  id="outlined-disabled"
+                  label={this.props.data.domanda_label}
+                  defaultValue={this.props.data.domanda[0].col3}
+                  classes={{
+                    root: jnStyles.jnDCT_Text_Border,
+                    input: jnStyles.jnDCT_Text,
+                    notchedOutline: jnStyles.jnDCT_Notched,
+                  }}
+                />
+              </FormControl>
+              <DTC_TextMultiline
+                required
+                id={this.state.rispostaId}
+                label={this.props.data.testo_gruppo_label}
+                onChange={this.onChangeForm}
+                size={1}
+                ref={this.changeChildRispostaId}
+              />
+            </Stack>
+
+            <ButtonGroup
+              variant="contained"
+              aria-label="outlined primary button group"
+              classes={{ root: jnStyles.jnBT }}
+            >
+              <Button
+                type="submit"
+                variant="contained"
+                classes={{ root: jnStyles.jnBT }}
+              >
+                Salva
+              </Button>
+              <Button
+                type="reset"
+                variant="contained"
+                classes={{ root: jnStyles.jnBT }}
+              >
+                Reset
+              </Button>
+            </ButtonGroup>
           </Stack>
         </Box>
         <DTC_DataGrid
-          id="gd_visualizza"
+          id="gd_risposte"
           cols={this.props.data.cols}
           rows={this.props.data.rows}
           onChange={this.onChangeForm}

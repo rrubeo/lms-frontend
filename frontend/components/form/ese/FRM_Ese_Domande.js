@@ -110,15 +110,13 @@ class FRM_Ese_Domande extends React.Component {
   }
 
   render() {
-    // console.log("length", this.props.query.param.length);
-    // console.log(this.props.query.param);
     const pageBack =
       this.props.query.param.length > 3
         ? ese_cfg.ESE_STEP_2
         : ese_cfg.ESE_STEP_3;
 
     const linkBack = utils.getBackLink("ese", pageBack, this.props.query);
-    // console.log(linkBack);
+
     return (
       <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
         <Stack
@@ -161,6 +159,7 @@ class FRM_Ese_Domande extends React.Component {
               alignItems="center"
             >
               <DTC_TextBox
+                type="number"
                 required
                 id={this.state.numDomandaId}
                 label={this.props.data.n_domanda_label}
@@ -177,6 +176,7 @@ class FRM_Ese_Domande extends React.Component {
                 ref={this.changeChildTipoId}
               />
               <DTC_TextBox
+                type="number"
                 required
                 id={this.state.ptDomandaId}
                 label={this.props.data.pt_domanda_label}

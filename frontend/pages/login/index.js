@@ -125,6 +125,7 @@ export default function Login(props) {
                   required
                   id="password"
                   label="Password"
+                  type="password"
                   size={{ xs: 100, sm: 150, md: 270 }}
                   onChange={onChangeForm}
                   // ref={this.changeChildLezioneId}

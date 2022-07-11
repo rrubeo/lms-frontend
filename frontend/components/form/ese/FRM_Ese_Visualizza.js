@@ -162,6 +162,7 @@ class FRM_Ese_Visualizza extends React.Component {
               ref={this.changeChildTipoId}
             />
             <DTC_TextBox
+              type="number"
               id={this.state.limiteId}
               label={this.props.data.limite_label}
               onChange={this.onChangeForm}
@@ -169,6 +170,7 @@ class FRM_Ese_Visualizza extends React.Component {
               ref={this.changeChildLimiteId}
             />
             <DTC_TextBox
+              type="number"
               id={this.state.punteggioId}
               label={this.props.data.punteggio_label}
               onChange={this.onChangeForm}

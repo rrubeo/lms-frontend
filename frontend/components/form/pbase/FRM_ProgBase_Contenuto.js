@@ -206,6 +206,7 @@ class FRM_ProgBase_Contenuto extends React.Component {
             {this.state.isVideo ? (
               <DTC_TextBox
                 required
+                type="number"
                 id={this.state.durataId}
                 label={this.props.data.durata_label}
                 onChange={this.onChangeForm}
