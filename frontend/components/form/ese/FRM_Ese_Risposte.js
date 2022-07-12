@@ -3,14 +3,13 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
 import DCT_LinkButton from "../../DCT_LinkButton";
 import DCT_Stepper from "../../DCT_Stepper";
 import DTC_DataGrid from "../../grid/DTC_DataGrid";
 import DTC_TextMultiline from "../../DTC_TextMultiline";
 import DTC_TextBox from "../../DTC_TextBox";
 import DCT_ComboBox from "../../selector/DCT_ComboBox";
+import DTC_TextInfo from "../../DTC_TextInfo";
 import jnStyles from "../../../styles/utils.module.css";
 
 const utils = require("../../../lib");
@@ -87,7 +86,7 @@ class FRM_Ese_Risposte extends React.Component {
   }
 
   render() {
-    console.log(this.props.data.domanda[0]);
+    // console.log(this.props.data.domanda[0]);
     const linkBack = utils.getBackLink(
       "ese",
       ese_cfg.ESE_STEP_4,
@@ -153,20 +152,12 @@ class FRM_Ese_Risposte extends React.Component {
               alignItems="center"
               sx={{ m: "0px", width: "80%", p: "0px" }}
             >
-              <FormControl sx={{ m: "0px", width: "100%", p: "0px" }}>
-                <TextField
-                  disabled
-                  multiline
-                  id="outlined-disabled"
-                  label={this.props.data.domanda_label}
-                  defaultValue={this.props.data.domanda[0].col3}
-                  classes={{
-                    root: jnStyles.jnDCT_Text_Border,
-                    input: jnStyles.jnDCT_Text,
-                    notchedOutline: jnStyles.jnDCT_Notched,
-                  }}
-                />
-              </FormControl>
+              <DTC_TextInfo
+                id="tx_domanda"
+                label={this.props.data.domanda_label}
+                value={this.props.data.domanda[0].col3}
+                size={1}
+              />
               <DTC_TextMultiline
                 required
                 id={this.state.rispostaId}
@@ -176,7 +167,6 @@ class FRM_Ese_Risposte extends React.Component {
                 ref={this.changeChildRispostaId}
               />
             </Stack>
-
             <ButtonGroup
               variant="contained"
               aria-label="outlined primary button group"

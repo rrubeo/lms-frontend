@@ -30,7 +30,7 @@ const getFunzioniForm = async (token, user, formName) => {
 };
 const deleteObjectURL = async (token, url) => {
   const f = await utils.deleteFetch(token, url);
-  console.log("delete-" + url);
+  console.log("************ DELETE", url);
   // console.log(f);
   if (f.status) return [];
   return f;

@@ -6,6 +6,14 @@ import { stepper, tornaIndietro } from "../../../../data/ese/data_common";
 import { rows, cols } from "../../../../data/ese/data_esercita";
 
 import { getFunzioniForm } from "../../../../data/common";
+import {
+  getBreadEsercita,
+  insertRisposta,
+  deleteRisposta,
+  getEsercitazioneCheck,
+  getEsercitazioneInfo,
+  getDomande,
+} from "../../../../data/ese/common";
 
 async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
@@ -13,21 +21,38 @@ async function getHandler(userLogin, pid) {
     userLogin.userID,
     "FRM_ProgBase_Ricerca"
   );
-
+  const db_domande = await getEsercitazioneCheck(userLogin.token, 0, pid, 0, 0);
+  const db_esercitazione = await getEsercitazioneInfo(
+    userLogin.token,
+    0,
+    pid,
+    0,
+    0
+  );
   const data = {
-    title: "Esercitazioni",
+    title: "Esercitazioni - Check",
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,
-    rows: rows,
-    cols: cols,
+    rows: db_domande,
+    nome_label: "Esercitazione",
+    nome: db_esercitazione.nomeEsercitazione
+      ? db_esercitazione.nomeEsercitazione
+      : "NOME",
     tipo_label: "Tipo Esercitazione",
-    tipo: [],
+    tipo: db_esercitazione.verificaEsercitazione
+      ? db_esercitazione.verificaEsercitazione
+      : "TIPO",
+    limite_label: "Tempo Limite (min.)",
+    limite: db_esercitazione.tempoLimite ? db_esercitazione.tempoLimite : "0",
     livello_label: "Livello Difficoltà",
-    livello: [],
-    testo_gruppo_label: "Testo Gruppo",
-    nome_gruppo_label: "Nome Gruppo Domande",
-    punteggio_label: "Punteggio Minimo",
+    livello: db_esercitazione.livelloDifficolta
+      ? db_esercitazione.livelloDifficolta
+      : "LIVELLO",
+    punteggio_label: "Punteggio Minimo (%)",
+    punteggio: db_esercitazione.punteggio
+      ? db_esercitazione.punteggio
+      : "LIVELLO",
     back_label: tornaIndietro,
     stepper: stepper,
     funzioni: db_funzioni,

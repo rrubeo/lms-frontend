@@ -6,7 +6,7 @@ function getPid(request) {
   console.log(pid);
   if (!pid) pid = 0;
   else pid = pid[0];
-  console.log("getPid", pid);
+  // console.log("getPid", pid);
   return pid;
 }
 
@@ -16,7 +16,7 @@ function getParentPid(request, pos) {
   console.log(pid);
   if (!pid) pid = 0;
   else pid = pid[pos];
-  console.log("getParentPid", pid);
+  // console.log("getParentPid", pid);
   return pid;
 }
 
@@ -33,7 +33,7 @@ async function getLogin(request) {
     userLogin = await getToken("Romolo", "pass2");
   }
 
-  console.log("getLogin", userLogin.userID);
+  // console.log("getLogin", userLogin.userID);
   return userLogin;
 }
 

@@ -7,6 +7,7 @@ import FRM_Ese_Visualizza from "../../components/form/ese/FRM_Ese_Visualizza";
 import FRM_Ese_Esercitazione from "../../components/form/ese/FRM_Ese_Esercitazione";
 import FRM_Ese_Domande from "../../components/form/ese/FRM_Ese_Domande";
 import FRM_Ese_Risposte from "../../components/form/ese/FRM_Ese_Risposte";
+import FRM_Ese_Check from "../../components/form/ese/FRM_Ese_Check";
 import { validateForm } from "../../components/form/ese/validator";
 
 import {
@@ -195,6 +196,20 @@ function Main() {
             data={data}
             onNextStep={handleNextStep}
             action={ese_cfg.ESE_STEP_5_ACTION}
+            query={pageQuery}
+          />
+        ) : (
+          <></>
+        )}
+        {pageName === ese_cfg.ESE_STEP_6 ? (
+          <FRM_Ese_Check
+            id={ese_cfg.FRM_ESE_STEP_6}
+            activeStep={4}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            data={data}
+            onNextStep={handleNextStep}
+            action={ese_cfg.ESE_STEP_6_ACTION}
             query={pageQuery}
           />
         ) : (

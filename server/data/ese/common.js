@@ -16,13 +16,14 @@ import {
   GetTipologiaDomanda,
   RidoRispostaDomandaDats,
   GetRispostaDomanda,
+  GetCheckEsercitazione,
 } from "./config";
 
 const getRicercaLezioni = async (token) => {
   const f = await utils.getFetch(token, GetLezioneConEsercitazione(0, 0, 0));
 
   console.log("getRicercaLezioni");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -97,6 +98,34 @@ const getEsercitazioneLezione = async (token, IdLezione) => {
       col5: x.livelloDifficolta,
     };
   });
+  return data;
+};
+
+const getEsercitazioneInfo = async (
+  token,
+  IdLezione,
+  IdEsercitazione,
+  IdClasseArgomento,
+  IdArgomento
+) => {
+  const f = await utils.getFetch(
+    token,
+    GetEsercitazioneLezione(
+      IdLezione,
+      IdEsercitazione,
+      IdClasseArgomento,
+      IdArgomento
+    )
+  );
+  let data = {};
+  console.log("getEsercitazioneInfo");
+  // console.log(f);
+  if (f.status) return data;
+
+  if (f.length > 0) {
+    data = f[0];
+  }
+  console.log(data);
   return data;
 };
 
@@ -188,7 +217,7 @@ const getDomande = async (
   );
 
   console.log("getDomande");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -285,6 +314,30 @@ const getTipoRispostaCombo = async (token) => {
   return data;
 };
 
+const getEsercitazioneCheck = async (
+  token,
+  IdDomanda,
+  IdEsercitazione,
+  IdGruppoDomande,
+  IdRisposta
+) => {
+  const f = await utils.getFetch(
+    token,
+    GetCheckEsercitazione(
+      IdDomanda,
+      IdEsercitazione,
+      IdGruppoDomande,
+      IdRisposta
+    )
+  );
+
+  console.log("getEsercitazioneCheck");
+  console.log(f);
+  if (f.status) return [];
+
+  return f;
+};
+
 module.exports = {
   getRicercaLezioni,
   getEsercitazioneLezione,
@@ -306,4 +359,6 @@ module.exports = {
   deleteRisposta,
   getRisposte,
   getTipoRispostaCombo,
+  getEsercitazioneCheck,
+  getEsercitazioneInfo,
 };

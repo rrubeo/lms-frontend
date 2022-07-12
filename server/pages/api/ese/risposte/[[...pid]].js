@@ -37,7 +37,7 @@ async function getHandler(userLogin, pid, pidEsercitazione, pidGruppo) {
     usermenu: usermenu,
     rows: db_rows,
     cols: cols,
-    n_domanda_label: "Numero Domanda",
+    n_domanda_label: "Numero Risposta",
     tipo_label: "Risposta Corretta",
     tipo: db_tipo,
     domanda_label: "Domanda",

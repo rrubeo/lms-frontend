@@ -61,7 +61,7 @@ const getToken = async (url, mBody) => {
 };
 
 const getFetch = async (token, url) => {
-  console.log("URL:", url);
+  console.log("************ GET:", url);
   let f = await fetch(url, {
     headers: getAuthorization(token),
     method: "GET",
@@ -94,13 +94,14 @@ const getFetch = async (token, url) => {
 };
 
 const postFetch = async (token, url, mBody) => {
+  console.log("************ POST:", url);
   let f = await fetch(url, {
     headers: getAuthorization(token),
     method: "POST",
     body: JSON.stringify(mBody),
   });
   let resp = await f;
-  console.log("************ POST **************");
+  // console.log("************ POST **************");
   // console.log(resp);
   let data = isJson(resp) ? resp.json() : resp;
   return data;

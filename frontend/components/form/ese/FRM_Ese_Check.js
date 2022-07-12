@@ -3,14 +3,24 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import Badge from "@mui/material/Badge";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import LinearProgress from "@mui/material/LinearProgress";
+import CircularProgress from "@mui/material/CircularProgress";
 import DCT_LinkButton from "../../DCT_LinkButton";
 import DCT_Stepper from "../../DCT_Stepper";
 import DTC_DataGrid from "../../grid/DTC_DataGrid";
 import DTC_TextMultiline from "../../DTC_TextMultiline";
 import DTC_TextBox from "../../DTC_TextBox";
+import DTC_TextInfo from "../../DTC_TextInfo";
 import DCT_ComboBox from "../../selector/DCT_ComboBox";
 import jnStyles from "../../../styles/utils.module.css";
-
+import fsStyle from "../../../styles/Fs.module.css";
+import { styled } from "@mui/material/styles";
 const utils = require("../../../lib");
 const ese_cfg = require("./config");
 
@@ -68,6 +78,7 @@ class FRM_Ese_Check extends React.Component {
       ese_cfg.ESE_STEP_3,
       this.props.query
     );
+    console.log(this.props.data);
     return (
       <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
         <Stack
@@ -96,34 +107,83 @@ class FRM_Ese_Check extends React.Component {
             justifyContent="center"
             alignItems="center"
           >
-            <DTC_TextMultiline
-              required
-              id={this.state.testoGruppoId}
-              label={this.props.data.testo_gruppo_label}
-              onChange={this.onChangeForm}
+            <DTC_TextInfo
+              id="tx_esercita"
+              label={this.props.data.nome_label}
+              value={this.props.data.nome}
               size={1}
-              ref={this.changeChildTestoGruppoId}
             />
-            <DTC_TextBox
-              required
-              id={this.state.nomeGruppoId}
-              label={this.props.data.nome_gruppo_label}
-              onChange={this.onChangeForm}
+            <DTC_TextInfo
+              id="tx_tipo"
+              label={this.props.data.tipo_label}
+              value={this.props.data.tipo}
               size={1}
-              ref={this.changeChildNomeGruppoId}
+            />
+            <DTC_TextInfo
+              id="tx_limite"
+              label={this.props.data.limite_label}
+              value={this.props.data.limite}
+              size={1}
+            />
+            <DTC_TextInfo
+              id="tx_livello"
+              label={this.props.data.livello_label}
+              value={this.props.data.livello}
+              size={1}
+            />
+            <DTC_TextInfo
+              id="tx_pt"
+              label={this.props.data.punteggio_label}
+              value={this.props.data.punteggio}
+              size={1}
             />
           </Stack>
+          {this.props.data.rows.map((item, index) => (
+            <Accordion key={index}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography
+                  classes={{
+                    root: jnStyles.jnDCT_TextCheckOrdine,
+                  }}
+                  align="center"
+                  sx={{ width: "5%", flexShrink: 0 }}
+                >
+                  {item.numDomanda}
+                </Typography>
+                <Typography
+                  classes={{
+                    root: jnStyles.jnDCT_TextCheck,
+                  }}
+                >
+                  {item.testoDomanda}
+                </Typography>
+                <Typography
+                  classes={{
+                    root: jnStyles.jnDCT_TextCheckPt,
+                  }}
+                  sx={{ px: 5, width: "25%", flexShrink: 0 }}
+                >
+                  {`Punteggio ${item.punteggio} %`}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography
+                  classes={{
+                    root: jnStyles.jnDCT_TextCheckResponse,
+                  }}
+                  align="center"
+                  sx={{ width: "100%", flexShrink: 0 }}
+                >
+                  {item.numeroRisposta}-{item.testoRisposta}
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          ))}
         </Box>
-        <DTC_DataGrid
-          id="gd_visualizza"
-          cols={this.props.data.cols}
-          rows={this.props.data.rows}
-          onChange={this.onChangeForm}
-          onDelete={this.onDeleteRow}
-          onNextStep={this.props.onNextStep}
-          action={this.props.action}
-          actionWidth={150}
-        />
       </Stack>
     );
   }
