@@ -74,33 +74,7 @@ async function deleteHandler(userLogin, deleteData) {
 }
 
 async function postHandler(userLogin, postData, response, pid) {
-  //   let res = { status: 200, message: "" };
-  //   for (let m of postData.lezione) {
-  //     if (m != 0) {
-  //       let poba = {
-  //         lezaFkPobaId: parseInt(pid),
-  //         lezaFkLeziId: m.id,
-  //         lezaSysuser: userLogin.userID,
-  //       };
-  //       console.log(poba);
-  //       let p3 = await insertLezioneAggr(userLogin.token, poba);
-  //       console.log(p3);
-
-  //       const msg =
-  //         process.env.NODE_ENV === "production"
-  //           ? "OK"
-  //           : JSON.stringify(poba) + " RESULT:" + JSON.stringify(p3);
-
-  //       res = { status: 200, message: msg };
-
-  //       if (p3.status) {
-  //         res.status = p3.status;
-  //         res.message = p3.statusText;
-  //         break;
-  //       }
-  //     }
-  //   }
-
+  let res = { status: 200, message: "" };
   return res;
 }
 

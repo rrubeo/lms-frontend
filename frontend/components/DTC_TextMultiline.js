@@ -29,6 +29,10 @@ class DTC_TextMultiline extends React.Component {
     this.setState({ value: "" });
   }
 
+  setText(text) {
+    this.setState({ value: text });
+  }
+
   render() {
     return (
       <FormControl sx={{ m: "0px", width: this.props.size, p: "0px" }}>

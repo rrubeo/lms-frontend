@@ -19,6 +19,7 @@ class FRM_Ese_Risposte extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedId: 0,
       numDomandaId: "tx_numero",
       numDomandaValue: "",
       rispostaId: "tx_gruppo",
@@ -31,6 +32,7 @@ class FRM_Ese_Risposte extends React.Component {
     this.onChangeForm = this.onChangeForm.bind(this);
     this.onDeleteRow = this.onDeleteRow.bind(this);
     this.handleReset = this.handleReset.bind(this);
+    this.onSelectRow = this.onSelectRow.bind(this);
 
     this.changeChildRispostaId = React.createRef();
     this.changeChildTipoId = React.createRef();
@@ -53,6 +55,7 @@ class FRM_Ese_Risposte extends React.Component {
     this.changeChildTipoId.current.handleReset();
     this.changeChildNumDomandaId.current.handleReset();
     this.setState({
+      selectedId: 0,
       tipoValue: { label: "", id: 0 },
       numDomandaValue: "",
       rispostaValue: "",
@@ -83,6 +86,19 @@ class FRM_Ese_Risposte extends React.Component {
       key: data,
     };
     this.props.onDelete(rowData);
+  }
+
+  onSelectRow(id, data) {
+    console.log(data);
+    this.changeChildTipoId.current.setText(data.row.col3);
+    this.changeChildRispostaId.current.setText(data.row.col2);
+    this.changeChildNumDomandaId.current.setText(data.row.col1);
+
+    this.setState({
+      selectedId: id,
+      numDomandaValue: data.row.col1,
+      rispostaValue: data.row.col2,
+    });
   }
 
   render() {
@@ -195,6 +211,7 @@ class FRM_Ese_Risposte extends React.Component {
           rows={this.props.data.rows}
           onChange={this.onChangeForm}
           onDelete={this.onDeleteRow}
+          onSelect={this.onSelectRow}
           onNextStep={this.props.onNextStep}
           action={this.props.action}
           actionWidth={150}

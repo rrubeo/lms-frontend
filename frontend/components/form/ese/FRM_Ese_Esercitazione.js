@@ -21,6 +21,7 @@ class FRM_Ese_Esercitazione extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedId: 0,
       testoGruppoId: "tx_gruppo",
       testoGruppoValue: "",
       nomeGruppoId: "tx_nome_gruppo",
@@ -34,6 +35,7 @@ class FRM_Ese_Esercitazione extends React.Component {
     this.onChangeForm = this.onChangeForm.bind(this);
     this.onDeleteRow = this.onDeleteRow.bind(this);
     this.handleReset = this.handleReset.bind(this);
+    this.onSelectRow = this.onSelectRow.bind(this);
 
     this.changeChildTestoGruppoId = React.createRef();
     this.changeChildNomeGruppoId = React.createRef();
@@ -58,6 +60,7 @@ class FRM_Ese_Esercitazione extends React.Component {
     this.changeChildNomeGruppoId.current.handleReset();
     this.changeChildUploadId.current.handleReset();
     this.setState({
+      selectedId: 0,
       testoGruppoValue: "",
       nomeGruppoValue: "",
       selectedFile: null,
@@ -88,6 +91,18 @@ class FRM_Ese_Esercitazione extends React.Component {
       key: data,
     };
     this.props.onDelete(rowData);
+  }
+
+  onSelectRow(id, data) {
+    console.log(data);
+    this.changeChildTestoGruppoId.current.setText(data.row.col2);
+    this.changeChildNomeGruppoId.current.setText(data.row.col1);
+
+    this.setState({
+      selectedId: id,
+      nomeGruppoValue: data.row.col1,
+      testoGruppoValue: data.row.col2,
+    });
   }
 
   render() {
@@ -192,6 +207,7 @@ class FRM_Ese_Esercitazione extends React.Component {
             rows={this.props.data.rows}
             onChange={this.onChangeForm}
             onDelete={this.onDeleteRow}
+            onSelect={this.onSelectRow}
             onNextStep={this.props.onNextStep}
             action={this.props.action}
             actionWidth={150}

@@ -52,7 +52,7 @@ async function deleteHandler(userLogin, deleteData) {
   console.log("deleteHandler");
   console.log(deleteData);
   let d1 = await deleteEsercitazione(userLogin.token, deleteData.key);
-  const res = { status: 200, message: "Esercitazione eliminate" };
+  const res = { status: 200, message: "Esercitazione eliminata" };
   return res;
 }
 

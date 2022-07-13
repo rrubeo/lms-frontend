@@ -158,8 +158,11 @@ class DTC_DataGrid extends React.Component {
 
   handleRowClick(params, event) {
     event.defaultMuiPrevented = true;
-    // console.log(params);
     this.setState({ currentId: params.id });
+
+    if (this.props.onSelect) {     
+      this.props.onSelect(params.id, params);
+    }
   }
 
   handleRowDoubleClick(params, event) {

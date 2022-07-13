@@ -125,7 +125,7 @@ const getEsercitazioneInfo = async (
   if (f.length > 0) {
     data = f[0];
   }
-  console.log(data);
+  // console.log(data);
   return data;
 };
 
@@ -179,7 +179,7 @@ const getGruppoDomande = async (token, IdEsercitazione) => {
   const f = await utils.getFetch(token, GetGruppoDomande(0, IdEsercitazione));
 
   console.log("getGruppoDomande");
-  // console.log(f);
+  console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -332,10 +332,40 @@ const getEsercitazioneCheck = async (
   );
 
   console.log("getEsercitazioneCheck");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
-  return f;
+  let data = {};
+  for (let i = 0; i < f.length; i++) {
+    const id = f[i].idDomandaEsercitazione;
+
+    if (id in data) {
+      let risposta = {
+        nris: f[i].numeroRisposta,
+        testo: f[i].testoRisposta,
+        corretta: f[i].rispostaCorretta,
+      };
+      data[id].risposte.push(risposta);
+    } else {
+      data[id] = {
+        ndom: f[i].numDomanda,
+        testo: f[i].testoDomanda,
+        tipo: f[i].tipologiaDomanda,
+        punteggio: f[i].punteggio,
+        livello: f[i].livelloDifficolta,
+        limite: f[i].tempoLimite,
+        risposte: [
+          {
+            nris: f[i].numeroRisposta,
+            testo: f[i].testoRisposta,
+            corretta: f[i].rispostaCorretta,
+          },
+        ],
+      };
+    }
+  }
+  // console.log(data);
+  return data;
 };
 
 module.exports = {

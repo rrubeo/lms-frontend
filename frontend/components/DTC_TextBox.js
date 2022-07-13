@@ -28,6 +28,10 @@ class DTC_TextBox extends React.Component {
     this.setState({ value: "" });
   }
 
+  setText(text) {
+    this.setState({ value: text });
+  }
+
   render() {
     // console.log(`<DTC_TextBox ='${this.props.id}'> (${this.state.value})`);
     return (

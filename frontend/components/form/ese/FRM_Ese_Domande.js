@@ -21,6 +21,7 @@ class FRM_Ese_Domande extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedId: 0,
       domandaId: "tx_domanda",
       domandaValue: "",
       numDomandaId: "tx_numero",
@@ -38,6 +39,7 @@ class FRM_Ese_Domande extends React.Component {
     this.onChangeForm = this.onChangeForm.bind(this);
     this.onDeleteRow = this.onDeleteRow.bind(this);
     this.handleReset = this.handleReset.bind(this);
+    this.onSelectRow = this.onSelectRow.bind(this);
 
     this.changeChildTipoId = React.createRef();
     this.changeChildDomandaId = React.createRef();
@@ -68,6 +70,7 @@ class FRM_Ese_Domande extends React.Component {
     this.changeChildNumDomandaId.current.handleReset();
     this.changeChildPtDomandaId.current.handleReset();
     this.setState({
+      selectedId: 0,
       tipoValue: { label: "", id: 0 },
       domandaValue: "",
       numDomandaValue: "",
@@ -107,6 +110,22 @@ class FRM_Ese_Domande extends React.Component {
       key: data,
     };
     this.props.onDelete(rowData);
+  }
+
+  onSelectRow(id, data) {
+    console.log(data);
+    this.changeChildTipoId.current.setText(data.row.col2);
+    this.changeChildDomandaId.current.setText(data.row.col3);
+    // this.changeChildUploadId.current.setText(data.row.col3);
+    this.changeChildNumDomandaId.current.setText(data.row.col1);
+    this.changeChildPtDomandaId.current.setText(data.row.col4);
+    this.setState({      
+      selectedId: id,
+      domandaValue: data.row.col3,
+      numDomandaValue: data.row.col3,
+      ptDomandaValue: data.row.col4,
+      selectedFile: null,
+    });
   }
 
   render() {
@@ -230,6 +249,7 @@ class FRM_Ese_Domande extends React.Component {
             rows={this.props.data.rows}
             onChange={this.onChangeForm}
             onDelete={this.onDeleteRow}
+            onSelect={this.onSelectRow}
             onNextStep={this.props.onNextStep}
             action={this.props.action}
             actionWidth={150}

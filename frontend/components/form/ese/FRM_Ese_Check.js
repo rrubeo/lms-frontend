@@ -1,23 +1,16 @@
 import * as React from "react";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Badge from "@mui/material/Badge";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import LinearProgress from "@mui/material/LinearProgress";
-import CircularProgress from "@mui/material/CircularProgress";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import DCT_LinkButton from "../../DCT_LinkButton";
 import DCT_Stepper from "../../DCT_Stepper";
-import DTC_DataGrid from "../../grid/DTC_DataGrid";
-import DTC_TextMultiline from "../../DTC_TextMultiline";
-import DTC_TextBox from "../../DTC_TextBox";
 import DTC_TextInfo from "../../DTC_TextInfo";
-import DCT_ComboBox from "../../selector/DCT_ComboBox";
 import jnStyles from "../../../styles/utils.module.css";
 import fsStyle from "../../../styles/Fs.module.css";
 import { styled } from "@mui/material/styles";
@@ -32,6 +25,7 @@ class FRM_Ese_Check extends React.Component {
       testoGruppoValue: "",
       nomeGruppoId: "tx_nome_gruppo",
       nomeGruppoValue: "",
+      domande: this.props.data.rows ? this.props.data.rows : {},
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -78,7 +72,14 @@ class FRM_Ese_Check extends React.Component {
       ese_cfg.ESE_STEP_3,
       this.props.query
     );
-    console.log(this.props.data);
+    // console.log(this.props.data.rows);
+    // console.log(this.state.domande);
+
+    Object.entries(this.state.domande).map(function (value, key) {
+      console.log("keyName", key);
+      console.log(value[1]);
+    });
+
     return (
       <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
         <Stack
@@ -138,51 +139,91 @@ class FRM_Ese_Check extends React.Component {
               size={1}
             />
           </Stack>
-          {this.props.data.rows.map((item, index) => (
-            <Accordion key={index}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography
-                  classes={{
-                    root: jnStyles.jnDCT_TextCheckOrdine,
-                  }}
-                  align="center"
-                  sx={{ width: "5%", flexShrink: 0 }}
+
+          {Object.entries(this.state.domande).map(function (value, key) {
+            return (
+              <Accordion key={key} sx={{ my: 2, py: 0, px: 0 }}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
                 >
-                  {item.numDomanda}
-                </Typography>
-                <Typography
-                  classes={{
-                    root: jnStyles.jnDCT_TextCheck,
-                  }}
-                >
-                  {item.testoDomanda}
-                </Typography>
-                <Typography
-                  classes={{
-                    root: jnStyles.jnDCT_TextCheckPt,
-                  }}
-                  sx={{ px: 5, width: "25%", flexShrink: 0 }}
-                >
-                  {`Punteggio ${item.punteggio} %`}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography
-                  classes={{
-                    root: jnStyles.jnDCT_TextCheckResponse,
-                  }}
-                  align="center"
-                  sx={{ width: "100%", flexShrink: 0 }}
-                >
-                  {item.numeroRisposta}-{item.testoRisposta}
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-          ))}
+                  <Typography
+                    classes={{
+                      root: jnStyles.jnDCT_TextCheckOrdine,
+                    }}
+                    align="center"
+                    sx={{ width: "5%", flexShrink: 0 }}
+                  >
+                    {value[1].ndom}
+                  </Typography>
+                  <Typography
+                    classes={{
+                      root: jnStyles.jnDCT_TextCheck,
+                    }}
+                  >
+                    {value[1].testo}
+                  </Typography>
+                  <Typography
+                    classes={{
+                      root: jnStyles.jnDCT_TextCheckPt,
+                    }}
+                    sx={{ px: 5, width: "25%", flexShrink: 0 }}
+                  >
+                    {`Punteggio ${value[1].punteggio} %`}
+                  </Typography>
+                  <Typography
+                    classes={{
+                      root: jnStyles.jnDCT_TextCheckPt,
+                    }}
+                    sx={{ px: 5, flexShrink: 0 }}
+                  >
+                    {`(${value[1].tipo})`}
+                  </Typography>
+                </AccordionSummary>
+                {value[1].risposte.map((item, index) => (
+                  <AccordionDetails key={index} sx={{ py: 0, px: 10 }}>
+                    <Stack
+                      direction={{ xs: "column", sm: "column", md: "row" }}
+                      spacing={1}
+                      justifyContent="flex-start"
+                      alignItems="center"
+                    >
+                      <Typography
+                        classes={{
+                          root: jnStyles.jnDCT_TextCheckOrdine,
+                        }}
+                        align="center"
+                        sx={{ width: "5%", flexShrink: 0 }}
+                      >
+                        {item.nris}
+                      </Typography>
+                      <Typography
+                        classes={{
+                          root: jnStyles.jnDCT_TextCheckResponse,
+                        }}
+                        align="center"
+                        sx={{ flexShrink: 0 }}
+                      >
+                        {item.testo}
+                      </Typography>
+                      <FormControlLabel
+                        disabled
+                        control={
+                          item.corretta == 1 ? (
+                            <Checkbox defaultChecked />
+                          ) : (
+                            <Checkbox />
+                          )
+                        }
+                        label={item.corretta == 1 ? "corretta" : "errata"}
+                      />
+                    </Stack>
+                  </AccordionDetails>
+                ))}
+              </Accordion>
+            );
+          })}
         </Box>
       </Stack>
     );

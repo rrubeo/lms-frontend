@@ -18,6 +18,7 @@ class FRM_Ese_Visualizza extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedId: 0,
       nomeId: "tx_nome",
       nomeValue: "",
       limiteId: "tx_limite",
@@ -30,16 +31,32 @@ class FRM_Ese_Visualizza extends React.Component {
       livelloValue: { label: "", id: 0 },
     };
 
+    this.handleUpdate = this.handleUpdate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onChangeForm = this.onChangeForm.bind(this);
     this.onDeleteRow = this.onDeleteRow.bind(this);
     this.handleReset = this.handleReset.bind(this);
+    this.onSelectRow = this.onSelectRow.bind(this);
 
     this.changeChildTipoId = React.createRef();
     this.changeChildLivelloId = React.createRef();
     this.changeChildNomeId = React.createRef();
     this.changeChildLimiteId = React.createRef();
     this.changeChildPunteggioId = React.createRef();
+  }
+
+  async handleUpdate(event) {
+    event.preventDefault();
+    const data = {
+      upid: this.state.selectedId,
+      id: ese_cfg.FRM_ESE_STEP_3,
+      nome: this.state.nomeValue,
+      limite: this.state.limiteValue,
+      punteggio: this.state.punteggioValue,
+      tipo: this.state.tipoValue,
+      livello: this.state.livelloValue,
+    };
+    await this.props.onSubmit(event, data);
   }
 
   async handleSubmit(event) {
@@ -64,6 +81,7 @@ class FRM_Ese_Visualizza extends React.Component {
     this.changeChildPunteggioId.current.handleReset();
 
     this.setState({
+      selectedId: 0,
       tipoValue: { label: "", id: 0 },
       livelloValue: { label: "", id: 0 },
       nomeValue: "",
@@ -73,6 +91,8 @@ class FRM_Ese_Visualizza extends React.Component {
   }
 
   onChangeForm(id, data) {
+    // console.log("COMBO VALUE CHANGE");
+    // console.log(data);
     switch (id) {
       case this.state.nomeId:
         this.setState({ nomeValue: data });
@@ -102,6 +122,23 @@ class FRM_Ese_Visualizza extends React.Component {
       key: data,
     };
     this.props.onDelete(rowData);
+  }
+
+  onSelectRow(id, data) {
+    console.log(data);
+
+    this.changeChildNomeId.current.setText(data.row.col1);
+    this.changeChildPunteggioId.current.setText(data.row.col4);
+    this.changeChildLimiteId.current.setText(data.row.col3);
+    this.changeChildLivelloId.current.setText(data.row.col5);
+    this.changeChildTipoId.current.setText(data.row.col2);
+
+    this.setState({
+      selectedId: id,
+      nomeValue: data.row.col1,
+      limiteValue: data.row.col3,
+      punteggioValue: data.row.col4,
+    });
   }
 
   render() {
@@ -195,7 +232,14 @@ class FRM_Ese_Visualizza extends React.Component {
                 variant="contained"
                 classes={{ root: jnStyles.jnBT }}
               >
-                Salva
+                Nuovo
+              </Button>
+              <Button
+                variant="contained"
+                classes={{ root: jnStyles.jnBT }}
+                onClick={this.handleUpdate}
+              >
+                Modifica
               </Button>
               <Button
                 type="reset"
@@ -213,6 +257,7 @@ class FRM_Ese_Visualizza extends React.Component {
           rows={this.props.data.rows}
           onChange={this.onChangeForm}
           onDelete={this.onDeleteRow}
+          onSelect={this.onSelectRow}
           onNextStep={this.props.onNextStep}
           action={this.props.action}
           actionWidth={200}

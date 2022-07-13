@@ -38,12 +38,12 @@ class DCT_ComboBox extends React.Component {
   componentDidMount() {
     // console.log("COMBO componentDidMount");
     // console.log(this.props.selection);
-    if (this.props.selection) {
-      // console.log(this.props.list);
-      console.log(
-        this.props.list.findIndex((item) => item.id == this.props.selection)
-      );
-    }
+    // if (this.props.selection) {
+    //   // console.log(this.props.list);
+    //   console.log(
+    //     this.props.list.findIndex((item) => item.id == this.props.selection)
+    //   );
+    // }
   }
 
   handleInputChange(event, value) {
@@ -52,7 +52,7 @@ class DCT_ComboBox extends React.Component {
 
   handleValueChange(event, value) {
     // console.log("COMBO VALUE CHANGE");
-    // console.log(this.props.list);
+    // console.log(this.props.id);
     // console.log(value);
     this.setState({ value: value });
     this.props.onChange(this.props.id, value);
@@ -63,17 +63,15 @@ class DCT_ComboBox extends React.Component {
     this.setState({ value: this.props.list[0] });
   }
 
-  render() {
-    // console.log(
-    //   `<DCT_ComboBox ='${this.props.id}'> (${this.state.value.id}) = ${this.state.value.label}`
-    // );
-    // if (this.props.selection) {
-    //   console.log(this.props.list);
-    //   console.log(
-    //     this.props.list.findIndex((item) => item.id == this.props.selection)
-    //   );
-    // }
+  setText(text) {
+    // this.setState({ value: text });
+    const selezione = this.props.list.findIndex((item) => item.label == text);
+    this.setState({ value: this.props.list[selezione] });
+    this.props.onChange(this.props.id, this.props.list[selezione]);
+    // console.log(selezione);
+  }
 
+  render() {
     return (
       <FormControl
         sx={{ m: 0, p: 0, width: this.props.size }}
