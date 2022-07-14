@@ -24,8 +24,9 @@ const rows = [
 
 const cols = [
   { field: "col1", headerName: "Nome Gruppo", flex: 1, minWidth: 50 },
-  { field: "col2", headerName: "Nome File", flex: 1, minWidth: 50 },
-  { field: "col3", headerName: "Tipologia File", flex: 1, minWidth: 50 },
+  { field: "col2", headerName: "Testo", flex: 1, minWidth: 50 },
+  { field: "col3", headerName: "Nome File", flex: 1, minWidth: 50 },
+  { field: "col4", headerName: "Tipologia File", flex: 1, minWidth: 50 },
 ];
 
 module.exports = { rows, cols };

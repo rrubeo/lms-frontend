@@ -41,7 +41,7 @@ async function getHandler(userLogin, pid) {
 
 async function deleteHandler(userLogin, deleteData) {
   let d1 = await deleteLezione(userLogin.token, deleteData.key);
-  console.log(d1);
+  // console.log(d1);
   const res = { status: 200, message: "Lezione eliminata" };
   return res;
 }

@@ -35,6 +35,7 @@ class FRM_Ese_Domande extends React.Component {
       uploadLoading: false,
     };
 
+    this.handleUpdate = this.handleUpdate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onChangeForm = this.onChangeForm.bind(this);
     this.onDeleteRow = this.onDeleteRow.bind(this);
@@ -46,6 +47,20 @@ class FRM_Ese_Domande extends React.Component {
     this.changeChildUploadId = React.createRef();
     this.changeChildPtDomandaId = React.createRef();
     this.changeChildNumDomandaId = React.createRef();
+  }
+
+  async handleUpdate(event) {
+    event.preventDefault();
+    const data = {
+      upid: this.state.selectedId,
+      id: ese_cfg.FRM_ESE_STEP_4,
+      domanda: this.state.domandaValue,
+      numero: this.state.numDomandaValue,
+      punteggio: this.state.ptDomandaValue,
+      tipo: this.state.tipoValue,
+      file: this.state.selectedFile,
+    };
+    await this.props.onSubmit(event, data);
   }
 
   async handleSubmit(event) {
@@ -119,10 +134,10 @@ class FRM_Ese_Domande extends React.Component {
     // this.changeChildUploadId.current.setText(data.row.col3);
     this.changeChildNumDomandaId.current.setText(data.row.col1);
     this.changeChildPtDomandaId.current.setText(data.row.col4);
-    this.setState({      
+    this.setState({
       selectedId: id,
       domandaValue: data.row.col3,
-      numDomandaValue: data.row.col3,
+      numDomandaValue: data.row.col1,
       ptDomandaValue: data.row.col4,
       selectedFile: null,
     });
@@ -228,7 +243,14 @@ class FRM_Ese_Domande extends React.Component {
                 variant="contained"
                 classes={{ root: jnStyles.jnBT }}
               >
-                Salva
+                Nuovo
+              </Button>
+              <Button
+                variant="contained"
+                classes={{ root: jnStyles.jnBT }}
+                onClick={this.handleUpdate}
+              >
+                Modifica
               </Button>
               <Button
                 type="reset"

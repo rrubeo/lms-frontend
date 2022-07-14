@@ -34,6 +34,8 @@ const cols = [
     flex: 1,
     minWidth: 50,
     maxWidth: 150,
+    type: "number",
+    align: "right",
   },
   {
     field: "col4",
@@ -41,6 +43,8 @@ const cols = [
     flex: 1,
     minWidth: 50,
     maxWidth: 150,
+    type: "number",
+    align: "right",
   },
   {
     field: "col5",

@@ -27,7 +27,7 @@ async function getHandler(userLogin, pid) {
   const db_livello = await getLivelloDiffCombo(userLogin.token);
   const db_bread = await getBreadView(userLogin.token, pid);
   const data = {
-    title: "Esercitazioni",
+    title: "Esercitazioni/Verifiche",
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,
@@ -59,6 +59,7 @@ async function deleteHandler(userLogin, deleteData) {
 async function postHandler(userLogin, postData, pid) {
   console.log(postData);
   let poba = {
+    eserId: postData.upid ? postData.upid : -1,
     eserNome: postData.nome,
     eserMinutiTempoLimite: postData.limite,
     eserSysuser: userLogin.userID,

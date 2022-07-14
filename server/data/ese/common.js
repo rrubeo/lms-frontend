@@ -186,8 +186,9 @@ const getGruppoDomande = async (token, IdEsercitazione) => {
     return {
       id: x.idGruppoDomande,
       col1: x.gruppoDomandeDesc,
-      col2: x.nomeFile,
-      col3: x.tipologiaFile,
+      col2: x.gruppoDomandeTesto,
+      col3: x.nomeFile,
+      col4: x.tipologiaFile,
     };
   });
   return data;

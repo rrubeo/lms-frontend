@@ -31,6 +31,7 @@ class FRM_Ese_Esercitazione extends React.Component {
       uploadLoading: false,
     };
 
+    this.handleUpdate = this.handleUpdate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onChangeForm = this.onChangeForm.bind(this);
     this.onDeleteRow = this.onDeleteRow.bind(this);
@@ -40,6 +41,18 @@ class FRM_Ese_Esercitazione extends React.Component {
     this.changeChildTestoGruppoId = React.createRef();
     this.changeChildNomeGruppoId = React.createRef();
     this.changeChildUploadId = React.createRef();
+  }
+
+  async handleUpdate(event) {
+    event.preventDefault();
+    const data = {
+      upid: this.state.selectedId,
+      id: ese_cfg.FRM_ESE_STEP_2,
+      testoGruppo: this.state.testoGruppoValue,
+      nomeGruppo: this.state.nomeGruppoValue,
+      file: this.state.selectedFile,
+    };
+    await this.props.onSubmit(event, data);
   }
 
   async handleSubmit(event) {
@@ -186,7 +199,14 @@ class FRM_Ese_Esercitazione extends React.Component {
                 variant="contained"
                 classes={{ root: jnStyles.jnBT }}
               >
-                Salva
+                Nuovo
+              </Button>
+              <Button
+                variant="contained"
+                classes={{ root: jnStyles.jnBT }}
+                onClick={this.handleUpdate}
+              >
+                Modifica
               </Button>
               <Button
                 type="reset"

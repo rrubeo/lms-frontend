@@ -55,6 +55,7 @@ async function deleteHandler(userLogin, deleteData) {
 async function postHandler(userLogin, postData, pid) {
   console.log(postData);
   let poba = {
+    grudId: postData.upid ? postData.upid : -1,
     grudNome: postData.nomeGruppo,
     grudSysuser: userLogin.userID,
     grudPathFile: "",

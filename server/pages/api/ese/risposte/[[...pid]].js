@@ -62,11 +62,12 @@ async function deleteHandler(userLogin, deleteData) {
 async function postHandler(userLogin, postData, pid) {
   console.log(postData);
   let poba = {
+    ridoId: postData.upid ? postData.upid : -1,
     ridoFkDoesId: pid,
     ridoSysuser: userLogin.userID,
     ridoTestoRisposta: postData.risposta,
     ridoFlagRispostaCorretta: postData.tipo.id == 1 ? 1 : 0,
-    numeroRisposta: postData.numero,
+    ridoNumeroRisposta: postData.numero,
   };
   console.log("########################################################");
   console.log(poba);

@@ -26,8 +26,17 @@ async function getHandler(
     userLogin.userID,
     "FRM_ProgBase_Ricerca"
   );
-  const db_rows = await getDomande(userLogin.token, 0, pidEsercitazione, pidGruppo);
-  const db_bread = await getBreadEsercita(userLogin.token, pidLezione, pidEsercitazione);
+  const db_rows = await getDomande(
+    userLogin.token,
+    0,
+    pidEsercitazione,
+    pidGruppo
+  );
+  const db_bread = await getBreadEsercita(
+    userLogin.token,
+    pidLezione,
+    pidEsercitazione
+  );
   const db_tipo = await getTipoDomandaCombo(userLogin.token);
 
   const data = {
@@ -68,6 +77,7 @@ async function postHandler(
 ) {
   console.log(postData);
   let poba = {
+    doesId: postData.upid ? postData.upid : -1,
     doesSysuser: userLogin.userID,
     doesFkTidoId: postData.tipo.id,
     doesFkEserId: pidEsercitazione,

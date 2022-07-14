@@ -7,13 +7,14 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Checkbox from "@mui/material/Checkbox";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import DCT_LinkButton from "../../DCT_LinkButton";
 import DCT_Stepper from "../../DCT_Stepper";
-import DTC_TextInfo from "../../DTC_TextInfo";
+import Fab from "@mui/material/Fab";
 import jnStyles from "../../../styles/utils.module.css";
-import fsStyle from "../../../styles/Fs.module.css";
-import { styled } from "@mui/material/styles";
+
 const utils = require("../../../lib");
 const ese_cfg = require("./config");
 
@@ -32,6 +33,7 @@ class FRM_Ese_Check extends React.Component {
     this.onChangeForm = this.onChangeForm.bind(this);
     this.onDeleteRow = this.onDeleteRow.bind(this);
     this.handleReset = this.handleReset.bind(this);
+    this.gridItem = this.gridItem.bind(this);
 
     this.changeChildTestoGruppoId = React.createRef();
     this.changeChildNomeGruppoId = React.createRef();
@@ -66,6 +68,17 @@ class FRM_Ese_Check extends React.Component {
     this.props.onDelete(rowData);
   }
 
+  gridItem(label, value) {
+    return (
+      <Grid item xs="auto">
+        <div className={jnStyles.jnDCT_TextCheckLabel}>{label}</div>
+        <Paper elevation={4}>
+          <div className={jnStyles.jnDCT_TextCheckText}>{value}</div>
+        </Paper>
+      </Grid>
+    );
+  }
+
   render() {
     const linkBack = utils.getBackLink(
       "ese",
@@ -95,6 +108,31 @@ class FRM_Ese_Check extends React.Component {
           activeStep={this.props.activeStep}
           steps={this.props.data.stepper}
         />
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid
+            container
+            spacing={{ xs: 2, md: 4 }}
+            columns={{ xs: 4, sm: 8, md: 12 }}
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+          >
+            {this.gridItem(this.props.data.tipo_label, this.props.data.tipo)}
+            {this.gridItem(
+              this.props.data.limite_label,
+              this.props.data.limite
+            )}
+            {this.gridItem(
+              this.props.data.livello_label,
+              this.props.data.livello
+            )}
+            {this.gridItem(
+              this.props.data.punteggio_label,
+              this.props.data.punteggio
+            )}
+            {this.gridItem(this.props.data.nome_label, this.props.data.nome)}
+          </Grid>
+        </Box>
         <Box
           component="form"
           id={ese_cfg.FRM_ESE_STEP_6}
@@ -102,127 +140,135 @@ class FRM_Ese_Check extends React.Component {
           onReset={this.handleReset}
           sx={{ display: "inline" }}
         >
-          <Stack
-            direction={{ xs: "column", sm: "column", md: "row" }}
-            spacing={2}
-            justifyContent="center"
-            alignItems="center"
-          >
-            <DTC_TextInfo
-              id="tx_esercita"
-              label={this.props.data.nome_label}
-              value={this.props.data.nome}
-              size={1}
-            />
-            <DTC_TextInfo
-              id="tx_tipo"
-              label={this.props.data.tipo_label}
-              value={this.props.data.tipo}
-              size={1}
-            />
-            <DTC_TextInfo
-              id="tx_limite"
-              label={this.props.data.limite_label}
-              value={this.props.data.limite}
-              size={1}
-            />
-            <DTC_TextInfo
-              id="tx_livello"
-              label={this.props.data.livello_label}
-              value={this.props.data.livello}
-              size={1}
-            />
-            <DTC_TextInfo
-              id="tx_pt"
-              label={this.props.data.punteggio_label}
-              value={this.props.data.punteggio}
-              size={1}
-            />
-          </Stack>
-
           {Object.entries(this.state.domande).map(function (value, key) {
             return (
-              <Accordion key={key} sx={{ my: 2, py: 0, px: 0 }}>
+              <Accordion
+                key={key}
+                sx={{
+                  my: 2,
+                  py: 0,
+                  px: 0,
+                  "&:before": {
+                    display: "none",
+                  },
+                }}
+                classes={{
+                  root: jnStyles.accordion,
+                }}
+                disableGutters
+                elevation={0}
+              >
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <Typography
-                    classes={{
-                      root: jnStyles.jnDCT_TextCheckOrdine,
-                    }}
-                    align="center"
-                    sx={{ width: "5%", flexShrink: 0 }}
+                  <Grid
+                    container
+                    spacing={{ xs: 2, md: 1 }}
+                    columns={{ xs: 4, sm: 8, md: 12 }}
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
                   >
-                    {value[1].ndom}
-                  </Typography>
-                  <Typography
-                    classes={{
-                      root: jnStyles.jnDCT_TextCheck,
-                    }}
-                  >
-                    {value[1].testo}
-                  </Typography>
-                  <Typography
-                    classes={{
-                      root: jnStyles.jnDCT_TextCheckPt,
-                    }}
-                    sx={{ px: 5, width: "25%", flexShrink: 0 }}
-                  >
-                    {`Punteggio ${value[1].punteggio} %`}
-                  </Typography>
-                  <Typography
-                    classes={{
-                      root: jnStyles.jnDCT_TextCheckPt,
-                    }}
-                    sx={{ px: 5, flexShrink: 0 }}
-                  >
-                    {`(${value[1].tipo})`}
-                  </Typography>
+                    {gridQuestion(
+                      "6",
+                      value[1].tipo,
+                      jnStyles.jnDCT_TextCheckPt
+                    )}
+                    {gridQuestion(
+                      "6",
+                      `Punteggio ${value[1].punteggio} %`,
+                      jnStyles.jnDCT_TextCheckPt
+                    )}
+                    {gridNumber("1", value[1].ndom, jnStyles.jnDCT_Fab1)}
+                    {gridQuestionPage(
+                      "11",
+                      value[1].testo,
+                      jnStyles.jnDCT_TextCheck
+                    )}
+                  </Grid>
                 </AccordionSummary>
                 {value[1].risposte.map((item, index) => (
-                  <AccordionDetails key={index} sx={{ py: 0, px: 10 }}>
-                    <Stack
-                      direction={{ xs: "column", sm: "column", md: "row" }}
-                      spacing={1}
-                      justifyContent="flex-start"
+                  <AccordionDetails key={index} sx={{ py: 0, px: 0 }}>
+                    <Grid
+                      container
+                      spacing={{ xs: 1, md: 1 }}
+                      columns={{ xs: 4, sm: 8, md: 12 }}
+                      direction="row"
+                      justifyContent="center"
                       alignItems="center"
+                      sx={{ pb: 1, px: 0 }}
                     >
-                      <Typography
-                        classes={{
-                          root: jnStyles.jnDCT_TextCheckOrdine,
-                        }}
-                        align="center"
-                        sx={{ width: "5%", flexShrink: 0 }}
-                      >
-                        {item.nris}
-                      </Typography>
-                      <Typography
-                        classes={{
-                          root: jnStyles.jnDCT_TextCheckResponse,
-                        }}
-                        align="center"
-                        sx={{ flexShrink: 0 }}
-                      >
-                        {item.testo}
-                      </Typography>
-                      <FormControlLabel
-                        disabled
-                        control={
-                          item.corretta == 1 ? (
-                            <Checkbox defaultChecked />
-                          ) : (
-                            <Checkbox />
-                          )
-                        }
-                        label={item.corretta == 1 ? "corretta" : "errata"}
-                      />
-                    </Stack>
+                      {gridNumber("1", item.nris, jnStyles.jnDCT_Fab)}
+                      {gridQuestionPage(
+                        "5",
+                        item.testo,
+                        jnStyles.jnDCT_TextCheckResponse
+                      )}
+                      {gridCheckBox("3", item.corretta)}
+                    </Grid>
                   </AccordionDetails>
                 ))}
               </Accordion>
             );
+            function gridCheckBox(size, flag) {
+              return (
+                <Grid item xs={size} zeroMinWidth>
+                  <FormControlLabel
+                    disabled
+                    control={
+                      flag == 1 ? <Checkbox defaultChecked /> : <Checkbox />
+                    }
+                    label={flag == 1 ? "corretta" : "errata"}
+                  />
+                </Grid>
+              );
+            }
+            function gridQuestion(size, value, stile) {
+              return (
+                <Grid item xs={size}>
+                  <Typography
+                    classes={{
+                      root: stile,
+                    }}
+                  >
+                    {value}
+                  </Typography>
+                </Grid>
+              );
+            }
+            function gridNumber(size, value, stile) {
+              return (
+                <Grid item xs="auto">
+                  <Fab
+                    size="small"
+                    sx={{ p: 0, m: 0 }}
+                    classes={{
+                      root: stile,
+                    }}
+                  >
+                    {value}
+                  </Fab>
+                </Grid>
+              );
+            }
+            function gridQuestionPage(size, value, stile) {
+              return (
+                <Grid item xs={size}>
+                  <Paper elevation={4}>
+                    <Typography
+                      sx={{ px: 1, py: 0.5 }}
+                      classes={{
+                        root: stile,
+                      }}
+                    >
+                      {value}
+                    </Typography>
+                  </Paper>
+                </Grid>
+              );
+            }
           })}
         </Box>
       </Stack>

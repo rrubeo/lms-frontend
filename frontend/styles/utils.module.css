@@ -436,15 +436,58 @@
     padding: 0 0 0 0;
 }
 
+.jnDCT_TextCheckLabel {
+    font-size: 9pt;
+    font-weight: 800;
+    text-shadow: 1px 1px #d2d5ec;
+    color: #252846;
+    border: 0px;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+}
+
+.jnDCT_TextCheckText {
+    font-size: 12pt;
+    font-weight: 400;
+    text-shadow: 1px 1px #252846;
+    color: #ffffff;
+    border: 0px;
+    padding: 10px;
+    margin: 0px;
+    text-align: center;
+    background-color: #798DB4;
+}
+
 .jnDCT_TextCheck {
     font-size: 11pt;
     font-weight: 400;
     text-shadow: 1px 1px #d2d5ec;
     color: #252846;
     border: 0px;
-    padding: 0px;
+    /* padding: 0px; */
     margin: 0px;
     text-align: justify;
+}
+
+.jnDCT_Fab1 {
+    font-size: 10pt;
+    font-weight: 800;
+    /* text-shadow: 1px 1px #d2d5ec; */
+    color: #ffffff;
+    border: 0px;
+    text-align: center;
+    background-color: #252846;
+}
+
+.jnDCT_Fab {
+    font-size: 10pt;
+    font-weight: 800;
+    /* text-shadow: 1px 1px #d2d5ec; */
+    color: #ffffff;
+    border: 0px;
+    text-align: center;
+    background-color: #B34A9D;
 }
 
 .jnDCT_TextCheckResponse {
@@ -453,7 +496,7 @@
     text-shadow: 1px 1px #d2d5ec;
     color: #B34A9D;
     border: 0px;
-    padding: 0px;
+    /* padding: 0px; */
     margin: 0px;
     text-align: justify;
 }
@@ -538,8 +581,13 @@
     }
 }
 
-
-
+.accordion {
+    border: 0px;
+    border-radius: 36px;
+    background-color: #ebe9e9;
+    -webkit-box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.4);
+}
 
 .shadow {
     -webkit-box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.2);

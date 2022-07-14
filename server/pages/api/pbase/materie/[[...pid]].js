@@ -53,8 +53,7 @@ async function getHandler(userLogin, pid) {
 }
 
 async function deleteHandler(userLogin, deleteData) {
-  let d1 = await deleteProgrammaBase(userLogin.token, deleteData.key);
-  console.log(d1);
+  let d1 = await deleteProgrammaBase(userLogin.token, deleteData.key);  
   const res = { status: 200, message: "Materia eliminata" };
   return res;
 }
