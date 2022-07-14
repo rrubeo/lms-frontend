@@ -1,5 +1,6 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
+import { useSearchParams } from 'react-router-dom';
 
 import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
 
@@ -16,7 +17,7 @@ async function getHandler(userLogin, pid) {
     ""
   );
 
-  const subjects = await getLezioni(userLogin.token, userLogin.userID);
+  const subjects = await getLezioni(userLogin.token, userLogin.userID, parseInt(window.location.href.split('=')[1]));
 
   const data = {
     title: "Configurazione dettaglio",
@@ -25,7 +26,7 @@ async function getHandler(userLogin, pid) {
     navmenu: navmenu,
     usermenu: usermenu,
     funzioni: db_funzioni,
-    materie: subjects[0].lezioni,
+    materie: subjects,
     // bread: db_bread,
   };
   return data;

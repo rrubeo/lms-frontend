@@ -29,7 +29,7 @@ class FS_List extends React.Component {
         </Typography>
         <List
           className={fsStyle.lessonsCard}
-          sx={{ backgroundColor: this.state.background, paddingLeft: this.state.padding, paddingRight: this.state.padding}}
+          sx={{ backgroundColor: this.state.background, paddingLeft: this.state.padding, paddingRight: this.state.padding, minHeight: this.props.height, maxHeight: this.props.height}}
           dense={true}
         >
         {

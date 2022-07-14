@@ -64,8 +64,6 @@ function Aula() {
   if (!data) return <Loader id="aula" />;
   if (data.status != 200) return <div>{data.message}</div>;
 
-  //console.log(data)
-
   return (
     <>
       <DCT_Layout id="Layout" data={data}>

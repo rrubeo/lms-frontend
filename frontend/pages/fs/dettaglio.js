@@ -12,8 +12,9 @@ import useSWR, { useSWRConfig, SWRConfig } from "swr";
 import { withIronSessionSsr } from "iron-session/next";
 import { defaultLogin, sessionOptions, getAuthSession } from "../../lib";
 import useUser from "../../lib/useUser";
-import FS_Accordion_Lesson from "../../components/form/fs/FS_Accordion_Lesson.js";
+import FS_List from "../../components/form/fs/FS_List";
 import FS_Progress from "../../components/form/fs/FS_Progress.js";
+import FS_Video_Player from "../../components/form/fs/FS_Video_Player";
 import fsStyle from "../../styles/Fs.module.css";
 import jnStyles from "../../styles/utils.module.css";
 
@@ -71,58 +72,12 @@ function Dettaglio() {
   if (!data) return <Loader id="home" />;
   if (data.status != 200) return <div>{data.message}</div>;
 
-  const materie = [];
-
+  
   function handleClick(event) {
     event.preventDefault();
     window.location.href = "../fs";
   }
 
-  /*
-  var getArrayMaterie = function(){
-    if (data.materie.length>0){
-      for (var i= 0; i< data.materie.length; i++){
-        getArrayMaterie2(data.materie[i].lezioni);
-      }
-    }
-  };
-
-  var getArrayMaterie2 = function(materieArray){
-    if (materieArray.length>0){
-      for (var i= 0; i< materieArray.length; i++){
-        getArrayMaterie3(materieArray[i].materiA1);
-      }  
-    }
-  };
-
-  var getArrayMaterie3 = function(materieArray){
-    if (materieArray.length>0){
-      for (var i= 0; i< materieArray.length; i++){
-        getArrayMaterie4(materieArray[i].classE1);
-      }  
-    }
-  };
-
-  var getArrayMaterie4 = function(materieArray){
-    if (materieArray.length>0){
-      for (var i= 0; i< materieArray.length; i++){
-        getArrayMaterie5(materieArray[i].lezione1);
-      }  
-    }
-  };
-
-  var getArrayMaterie5 = function(materieArray){
-    if (materieArray.length>0){
-      for (var i= 0; i< materieArray.length; i++){
-        materie.push(materieArray[i]);
-      }  
-    }
-  };
-
-  var getLezioneById = function(list, itemId){
-
-  };
-  */
 
   const breadcrumbs = [
     <Link
@@ -139,8 +94,6 @@ function Dettaglio() {
     </Link>,
   ];
 
-  //getArrayMaterie();
-
   return (
     <>
       <DCT_Layout id="Layout" data={data}>
@@ -152,39 +105,44 @@ function Dettaglio() {
           >
             {breadcrumbs}
           </Breadcrumbs>
-          <Container disableGutters maxWidth="false">
-            <Grid container style={{ alignItems: "center" }}>
-              <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-                <Typography variant="h1" className={jnStyles.jnA1}>
-                  Informatica (n)
-                </Typography>
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                md={12}
-                lg={6}
-                xl={6}
-                className={fsStyle.progressContentGrid}
-              >
-                <FS_Progress type="dettaglio" title="Completato" percentage={100} />
-              </Grid>
+          <Grid container sx={{ alignItems: "center" }}>
+            <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
+              <Typography variant="h1" className={jnStyles.jnA1}>Informatica (n)</Typography>
             </Grid>
-          </Container>
-          <Container disableGutters maxWidth="false">
-            <Grid container spacing={6}>
-              <Grid item xs={12} sm={12} md={12} lg={3} xl={3}>
-                <FS_Accordion_Lesson />
-              </Grid>
-              <Grid item xs={12} sm={12} md={12} lg={5} xl={5}>
-                Ciao
-              </Grid>
-              <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
-                Ciao
-              </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={12}
+              lg={4}
+              xl={4}
+              className={fsStyle.progressContentGrid}
+            >
+              <FS_Progress type="dettaglio" title="Completato" percentage={100} />
             </Grid>
-          </Container>
+          </Grid>
+        </Container>
+
+        <Container disableGutters maxWidth="false" sx={{ paddingTop: "2%" }}>
+          <Grid container>
+            <Grid item xs={12} sm={12} md={12} lg={3} xl={3}>
+              <FS_List
+                background="#798CB4"
+                class="lessonsCard"
+                title="Ultime lezioni viste"
+                array={[{id:"1", name:"Ciao"}, {id:"2", name:"Ciao2"}, {id:"3", name:"Ciao3"}]}
+                type="text"
+                height="510px"
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={5} xl={5}>
+              <FS_Video_Player
+                title="CIAO"
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
+            </Grid>
+          </Grid>
         </Container>
       </DCT_Layout>
     </>

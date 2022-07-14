@@ -26,8 +26,8 @@ function GetIscrizioneStudente(username) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_ISCRIZIONE_STUDENTE}/${username}`;
 }
 
-function GetLezioni(username) {
-  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_LEZIONI}/${username}`;
+function GetLezioni(username, classeArgomento) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_LEZIONI}/${username}/${classeArgomento}`;
 }
 
 function GetLezioniSeguite(username, idIscrizione, maxNumber) {

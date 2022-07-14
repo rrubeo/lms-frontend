@@ -112,14 +112,16 @@ function HomepageStudente() {
                 title="Corsi attivi"
                 array={[{'id': 1, 'name': data.profilo.iscrizione}]}
                 type="text"
+                height="100px"
               />
 
               <FS_List
                 background="#798CB4"
                 class="lessonsCard"
                 title="Ultime lezioni viste"
-                array={data.lezioniViste}
+                array={data.lezioniViste.splice(0, 3)}
                 type="text"
+                height="510px"
               />
 
               <Button sx={{marginTop: '3%'}} variant="contained" classes={{ root: jnStyles.jnBT }} href="../fs/aula">Classe virtuale</Button>

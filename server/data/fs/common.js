@@ -21,6 +21,7 @@ const getToken = async (user, password) => {
   return data;
 };
 
+
 const getFunzioniForm = async (token, user, formName) => {
   const f = await utils.getFetch(token, GetFunzioniForm(user, formName));
 
@@ -36,6 +37,7 @@ const getFunzioniForm = async (token, user, formName) => {
   return data;
 };
 
+
 const deleteObjectURL = async (token, url) => {
   const f = await utils.deleteFetch(token, url);
   console.log("delete-" + url);
@@ -43,6 +45,7 @@ const deleteObjectURL = async (token, url) => {
   if (f.status) return [];
   return f;
 };
+
 
 const getIscrizioneStudente = async (token, username) => {
   const f = await utils.getFetch(token, GetIscrizioneStudente(username));
@@ -52,8 +55,9 @@ const getIscrizioneStudente = async (token, username) => {
   return data;
 };
 
-const getLezioni = async (token, username) => {
-  const f = await utils.getFetch(token, GetLezioni(username));
+
+const getLezioni = async (token, username, classeArgomento) => {
+  const f = await utils.getFetch(token, GetLezioni(username, classeArgomento));
 
   if (f.status) return [];
 
@@ -119,7 +123,6 @@ const getTutorAula = async (token, idRuolo, idIscrizione, username) => {
 };
 
 
-
 module.exports = {
   getToken,
   getFunzioniForm,
@@ -127,5 +130,5 @@ module.exports = {
   getLezioni,
   getLezioniSeguite,
   getDocentiAula,
-  getTutorAula
+  getTutorAula,
 };

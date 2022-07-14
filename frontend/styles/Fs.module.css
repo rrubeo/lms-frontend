@@ -62,8 +62,6 @@
 
 .lessonsCard{
     max-width: 80%;
-    min-height: 410px;
-    max-height: 410px;
     padding: 0.5rem 1.5rem;
     border-radius: 26px;
     box-shadow: none;

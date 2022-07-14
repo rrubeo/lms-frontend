@@ -21,10 +21,8 @@ export default function ControlledAccordions(props) {
 
 
   var handleClick = function(event, itemId){
-    window.location.href = "../fs/dettaglio?idLezione="+itemId;
+    window.location.href = "../fs/dettaglio?classeArgomento="+itemId;
   };
-
-  console.log(props)
 
   return (
     <Container disableGutters maxWidth="false" sx={{paddingBottom: '2.5%'}}>
@@ -65,7 +63,7 @@ export default function ControlledAccordions(props) {
                 }
               >
                 <Box className={fsStyle.accordionImgContainer}>
-                  <Typography variant="h3" className={item.classE1[0].lezione1[0].percorsoImmagineMateria}></Typography>
+                  <Typography variant="h3" className={item.materia.materia.percorsoImmagineMateria}></Typography>
                 </Box>
 
                 <Box className={fsStyle.accordionTitleContainer}>
@@ -74,14 +72,14 @@ export default function ControlledAccordions(props) {
                       <Typography variant="h6" className={jnStyles.jnD4}>{item.materia.materia.descr}</Typography>
                     </Box>
                     <Box className={fsStyle.accordionPercentageContainer}>
-                      <Typography variant="h6" className={jnStyles.jnD5}>{100}%</Typography>
+                      <Typography variant="h6" className={jnStyles.jnD5}>{item.materia.materia.percentualeAvanzamento}%</Typography>
                     </Box>
                   </Stack>
                   <Stack>
                     <LinearProgress
                       className={fsStyle.accordionProgress}
                       variant="determinate"
-                      value={100}
+                      value={item.materia.materia.percentualeAvanzamento}
                     />
                   </Stack>
                 </Box>
@@ -107,7 +105,7 @@ export default function ControlledAccordions(props) {
                               padding: "10px 0",
                             }}
                           >
-                            <Typography variant="p" className={jnStyles.jnI2} onClick={event => handleClick(event, lezioneItem.idLezione)}>
+                            <Typography variant="p" className={jnStyles.jnI2} onClick={event => handleClick(event, subitem.classe.id)}>
                               {lezioneItem.lezione}
                             </Typography>
                           </Box>
