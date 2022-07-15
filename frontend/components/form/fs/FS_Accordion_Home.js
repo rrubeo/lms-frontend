@@ -20,8 +20,8 @@ export default function ControlledAccordions(props) {
   };
 
 
-  var handleClick = function(event, itemId){
-    window.location.href = "../fs/dettaglio?classeArgomento="+itemId;
+  var handleClick = function(event, itemId, lessonId){
+    window.location.href = "../fs/dettaglio?classeArgomento="+itemId+"&lezione="+lessonId;
   };
 
   return (
@@ -35,19 +35,19 @@ export default function ControlledAccordions(props) {
             disableGutters
             maxWidth="false"
             className={fsStyle.accordionContainer}
-            key={item.materia.materia.id}
+            key={item.lezioniStudenteMateria.lezioniStudenteMateria.id}
           >
             <Accordion
               className={fsStyle.accordionElement}
-              expanded={expanded === item.materia.materia.id}
-              onChange={handleChange(item.materia.materia.id)}
+              expanded={expanded === item.lezioniStudenteMateria.lezioniStudenteMateria.id}
+              onChange={handleChange(item.lezioniStudenteMateria.lezioniStudenteMateria.id)}
             >
               <AccordionSummary
                 classes={{content: fsStyle.accordionSummaryContent}}
                 className={fsStyle.accordionSummary}
                 sx={{ minHeight: "90px" }}
                 expandIcon={
-                  expanded === item.materia.materia.id ? (
+                  expanded === item.lezioniStudenteMateria.lezioniStudenteMateria.id ? (
                     <Typography
                       variant="h4"
                       className="icon-arrow-down3"
@@ -63,40 +63,40 @@ export default function ControlledAccordions(props) {
                 }
               >
                 <Box className={fsStyle.accordionImgContainer}>
-                  <Typography variant="h3" className={item.materia.materia.percorsoImmagineMateria}></Typography>
+                  <Typography variant="h3" className={item.lezioniStudenteMateria.lezioniStudenteMateria.percorsoImmagineMateria}></Typography>
                 </Box>
 
                 <Box className={fsStyle.accordionTitleContainer}>
                   <Stack direction="row">
                     <Box className={fsStyle.accordionTitleDivContainer}>
-                      <Typography variant="h6" className={jnStyles.jnD4}>{item.materia.materia.descr}</Typography>
+                      <Typography variant="h6" className={jnStyles.jnD4}>{item.lezioniStudenteMateria.lezioniStudenteMateria.descr}</Typography>
                     </Box>
                     <Box className={fsStyle.accordionPercentageContainer}>
-                      <Typography variant="h6" className={jnStyles.jnD5}>{item.materia.materia.percentualeAvanzamento}%</Typography>
+                      <Typography variant="h6" className={jnStyles.jnD5}>{parseInt(item.lezioniStudenteMateria.lezioniStudenteMateria.percentualeAvanzamento)}%</Typography>
                     </Box>
                   </Stack>
                   <Stack>
                     <LinearProgress
                       className={fsStyle.accordionProgress}
                       variant="determinate"
-                      value={item.materia.materia.percentualeAvanzamento}
+                      value={parseInt(item.lezioniStudenteMateria.lezioniStudenteMateria.percentualeAvanzamento)}
                     />
                   </Stack>
                 </Box>
               </AccordionSummary>
               <AccordionDetails className={fsStyle.accordionDetailContainer}>
-                {item.classE1.map((subitem) => (
+                {item.lezioniStudenteCLASSE1.map((subitem) => (
                   <Container
-                    key={subitem.classe.id}
+                    key={subitem.lezioniStudenteClasse.id}
                     disableGutters
                     maxWidth="false"
                     sx={{ paddingBottom: "30px" }}
                   >
                     <Typography variant="h6" className={jnStyles.jnD1}>
-                      {subitem.classe.descr}
+                      {subitem.lezioniStudenteClasse.descr}
                     </Typography>
                     <List dense={true}>
-                      {subitem.lezione1.map((lezioneItem) => (
+                      {subitem.lezioniStudenteLezione1.map((lezioneItem) => (
                         <ListItem key={lezioneItem.idLezione} sx={{ padding: "0" }}>
                           <Box
                             sx={{
@@ -105,13 +105,13 @@ export default function ControlledAccordions(props) {
                               padding: "10px 0",
                             }}
                           >
-                            <Typography variant="p" className={jnStyles.jnI2} onClick={event => handleClick(event, subitem.classe.id)}>
+                            <Typography variant="p" className={jnStyles.jnI2} onClick={event => handleClick(event, subitem.lezioniStudenteClasse.id, lezioneItem.idLezione)}>
                               {lezioneItem.lezione}
                             </Typography>
                           </Box>
                           <Box sx={{ width: "30%", textAlign: "right" }}>
                             <Typography variant="p" className={jnStyles.jnL2}>
-                              Stimato {lezioneItem.tempoStimatoLezione ? lezioneItem.tempoStimatoLezione : 0} m
+                              Stimato {lezioneItem.TempoStimatoLezione ? lezioneItem.TempoStimatoLezione : 0} m
                             </Typography>
                           </Box>
                         </ListItem>

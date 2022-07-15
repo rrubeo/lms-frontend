@@ -23,7 +23,7 @@ class FS_Video_Player extends React.Component {
           {this.state.title}
         </Typography>
         <ReactPlayer
-          url="https://vimeo.com/727781299"
+          url={"https://vimeo.com/"+this.props.url}
           controls={true}
           width={'100%'}
         />

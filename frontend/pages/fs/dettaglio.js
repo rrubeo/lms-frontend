@@ -45,10 +45,12 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   }
 
   fallback.pageName = "home";
-  fallback.apiUrl = fs_cfg.FS_FUNZIONI_DETTAGLIO;
+  
   fallback.authenticated = true;
   fallback.userInfo = authSession;
   fallback.pageQuery = query;
+  fallback.apiUrl = fs_cfg.FS_FUNZIONI_DETTAGLIO+"/"+query.classeArgomento+"/"+query.lezione;
+
 
   return {
     props: {
@@ -90,9 +92,37 @@ function Dettaglio() {
       HOME
     </Link>,
     <Link className={jnStyles.jnP1} underline="none" key="2">
-      INFORMATICA
+      {data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteMateria.lezioniStudenteMateria.descr.toUpperCase()}
     </Link>,
   ];
+
+
+  function setArrayProp(list) {
+    const data = list.map((x) => {
+      return {
+        id: x.idLezione,
+        name: x.lezione,
+      };
+    });
+
+    return data;
+  }
+
+
+  function getContenutoVideo(list) {
+    if (list.length>0){
+      for (var i= 0; i< list.length; i++){
+        if (list[i].tipoContenuto == "Video"){
+          return list[i];
+        }
+      }
+    }
+  }
+
+  function getContenutoImmagine() {
+
+  }
+
 
   return (
     <>
@@ -107,7 +137,9 @@ function Dettaglio() {
           </Breadcrumbs>
           <Grid container sx={{ alignItems: "center" }}>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
-              <Typography variant="h1" className={jnStyles.jnA1}>Informatica (n)</Typography>
+              <Typography variant="h1" className={jnStyles.jnA1}>
+                {data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteMateria.lezioniStudenteMateria.descr}
+              </Typography>
             </Grid>
             <Grid
               item
@@ -118,7 +150,7 @@ function Dettaglio() {
               xl={4}
               className={fsStyle.progressContentGrid}
             >
-              <FS_Progress type="dettaglio" title="Completato" percentage={100} />
+              <FS_Progress type="dettaglio" title="Completato" percentage={data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteMateria.lezioniStudenteMateria.percentualeAvanzamento} />
             </Grid>
           </Grid>
         </Container>
@@ -127,17 +159,18 @@ function Dettaglio() {
           <Grid container>
             <Grid item xs={12} sm={12} md={12} lg={3} xl={3}>
               <FS_List
-                background="#798CB4"
+                background="#B34B9E"
                 class="lessonsCard"
-                title="Ultime lezioni viste"
-                array={[{id:"1", name:"Ciao"}, {id:"2", name:"Ciao2"}, {id:"3", name:"Ciao3"}]}
+                title={data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteClasse.descr}
+                array={setArrayProp(data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteLezione1)}
                 type="text"
                 height="510px"
               />
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={5} xl={5}>
               <FS_Video_Player
-                title="CIAO"
+                title={data.materia.length>0 ? getContenutoVideo(data.materia).lezione : ""}
+                url={data.materia.length>0 ? getContenutoVideo(data.materia).contenutoPercorso : ""}
               />
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>

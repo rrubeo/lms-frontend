@@ -130,10 +130,10 @@ function HomepageStudente() {
             {
               data.materie.map((item) =>
                 <FS_Accordion_Home
-                  key={item.anno.id}
-                  title={item.anno.descr}
-                  array={item.materiA1}
-                />
+                  key={item.lezioniStudenteAnno.id}
+                  title={item.lezioniStudenteAnno.descr}
+                  array={item.lezioniStudenteMATERIA1}
+                /> 
               )
             }  
             </Grid>

@@ -20,6 +20,7 @@ const CLOUD_API_TBL_LIST_ISCRIZIONE_STUDENTE = "api/Tables/GetIscrizioneStudente
 const CLOUD_API_TBL_LIST_LEZIONI = "api/Tables/GetLezioniStudente";
 const CLOUD_API_TBL_LIST_LEZIONI_SEGUITE = "api/Tables/GetStudenteLezioniSeguite";
 const CLOUD_API_TBL_LIST_DOCENTI_AULA = "api/Tables/GetTUtorDocentexStudente";
+const CLOUD_API_TBL_LIST_MATERIA = "api/Tables/GetContenutoLezione";
 
 //Endpoint
 function GetIscrizioneStudente(username) {
@@ -42,6 +43,10 @@ function GetTutorAula(idRuolo, idIscrizione, username) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_DOCENTI_AULA}/${idRuolo}/${idIscrizione}/${username}`;
 }
 
+function GetLezione(idLezione) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_MATERIA}/${idLezione}`;
+}
+
 
 //const IscrizioneStudente = `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_ISCRIZIONE_STUDENTE}`;
 
@@ -54,7 +59,8 @@ module.exports = {
   GetLezioni,
   GetLezioniSeguite,
   GetDocentiAula,
-  GetTutorAula
+  GetTutorAula,
+  GetLezione
 };
 
 

@@ -5,7 +5,8 @@ import {
   GetLezioni,
   GetLezioniSeguite,
   GetDocentiAula,
-  GetTutorAula
+  GetTutorAula,
+  GetLezione
 } from "../../data/fs/config";
 
 const utils = require("../../lib/utils");
@@ -60,13 +61,7 @@ const getLezioni = async (token, username, classeArgomento) => {
   const f = await utils.getFetch(token, GetLezioni(username, classeArgomento));
 
   if (f.status) return [];
-
-  const data = f.map((x) => {
-    return {
-      id: utils.getUID(),
-      lezioni: x.datiLezione,
-    };
-  });
+  const data = f;
   return data;
 };
 
@@ -122,6 +117,14 @@ const getTutorAula = async (token, idRuolo, idIscrizione, username) => {
   return data;
 };
 
+const getLezione = async (token, idLezione) => {
+  const f = await utils.getFetch(token, GetLezione(idLezione));
+
+  if (f.status) return [];
+  const data = f;
+  return data;
+};
+
 
 module.exports = {
   getToken,
@@ -131,4 +134,5 @@ module.exports = {
   getLezioniSeguite,
   getDocentiAula,
   getTutorAula,
+  getLezione
 };

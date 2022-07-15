@@ -21,7 +21,7 @@ async function getHandler(userLogin, pid) {
   const profile = await getIscrizioneStudente(userLogin.token, userLogin.userID);
   const subjects = await getLezioni(userLogin.token, userLogin.userID, 0);
   const recentLessons = await getLezioniSeguite(userLogin.token, userLogin.userID, profile.idIscrizione, 0);
-
+  
   const data = {
     title: "Configurazione Iscrizione studente",
     // login: false,
@@ -30,7 +30,7 @@ async function getHandler(userLogin, pid) {
     usermenu: usermenu,
     funzioni: db_funzioni,
     profilo: profile,
-    materie: subjects[0].lezioni,
+    materie: subjects,
     lezioniViste: recentLessons,
     // bread: db_bread,
   };
