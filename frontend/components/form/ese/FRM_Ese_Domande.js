@@ -30,6 +30,8 @@ class FRM_Ese_Domande extends React.Component {
       ptDomandaValue: "",
       tipoId: "cb_tipo",
       tipoValue: { label: "", id: 0 },
+      gruppoId: "cb_gruppo",
+      gruppoValue: { label: "", id: 0 },
       uploadId: "tx_upload",
       selectedFile: null,
       uploadLoading: false,
@@ -43,6 +45,7 @@ class FRM_Ese_Domande extends React.Component {
     this.onSelectRow = this.onSelectRow.bind(this);
 
     this.changeChildTipoId = React.createRef();
+    this.changeChildGruppoId = React.createRef();
     this.changeChildDomandaId = React.createRef();
     this.changeChildUploadId = React.createRef();
     this.changeChildPtDomandaId = React.createRef();
@@ -58,6 +61,7 @@ class FRM_Ese_Domande extends React.Component {
       numero: this.state.numDomandaValue,
       punteggio: this.state.ptDomandaValue,
       tipo: this.state.tipoValue,
+      gruppo: this.state.gruppoValue,
       file: this.state.selectedFile,
     };
     await this.props.onSubmit(event, data);
@@ -72,14 +76,17 @@ class FRM_Ese_Domande extends React.Component {
       numero: this.state.numDomandaValue,
       punteggio: this.state.ptDomandaValue,
       tipo: this.state.tipoValue,
+      gruppo: this.state.gruppoValue,
       file: this.state.selectedFile,
     };
+    console.log(data);
     await this.props.onSubmit(event, data);
     this.setState({ uploadLoading: false });
   }
 
   handleReset(event) {
     this.changeChildTipoId.current.handleReset();
+    this.changeChildGruppoId.current.handleReset();
     this.changeChildDomandaId.current.handleReset();
     this.changeChildUploadId.current.handleReset();
     this.changeChildNumDomandaId.current.handleReset();
@@ -87,6 +94,7 @@ class FRM_Ese_Domande extends React.Component {
     this.setState({
       selectedId: 0,
       tipoValue: { label: "", id: 0 },
+      gruppoValue: { label: "", id: 0 },
       domandaValue: "",
       numDomandaValue: "",
       ptDomandaValue: "",
@@ -96,6 +104,8 @@ class FRM_Ese_Domande extends React.Component {
 
   onChangeForm(id, data) {
     // console.log("CHANGE");
+    // console.log(id);
+    // console.log(data);
     switch (id) {
       case this.state.domandaId:
         this.setState({ domandaValue: data });
@@ -108,6 +118,9 @@ class FRM_Ese_Domande extends React.Component {
         break;
       case this.state.tipoId:
         this.setState({ tipoValue: data });
+        break;
+      case this.state.gruppoId:
+        this.setState({ gruppoValue: data });
         break;
       case this.state.uploadId:
         this.setState({ selectedFile: data });
@@ -128,8 +141,9 @@ class FRM_Ese_Domande extends React.Component {
   }
 
   onSelectRow(id, data) {
-    console.log(data);
+    // console.log(data);
     this.changeChildTipoId.current.setText(data.row.col2);
+    this.changeChildGruppoId.current.setText(data.row.col5);
     this.changeChildDomandaId.current.setText(data.row.col3);
     // this.changeChildUploadId.current.setText(data.row.col3);
     this.changeChildNumDomandaId.current.setText(data.row.col1);
@@ -217,6 +231,14 @@ class FRM_Ese_Domande extends React.Component {
                 onChange={this.onChangeForm}
                 size={1}
                 ref={this.changeChildPtDomandaId}
+              />
+              <DCT_ComboBox
+                id={this.state.gruppoId}
+                list={this.props.data.gruppo}
+                label={this.props.data.gruppo_label}
+                onChange={this.onChangeForm}
+                size={1}
+                ref={this.changeChildGruppoId}
               />
               <DCT_Upload
                 id={this.state.uploadId}

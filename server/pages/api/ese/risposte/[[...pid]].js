@@ -15,7 +15,13 @@ import {
   getDomande,
 } from "../../../../data/ese/common";
 
-async function getHandler(userLogin, pid, pidEsercitazione, pidGruppo) {
+async function getHandler(
+  userLogin,
+  pid,
+  pidEsercitazione,
+  pidGruppo,
+  pidLezione
+) {
   const db_funzioni = await getFunzioniForm(
     userLogin.token,
     userLogin.userID,
@@ -28,6 +34,11 @@ async function getHandler(userLogin, pid, pidEsercitazione, pidGruppo) {
     pid,
     pidEsercitazione,
     pidGruppo
+  );
+  const db_bread = await getBreadEsercita(
+    userLogin.token,
+    pidLezione,
+    pidEsercitazione
   );
 
   const data = {
@@ -46,6 +57,7 @@ async function getHandler(userLogin, pid, pidEsercitazione, pidGruppo) {
     back_label: tornaIndietro,
     stepper: stepper,
     funzioni: db_funzioni,
+    bread: db_bread,
   };
   return data;
 }
@@ -122,7 +134,8 @@ export default async function handler(req, res) {
         userLogin,
         pid,
         pidEsercitazione,
-        pidGruppo
+        pidGruppo,
+        pidLezione
       );
       res.status(200).json(dataGet);
       break;

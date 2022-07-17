@@ -23,11 +23,6 @@ class DCT_ComboBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // value: this.props.selection
-      //   ? this.props.list[
-      //       this.props.list.findIndex((item) => item.id == this.props.selection)
-      //     ]
-      //   : this.props.list[0],
       value: this.props.list[0],
     };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -35,16 +30,7 @@ class DCT_ComboBox extends React.Component {
     this.handleReset = this.handleReset.bind(this);
   }
 
-  componentDidMount() {
-    // console.log("COMBO componentDidMount");
-    // console.log(this.props.selection);
-    // if (this.props.selection) {
-    //   // console.log(this.props.list);
-    //   console.log(
-    //     this.props.list.findIndex((item) => item.id == this.props.selection)
-    //   );
-    // }
-  }
+  componentDidMount() {}
 
   handleInputChange(event, value) {
     // console.log("INPUT CHANGE");
@@ -65,10 +51,11 @@ class DCT_ComboBox extends React.Component {
 
   setText(text) {
     // this.setState({ value: text });
-    const selezione = this.props.list.findIndex((item) => item.label == text);
+    let selezione = this.props.list.findIndex((item) => item.label == text);
+    if (selezione == -1) selezione = 0;
     this.setState({ value: this.props.list[selezione] });
     this.props.onChange(this.props.id, this.props.list[selezione]);
-    // console.log(selezione);
+    console.log("selezione", selezione);
   }
 
   render() {
@@ -78,6 +65,7 @@ class DCT_ComboBox extends React.Component {
         classes={{ root: jnStyles.jnO2 }}
       >
         <StyledAutocomplete
+          autoComplete={false}
           key={this.props.id}
           id={this.props.id}
           disableClearable

@@ -33,6 +33,7 @@ const getRicercaLezioni = async (token) => {
       col2: x.classeArgomento,
       col3: x.argomento,
       col4: x.lezione,
+      col5: x.dettaglio,
     };
   });
   return data;
@@ -179,7 +180,7 @@ const getGruppoDomande = async (token, IdEsercitazione) => {
   const f = await utils.getFetch(token, GetGruppoDomande(0, IdEsercitazione));
 
   console.log("getGruppoDomande");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -191,6 +192,27 @@ const getGruppoDomande = async (token, IdEsercitazione) => {
       col4: x.tipologiaFile,
     };
   });
+  return data;
+};
+
+const getGruppoDomandeCombo = async (token, IdEsercitazione) => {
+  const f = await utils.getFetch(token, GetGruppoDomande(0, IdEsercitazione));
+
+  console.log("getGruppoDomandeCombo");
+  // console.log(f);
+  if (f.status) return [];
+
+  const arr1 = [{ label: "Seleziona", id: 0 }];
+
+  let arr2 = f.map((x) => {
+    return {
+      label: x.gruppoDomandeDesc,
+      id: x.idGruppoDomande,
+    };
+  });
+
+  const data = arr1.concat(arr2);
+
   return data;
 };
 
@@ -337,8 +359,11 @@ const getEsercitazioneCheck = async (
   if (f.status) return [];
 
   let data = {};
+
   for (let i = 0; i < f.length; i++) {
-    const id = f[i].idDomandaEsercitazione;
+    // console.log(f[i].numDomanda);
+    // const id = f[i].idDomandaEsercitazione;
+    const id = f[i].numDomanda;
 
     if (id in data) {
       let risposta = {
@@ -350,6 +375,8 @@ const getEsercitazioneCheck = async (
     } else {
       data[id] = {
         ndom: f[i].numDomanda,
+        nomeGrp: f[i].nomeGruppoDomande,
+        txtGrp: f[i].testoGruppoDomande,
         testo: f[i].testoDomanda,
         tipo: f[i].tipologiaDomanda,
         punteggio: f[i].punteggio,
@@ -380,6 +407,7 @@ module.exports = {
   insertEsercitazioneIntoLezione,
   getBreadEsercita,
   getGruppoDomande,
+  getGruppoDomandeCombo,
   insertGruppoDomande,
   deleteGruppoDomande,
   getDomande,

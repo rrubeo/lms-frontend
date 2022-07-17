@@ -60,24 +60,6 @@ async function getHandler(userLogin, pid) {
   return data;
 }
 
-async function deleteHandler(userLogin, deleteData) {
-  //   console.log("deleteHandler");
-  //   console.log(deleteData);
-  //   let d1 = await deleteLezioneAggr(
-  //     userLogin.token,
-  //     deleteData.key,
-  //     deleteData.pbaseId
-  //   );
-  //   // console.log(d1);
-  //   const res = { status: 200, message: "Aggregato eliminato" };
-  //   return res;
-}
-
-async function postHandler(userLogin, postData, response, pid) {
-  let res = { status: 200, message: "" };
-  return res;
-}
-
 export default async function handler(req, res) {
   // Run cors
   await utils.cors(req, res);
@@ -90,14 +72,6 @@ export default async function handler(req, res) {
     case "GET":
       const dataGet = await getHandler(userLogin, pid);
       res.status(200).json(dataGet);
-      break;
-    case "POST":
-      //   const dataPost = await postHandler(userLogin, req.body, res, pid);
-      //   res.status(dataPost.status).json(dataPost);
-      break;
-    case "DELETE":
-      //   const dataDel = await deleteHandler(userLogin, req.body);
-      //   res.status(dataDel.status).json(dataDel);
       break;
   }
 }

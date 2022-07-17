@@ -98,7 +98,7 @@ function Main() {
 
     const vres = await validateForm(formData);
 
-    console.log(formData);
+    // console.log(formData);
     if (vres.valid) {
       const res = await utils.postData(apiUrl, formData);
       if (res.status != 200) {

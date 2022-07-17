@@ -11,6 +11,7 @@ import {
   insertDomanda,
   deleteDomanda,
   getTipoDomandaCombo,
+  getGruppoDomandeCombo,
   getDomande,
 } from "../../../../data/ese/common";
 
@@ -38,6 +39,10 @@ async function getHandler(
     pidEsercitazione
   );
   const db_tipo = await getTipoDomandaCombo(userLogin.token);
+  const db_gruppo = await getGruppoDomandeCombo(
+    userLogin.token,
+    pidEsercitazione
+  );
 
   const data = {
     title: "Esercitazioni - Domande",
@@ -49,6 +54,8 @@ async function getHandler(
     domanda_label: "Testo Domanda",
     tipo_label: "Tipologia Domanda",
     tipo: db_tipo,
+    gruppo_label: "Gruppo Domande",
+    gruppo: db_gruppo,
     n_domanda_label: "Numero Domanda",
     pt_domanda_label: "Punteggio Domanda (%)",
     punteggio_label: "Punteggio Minimo",
@@ -85,7 +92,12 @@ async function postHandler(
     doesPercentualePunteggio: postData.punteggio,
     doesPathFile: "",
     doesNumeroDomanda: postData.numero,
-    doesFkGrudId: pidGruppo == 0 ? null : pidGruppo,
+    doesFkGrudId:
+      pidGruppo == 0
+        ? postData.gruppo.id == 0
+          ? null
+          : postData.gruppo.id
+        : pidGruppo,
     doesFkTifiId: 0,
   };
   console.log("########################################################");

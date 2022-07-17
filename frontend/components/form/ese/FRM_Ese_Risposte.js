@@ -10,6 +10,7 @@ import DTC_TextMultiline from "../../DTC_TextMultiline";
 import DTC_TextBox from "../../DTC_TextBox";
 import DCT_ComboBox from "../../selector/DCT_ComboBox";
 import DTC_TextInfo from "../../DTC_TextInfo";
+import DCT_Breadcrumbs from "../../DCT_Breadcrumbs";
 import jnStyles from "../../../styles/utils.module.css";
 
 const utils = require("../../../lib");
@@ -130,6 +131,13 @@ class FRM_Ese_Risposte extends React.Component {
           alignItems="center"
         >
           <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
+          <DCT_Breadcrumbs
+            id={`bread_${ese_cfg.FRM_ESE_STEP_5}`}
+            list={this.props.data.bread}
+            page={[ese_cfg.ESE_STEP_5]}
+            pageId={this.props.pbaseId}
+            path={`${process.env.frontend}/ese`}
+          />
         </Stack>
         <DCT_Stepper
           id="stepper"

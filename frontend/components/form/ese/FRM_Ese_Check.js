@@ -79,6 +79,24 @@ class FRM_Ese_Check extends React.Component {
     );
   }
 
+  gridItemNumber(label, value, stile) {
+    return (
+      <Grid item xs="auto" align="center">
+        <div className={jnStyles.jnDCT_TextCheckLabel}>{label}</div>
+        <Fab
+          component="div"
+          size="small"
+          sx={{ p: 0, m: 0 }}
+          classes={{
+            root: stile,
+          }}
+        >
+          {value}
+        </Fab>
+      </Grid>
+    );
+  }
+
   render() {
     const linkBack = utils.getBackLink(
       "ese",
@@ -118,17 +136,19 @@ class FRM_Ese_Check extends React.Component {
             alignItems="center"
           >
             {this.gridItem(this.props.data.tipo_label, this.props.data.tipo)}
-            {this.gridItem(
+            {this.gridItemNumber(
               this.props.data.limite_label,
-              this.props.data.limite
+              this.props.data.limite,
+              jnStyles.jnDCT_Fab
             )}
             {this.gridItem(
               this.props.data.livello_label,
               this.props.data.livello
             )}
-            {this.gridItem(
+            {this.gridItemNumber(
               this.props.data.punteggio_label,
-              this.props.data.punteggio
+              this.props.data.punteggio,
+              jnStyles.jnDCT_Fab1
             )}
             {this.gridItem(this.props.data.nome_label, this.props.data.nome)}
           </Grid>
@@ -171,19 +191,21 @@ class FRM_Ese_Check extends React.Component {
                     justifyContent="center"
                     alignItems="center"
                   >
+                    {gridQuestion(2, value[1].tipo, jnStyles.jnDCT_TextCheckPt)}
                     {gridQuestion(
-                      "6",
-                      value[1].tipo,
+                      2,
+                      value[1].nomeGrp,
                       jnStyles.jnDCT_TextCheckPt
                     )}
+                    {gridQuestion(7, value[1].txtGrp, jnStyles.jnDCT_TextCheck)}
                     {gridQuestion(
-                      "6",
+                      1,
                       `Punteggio ${value[1].punteggio} %`,
                       jnStyles.jnDCT_TextCheckPt
                     )}
-                    {gridNumber("1", value[1].ndom, jnStyles.jnDCT_Fab1)}
+                    {gridNumber("auto", value[1].ndom, jnStyles.jnDCT_Fab1)}
                     {gridQuestionPage(
-                      "11",
+                      11,
                       value[1].testo,
                       jnStyles.jnDCT_TextCheck
                     )}
@@ -200,13 +222,13 @@ class FRM_Ese_Check extends React.Component {
                       alignItems="center"
                       sx={{ pb: 1, px: 0 }}
                     >
-                      {gridNumber("1", item.nris, jnStyles.jnDCT_Fab)}
+                      {gridNumber("auto", item.nris, jnStyles.jnDCT_Fab)}
                       {gridQuestionPage(
-                        "5",
+                        5,
                         item.testo,
                         jnStyles.jnDCT_TextCheckResponse
                       )}
-                      {gridCheckBox("3", item.corretta)}
+                      {gridCheckBox(3, item.corretta)}
                     </Grid>
                   </AccordionDetails>
                 ))}
@@ -240,7 +262,7 @@ class FRM_Ese_Check extends React.Component {
             }
             function gridNumber(size, value, stile) {
               return (
-                <Grid item xs="auto">
+                <Grid item xs={size}>
                   <Fab
                     size="small"
                     sx={{ p: 0, m: 0 }}

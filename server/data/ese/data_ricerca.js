@@ -27,6 +27,15 @@ const cols = [
   { field: "col2", headerName: "Classe Argomento", flex: 1, minWidth: 50 },
   { field: "col3", headerName: "Argomento", flex: 1, minWidth: 50 },
   { field: "col4", headerName: "Lezione", flex: 1, minWidth: 50 },
+  {
+    field: "col5",
+    headerName: "Esercitazioni",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 150,
+    type: "number",
+    align: "right",
+  },
 ];
 
 module.exports = { rows, cols };
