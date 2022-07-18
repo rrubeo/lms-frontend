@@ -105,14 +105,21 @@ export default function ControlledAccordions(props) {
                               padding: "10px 0",
                             }}
                           >
-                            <Typography variant="p" className={jnStyles.jnI2} onClick={event => handleClick(event, subitem.lezioniStudenteClasse.id, lezioneItem.idLezione)}>
+                            <Typography variant="p" className={jnStyles.jnI2}>
                               {lezioneItem.lezione}
                             </Typography>
                           </Box>
                           <Box sx={{ width: "30%", textAlign: "right" }}>
-                            <Typography variant="p" className={jnStyles.jnL2}>
+                            <Typography variant="p" className={jnStyles.jnL2} sx={{marginRight: '25px'}}>
                               Stimato {lezioneItem.TempoStimatoLezione ? lezioneItem.TempoStimatoLezione : 0} m
                             </Typography>
+
+                            <Typography
+                              variant="h4"
+                              className="icon-arrow-right3"
+                              sx={{ color: "#000000", fontSize: '20px', display: 'inline', cursor: 'pointer' }}
+                              onClick={event => handleClick(event, subitem.lezioniStudenteClasse.id, lezioneItem.idLezione)}
+                            ></Typography>   
                           </Box>
                         </ListItem>
                       ))}

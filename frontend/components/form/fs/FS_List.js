@@ -17,11 +17,38 @@ class FS_List extends React.Component {
       title: this.props.title ? this.props.title : ' ',
       list: this.props.array ? this.props.array : [{name: "Nessuna lezione recente"}],
       background: this.props.background ? this.props.background : null,
-      padding: this.props.type == "avatar" ? '0!important' : null
+      padding: this.props.type == "avatar" ? '0!important' : null,
+      arg: this.props.arg ? this.props.arg : null
     };
   }
 
   render() {
+    function handleClickArg(event, clickable, itemId, lessonId){
+      if (clickable){
+        window.location.href = "../fs/dettaglio?classeArgomento="+itemId+"&lezione="+lessonId;
+      }   
+    };
+
+    const queryParams = new URLSearchParams(window.location.search);
+    const lessonId = queryParams.get('lezione');
+
+    function getPrimaryPropsCSS(itemId){
+      if (lessonId == itemId){
+        return {
+          color: "#ffffff",
+          fontSize: "15pt",
+          fontWeight: "500",
+        }
+      } else {
+        return {
+          color: "#ffffff",
+          fontSize: "15pt",
+          fontWeight: "300",
+        } 
+      }
+    }
+
+
     return (
       <Container disableGutters maxWidth="false">
         <Typography variant="h6" className={jnStyles.jnD1}>
@@ -37,11 +64,7 @@ class FS_List extends React.Component {
             this.state.list.map((item) =>
               <ListItem key={item.id} sx={{paddingLeft: 0, paddingRight: 0}}>
                 <ListItemText
-                  primaryTypographyProps={{
-                    color: "#ffffff",
-                    fontSize: "15pt",
-                    fontWeight: "300",
-                  }}
+                  primaryTypographyProps={getPrimaryPropsCSS(item.id)}
                   primary={item.name ? item.name : "Single-line item"}
                   secondaryTypographyProps={{
                     color: "#ffffff",
@@ -49,6 +72,7 @@ class FS_List extends React.Component {
                     fontWeight: "300",
                   }}
                   secondary={item.hint ? item.hint : ""}
+                  onClick={event => handleClickArg(event, this.props.clickable, this.state.arg, item.id)}
                 />
               </ListItem>
             ):(

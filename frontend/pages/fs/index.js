@@ -113,6 +113,7 @@ function HomepageStudente() {
                 array={[{'id': 1, 'name': data.profilo.iscrizione}]}
                 type="text"
                 height="100px"
+                clickable={false}
               />
 
               <FS_List
@@ -122,6 +123,7 @@ function HomepageStudente() {
                 array={data.lezioniViste.splice(0, 3)}
                 type="text"
                 height="510px"
+                clickable={false}
               />
 
               <Button sx={{marginTop: '3%'}} variant="contained" classes={{ root: jnStyles.jnBT }} href="../fs/aula">Classe virtuale</Button>
