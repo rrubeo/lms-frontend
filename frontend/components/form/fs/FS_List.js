@@ -6,6 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from "@mui/material/ListItemText";
 import Avatar from '@mui/material/Avatar';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import fsStyle from "../../../styles/Fs.module.css";
 import jnStyles from "../../../styles/utils.module.css";
 
@@ -23,27 +24,23 @@ class FS_List extends React.Component {
   }
 
   render() {
-    function handleClickArg(event, clickable, itemId, lessonId){
-      if (clickable){
-        window.location.href = "../fs/dettaglio?classeArgomento="+itemId+"&lezione="+lessonId;
-      }   
-    };
-
     const queryParams = new URLSearchParams(window.location.search);
     const lessonId = queryParams.get('lezione');
 
     function getPrimaryPropsCSS(itemId){
       if (lessonId == itemId){
         return {
+          display: "inline-block",
           color: "#ffffff",
           fontSize: "15pt",
-          fontWeight: "500",
+          fontWeight: "500"
         }
       } else {
         return {
+          display: "inline-block",
           color: "#ffffff",
           fontSize: "15pt",
-          fontWeight: "300",
+          fontWeight: "300"
         } 
       }
     }
@@ -65,15 +62,18 @@ class FS_List extends React.Component {
               <ListItem key={item.id} sx={{paddingLeft: 0, paddingRight: 0}}>
                 <ListItemText
                   primaryTypographyProps={getPrimaryPropsCSS(item.id)}
-                  primary={item.name ? item.name : "Single-line item"}
-                  secondaryTypographyProps={{
-                    color: "#ffffff",
-                    fontSize: "10pt",
-                    fontWeight: "300",
-                  }}
-                  secondary={item.hint ? item.hint : ""}
-                  onClick={event => handleClickArg(event, this.props.clickable, this.state.arg, item.id)}
+                  primary={item.name ? item.name : "Single-line item"}                  
                 />
+                {this.props.clickable ?
+                  <ListItemIcon 
+                    sx={{cursor: 'pointer', color: '#ffffff', justifyContent: 'right'}} 
+                    className="icon-arrow-right3"
+                    onClick={event => this.props.onClickFunction(event, this.props.clickable, this.state.arg, item.id)}
+                  />
+                  :
+                  <ListItemIcon/>
+                }
+                
               </ListItem>
             ):(
               this.state.list.map((item) =>

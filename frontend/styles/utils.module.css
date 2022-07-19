@@ -320,6 +320,15 @@
     color: #ffffff;
 }
 
+.jnBTPink {
+    border-radius: 26px;
+    font-size: 10pt;
+    font-weight: 800;
+    background-color: #ffffff;
+    color: #B34B9E;
+    border-color: #B34B9E;
+}
+
 .jnBTLink {
     border-radius: 26px;
     font-size: 8pt;

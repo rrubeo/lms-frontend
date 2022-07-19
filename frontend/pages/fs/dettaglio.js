@@ -16,6 +16,7 @@ import FS_List from "../../components/form/fs/FS_List";
 import FS_Progress from "../../components/form/fs/FS_Progress.js";
 import FS_Video_Player from "../../components/form/fs/FS_Video_Player";
 import FS_Image_Carousel from "../../components/form/fs/FS_Image_Carousel";
+import FS_Footer from "../../components/form/fs/FS_Footer";
 import fsStyle from "../../styles/Fs.module.css";
 import jnStyles from "../../styles/utils.module.css";
 
@@ -80,6 +81,12 @@ function Dettaglio() {
     event.preventDefault();
     window.location.href = "../fs";
   }
+
+  function handleClickArg(event, clickable, itemId, lessonId){
+    if (clickable){
+      window.location.href = "../fs/dettaglio?classeArgomento="+itemId+"&lezione="+lessonId;
+    }   
+  };
 
 
   const breadcrumbs = [
@@ -168,6 +175,7 @@ function Dettaglio() {
                 clickable={true}
                 type="text"
                 height="510px"
+                onClickFunction={handleClickArg}
               />
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={5} xl={5}>
@@ -181,6 +189,10 @@ function Dettaglio() {
             <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
             </Grid>
           </Grid>
+        </Container>
+
+        <Container disableGutters maxWidth="false" sx={{marginTop: '2%'}}>
+          <FS_Footer/>
         </Container>
       </DCT_Layout>
     </>
