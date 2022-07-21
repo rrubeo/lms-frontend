@@ -10,6 +10,7 @@ class FS_Video_Player extends React.Component {
     super(props);
     this.state = {
       title: this.props.title ? this.props.title : ' ',
+      url: this.props.url ? this.props.url : ' ',
       list: this.props.array ? this.props.array : [{name: "Nessuna lezione recente"}],
       background: this.props.background ? this.props.background : null,
       padding: this.props.type == "avatar" ? '0!important' : null
@@ -23,7 +24,7 @@ class FS_Video_Player extends React.Component {
           {this.state.title}
         </Typography>
         <ReactPlayer
-          url={"https://vimeo.com/"+this.props.url}
+          url={"https://vimeo.com/"+this.state.url}
           controls={true}
           width={'100%'}
         />

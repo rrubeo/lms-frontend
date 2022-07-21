@@ -117,18 +117,35 @@ function Dettaglio() {
   }
 
 
+  function getContenutoTitle(list) {
+    if (list.length>0){
+      for (var i= 0; i< list.length; i++){
+        return list[0].lezione;
+      }
+    }
+  }
+
+
   function getContenutoVideo(list) {
     if (list.length>0){
       for (var i= 0; i< list.length; i++){
         if (list[i].tipoContenuto == "Video"){
-          return list[i];
+          return list[i].contenutoPercorso;
         }
       }
     }
   }
 
-  function getContenutoImmagine() {
 
+  function clickNext(event, list, index) {
+    if (list.length>0){
+      if (index < (list.length-1)){
+        index = index+1;
+        const queryParams = new URLSearchParams(window.location.search);
+        const itemId = queryParams.get('classeArgomento');
+        window.location.href = "../fs/dettaglio?classeArgomento="+itemId+"&lezione="+list[index].idLezione;
+      }
+    }
   }
 
 
@@ -180,8 +197,8 @@ function Dettaglio() {
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={5} xl={5}>
               <FS_Video_Player
-                title={data.materia.length>0 ? getContenutoVideo(data.materia).lezione : ""}
-                url={data.materia.length>0 ? getContenutoVideo(data.materia).contenutoPercorso : ""}
+                title={getContenutoTitle(data.materia)}
+                url={getContenutoVideo(data.materia)}
               />
 
               <FS_Image_Carousel/>
@@ -192,7 +209,11 @@ function Dettaglio() {
         </Container>
 
         <Container disableGutters maxWidth="false" sx={{marginTop: '2%'}}>
-          <FS_Footer/>
+          <FS_Footer
+            index={data.index}
+            array={data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteLezione1}
+            onClickNext={clickNext}
+          />
         </Container>
       </DCT_Layout>
     </>

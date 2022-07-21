@@ -9,9 +9,21 @@ import {
 } from "../../../../data/fs/common";
 
 
+function getIndex(list, itemId) {
+  if (list.length>0){
+    for (var i= 0; i< list.length; i++){
+      if (list[i].idLezione == itemId){
+        return i;
+      }
+    }
+  }
+};
+
+
 async function getHandler(userLogin, classeArgomento, lezione) {
   const arg = await getLezioni(userLogin.token, userLogin.userID, classeArgomento);
   const subject = await getLezione(userLogin.token, lezione);
+  const selectedIndex = getIndex(arg[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteLezione1, lezione);
 
   const data = {
     title: "Configurazione dettaglio",
@@ -21,6 +33,7 @@ async function getHandler(userLogin, classeArgomento, lezione) {
     usermenu: usermenu,
     argomento: arg,
     materia: subject,
+    index: selectedIndex
     // bread: db_bread,
   };
   return data;

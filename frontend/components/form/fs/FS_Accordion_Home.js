@@ -111,7 +111,7 @@ export default function ControlledAccordions(props) {
                           </Box>
                           <Box sx={{ width: "30%", textAlign: "right" }}>
                             <Typography variant="p" className={jnStyles.jnL2} sx={{marginRight: '25px'}}>
-                              Stimato {lezioneItem.TempoStimatoLezione ? lezioneItem.TempoStimatoLezione : 0} m
+                              Stimato {lezioneItem.durataMinutiLezione ? lezioneItem.durataMinutiLezione : 0} m
                             </Typography>
 
                             <Typography
