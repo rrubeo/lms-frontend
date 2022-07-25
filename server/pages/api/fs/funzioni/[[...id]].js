@@ -24,15 +24,13 @@ async function getHandler(userLogin, pid) {
   
   const data = {
     title: "Configurazione Iscrizione studente",
-    // login: false,
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,
     funzioni: db_funzioni,
     profilo: profile,
     materie: subjects,
-    lezioniViste: recentLessons,
-    // bread: db_bread,
+    lezioniViste: recentLessons
   };
   return data;
 }

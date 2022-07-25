@@ -20,21 +20,46 @@ function getIndex(list, itemId) {
 };
 
 
+function getContenutoVideo(list) {
+  if (list.length>0){
+    for (var i= 0; i< list.length; i++){
+      if (list[i].tipoContenuto == "Video"){
+        return list[i];
+      }
+    }
+  }
+}
+
+
+function getContenutoTesto(list) {
+  if (list.length>0){
+    for (var i= 0; i< list.length; i++){
+      if (list[i].tipoContenuto == "Testo"){
+        return list[i];
+      }
+    }
+  }
+}
+
+
 async function getHandler(userLogin, classeArgomento, lezione) {
   const arg = await getLezioni(userLogin.token, userLogin.userID, classeArgomento);
-  const subject = await getLezione(userLogin.token, lezione);
+  const contents = await getLezione(userLogin.token, lezione);
+  const contentVideo = getContenutoVideo(contents);
+  const contentText = getContenutoTesto(contents);
   const selectedIndex = getIndex(arg[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteLezione1, lezione);
+  const subject = arg[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteLezione1[selectedIndex];
 
   const data = {
     title: "Configurazione dettaglio",
-    // login: false,
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,
     argomento: arg,
-    materia: subject,
+    contenutoVideo: contentVideo,
+    contenutoTesto: contentText,
+    lezione: subject,
     index: selectedIndex
-    // bread: db_bread,
   };
   return data;
 }

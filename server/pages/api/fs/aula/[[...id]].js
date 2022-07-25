@@ -25,14 +25,12 @@ async function getHandler(userLogin, pid) {
 
   const data = {
     title: "Configurazione Aula",
-    // login: false,
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,
     funzioni: db_funzioni,
     docenti: docenti,
     tutor: tutor
-    // bread: db_bread,
   };
   return data;
 }

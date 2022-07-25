@@ -11,7 +11,6 @@ class FS_Footer extends React.Component {
   render() {
     return (
       <BottomNavigation
-        showLabels
         sx={{justifyContent: 'right', alignItems: 'center'}}
       >
         <Button sx={{height: '35px', minWidth: '180px', marginRight: '15px'}} variant="outlined" classes={{ root: jnStyles.jnBTPink }}>Inizia esercitazione</Button>

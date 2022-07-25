@@ -105,7 +105,7 @@ function Dettaglio() {
   ];
 
 
-  function setArrayProp(list) {
+  function setArray(list) {
     const data = list.map((x) => {
       return {
         id: x.idLezione,
@@ -114,26 +114,6 @@ function Dettaglio() {
     });
 
     return data;
-  }
-
-
-  function getContenutoTitle(list) {
-    if (list.length>0){
-      for (var i= 0; i< list.length; i++){
-        return list[0].lezione;
-      }
-    }
-  }
-
-
-  function getContenutoVideo(list) {
-    if (list.length>0){
-      for (var i= 0; i< list.length; i++){
-        if (list[i].tipoContenuto == "Video"){
-          return list[i].contenutoPercorso;
-        }
-      }
-    }
   }
 
 
@@ -188,7 +168,7 @@ function Dettaglio() {
                 class="lessonsCard"
                 title={data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteClasse.descr}
                 arg={data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteClasse.id}
-                array={setArrayProp(data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteLezione1)}
+                array={setArray(data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteLezione1)}
                 clickable={true}
                 type="text"
                 height="510px"
@@ -197,8 +177,8 @@ function Dettaglio() {
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={5} xl={5}>
               <FS_Video_Player
-                title={getContenutoTitle(data.materia)}
-                url={getContenutoVideo(data.materia)}
+                title={data.lezione.lezione}
+                url={data.contenutoVideo ? data.contenutoVideo.contenutoPercorso : ' '}
               />
 
               <FS_Image_Carousel/>

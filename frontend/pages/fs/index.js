@@ -120,7 +120,7 @@ function HomepageStudente() {
                 background="#798CB4"
                 class="lessonsCard"
                 title="Ultime lezioni viste"
-                array={data.lezioniViste.splice(0, 3)}
+                array={data.lezioniViste.splice(0, 5)}
                 type="text"
                 height="510px"
                 clickable={false}
