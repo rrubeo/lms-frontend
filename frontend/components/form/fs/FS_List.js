@@ -68,7 +68,7 @@ class FS_List extends React.Component {
                   <ListItemIcon 
                     sx={{cursor: 'pointer', color: '#ffffff', justifyContent: 'right'}} 
                     className="icon-arrow-right3"
-                    onClick={event => this.props.onClickFunction(event, this.props.clickable, this.state.arg, item.id)}
+                    onClick={event => this.props.onClickFunction(this.props.clickable, this.state.arg, item.id)}
                   />
                   :
                   <ListItemIcon/>

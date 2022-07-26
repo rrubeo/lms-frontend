@@ -17,13 +17,15 @@ class FS_ProfileStudent extends React.Component {
   }
 
   render() {
+    const fs_cfg = require("../../../components/form/fs/config");
+
     return (
       <Grid container className={fsStyle.profileStudentBalloon}>
         <Grid item className={fsStyle.profileStudentAvatarContainer}>
           <Avatar
             className={fsStyle.profileStudentAvatar}
             alt="Profile"
-            src= {this.state.image}
+            src= {fs_cfg.IMAGE_BASE_URL+this.state.image}
           >{this.state.name.slice(0, 1)+this.state.surname.slice(0, 1)}</Avatar>
         </Grid>
         <Grid item>

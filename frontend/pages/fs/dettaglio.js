@@ -76,18 +76,6 @@ function Dettaglio() {
   if (!data) return <Loader id="home" />;
   if (data.status != 200) return <div>{data.message}</div>;
 
-  
-  function handleClick(event) {
-    event.preventDefault();
-    window.location.href = "../fs";
-  }
-
-  function handleClickArg(event, clickable, itemId, lessonId){
-    if (clickable){
-      window.location.href = "../fs/dettaglio?classeArgomento="+itemId+"&lezione="+lessonId;
-    }   
-  };
-
 
   const breadcrumbs = [
     <Link
@@ -104,6 +92,31 @@ function Dettaglio() {
     </Link>,
   ];
 
+  
+  //CLICK SU BREADCRUMBS
+  function handleClick() {
+    window.location.href = "../fs";
+  }
+
+  //CLICK SU FRECCIA LISTA
+  function handleClickArg(clickable, itemId, lessonId){
+    if (clickable){
+      window.location.href = "../fs/dettaglio?classeArgomento="+itemId+"&lezione="+lessonId;
+    }   
+  };
+
+  //CLICK PROSSIMA LEZIONE
+  function handleClickNext(list, index) {
+    if (list.length>0){
+      if (index < (list.length-1)){
+        index = index+1;
+        const queryParams = new URLSearchParams(window.location.search);
+        const itemId = queryParams.get('classeArgomento');
+        window.location.href = "../fs/dettaglio?classeArgomento="+itemId+"&lezione="+list[index].idLezione;
+      }
+    }
+  }
+
 
   function setArray(list) {
     const data = list.map((x) => {
@@ -114,18 +127,6 @@ function Dettaglio() {
     });
 
     return data;
-  }
-
-
-  function clickNext(event, list, index) {
-    if (list.length>0){
-      if (index < (list.length-1)){
-        index = index+1;
-        const queryParams = new URLSearchParams(window.location.search);
-        const itemId = queryParams.get('classeArgomento');
-        window.location.href = "../fs/dettaglio?classeArgomento="+itemId+"&lezione="+list[index].idLezione;
-      }
-    }
   }
 
 
@@ -192,7 +193,7 @@ function Dettaglio() {
           <FS_Footer
             index={data.index}
             array={data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteLezione1}
-            onClickNext={clickNext}
+            onClickNext={handleClickNext}
           />
         </Container>
       </DCT_Layout>

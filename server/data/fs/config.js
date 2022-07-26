@@ -10,6 +10,7 @@ const UserValidate = `${CLOUD_BASE_URL}/${CLOUD_API_VALID_TOKEN}`;
 
 //API autorizzazione funzioni FORM
 const CLOUD_API_FORM = "api/Tables/GetFunzioniRuoliForm";
+
 //Endpoint
 function GetFunzioniForm(user, formName) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_FORM}/${user}/${formName}`;

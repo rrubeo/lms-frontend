@@ -81,8 +81,8 @@
 }
 
 .accordion{
-    min-height: 410px;
-    max-height: 410px;
+    min-height: 675px;
+    max-height: 675px;
     overflow-y: scroll;
 }
 
@@ -151,7 +151,8 @@
     margin: 2% 1%;
     border-radius: 20px;
     padding: 2%;
-    height: 300px;
+    /*height: 300px;*/
+    height: 400px;
     overflow-y: scroll;
 }
 
@@ -180,6 +181,29 @@
 
 .accordionSummaryContent{
     align-items: center;
+}
+
+.footerContainer{
+    justify-content: right;
+    align-items: center;
+}
+
+.footerButton{
+    border-radius: 26px;
+    background-color: #ffffff;
+    color: #B34B9E;
+    border: 1px solid #B34B9E;
+}
+
+.footerButtonFull{
+    border-radius: 26px;
+    background-color: #252847;
+    color: #ffffff;
+}
+
+.footerLabel{
+    font-size: 11pt;
+    font-weight: 400;
 }
 
 
