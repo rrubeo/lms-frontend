@@ -6,7 +6,8 @@ import {
   GetLezioniSeguite,
   GetDocentiAula,
   GetTutorAula,
-  GetLezione
+  GetLezione,
+  GetPDF
 } from "../../data/fs/config";
 
 const utils = require("../../lib/utils");
@@ -125,6 +126,14 @@ const getLezione = async (token, idLezione) => {
   return data;
 };
 
+const getPDF = async (token, idContenuto) => {
+  const f = await utils.getFetch(token, GetPDF(idContenuto));
+
+  if (f.status) return [];
+  const data = f;
+  return data;
+};
+
 
 module.exports = {
   getToken,
@@ -134,5 +143,6 @@ module.exports = {
   getLezioniSeguite,
   getDocentiAula,
   getTutorAula,
-  getLezione
+  getLezione,
+  getPDF
 };

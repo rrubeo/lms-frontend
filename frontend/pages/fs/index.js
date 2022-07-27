@@ -87,7 +87,10 @@ function HomepageStudente() {
         <Container disableGutters maxWidth="false">
           <Grid container sx={{ alignItems: "center" }}>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
-              <FS_ProfileStudent profile={data.profilo}/>
+              <FS_ProfileStudent 
+              profile={data.profilo}
+              urlPath={fs_cfg.IMAGE_BASE_URL}
+              />
             </Grid>
             <Grid
               item

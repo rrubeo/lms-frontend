@@ -5,7 +5,8 @@ import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
 
 import { 
   getLezioni,
-  getLezione
+  getLezione,
+  getPDF
 } from "../../../../data/fs/common";
 
 
@@ -20,33 +21,10 @@ function getIndex(list, itemId) {
 };
 
 
-function getContenutoVideo(list) {
-  if (list.length>0){
-    for (var i= 0; i< list.length; i++){
-      if (list[i].tipoContenuto == "Video"){
-        return list[i];
-      }
-    }
-  }
-}
-
-
-function getContenutoTesto(list) {
-  if (list.length>0){
-    for (var i= 0; i< list.length; i++){
-      if (list[i].tipoContenuto == "Testo"){
-        return list[i];
-      }
-    }
-  }
-}
-
-
 async function getHandler(userLogin, classeArgomento, lezione) {
   const arg = await getLezioni(userLogin.token, userLogin.userID, classeArgomento);
   const contents = await getLezione(userLogin.token, lezione);
-  const contentVideo = getContenutoVideo(contents);
-  const contentText = getContenutoTesto(contents);
+  const images = await getPDF(userLogin.token, contents[0].idPdf);
   const selectedIndex = getIndex(arg[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteLezione1, lezione);
   const subject = arg[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteLezione1[selectedIndex];
 
@@ -56,8 +34,9 @@ async function getHandler(userLogin, classeArgomento, lezione) {
     navmenu: navmenu,
     usermenu: usermenu,
     argomento: arg,
-    contenutoVideo: contentVideo,
-    contenutoTesto: contentText,
+    contenuti: contents[0],
+    immagini: images.testoImages,
+    selectedImage: images.testoImages[0].imagePath,
     lezione: subject,
     index: selectedIndex
   };

@@ -117,7 +117,6 @@ function Dettaglio() {
     }
   }
 
-
   function setArray(list) {
     const data = list.map((x) => {
       return {
@@ -127,6 +126,27 @@ function Dettaglio() {
     });
 
     return data;
+  }
+
+  function setArrayImages(list) {
+    const data = list.map((x, index) => {
+      return {
+        id: index,
+        images: x,
+      };
+    });
+
+    return data;
+  }
+
+  function handleClickImage(index){
+    for (var i= 0; i< data.immagini.length; i++){
+      document.getElementById('imgCarousel'+i).style.borderColor = "#000000";   
+      if (i == index){
+        document.getElementById('imgCarousel'+i).style.borderColor = "#B34B9E"; 
+      }
+    }
+    document.getElementById('image').src= data.immagini[index].imagePath;  
   }
 
 
@@ -179,12 +199,17 @@ function Dettaglio() {
             <Grid item xs={12} sm={12} md={12} lg={5} xl={5}>
               <FS_Video_Player
                 title={data.lezione.lezione}
-                url={data.contenutoVideo ? data.contenutoVideo.contenutoPercorso : ' '}
+                url={data.contenuti.pathVideo ? data.contenuti.pathVideo : ' '}
               />
 
-              <FS_Image_Carousel/>
+              <FS_Image_Carousel
+                array={setArrayImages(data.immagini)}
+                index={0}
+                onClickFunction={handleClickImage}
+              />
             </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
+            <Grid item xs={12} sm={12} md={12} lg={4} xl={4} sx={{maxHeight: '600px', overflow: 'scroll'}}>
+              <img style={{width: '100%'}} id="image" src={data.immagini[0].imagePath}/>
             </Grid>
           </Grid>
         </Container>
