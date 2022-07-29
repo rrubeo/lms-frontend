@@ -203,13 +203,13 @@ function Dettaglio() {
               />
 
               <FS_Image_Carousel
-                array={setArrayImages(data.immagini)}
+                array={data.immagini ? setArrayImages(data.immagini): null}
                 index={0}
                 onClickFunction={handleClickImage}
               />
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={4} xl={4} sx={{maxHeight: '600px', overflow: 'scroll'}}>
-              <img style={{width: '100%'}} id="image" src={data.immagini[0].imagePath}/>
+              <img style={{width: '100%'}} id="image" src={data.immagini ? data.immagini[0].imagePath : " "}/>
             </Grid>
           </Grid>
         </Container>

@@ -25,6 +25,7 @@ async function getHandler(userLogin, classeArgomento, lezione) {
   const arg = await getLezioni(userLogin.token, userLogin.userID, classeArgomento);
   const contents = await getLezione(userLogin.token, lezione);
   const images = await getPDF(userLogin.token, contents[0].idPdf);
+  const selectedImage = images.length>0 ? images.testoImages[0].imagePath : "";
   const selectedIndex = getIndex(arg[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteLezione1, lezione);
   const subject = arg[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteLezione1[selectedIndex];
 
@@ -36,7 +37,7 @@ async function getHandler(userLogin, classeArgomento, lezione) {
     argomento: arg,
     contenuti: contents[0],
     immagini: images.testoImages,
-    selectedImage: images.testoImages[0].imagePath,
+    immagineSelezionata: selectedImage,
     lezione: subject,
     index: selectedIndex
   };
