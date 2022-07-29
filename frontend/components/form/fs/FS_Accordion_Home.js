@@ -118,7 +118,7 @@ export default function ControlledAccordions(props) {
                               variant="h4"
                               className="icon-arrow-right3"
                               sx={{ color: "#000000", fontSize: '20px', display: 'inline', cursor: 'pointer' }}
-                              onClick={event => handleClick(subitem.lezioniStudenteClasse.id, lezioneItem.idLezione)}
+                              onClick={event => handleClick(subitem.lezioniStudenteClasse.id, lezioneItem.idArgomento)}
                             ></Typography>   
                           </Box>
                         </ListItem>

@@ -150,6 +150,15 @@ function Dettaglio() {
   }
 
 
+  function getImage(list){
+    if (Array.isArray(list)){
+      if (list.length>0){
+        return <img style={{width: '100%'}} id="image" src={list[0].imagePath}/>  
+      }
+    }
+  }
+
+
   return (
     <>
       <DCT_Layout id="Layout" data={data}>
@@ -209,7 +218,7 @@ function Dettaglio() {
               />
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={4} xl={4} sx={{maxHeight: '600px', overflow: 'scroll'}}>
-              <img style={{width: '100%'}} id="image" src={data.immagini ? data.immagini[0].imagePath : " "}/>
+              {getImage(data.immagini)}
             </Grid>
           </Grid>
         </Container>
