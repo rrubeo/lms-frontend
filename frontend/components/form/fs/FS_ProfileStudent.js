@@ -23,7 +23,7 @@ class FS_ProfileStudent extends React.Component {
           <Avatar
             className={fsStyle.profileStudentAvatar}
             alt="Profile"
-            src= {this.props.urlPath+"/immaginiutente/studente2.jpg"}
+            src= {this.props.urlPath+"/"+this.state.image}
           >{this.state.name.slice(0, 1)+this.state.surname.slice(0, 1)}</Avatar>
         </Grid>
         <Grid item>
