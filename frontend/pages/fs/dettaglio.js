@@ -112,7 +112,7 @@ function Dettaglio() {
         index = index+1;
         const queryParams = new URLSearchParams(window.location.search);
         const itemId = queryParams.get('classeArgomento');
-        window.location.href = "../fs/dettaglio?classeArgomento="+itemId+"&lezione="+list[index].idLezione;
+        window.location.href = "../fs/dettaglio?classeArgomento="+itemId+"&lezione="+list[index].idArgomento;
       }
     }
   }
@@ -120,7 +120,7 @@ function Dettaglio() {
   function setArray(list) {
     const data = list.map((x) => {
       return {
-        id: x.idLezione,
+        id: x.idArgomento,
         name: x.lezione,
       };
     });
