@@ -45,8 +45,7 @@ class FRM_ProgBase_Materie extends React.Component {
     await this.props.onSubmit(event, data);
   }
 
-  handleReset(event) {
-    // console.log("RESET");
+  handleReset(event) {   
     event.preventDefault();
     this.changeChildAnnoId.current.handleReset();
     this.changeChildSelectId.current.handleReset();
@@ -54,11 +53,7 @@ class FRM_ProgBase_Materie extends React.Component {
     this.setState({ materieValue: [] });
   }
 
-  onChangeForm(id, data) {
-    // console.log("CHANGE FORM");
-    // console.log(id);
-    // console.log(data);
-
+  onChangeForm(id, data) {    
     switch (id) {
       case this.state.annoId:
         this.setState({ annoValue: data });

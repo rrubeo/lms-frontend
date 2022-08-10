@@ -15,7 +15,7 @@ export default withIronSessionApiRoute(async (req, res) => {
     };
 
     const userRole = await getRoles(user);
-    // console.log(userRole[0]);
+    console.log(userRole);
     if (userRole[0]) {
       user.role = userRole[0].ruolo;
       user.idRole = userRole[0].idRuoloUtente;

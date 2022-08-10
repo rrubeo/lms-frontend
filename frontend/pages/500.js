@@ -4,7 +4,12 @@ import Image from "next/image";
 
 export default function Custom500() {
   return (
-    <Container component="div" maxWidth="md" sx={{ my: 0, py: 0 }}>
+    <Container
+      component="span"
+      maxWidth="lg"
+      sx={{ my: 0, py: "2%", px: "2%" }}
+      disableGutters={true}
+    >
       <Box
         component="div"
         sx={{

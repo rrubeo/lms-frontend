@@ -24,7 +24,14 @@ class FRM_GestStud_Ricerca extends React.Component {
     event.preventDefault();
   }
 
-  handleSubmit(event) {}
+  handleSubmit(event) {
+    event.preventDefault();
+    const data = {
+      id: gs_cfg.FRM_PBASE_STEP_0,
+    };
+    // this.props.onSubmit(event, data);
+    this.props.onNextStep(event, null, gs_cfg.GSTU_STEP_1);
+  }
 
   handleReset(event) {}
 
@@ -66,20 +73,6 @@ class FRM_GestStud_Ricerca extends React.Component {
           >
             {this.props.data.config_label}
           </Button>
-          {/* <Button
-            variant="contained"
-            onClick={(event) => this.handleBack(event)}
-          >
-            {this.props.data.config_label}
-          </Button> */}
-          {/* <Link href={gs_cfg.PBASE_STEP_1}>
-            <Button variant="contained"> {this.props.data.config_label}</Button>
-          </Link> */}
-          {/* <Stack direction="row" spacing={2}>
-            <Button type="submit" variant="contained">
-              {this.props.data.config_label}
-            </Button>
-          </Stack> */}
         </Box>
         <DTC_DataGrid
           id="gd_ricerca"
@@ -89,6 +82,7 @@ class FRM_GestStud_Ricerca extends React.Component {
           onDelete={this.onDeleteRow}
           onNextStep={this.props.onNextStep}
           action={this.props.action}
+          actionWidth={150}
         />
       </Stack>
     );

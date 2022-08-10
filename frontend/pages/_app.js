@@ -29,15 +29,11 @@ export default function MyApp(props) {
     redirectTo: PAGE_LOGIN,
   });
 
-  // console.log("APP");
-  // console.log(user);
   React.useEffect(() => {
     const start = () => {
-      // console.log("routeChangeStart");
       setLoading(true);
     };
     const end = () => {
-      // console.log("finished");
       setLoading(false);
     };
     Router.events.on("routeChangeStart", start);
@@ -62,7 +58,7 @@ export default function MyApp(props) {
         ) : (
           <>
             <ErrorBoundary>
-              <Component {...pageProps} />
+              <Component {...pageProps} />{" "}
             </ErrorBoundary>
             <Toaster
               position="bottom-right"

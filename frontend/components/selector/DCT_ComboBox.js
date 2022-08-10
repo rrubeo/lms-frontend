@@ -55,7 +55,16 @@ class DCT_ComboBox extends React.Component {
     if (selezione == -1) selezione = 0;
     this.setState({ value: this.props.list[selezione] });
     this.props.onChange(this.props.id, this.props.list[selezione]);
-    console.log("selezione", selezione);
+    // console.log("selezione", selezione);
+  }
+
+  setIndex(index) {
+    // this.setState({ value: text });
+    let selezione = this.props.list.findIndex((item) => item.id == index);
+    if (selezione == -1) selezione = 0;
+    this.setState({ value: this.props.list[selezione] });
+    this.props.onChange(this.props.id, this.props.list[selezione]);
+    // console.log("selezione", selezione);
   }
 
   render() {

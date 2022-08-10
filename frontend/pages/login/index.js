@@ -118,8 +118,7 @@ export default function Login(props) {
                   id="userName"
                   label="Username"
                   size={{ xs: 100, sm: 150, md: 270 }}
-                  onChange={onChangeForm}
-                  // ref={this.changeChildLezioneId}
+                  onChange={onChangeForm}                  
                 />
                 <DTC_TextBox
                   required
@@ -127,8 +126,7 @@ export default function Login(props) {
                   label="Password"
                   type="password"
                   size={{ xs: 100, sm: 150, md: 270 }}
-                  onChange={onChangeForm}
-                  // ref={this.changeChildLezioneId}
+                  onChange={onChangeForm}                  
                 />
               </Stack>
             </CardContent>

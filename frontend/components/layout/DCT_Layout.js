@@ -23,6 +23,7 @@ class DCT_Layout extends React.Component {
     this.state = {
       open: false,
       loaded: true,
+      isStudent: this.props.user ? this.props.user.isStudent : 0,
       data: {},
     };
 
@@ -34,10 +35,10 @@ class DCT_Layout extends React.Component {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, user } = this.props;
     const { menu, navmenu, usermenu, title } = this.props.data;
     const { open, loaded } = this.state;
-    // console.log(`<DCT_Layout ='${this.props.id}'> (${open})`);
+    console.log(user);
 
     return (
       <>
@@ -57,16 +58,21 @@ class DCT_Layout extends React.Component {
               usermenu={usermenu}
               navmenu={navmenu}
               handleOnClick={this.handleOnClick}
+              user={user}
             />
-            <DCT_SideMenu
-              loaded={loaded}
-              id="Side"
-              open={open}
-              direction="rtl"
-              drawerwidth={400}
-              sideMenu={menu}
-              handleOnClick={this.handleOnClick}
-            ></DCT_SideMenu>
+            {!this.state.isStudent ? (
+              <DCT_SideMenu
+                loaded={loaded}
+                id="Side"
+                open={open}
+                direction="rtl"
+                drawerwidth={400}
+                sideMenu={menu}
+                handleOnClick={this.handleOnClick}
+              ></DCT_SideMenu>
+            ) : (
+              <></>
+            )}
             <Box
               component="main"
               sx={{

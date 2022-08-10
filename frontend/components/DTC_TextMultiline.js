@@ -3,8 +3,6 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import jnStyles from "../styles/utils.module.css";
-import TextField from "@mui/material/TextField";
-import { styled } from "@mui/material/styles";
 
 class DTC_TextMultiline extends React.Component {
   constructor(props) {

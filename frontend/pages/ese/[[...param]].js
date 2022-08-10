@@ -1,6 +1,7 @@
 import React from "react";
 import useSWR, { useSWRConfig, SWRConfig } from "swr";
 import Loader from "../../components/layout/loader";
+import Wip from "../../components/layout/wip";
 import DCT_Layout from "../../components/layout/DCT_Layout";
 import FRM_Ese_Ricerca from "../../components/form/ese/FRM_Ese_Ricerca";
 import FRM_Ese_Visualizza from "../../components/form/ese/FRM_Ese_Visualizza";
@@ -9,6 +10,8 @@ import FRM_Ese_Domande from "../../components/form/ese/FRM_Ese_Domande";
 import FRM_Ese_Risposte from "../../components/form/ese/FRM_Ese_Risposte";
 import FRM_Ese_Check from "../../components/form/ese/FRM_Ese_Check";
 import { validateForm } from "../../components/form/ese/validator";
+import useUser from "../../lib/useUser";
+import { PAGE_401 } from "../../lib/redirect";
 
 import {
   defaultLogin,
@@ -18,8 +21,6 @@ import {
   MSG_SUCCESS,
   MSG_ERROR,
   MSG_INFO,
-  MSG_WARNING,
-  forceReloadUtil,
   forceNavigateUtil,
 } from "../../lib";
 
@@ -67,16 +68,17 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 sessionOptions);
 
 function Main() {
-  //Recupera info utente
+  const { user } = useUser({
+    redirectTo: PAGE_401,
+  });
   const { fallback, mutate } = useSWRConfig();
   const { userInfo, pageName, apiUrl, pageQuery, subIndex } = fallback;
-  // console.log("pageQuery", pageQuery);
-  // console.log("subIndex", subIndex);
+
   let { data, error } = useSWR(apiUrl, utils.getData);
 
   if (error) return <div>{error.message}</div>;
-  if (!data) return <Loader id="pb" />;
-  if (data.status != 200) return <div>{data.message}</div>;
+  if (!data) return <Loader id="ese" />;
+  if (data.status != 200) return <Wip>{data.message}</Wip>;
 
   const reloadData = async () => {
     console.log("data changed");
@@ -129,7 +131,7 @@ function Main() {
   };
 
   return (
-    <DCT_Layout id="Layout" data={data}>
+    <DCT_Layout id="Layout" data={data} user={user}>
       <section>
         <h1>{data.title}</h1>
         {pageName === ese_cfg.ESE_STEP_0 ? (

@@ -35,6 +35,7 @@ class DCT_Nav extends React.Component {
       open: this.props.open,
       drawerwidth: this.props.drawerwidth,
       title: this.props.title,
+      isStudent: this.props.user ? this.props.user.isStudent : 0,
     };
     this.handleOnClick = this.handleOnClick.bind(this);
   }
@@ -58,33 +59,37 @@ class DCT_Nav extends React.Component {
             drawerwidth={this.state.drawerwidth}
           >
             <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={this.handleOnClick}
-                edge="start"
-                sx={{
-                  ml: "23px",
+              {!this.state.isStudent ? (
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={this.handleOnClick}
+                  edge="start"
+                  sx={{
+                    ml: "23px",
 
-                  // ...(this.state.open && { display: "none" }),
-                }}
-              >
-                {this.state.open ? (
-                  <MenuOpen
-                    sx={{
-                      fontSize: "46px",
-                      // ...(this.state.open && { display: "none" }),
-                    }}
-                  />
-                ) : (
-                  <MenuIcon
-                    sx={{
-                      fontSize: "46px",
-                      // ...(this.state.open && { display: "none" }),
-                    }}
-                  />
-                )}
-              </IconButton>
+                    // ...(this.state.open && { display: "none" }),
+                  }}
+                >
+                  {this.state.open ? (
+                    <MenuOpen
+                      sx={{
+                        fontSize: "46px",
+                        // ...(this.state.open && { display: "none" }),
+                      }}
+                    />
+                  ) : (
+                    <MenuIcon
+                      sx={{
+                        fontSize: "46px",
+                        // ...(this.state.open && { display: "none" }),
+                      }}
+                    />
+                  )}
+                </IconButton>
+              ) : (
+                <></>
+              )}
               <Box
                 sx={{
                   flexGrow: 1,
@@ -113,6 +118,7 @@ class DCT_Nav extends React.Component {
                 id="USERMENU"
                 navmenu={this.props.navmenu}
                 usermenu={this.props.usermenu}
+                user={this.props.user}
               />
             </Toolbar>
           </AppBar>

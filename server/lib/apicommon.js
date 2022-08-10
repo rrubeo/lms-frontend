@@ -3,7 +3,7 @@ import { getToken } from "../data/common";
 function getPid(request) {
   let { pid } = request.query;
   console.log("getPid ########");
-  console.log(pid);
+  console.log(pid?pid:"getPid NON PRESENTE");
   if (!pid) pid = 0;
   else pid = pid[0];
   // console.log("getPid", pid);

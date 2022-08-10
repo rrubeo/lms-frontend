@@ -34,6 +34,14 @@ const theme = createTheme({
         fontSize: "29pt",
         fontWeight: 800,
       },
+      h5: {
+        fontSize: "19pt",
+        fontWeight: 800,
+      },
+      h6: {
+        fontSize: "9pt",
+        fontWeight: 800,
+      },
     },
   },
 });

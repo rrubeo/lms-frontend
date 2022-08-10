@@ -1,11 +1,13 @@
 import React from "react";
 import useSWR, { useSWRConfig, SWRConfig } from "swr";
 import Loader from "../../components/layout/loader";
+import Wip from "../../components/layout/wip";
 import DCT_Layout from "../../components/layout/DCT_Layout";
 import FRM_ProgIndi_ProgBase from "../../components/form/pindi/FRM_ProgIndi_ProgBase";
 import FRM_ProgIndi_Lezione from "../../components/form/pindi/FRM_ProgIndi_Lezione";
 
-import { validateForm } from "../../components/form/pindi/validator";
+import useUser from "../../lib/useUser";
+import { PAGE_401 } from "../../lib/redirect";
 
 import {
   defaultLogin,
@@ -15,10 +17,7 @@ import {
   MSG_SUCCESS,
   MSG_ERROR,
   MSG_INFO,
-  MSG_WARNING,
-  forceReloadUtil,
   forceNavigateUtil,
-  forceSearchUtil,
 } from "../../lib";
 
 import { withIronSessionSsr } from "iron-session/next";
@@ -65,6 +64,9 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 sessionOptions);
 
 function Main() {
+  const { user } = useUser({
+    redirectTo: PAGE_401,
+  });
   //Recupera info utente
   const { fallback, mutate } = useSWRConfig();
   const { userInfo, pageName, apiUrl, pageQuery } = fallback;
@@ -73,7 +75,7 @@ function Main() {
 
   if (error) return <div>{error.message}</div>;
   if (!data) return <Loader id="pi" />;
-  if (data.status != 200) return <div>{data.message}</div>;
+  if (data.status != 200) return <Wip>{data.message}</Wip>;
 
   const reloadData = async () => {
     console.log("data changed");
@@ -112,12 +114,12 @@ function Main() {
   };
 
   const handleNextStep = async (event, filter, route) => {
-    event.preventDefault();    
+    event.preventDefault();
     forceNavigateUtil(route, filter, fallback.subIndex);
   };
 
   return (
-    <DCT_Layout id="Layout" data={data}>
+    <DCT_Layout id="Layout" data={data} user={user}>
       <section>
         <h1>{data.title}</h1>
         {pageName === pi_cfg.PINDI_STEP_0 ? (
