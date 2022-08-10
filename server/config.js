@@ -10,19 +10,27 @@ const PINDI_STEP_0 = "pi_1base";
 const PINDI_STEP_1 = "pi_2le";
 
 const GSTU_STEP_0 = "gs_search";
-const GSTU_STEP_1 = "gs_new";
+const GSTU_STEP_1 = "gs_dett";
+const GSTU_STEP_2 = "gs_iscrizione";
+
+const GU_STEP_0 = "gu_search";
+const GU_STEP_1 = "gu_dett";
+
+const AR_STEP_0 = "ar_search";
+const AR_STEP_1 = "ar_ruoli";
 
 const ESE_STEP_0 = "ese_search";
 const ESE_STEP_1 = "ese_dett";
 
-
 const HOME_0 = "home";
 const HOME_STUDENT = "fs";
+const STUDENT_AULA = "fs/aula";
 const CALENDAR = "calendar";
 
 module.exports = {
   HOME_0,
   HOME_STUDENT,
+  STUDENT_AULA,
   CALENDAR,
   PBASE_STEP_0,
   PBASE_STEP_1,
@@ -34,6 +42,11 @@ module.exports = {
   PINDI_STEP_1,
   GSTU_STEP_0,
   GSTU_STEP_1,
+  GSTU_STEP_2,
   ESE_STEP_0,
-  ESE_STEP_1
+  ESE_STEP_1,
+  GU_STEP_0,
+  GU_STEP_1,
+  AR_STEP_0,
+  AR_STEP_1,
 };

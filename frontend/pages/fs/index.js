@@ -83,7 +83,7 @@ function HomepageStudente() {
 
   return (
     <>
-      <DCT_Layout id="Layout" data={data}>
+      <DCT_Layout id="Layout" data={data} user={user}>
         <Container disableGutters maxWidth="false">
           <Grid container sx={{ alignItems: "center" }}>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>

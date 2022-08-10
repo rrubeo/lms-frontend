@@ -5,14 +5,21 @@ import Image from "next/image";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/router";
 import jnStyles from "../styles/utils.module.css";
+
 export default function Custom401() {
   const router = useRouter();
 
   const handleLogin = async (event) => {
     router.push("login");
   };
+  
   return (
-    <Container component="div" maxWidth="md" sx={{ my: 0, py: 0 }}>
+    <Container
+      component="span"
+      maxWidth="lg"
+      sx={{ my: 0, py: "2%", px: "2%" }}
+      disableGutters={true}
+    >
       <Box
         component="div"
         sx={{

@@ -360,6 +360,17 @@
     padding: 0 0 0 10px;
 }
 
+.jnDCT_TextSection {
+    font-size: 11pt;
+    font-weight: 800;
+    text-shadow: 1px 1px #d2d5ec;
+    color: #B34A9D;
+    border: 0.5px solid #788CB4;
+    border-radius: 26px;
+    padding: 1.5%;
+    margin: 0;
+}
+
 .jnDCT_Text_Input {
     font-size: 11pt;
     font-weight: 800;
@@ -370,6 +381,25 @@
     top: -24%;
     transform-origin: 10px 40px;
 
+}
+
+.jnDCT_Date_Border {
+    border-radius: 26px;
+    -webkit-box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.2);
+}
+
+.jnDCT_Date_Text {
+    font-size: 11pt;
+    font-weight: 800;
+    padding: 7px 7px 7px 17px;
+}
+
+.jnDCT_Date_Label {
+    font-size: 11pt;
+    font-weight: 800;
+    color: #000000;
+    padding: 0 0 0 0;
 }
 
 .jnDCT_Text_Border {

@@ -1,5 +1,5 @@
 import * as React from "react";
-import Router from 'next/router'
+import Router from "next/router";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -23,6 +23,10 @@ class DCT_UserMenu extends React.Component {
       navmenu: this.props.navmenu,
       usermenu: this.props.usermenu,
       selectedIndex: 0,
+      isStudent: this.props.user ? this.props.user.isStudent : 0,
+      nominativo: this.props.user
+        ? this.props.user.login.charAt(0).toUpperCase()
+        : "XX",
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -97,7 +101,9 @@ class DCT_UserMenu extends React.Component {
               aria-haspopup="true"
               aria-expanded={this.state.open ? "true" : undefined}
             >
-              <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+              <Avatar sx={{ width: 32, height: 32 }}>
+                {this.state.nominativo}
+              </Avatar>
             </IconButton>
           </Tooltip>
         </Box>

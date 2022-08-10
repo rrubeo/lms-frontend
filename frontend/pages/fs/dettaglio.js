@@ -161,7 +161,7 @@ function Dettaglio() {
 
   return (
     <>
-      <DCT_Layout id="Layout" data={data}>
+      <DCT_Layout id="Layout" data={data} user={user}>
         <Container disableGutters maxWidth="false">
           <Breadcrumbs
             color="#A7A7A7"

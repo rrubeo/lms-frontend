@@ -9,7 +9,6 @@ import { defaultLogin, sessionOptions, getAuthSession } from "../../lib";
 import useUser from "../../lib/useUser";
 import FS_List from "../../components/form/fs/FS_List";
 
-
 const utils = require("../../lib/utils");
 const fs_cfg = require("../../components/form/fs/config");
 
@@ -66,25 +65,20 @@ function Aula() {
 
   return (
     <>
-      <DCT_Layout id="Layout" data={data}>
-        <Container disableGutters maxWidth="false" sx={{minHeight: '800px'}}>
+      <DCT_Layout id="Layout" data={data} user={user}>
+        <Container disableGutters maxWidth="false" sx={{ minHeight: "800px" }}>
           <Grid container>
             <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
-                <FS_List
-                  title="I miei insegnanti"
-                  array={data.docenti}
-                  type="avatar"
-                />
-            </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
               <FS_List
-                title="Il mio tutor"
-                array={data.tutor}
+                title="I miei insegnanti"
+                array={data.docenti}
                 type="avatar"
               />
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
+              <FS_List title="Il mio tutor" array={data.tutor} type="avatar" />
             </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={4} xl={4}></Grid>
           </Grid>
         </Container>
       </DCT_Layout>

@@ -1,6 +1,7 @@
 import React from "react";
 import DCT_Layout from "../../components/layout/DCT_Layout";
 import Loader from "../../components/layout/loader";
+import Wip from "../../components/layout/wip";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import safeJsonStringify from "safe-json-stringify";
@@ -63,11 +64,10 @@ function HomeMain() {
 
   if (error) return <div>{error.message}</div>;
   if (!data) return <Loader id="home" />;
-  if (data.status != 200) return <div>{data.message}</div>;
-
+  if (data.status != 200) return <Wip>{data.message}</Wip>;
   return (
     <>
-      <DCT_Layout id="Layout" data={data}>
+      <DCT_Layout id="Layout" data={data} user={user}>
         <Container component="span" maxWidth="lg" disableGutters={true}>
           <Box sx={{ flexGrow: 1, bgcolor: "#ffffff" }}>
             <DTC_Calendar data={data} />

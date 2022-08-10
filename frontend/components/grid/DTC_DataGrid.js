@@ -99,9 +99,14 @@ class DTC_DataGrid extends React.Component {
     };
 
     let allColumn = this.props.cols;
-    allColumn.push(buttonColumn);
+    // console.log(allColumn);
+    // console.log(buttonColumn);
 
-    this.setState({ columns: allColumn });
+    const a = allColumn.concat(buttonColumn);
+    // console.log(a);
+    // allColumn.push(buttonColumn);
+
+    this.setState({ columns: a });
   }
 
   createRandomRow(counter) {
@@ -160,7 +165,7 @@ class DTC_DataGrid extends React.Component {
     event.defaultMuiPrevented = true;
     this.setState({ currentId: params.id });
 
-    if (this.props.onSelect) {     
+    if (this.props.onSelect) {
       this.props.onSelect(params.id, params);
     }
   }

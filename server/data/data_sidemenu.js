@@ -50,13 +50,13 @@ const sidemenu = [
     id: utils.getUID(),
     text: "Assegnazione Ruoli",
     icon: "icon-role-assignment",
-    link: `${process.env.frontend}/${cfg.HOME_0}`,
+    link: `${process.env.frontend}/ar/${cfg.AR_STEP_0}`,
   },
   {
     id: utils.getUID(),
     text: "Anagrafica Utenti",
     icon: "icon-registry",
-    link: `${process.env.frontend}/${cfg.HOME_0}`,
+    link: `${process.env.frontend}/gu/${cfg.GU_STEP_0}`,
   },
   {
     id: utils.getUID(),
@@ -108,15 +108,15 @@ const sidemenu = [
 const navmenu = [
   {
     id: utils.getUID(),
-    text: "Student",
-    icon: "icon-student-teacher-assignment",
+    text: "Home",
+    icon: "icon-home",
     link: `${process.env.frontend}/${cfg.HOME_STUDENT}`,
   },
   {
     id: utils.getUID(),
-    text: "Profile",
-    icon: "icon-headphones",
-    link: `${process.env.frontend}/${cfg.HOME_0}`,
+    text: "Aula Virtuale",
+    icon: "icon-student-teacher-assignment",
+    link: `${process.env.frontend}/${cfg.STUDENT_AULA}`,
   },
   {
     id: utils.getUID(),
