@@ -61,12 +61,12 @@
 }
 
 .lessonsCard{
-    max-width: 80%;
+    width: 90%;
+    max-width: 400px;
     padding: 0.5rem 1.5rem;
     border-radius: 26px;
     box-shadow: none;
     transition: none;
-    overflow-y: scroll;
     margin-bottom: 5%;
 }
 
@@ -206,10 +206,24 @@
     font-weight: 400;
 }
 
+iframe .vp-center{
+    justify-content: left;    
+}
+
 
 
 @media only screen and (max-width: 1199px){
     .progressContentGrid{
         text-align: left;
+    }
+
+    .lessonsCard{
+        min-height: unset!important;
+        max-height: unset!important;
+    }
+
+    .progressContentContainer{
+        justify-content: left;
+        margin-top: 20px;
     }
 }

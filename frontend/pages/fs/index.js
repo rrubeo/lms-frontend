@@ -115,7 +115,7 @@ function HomepageStudente() {
                 title="Corsi attivi"
                 array={[{'id': 1, 'name': data.profilo.iscrizione}]}
                 type="text"
-                height="100px"
+                height="120px"
                 clickable={false}
               />
 

@@ -23,10 +23,11 @@ class FS_Video_Player extends React.Component {
         <Typography variant="h6" className={jnStyles.jnD1} sx={{paddingLeft: '20px'}}>
           {this.state.title}
         </Typography>
+
         <ReactPlayer
           url={"https://vimeo.com/"+this.state.url}
           controls={true}
-          width={'100%'}
+          width='100%'
         />
       </Container>
     );

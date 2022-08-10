@@ -195,7 +195,6 @@ function Dettaglio() {
             <Grid item xs={12} sm={12} md={12} lg={3} xl={3}>
               <FS_List
                 background="#B34B9E"
-                class="lessonsCard"
                 title={data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteClasse.descr}
                 arg={data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteClasse.id}
                 array={setArray(data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteLezione1)}

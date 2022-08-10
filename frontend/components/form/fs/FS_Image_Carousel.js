@@ -26,7 +26,7 @@ class FS_List extends React.Component {
 
     return (
       <Container disableGutters maxWidth="false" sx={{display: 'flex', alignItems: 'center', marginTop: '5%'}}>
-        <Container sx={{width: '100%'}}>
+        <Container sx={{width: '100%'}} maxWidth="false">
           <ImageList cols={5} variant="masonry" sx={{height: '150px', overflowY: 'hidden'}}>
             {this.state.list.map((item) => (
               <ImageListItem key={item.id} sx={{height: 'inherit!important', marginBottom: '0!important', cursor: 'pointer'}}>
