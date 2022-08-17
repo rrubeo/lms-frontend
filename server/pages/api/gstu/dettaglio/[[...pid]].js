@@ -21,6 +21,9 @@ import {
   getAnnoAccademicoCombo,
   getTipoStudenteCombo,
   insertIscrizione,
+  deleteIscrizione,
+  getIscrizione,
+  getIdIscrizione,
 } from "../../../../data/gstu/common";
 
 import { getAnnoFrequenza } from "../../../../data/pbase/common";
@@ -47,6 +50,7 @@ async function getHandler(userLogin, pid) {
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,
+    back_label: "Torna indietro",
     utenza_label: "Utenza",
     email_label: "eMail",
     cell_label: "Cellulare",
@@ -70,7 +74,6 @@ async function getHandler(userLogin, pid) {
     civico_label: "Numero Civico",
     tab1_label: "Dati Anagrafici",
     tab3_label: "Iscrizione",
-
     istituto_label: "Tipologia Istituto",
     istituto: db_istituto,
     accademico_label: "Anno Accademico",
@@ -81,6 +84,8 @@ async function getHandler(userLogin, pid) {
     annofreq: db_annofreq,
     cols_iscrizioni: cols_iscrizioni,
     funzioni: db_funzioni,
+    crediti_label: "Numero Crediti Bonus",
+    importo_label: "Importo Complessivo",
   };
 
   if (pid) {
@@ -88,7 +93,7 @@ async function getHandler(userLogin, pid) {
     const db_iscrizioni = await getIscrizioniPersona(userLogin.token, pid);
     const db_studente = await getPersona(userLogin.token, pid);
     data.title = db_studente.persNome
-      ? `Scheda: ${db_studente.persNome} ${db_studente.persCognome}`
+      ? `Studente: ${db_studente.persNome} ${db_studente.persCognome}`
       : "Scheda Studente";
     data.utenza = db_studente;
     data.rows_iscrizioni = db_iscrizioni;
@@ -101,9 +106,10 @@ async function getHandler(userLogin, pid) {
 }
 
 async function postHandler(userLogin, postData, pid) {
-  console.log(postData);
+  let res = { status: 200, message: "OK" };
   let p3 = {};
-  console.log("########################################################");
+  console.log("************ RICEVUTA ISCRIZIONE");
+  // console.log(postData);
   switch (postData.tab) {
     case 0:
       let poba = {
@@ -145,27 +151,102 @@ async function postHandler(userLogin, postData, pid) {
       p3 = await insertPersona(userLogin.token, poba);
       break;
     case 1:
-      let istu = {
+      let prepIstu = {
         persId: pid,
         istuFlagAttiva: 1,
         istuSysuser: userLogin.userID,
-        // istuSysdate: "2022-08-09T07:47:11.113Z",
-        istuFkAnacId: postData.iscr_accademico.label,
-        // istuDataIscrizione: "2022-08-09T07:47:11.113Z",
-        istuFkTistId: postData.iscr_tipostudente.id,
-        // istuDataAttivazione: "2022-08-09T07:47:11.113Z",
-        // istuDataDisattivazione: "2022-08-09T07:47:11.113Z",
-        istuFkAninId: postData.iscr_istituto.id,
-        istuFkAnfrId: postData.iscr_annofreq.id,
+        istuFkAnacId: "",
+        istuFkTistId: "",
+        istuDataAttivazione: null,
+        istuDataDisattivazione: null,
+        istuFkInisId: "",
+        istuFkAnfrId: "",
+        numeroCreditiBonus: 0,
+        importoTotale: 0,
       };
-      console.log(istu);
-      p3 = await insertIscrizione(userLogin.token, istu);
+
+      if (postData.action) {
+        console.log("************ UPDATE ISCRIZIONE");
+        const db_iscrizione = await getIdIscrizione(
+          userLogin.token,
+          postData.gridId
+        );
+        // console.log(db_iscrizione);
+        if (db_iscrizione.length > 0) {
+          res.status = 200;
+          res.message = "Iscrizione aggiornata";
+
+          prepIstu.istuId = postData.gridId;
+          prepIstu.istuFkAnacId = db_iscrizione[0].annoAccademico;
+          prepIstu.istuFkTistId = db_iscrizione[0].idTipoStudente;
+          prepIstu.istuFkInisId = db_iscrizione[0].idIndirizzoIstituto;
+          prepIstu.istuFkAnfrId = db_iscrizione[0].idAnnoFrequenza;
+          prepIstu.numeroCreditiBonus = db_iscrizione[0].numeroCreditiBonus;
+          prepIstu.importoTotale = db_iscrizione[0].importoTotale;
+
+          if (db_iscrizione[0].dataAttivazioneIscrizione == null) {
+            console.log(
+              "************ UPDATE ISCRIZIONE dataAttivazioneIscrizione NULL"
+            );
+            prepIstu.istuDataAttivazione = new Date();
+            prepIstu.istuDataDisattivazione = null;
+          } else {
+            if (db_iscrizione[0].dataDisattivazioneIscrizione == null) {
+              console.log(
+                "************ UPDATE ISCRIZIONE dataDisattivazioneIscrizione NULL"
+              );
+              prepIstu.istuDataDisattivazione = new Date();
+              prepIstu.istuDataAttivazione =
+                db_iscrizione[0].dataAttivazioneIscrizione;
+            } else {
+              console.log(
+                "************ UPDATE ISCRIZIONE dataDisattivazioneIscrizione NOT NULL"
+              );
+              prepIstu.istuDataAttivazione = new Date();
+              prepIstu.istuDataDisattivazione = null;
+            }
+          }
+
+          // console.log(prepIstu);
+        } else {
+          res.status = 200;
+          res.message = "Iscrizione non trovata";
+          return res;
+        }
+      } else {
+        console.log("************ VERIFICA ISCRIZIONE");
+        const chekIscrizione = await getIscrizione(
+          userLogin.token,
+          pid,
+          postData.iscr_annofreq.id,
+          postData.iscr_istituto.id
+        );
+        console.log(chekIscrizione);
+        if (chekIscrizione.length > 0) {
+          res.status = 200;
+          res.message =
+            chekIscrizione[0].annoFrequenza +
+            " " +
+            chekIscrizione[0].indirizzoIstituto +
+            ": iscrizione presente.";
+          return res;
+        }
+
+        prepIstu.istuFkAnacId = postData.iscr_accademico.label;
+        prepIstu.istuFkTistId = postData.iscr_tipostudente.id;
+        prepIstu.istuFkInisId = postData.iscr_istituto.id;
+        prepIstu.istuFkAnfrId = postData.iscr_annofreq.id;
+        prepIstu.numeroCreditiBonus = postData.crediti;
+        prepIstu.importoTotale = postData.importo;
+      }
+      console.log("************ POST ISCRIZIONE");
+      console.log(prepIstu);
+      p3 = await insertIscrizione(userLogin.token, prepIstu);
       break;
   }
 
   console.log(p3);
 
-  let res = { status: 200, message: "OK" };
   if (p3.status) {
     res.status = p3.status;
     res.message = p3.statusText;
@@ -173,6 +254,14 @@ async function postHandler(userLogin, postData, pid) {
     res.id = p3.istuId;
   }
 
+  return res;
+}
+
+async function deleteHandler(userLogin, deleteData) {
+  console.log("deleteHandler");
+  console.log(deleteData);
+  let d1 = await deleteIscrizione(userLogin.token, deleteData.key);
+  const res = { status: 200, message: "Iscrizione eliminata" };
   return res;
 }
 
@@ -192,6 +281,10 @@ export default async function handler(req, res) {
     case "POST":
       const dataPost = await postHandler(userLogin, req.body, pid);
       res.status(dataPost.status).json(dataPost);
+      break;
+    case "DELETE":
+      const dataDel = await deleteHandler(userLogin, req.body);
+      res.status(dataDel.status).json(dataDel);
       break;
   }
 }

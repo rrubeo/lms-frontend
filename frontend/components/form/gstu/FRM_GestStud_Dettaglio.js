@@ -9,12 +9,14 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import jnStyles from "../../../styles/utils.module.css";
 
+import DCT_LinkButton from "../../DCT_LinkButton";
 import SEC_Contatti from "../anagrafica/SEC_Contatti";
 import SEC_Anagrafici from "../anagrafica/SEC_Anagrafici";
 import SEC_Residenza from "../anagrafica/SEC_Residenza";
 import SEC_Domicilio from "../anagrafica/SEC_Domicilio";
 import SEC_Iscrizione from "../anagrafica/SEC_Iscrizione";
 
+const UPDATE_DATE = "ATTIVAZIONE";
 const gs_cfg = require("./config");
 
 function TabPanel(props) {
@@ -87,9 +89,12 @@ class FRM_GestStud_Dettaglio extends React.Component {
       tipostudenteValue: { label: "", id: 0 },
       annofreqValue: { label: "", id: 0 },
       accademicoValue: { label: "", id: 0 },
+      creditiValue: "",
+      importoValue: "",
     };
 
     this.getData = this.getData.bind(this);
+    this.handleOnFireAction = this.handleOnFireAction.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.onChangeForm = this.onChangeForm.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
@@ -104,6 +109,20 @@ class FRM_GestStud_Dettaglio extends React.Component {
     this.changeChildIscrizione = React.createRef();
   }
 
+  async handleOnFireAction(id, data) {
+    data.gridId = id;
+    data.id = this.props.id;
+    data.tab = this.state.selectedId;
+    data.idPersona = this.state.key;
+    // console.log(data);
+    switch (this.state.selectedId) {
+      case 1:
+        data.action = UPDATE_DATE;
+        break;
+    }
+    this.props.onFireAction(id, data);
+  }
+
   async handleUpdate(event) {
     event.preventDefault();
     const data = this.getData();
@@ -116,7 +135,7 @@ class FRM_GestStud_Dettaglio extends React.Component {
     switch (this.state.selectedId) {
       case 0:
         const data0 = {
-          id: gs_cfg.FRM_GSTU_STEP_1,
+          id: this.props.id,
           tab: this.state.selectedId,
           idPersona: this.state.key,
           email: this.state.emailValue,
@@ -150,13 +169,15 @@ class FRM_GestStud_Dettaglio extends React.Component {
         return data0;
       case 1:
         const data1 = {
-          id: gs_cfg.FRM_GSTU_STEP_1,
+          id: this.props.id,
           tab: this.state.selectedId,
           idPersona: this.state.key,
           iscr_istituto: this.state.istitutoValue,
           iscr_tipostudente: this.state.tipostudenteValue,
           iscr_annofreq: this.state.annofreqValue,
           iscr_accademico: this.state.accademicoValue,
+          crediti: this.state.creditiValue,
+          importo: this.state.importoValue,
         };
         return data1;
     }
@@ -282,6 +303,12 @@ class FRM_GestStud_Dettaglio extends React.Component {
       case "cb_accademico":
         this.setState({ accademicoValue: data });
         break;
+      case "tx_crediti":
+        this.setState({ creditiValue: data });
+        break;
+      case "tx_importo":
+        this.setState({ importoValue: data });
+        break;
       default:
         console.log(id);
         console.log(data);
@@ -290,16 +317,18 @@ class FRM_GestStud_Dettaglio extends React.Component {
   }
 
   onDeleteRow(id, data) {
-    console.log("DELETE ROW DA FARE");
-    console.log(id);
-    console.log(data);
-    // this.props.onDelete(rowData);
+    // console.log("FORM");
+    // console.log(id);
+    // console.log(data);
+    this.props.onDelete(data);
   }
 
   render() {
-    // console.log(this.props.query.param);
+    const linkBack = `/gs/${gs_cfg.GSTU_STEP_0}`;
+
     return (
       <Box sx={{ width: "100%" }}>
+        <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={this.state.selectedId}
@@ -309,13 +338,15 @@ class FRM_GestStud_Dettaglio extends React.Component {
             aria-label="scrollable auto tabs example"
           >
             <Tab label={this.props.data.tab1_label} {...a11yProps(0)} />
-            <Tab label={this.props.data.tab3_label} {...a11yProps(1)} />
+            {this.props.data.utenza && (
+              <Tab label={this.props.data.tab3_label} {...a11yProps(1)} />
+            )}
           </Tabs>
         </Box>
         <TabPanel value={this.state.selectedId} index={0}>
           <Box
             component="form"
-            id={gs_cfg.FRM_GSTU_STEP_1}
+            id={this.props.id}
             onSubmit={this.handleSubmit}
             onReset={this.handleReset}
             sx={{ display: "inline" }}
@@ -387,7 +418,7 @@ class FRM_GestStud_Dettaglio extends React.Component {
         <TabPanel value={this.state.selectedId} index={1}>
           <Box
             component="form"
-            id={gs_cfg.FRM_GSTU_STEP_1}
+            id={this.props.id}
             onSubmit={this.handleSubmit}
             onReset={this.handleReset}
             sx={{ display: "inline" }}
@@ -399,13 +430,14 @@ class FRM_GestStud_Dettaglio extends React.Component {
               alignItems="center"
             >
               <SEC_Iscrizione
-                id={gs_cfg.FRM_GSTU_STEP_1}
+                id={this.props.id}
                 data={this.props.data}
                 onChange={this.onChangeForm}
                 onDelete={this.onDeleteRow}
                 onNextStep={this.props.onNextStep}
                 ref={this.changeChildIscrizione}
                 action={this.props.action}
+                onFireAction={this.handleOnFireAction}
               />
               <ButtonGroup
                 variant="contained"
@@ -417,7 +449,14 @@ class FRM_GestStud_Dettaglio extends React.Component {
                   variant="contained"
                   classes={{ root: jnStyles.jnBT }}
                 >
-                  Salva
+                  Nuova Iscrizione
+                </Button>
+                <Button
+                  variant="contained"
+                  classes={{ root: jnStyles.jnBT }}
+                  onClick={this.handleUpdate}
+                >
+                  Modifica
                 </Button>
                 <Button
                   type="reset"

@@ -10,7 +10,7 @@ async function fetchJson(input, init) {
   if (response.ok) {
     return data;
   }
-  console.log("fetchJson error");
+  console.log("fetchJson error", data);
   throw new FetchError({
     message: response.statusText,
     response,

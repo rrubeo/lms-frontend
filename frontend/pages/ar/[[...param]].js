@@ -77,7 +77,7 @@ function Main() {
   if (data.status != 200) return <Wip>{data.message}</Wip>;
 
   const reloadData = async () => {
-    console.log("data changed");
+    console.log("reloadData");
     const options = {
       revalidate: true,
       revalidateIfStale: true,
@@ -117,7 +117,6 @@ function Main() {
 
   const handleNextStep = async (event, filter, route) => {
     event.preventDefault();
-    console.log(route);
     forceNavigateUtil(route, filter, fallback.subIndex);
   };
 

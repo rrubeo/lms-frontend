@@ -38,7 +38,7 @@ class DCT_Layout extends React.Component {
     const { children, user } = this.props;
     const { menu, navmenu, usermenu, title } = this.props.data;
     const { open, loaded } = this.state;
-    console.log(user);
+    // console.log(user);
 
     return (
       <>
@@ -66,7 +66,7 @@ class DCT_Layout extends React.Component {
                 id="Side"
                 open={open}
                 direction="rtl"
-                drawerwidth={400}
+                drawerwidth={330}
                 sideMenu={menu}
                 handleOnClick={this.handleOnClick}
               ></DCT_SideMenu>

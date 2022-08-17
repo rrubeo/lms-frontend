@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   await utils.cors(req, res);
 
   const pid = apic.getPid(req);
-  console.log(req.query);
+  // console.log(req.query);
   const userLogin = await apic.getLogin(req);
 
   console.log(

@@ -30,6 +30,7 @@ class DTC_DataGrid extends React.Component {
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.handleAddClick = this.handleAddClick.bind(this);
     this.handleRouteClick = this.handleRouteClick.bind(this);
+    this.handleUpdateClick = this.handleUpdateClick.bind(this);
   }
 
   getActiveAction(cfgAction) {
@@ -47,6 +48,9 @@ class DTC_DataGrid extends React.Component {
             return elem;
           case gd_cfg.GRID_ADD_ACTION:
             elem.callBack = this.handleAddClick;
+            return elem;
+          case gd_cfg.GRID_UPDATE_ACTION:
+            elem.callBack = this.handleUpdateClick;
             return elem;
         }
       } else {
@@ -116,6 +120,16 @@ class DTC_DataGrid extends React.Component {
       col1: randomCommodity(),
       col2: randomJobTitle(),
     };
+  }
+
+  handleUpdateClick(params, event, route) {
+    event.defaultMuiPrevented = true;
+    this.setState({ currentId: params.id });
+    // console.log("UPDATE GRID");
+    // console.log(params);
+    const thisRow = params.row;
+    // console.log(thisRow);
+    this.props.onFireAction(params.id, params.row);
   }
 
   handleAddClick(params, event, route) {

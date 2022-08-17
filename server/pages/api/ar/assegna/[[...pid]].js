@@ -24,16 +24,22 @@ async function getHandler(userLogin, pid) {
     "FRM_ProgBase_Ricerca"
   );
 
-  const db_utente = await getUtente(userLogin.token, pid);
+  let db_utente = await getUtente(userLogin.token, pid);
   const db_ruoli = await getRuoliCombo(userLogin.token);
   const db_rows = await getRuoliPersona(userLogin.token, pid);
 
+  if (!db_utente[0].attivo) {
+    db_utente[0].provvisoria = db_utente[0].mail;
+  }
+  console.log(db_utente);
   const data = {
     title: "Assegna Ruolo",
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,
+    back_label: "Torna indietro",
     userName_label: "Username",
+    pwd_label: "Password Provvisoria",
     ruoli_label: "Ruoli",
     ruoli: db_ruoli,
     rows: db_rows,
@@ -48,7 +54,9 @@ async function getHandler(userLogin, pid) {
 async function postHandler(userLogin, postData, pid) {
   console.log(postData);
   let res = { status: 200, message: "OK" };
+  let p3 = {};
   let username = postData.username.trim();
+  let provvisoria = postData.provvisoria.trim();
 
   const validUser = await getValidaUserName(userLogin.token, username);
 
@@ -56,9 +64,27 @@ async function postHandler(userLogin, postData, pid) {
     username = validUser[0].utente;
     console.log("************ USER NAME ESISTENTE", username);
     const utnt_data = await getUserName(userLogin.token, username);
-    console.log(utnt_data);
+    // console.log(utnt_data);
+    if (!utnt_data.utntFlagAttiva) {
+      console.log("************ NON ATTIVO", username);
+      utnt_data.utntFlagAttiva = 1;
+      utnt_data.utntPasswordHash = provvisoria;
+      utnt_data.utntFlagResetPassword = 1;
+      p3 = await insertUtente(userLogin.token, utnt_data);
+      // console.log(p3);
+      if (p3.status) {
+        res.status = p3.status;
+        res.message = p3.statusText;
+        return res;
+      }
+    }
   } else {
     console.log("************ NUOVA USER NAME", username);
+
+    if (provvisoria == "") {
+      res.message = "Inserire una password provvisoria";
+      return res;
+    }
 
     const db_utente = await getUtente(userLogin.token, pid);
     if (db_utente.length > 0) {
@@ -73,14 +99,14 @@ async function postHandler(userLogin, postData, pid) {
           utntFkStabId: 1,
           utntNickName: db_utente[0].nome,
           utntPathImmagine: "string",
-          utntPasswordHash: db_utente[0].mail,
-          utntFlagResetPassword: 0,
+          utntPasswordHash: provvisoria,
+          utntFlagResetPassword: 1,
           utntSysuser: userLogin.userID,
           utntFlagAttiva: 1,
         };
         console.log(utnt);
         console.log("************ CREATO", username);
-        let p3 = await insertUtente(userLogin.token, utnt);
+        p3 = await insertUtente(userLogin.token, utnt);
         console.log(p3);
         if (p3.status) {
           res.status = p3.status;
@@ -95,8 +121,6 @@ async function postHandler(userLogin, postData, pid) {
     let poba = {
       ruutFkUtntUserName: username,
       ruutFkRuolId: m.id,
-      // ruutDataAbilitazione: "2022-08-05T15:42:06.762Z",
-      // ruutDataDisabilitazione: "2022-08-05T15:42:06.762Z",
       ruutSysuser: userLogin.userID,
       ruutFlagAttiva: 1,
     };

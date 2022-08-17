@@ -2,6 +2,7 @@ import {
   GRID_ROUTE_ACTION,
   GRID_DELETE_ACTION,
   GRID_ADD_ACTION,
+  GRID_UPDATE_ACTION,
 } from "../../grid/config";
 
 //nomi di pagina
@@ -32,9 +33,10 @@ const GSTU_STEP_1_API = `${process.env.server}/gstu/dettaglio`;
 const GSTU_STEP_1_ACTION = [
   {
     id: "1",
-    title: "Elimina",
-    icon: "icon-delete2",
-    callBack: GRID_DELETE_ACTION,
+    title: "Attiva/Disattiva",
+    icon: "icon-switch",
+    callBack: GRID_UPDATE_ACTION,
+    route: GSTU_STEP_1,
   },
   {
     id: "2",
@@ -43,10 +45,20 @@ const GSTU_STEP_1_ACTION = [
     callBack: GRID_ROUTE_ACTION,
     route: GSTU_STEP_2,
   },
+  {
+    id: "3",
+    title: "Elimina",
+    icon: "icon-delete2",
+    callBack: GRID_DELETE_ACTION,
+  },
 ];
 
 const FRM_GSTU_STEP_2 = "FRM_GestStud_Iscrizione";
 const GSTU_STEP_2_API = `${process.env.server}/gstu/iscrizione`;
+const GSTU_STEP_2_API_1 = `${process.env.server}/gstu/servizi`;
+const GSTU_STEP_2_API_3 = `${process.env.server}/gstu/pagamenti`;
+const GSTU_STEP_2_API_4 = `${process.env.server}/gstu/tutor`;
+const GSTU_STEP_2_API_5 = `${process.env.server}/gstu/docenti`;
 const GSTU_STEP_2_ACTION = [];
 
 const MENU_API = `${process.env.server}/menu`;
@@ -83,6 +95,7 @@ module.exports = {
   GRID_ROUTE_ACTION,
   GRID_DELETE_ACTION,
   GRID_ADD_ACTION,
+  GRID_UPDATE_ACTION,
   GSTU_STEP_0,
   FRM_GSTU_STEP_0,
   GSTU_STEP_0_API,
@@ -94,6 +107,10 @@ module.exports = {
   GSTU_STEP_2,
   FRM_GSTU_STEP_2,
   GSTU_STEP_2_API,
+  GSTU_STEP_2_API_1,
+  GSTU_STEP_2_API_3,
+  GSTU_STEP_2_API_4,
+  GSTU_STEP_2_API_5,
   GSTU_STEP_2_ACTION,
   MENU_API,
   NO_DATA_DESC,

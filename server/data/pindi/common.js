@@ -15,12 +15,12 @@ const getIndirizzoIstituto = async (token) => {
   const f = await utils.getFetch(token, GetIndirizzoIstituto(0));
 
   console.log("getIndirizzoIstituto");
-  // console.log(f);
+  console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
     return {
-      label: x.tipoIstituto + "-" + x.indirizzoIstitutoDesc,
+      label: x.tipoIstituto + " " + x.indirizzoIstitutoDesc,
       id: x.idIndirizzoIstituto,
     };
   });

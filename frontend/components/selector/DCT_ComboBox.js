@@ -82,6 +82,7 @@ class DCT_ComboBox extends React.Component {
           onInputChange={this.handleInputChange}
           options={this.props.list}
           value={this.state.value}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
           classes={{
             inputRoot: jnStyles.jnComboInput,
             listbox: jnStyles.jnO2,

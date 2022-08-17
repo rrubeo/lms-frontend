@@ -6,8 +6,6 @@ import Button from "@mui/material/Button";
 import DTC_DataGrid from "../../grid/DTC_DataGrid";
 import jnStyles from "../../../styles/utils.module.css";
 
-const ar_cfg = require("./config");
-
 class FRM_Ruoli_Ricerca extends React.Component {
   constructor(props) {
     super(props);
@@ -32,14 +30,13 @@ class FRM_Ruoli_Ricerca extends React.Component {
     console.log(data);
 
     const rowData = {
-      id: pb_cfg.FRM_AR_STEP_0,
+      id: this.props.id,
       key: data,
     };
     this.props.onDelete(rowData);
   }
 
   render() {
-    console.log(`<${ar_cfg.FRM_AR_STEP_0}='${this.props.id}'>`);
     return (
       <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
         <DTC_DataGrid

@@ -153,7 +153,7 @@ const getPersona = async (token, idPersona) => {
   const f = await utils.getFetch(token, `${PersPersonaDats}/${idPersona}`);
 
   console.log("getPersona");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   return f;
@@ -180,6 +180,7 @@ const getYesNoCombo = async (token) => {
 
   return data;
 };
+
 module.exports = {
   getToken,
   getFunzioniForm,

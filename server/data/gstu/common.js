@@ -5,9 +5,23 @@ import {
   GetAnagraficaStudente,
   GetIscrizioneStudentexIdPersona,
   GetTipoIstitutoIndirizzoCombo,
+  GetAnnoIndirizzo,
   GetAnnoAccademicoCombo,
   GetTipoStudenteCombo,
   IstuIscrizioneStudenteDats,
+  FpagFrequenzaPagamentoTyps,
+  GetServizio,
+  GetServizioSottoscritto,
+  GetPagamentoStudente,
+  SesoServizioSottoscrittoDats,
+  PastPagamentoStudenteDats,
+  StutStudenteTutorRels,
+  StdoStudenteDocenteRels,
+  GetRuoloUtente,
+  GetStudenteTutor,
+  GetStudenteDocente,
+  GetMateriaScolasticaCombo,
+  GetDocenteMateria,
 } from "./config";
 
 const getRicercaStudenti = async (token) => {
@@ -42,23 +56,63 @@ const getStudente = async (token, idPersona) => {
 const getIscrizioniPersona = async (token, idPersona) => {
   const f = await utils.getFetch(
     token,
-    GetIscrizioneStudentexIdPersona(0, idPersona)
+    GetIscrizioneStudentexIdPersona(0, idPersona, 0, 0, 0)
   );
 
   console.log("getIscrizioniPersona");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
     return {
       id: x.idIscrizione,
-      col1: x.indirizzoIstituto,
-      col2: x.annoFrequenza,
+      col1: x.annoFrequenza,
+      col2: x.indirizzoIstituto,
       col3: x.annoAccademico,
-      col4: x.dataAttivazioneIscrizione,
+      col4: x.dataIscrizione,
+      col5: x.tipoStudente,
+      col6: x.dataAttivazioneIscrizione,
+      col7: x.dataDisattivazioneIscrizione,
+      col8: x.numeroCreditiBonus ? x.numeroCreditiBonus : 0,
+      col9: x.importoTotale ? x.importoTotale : 0,
     };
   });
   return data;
+};
+
+const getIscrizione = async (
+  token,
+  idPersona,
+  IdAnnoFrequenza,
+  IdIndirizzoIstituto
+) => {
+  const f = await utils.getFetch(
+    token,
+    GetIscrizioneStudentexIdPersona(
+      0,
+      idPersona,
+      IdAnnoFrequenza,
+      IdIndirizzoIstituto,
+      0
+    )
+  );
+
+  console.log("getIscrizione");
+  // console.log(f);
+  if (f.status) return [];
+  return f;
+};
+
+const getIdIscrizione = async (token, IdIscrizione) => {
+  const f = await utils.getFetch(
+    token,
+    GetIscrizioneStudentexIdPersona(0, 0, 0, 0, IdIscrizione)
+  );
+
+  console.log("getIdIscrizione");
+  // console.log(f);
+  if (f.status) return [];
+  return f;
 };
 
 const getIstitutoIndirizzoCombo = async (token) => {
@@ -112,7 +166,228 @@ const insertIscrizione = async (token, body) => {
 };
 
 const deleteIscrizione = async (token, id) => {
-  return await deleteObjectURL(token, `${IstuIscrizioneStudenteDats}/${id}`);
+  return await commMain.deleteObjectURL(
+    token,
+    `${IstuIscrizioneStudenteDats}/${id}`
+  );
+};
+
+const getFrequenzaPagamentoCombo = async (token) => {
+  const f = await utils.getFetch(token, FpagFrequenzaPagamentoTyps);
+
+  console.log("getFrequenzaPagamentoCombo");
+  console.log(f);
+  if (f.status) return [];
+
+  const arr1 = [{ label: "Seleziona", id: 0 }];
+
+  const arr2 = f.map((x) => {
+    return { label: x.fpagDescr, id: x.fpagId };
+  });
+
+  const data = arr1.concat(arr2);
+
+  return data;
+};
+
+const getServizioCombo = async (token) => {
+  const f = await utils.getFetch(token, GetServizio);
+
+  console.log("getServizioCombo");
+  // console.log(f);
+  if (f.status) return [];
+
+  const arr1 = [{ label: "Seleziona", id: 0 }];
+
+  const arr2 = f.map((x) => {
+    return { label: x.descrizioneServizio, id: x.idServizio };
+  });
+
+  const data = arr1.concat(arr2);
+
+  return data;
+};
+
+const getServizioSottoscritto = async (token, IdIscrizioneStudente) => {
+  const f = await utils.getFetch(
+    token,
+    GetServizioSottoscritto(IdIscrizioneStudente, 0)
+  );
+
+  console.log("getServizioSottoscritto");
+  console.log(f);
+  if (f.status) return [];
+
+  const data = f.map((x) => {
+    return {
+      id: x.idServizioSottoscritto,
+      col1: x.servizio,
+      col2: x.dataSottoscrizione,
+    };
+  });
+  return data;
+};
+
+const getPagamentoStudente = async (token, IdIscrizioneStudente) => {
+  const f = await utils.getFetch(
+    token,
+    GetPagamentoStudente(IdIscrizioneStudente)
+  );
+
+  console.log("getPagamentoStudente");
+  console.log(f);
+  if (f.status) return [];
+
+  const data = f.map((x) => {
+    return {
+      id: x.idPagamentoStudente,
+      col1: x.importoPagato,
+      col2: x.dataPagamento,
+    };
+  });
+  return data;
+};
+
+const insertServizio = async (token, body) => {
+  let res = await utils.postFetch(token, SesoServizioSottoscrittoDats, body);
+  return res;
+};
+
+const deleteServizio = async (token, id) => {
+  return await commMain.deleteObjectURL(
+    token,
+    `${SesoServizioSottoscrittoDats}/${id}`
+  );
+};
+
+const insertPagamento = async (token, body) => {
+  let res = await utils.postFetch(token, PastPagamentoStudenteDats, body);
+  return res;
+};
+
+const deletePagamento = async (token, id) => {
+  return await commMain.deleteObjectURL(
+    token,
+    `${PastPagamentoStudenteDats}/${id}`
+  );
+};
+
+const insertTutor = async (token, body) => {
+  let res = await utils.postFetch(token, StutStudenteTutorRels, body);
+  return res;
+};
+
+const deleteTutor = async (token, id) => {
+  return await commMain.deleteObjectURL(
+    token,
+    `${StutStudenteTutorRels}/${id}`
+  );
+};
+
+const insertDocente = async (token, body) => {
+  let res = await utils.postFetch(token, StdoStudenteDocenteRels, body);
+  return res;
+};
+
+const deleteDocente = async (token, id) => {
+  return await commMain.deleteObjectURL(
+    token,
+    `${StdoStudenteDocenteRels}/${id}`
+  );
+};
+
+const getTutorCombo = async (token) => {
+  const f = await utils.getFetch(token, GetRuoloUtente(0, 4));
+
+  console.log("getTutorCombo");
+  // console.log(f);
+  if (f.status) return [];
+
+  const arr1 = [{ label: "Seleziona", id: 0 }];
+
+  const arr2 = f.map((x) => {
+    return { label: x.cognome + " " + x.nome, id: x.idRuoloUtente };
+  });
+
+  const data = arr1.concat(arr2);
+
+  return data;
+};
+
+const getMateriaScolasticaCombo = async (token) => {
+  const f = await utils.getFetch(token, GetMateriaScolasticaCombo);
+
+  console.log("getMateriaScolasticaCombo");
+
+  if (f.status) return [];
+
+  const data = f.map((x) => {
+    return { label: x.materia, id: x.idMateria };
+  });
+
+  return data;
+};
+
+const getDocenteMateria = async (token, IdMateriaScolastica) => {
+  const f = await utils.getFetch(
+    token,
+    GetDocenteMateria(0, IdMateriaScolastica)
+  );
+
+  console.log("getDocenteMateria");
+  console.log(f);
+  if (f.status) return [];
+
+  const arr1 = [{ label: "Seleziona", id: 0 }];
+
+  const arr2 = f.map((x) => {
+    return { label: x.nome + " " + x.cognome, id: x.idDocenteMateria };
+  });
+
+  const data = arr1.concat(arr2);
+
+  return data;
+};
+
+const getStudenteTutor = async (token, IdIscrizioneStudente) => {
+  const f = await utils.getFetch(
+    token,
+    GetStudenteTutor(IdIscrizioneStudente, 0)
+  );
+
+  console.log("getStudenteTutor");
+  // console.log(f);
+  if (f.status) return [];
+
+  const data = f.map((x) => {
+    return {
+      id: x.idStudenteTutor,
+      col1: x.cognome,
+      col2: x.nome,
+    };
+  });
+  return data;
+};
+
+const getStudenteDocente = async (token, IdIscrizioneStudente) => {
+  const f = await utils.getFetch(
+    token,
+    GetStudenteDocente(IdIscrizioneStudente, 0)
+  );
+
+  console.log("getStudenteDocente");
+  console.log(f);
+  if (f.status) return [];
+
+  const data = f.map((x) => {
+    return {
+      id: x.idStudenteDocente,
+      col1: x.materia,
+      col2: x.cognome,
+      col3: x.nome,
+    };
+  });
+  return data;
 };
 
 module.exports = {
@@ -122,6 +397,25 @@ module.exports = {
   getIstitutoIndirizzoCombo,
   getTipoStudenteCombo,
   getAnnoAccademicoCombo,
+  getIscrizione,
+  getIdIscrizione,
   insertIscrizione,
   deleteIscrizione,
+  getFrequenzaPagamentoCombo,
+  getServizioCombo,
+  getServizioSottoscritto,
+  getPagamentoStudente,
+  insertServizio,
+  deleteServizio,
+  insertPagamento,
+  deletePagamento,
+  insertTutor,
+  deleteTutor,
+  insertDocente,
+  deleteDocente,
+  getTutorCombo,
+  getStudenteTutor,
+  getStudenteDocente,
+  getMateriaScolasticaCombo,
+  getDocenteMateria,
 };

@@ -19,7 +19,7 @@ const PBASE_STEP_0_API = `${process.env.server}/pbase`;
 const PBASE_STEP_0_ACTION = [
   {
     id: "1",
-    title: "Modifica",
+    title: "Dettaglio",
     icon: "icon-arrow-right4",
     callBack: GRID_ROUTE_ACTION,
     route: PBASE_STEP_1,

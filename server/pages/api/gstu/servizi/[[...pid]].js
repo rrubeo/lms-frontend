@@ -2,16 +2,16 @@ const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
 import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
-import {
-  cols_servizi,
-  cols_pagamenti,
-  cols_tutor,
-  cols_docenti,
-} from "../../../../data/gstu/data_studenti";
+import { cols_servizi } from "../../../../data/gstu/data_studenti";
 
 import { getFunzioniForm } from "../../../../data/common";
 
-import { getIdIscrizione } from "../../../../data/gstu/common";
+import {
+  getServizioCombo,
+  getServizioSottoscritto,
+  insertServizio,
+  deleteServizio,
+} from "../../../../data/gstu/common";
 
 async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
@@ -20,42 +20,52 @@ async function getHandler(userLogin, pid) {
     "FRM_ProgBase_Ricerca"
   );
 
-  const db_iscrizione = await getIdIscrizione(userLogin.token, pid);
-  let title = "Iscrizione";
-  // console.log(db_iscrizione);
-  if (db_iscrizione.length > 0) {
-    title =
-      "Iscrizione " +
-      db_iscrizione[0].annoFrequenza +
-      " - " +
-      db_iscrizione[0].nome +
-      " " +
-      db_iscrizione[0].cognome;
-  }
+  const db_servizio = await getServizioCombo(userLogin.token);
+  const db_sottoscritto = await getServizioSottoscritto(userLogin.token, pid);
+
   const data = {
-    title: title,
+    title: "Servizi",
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,
-    back_label: "Torna indietro",
-    tab4_label: "Piano Studi Personalizzato",
-    tab5_label: "Servizi Sottoscritti",
-    tab7_label: "Pagamenti",
-    tab8_label: "Tutor",
-    tab9_label: "Docenti",
-    iscrizione: db_iscrizione,
+    servizio_label: "Servizi Aggiuntivi",
+    servizio: db_servizio,
+    sottoscritto_label: "Data Sottoscrizione",
     funzioni: db_funzioni,
-    cols_pagamenti: cols_pagamenti,
-    cols_servizi: cols_servizi,
-    cols_tutor: cols_tutor,
-    cols_docenti: cols_docenti,
+    rows: db_sottoscritto,
+    cols: cols_servizi,
   };
   return data;
 }
 
 async function postHandler(userLogin, postData, pid) {
-  console.log(postData);
   let res = { status: 200, message: "OK" };
+  let p3 = {};
+  console.log("************ RICEVUTO SERVIZIO");
+  console.log(postData);
+
+  let seso = {
+    // sesoId: 8,
+    sesoFkIstuId: pid,
+    sesoFkServId: postData.servizio.id,
+    sesoDataSottoscrizione: postData.sottoscritto,
+    sesoFlagAttiva: 1,
+    sesoSysuser: userLogin.userID,
+  };
+
+  console.log("************ POST SERVIZIO");
+  console.log(seso);
+  p3 = await insertServizio(userLogin.token, seso);
+
+  console.log(p3);
+
+  if (p3.status) {
+    res.status = p3.status;
+    res.message = p3.statusText;
+  } else {
+    res.id = p3.istuId;
+  }
+
   return res;
 }
 
@@ -63,7 +73,7 @@ export default async function handler(req, res) {
   // Run cors
   await utils.cors(req, res);
 
-  console.log("ISCRIZIONI STUDENTE");
+  console.log("SERVIZI");
   const pid = apic.getPid(req);
   const userLogin = await apic.getLogin(req);
 

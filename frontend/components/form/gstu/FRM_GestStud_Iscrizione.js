@@ -9,6 +9,13 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import jnStyles from "../../../styles/utils.module.css";
 
+import DCT_LinkButton from "../../DCT_LinkButton";
+import SEC_Servizi from "../anagrafica/SEC_Servizi";
+import SEC_Pagamenti from "../anagrafica/SEC_Pagamenti";
+import SEC_Tutor from "../anagrafica/SEC_Tutor";
+import SEC_Docenti from "../anagrafica/SEC_Docenti";
+
+const utils = require("../../../lib");
 const gs_cfg = require("./config");
 
 function TabPanel(props) {
@@ -49,11 +56,15 @@ class FRM_GestStud_Iscrizione extends React.Component {
     super(props);
     this.state = {
       selectedId: 0,
+      idPersona: this.props.query ? this.props.query?.param[2] : 0,
+      idIscrizione: this.props.query ? this.props.query?.param[1] : 0,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleReset = this.handleReset.bind(this);
+    this.onChangeForm = this.onChangeForm.bind(this);
+    this.onDeleteRow = this.onDeleteRow.bind(this);
   }
 
   handleChange(event, newValue) {
@@ -64,16 +75,30 @@ class FRM_GestStud_Iscrizione extends React.Component {
     event.preventDefault();
   }
 
-  handleReset(event) {}
-
-  componentWillUnmount() {
-    console.log("SMONTA");
+  handleReset(event) {
+    switch (this.state.selectedId) {
+      case 1:
+        break;
+    }
   }
 
+  onChangeForm(id, data) {
+    switch (id) {
+      default:
+        console.log(id);
+        console.log(data);
+        break;
+    }
+  }
+
+  onDeleteRow(id, data) {}
+
   render() {
-    console.log(`<${gs_cfg.FRM_GSTU_STEP_2}='${this.props.id}'>`);
+    const linkBack = `/gs/${gs_cfg.GSTU_STEP_1}/${this.state.idPersona}`;
+
     return (
       <Box sx={{ width: "100%" }}>
+        <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={this.state.selectedId}
@@ -82,24 +107,53 @@ class FRM_GestStud_Iscrizione extends React.Component {
             scrollButtons="auto"
             aria-label="scrollable auto tabs example"
           >
-            <Tab label={this.props.data.tab4_label} {...a11yProps(1)} />
-            <Tab label={this.props.data.tab5_label} {...a11yProps(2)} />
-            <Tab label={this.props.data.tab6_label} {...a11yProps(3)} />
-            <Tab label={this.props.data.tab7_label} {...a11yProps(4)} />
-            <Tab label={this.props.data.tab8_label} {...a11yProps(5)} />
-            <Tab label={this.props.data.tab9_label} {...a11yProps(6)} />
+            <Tab label={this.props.data.tab4_label} {...a11yProps(0)} />
+            <Tab label={this.props.data.tab5_label} {...a11yProps(1)} />
+            <Tab label={this.props.data.tab7_label} {...a11yProps(2)} />
+            <Tab label={this.props.data.tab8_label} {...a11yProps(3)} />
+            <Tab label={this.props.data.tab9_label} {...a11yProps(4)} />
           </Tabs>
         </Box>
-        <TabPanel value={this.state.selectedId} index={1}>
+        <TabPanel value={this.state.selectedId} index={0}>
           <Box
             component="form"
-            id={gs_cfg.FRM_GSTU_STEP_2}
+            id={this.props.id}
             onSubmit={this.handleSubmit}
             onReset={this.handleReset}
             sx={{ display: "inline" }}
-          >
-            {" "}
-          </Box>
+          ></Box>
+        </TabPanel>
+        <TabPanel value={this.state.selectedId} index={1}>
+          <SEC_Servizi
+            id={this.props.id}
+            data={this.props.data}
+            query={this.props.query}
+            api={gs_cfg.GSTU_STEP_2_API_1}
+          />
+        </TabPanel>
+        <TabPanel value={this.state.selectedId} index={2}>
+          <SEC_Pagamenti
+            id={this.props.id}
+            data={this.props.data}
+            query={this.props.query}
+            api={gs_cfg.GSTU_STEP_2_API_3}
+          />
+        </TabPanel>
+        <TabPanel value={this.state.selectedId} index={3}>
+          <SEC_Tutor
+            id={this.props.id}
+            data={this.props.data}
+            query={this.props.query}
+            api={gs_cfg.GSTU_STEP_2_API_4}
+          />
+        </TabPanel>
+        <TabPanel value={this.state.selectedId} index={4}>
+          <SEC_Docenti
+            id={this.props.id}
+            data={this.props.data}
+            query={this.props.query}
+            api={gs_cfg.GSTU_STEP_2_API_5}
+          />
         </TabPanel>
       </Box>
     );

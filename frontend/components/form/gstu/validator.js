@@ -42,15 +42,18 @@ async function validateForm(formData) {
             iscr_accademico: formData.iscr_accademico.id,
           };
           schema = yup.object().shape({
-            iscr_istituto: yup
+            iscr_accademico: yup
               .number()
-              .moreThan(0, "Inserire un valore per Istituto"),
+              .moreThan(0, "Inserire un valore per Anno Accademico"),
             iscr_tipostudente: yup
               .number()
               .moreThan(0, "Inserire un valore per Tipo Studente"),
             iscr_annofreq: yup
               .number()
               .moreThan(0, "Inserire un valore per Anno Frequenza"),
+            iscr_istituto: yup
+              .number()
+              .moreThan(0, "Inserire un valore per Tipologia Istituto"),
           });
           break;
       }

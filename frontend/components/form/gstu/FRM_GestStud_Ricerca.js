@@ -1,5 +1,4 @@
 import * as React from "react";
-import { withRouter } from "next/router";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -16,24 +15,16 @@ class FRM_GestStud_Ricerca extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onChangeForm = this.onChangeForm.bind(this);
     this.onDeleteRow = this.onDeleteRow.bind(this);
-    this.handleReset = this.handleReset.bind(this);
-    this.handleBack = this.handleBack.bind(this);
-  }
-
-  handleBack(event) {
-    event.preventDefault();
   }
 
   handleSubmit(event) {
     event.preventDefault();
     const data = {
-      id: gs_cfg.FRM_PBASE_STEP_0,
+      id: this.props.id,
     };
     // this.props.onSubmit(event, data);
     this.props.onNextStep(event, null, gs_cfg.GSTU_STEP_1);
   }
-
-  handleReset(event) {}
 
   onChangeForm(id, data) {
     switch (id) {
@@ -57,15 +48,9 @@ class FRM_GestStud_Ricerca extends React.Component {
   }
 
   render() {
-    console.log(`<${gs_cfg.FRM_GSTU_STEP_0}='${this.props.id}'>`);
     return (
       <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
-        <Box
-          id={gs_cfg.FRM_GSTU_STEP_0}
-          component="form"
-          onSubmit={this.handleSubmit}
-          onReset={this.handleReset}
-        >
+        <Box id={this.props.id} component="form" onSubmit={this.handleSubmit}>
           <Button
             variant="contained"
             href={gs_cfg.GSTU_STEP_1}
@@ -89,4 +74,4 @@ class FRM_GestStud_Ricerca extends React.Component {
   }
 }
 
-export default withRouter(FRM_GestStud_Ricerca);
+export default FRM_GestStud_Ricerca;

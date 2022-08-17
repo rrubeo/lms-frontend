@@ -5,6 +5,7 @@ import Wip from "../../components/layout/wip";
 import DCT_Layout from "../../components/layout/DCT_Layout";
 import FRM_GestStud_Ricerca from "../../components/form/gstu/FRM_GestStud_Ricerca";
 import FRM_GestStud_Dettaglio from "../../components/form/gstu/FRM_GestStud_Dettaglio";
+import FRM_GestStud_Iscrizione from "../../components/form/gstu/FRM_GestStud_Iscrizione";
 import { validateForm } from "../../components/form/gstu/validator";
 import useUser from "../../lib/useUser";
 import { PAGE_401 } from "../../lib/redirect";
@@ -70,8 +71,7 @@ function Main() {
   //Recupera info utente
   const { fallback, mutate } = useSWRConfig();
   const { userInfo, pageName, apiUrl, pageQuery, subIndex } = fallback;
-  // console.log("pageQuery", pageQuery);
-  // console.log("subIndex", subIndex);
+
   let { data, error } = useSWR(apiUrl, utils.getData);
 
   if (error) return <div>{error.message}</div>;
@@ -79,7 +79,7 @@ function Main() {
   if (data.status != 200) return <Wip>{data.message}</Wip>;
 
   const reloadData = async () => {
-    console.log("data changed");
+    console.log("reloadData");
     const options = {
       revalidate: true,
       revalidateIfStale: true,
@@ -94,7 +94,6 @@ function Main() {
 
     const vres = await validateForm(formData);
 
-    // console.log(formData);
     if (vres.valid) {
       const res = await utils.postData(apiUrl, formData);
       if (res.status != 200) {
@@ -120,8 +119,21 @@ function Main() {
 
   const handleNextStep = async (event, filter, route) => {
     event.preventDefault();
-    console.log(route);
+    // console.log(route);
     forceNavigateUtil(route, filter, fallback.subIndex);
+  };
+
+  const onActionRow = async (id, data) => {    
+    // console.log(id);
+    // console.log(data);
+
+    const res = await utils.postData(apiUrl, data);
+    if (res.status != 200) {
+      validationMessage(res.message, MSG_ERROR);
+    } else {
+      await reloadData();
+      validationMessage(res.message, MSG_SUCCESS);
+    }
   };
 
   return (
@@ -150,6 +162,20 @@ function Main() {
             onNextStep={handleNextStep}
             action={gs_cfg.GSTU_STEP_1_ACTION}
             query={pageQuery}
+            onFireAction={onActionRow}
+          />
+        ) : (
+          <></>
+        )}
+        {pageName === gs_cfg.GSTU_STEP_2 ? (
+          <FRM_GestStud_Iscrizione
+            id={gs_cfg.FRM_GSTU_STEP_2}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            data={data}
+            onNextStep={handleNextStep}            
+            query={pageQuery}
+            onFireAction={onActionRow}
           />
         ) : (
           <></>
