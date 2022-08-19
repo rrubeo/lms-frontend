@@ -10,6 +10,7 @@ class SEC_Iscrizione extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedId: 0,
       istitutoId: "cb_istituto",
       istitutoValue: { label: "", id: 0 },
       tipostudenteId: "cb_tipostudente",
@@ -28,6 +29,7 @@ class SEC_Iscrizione extends React.Component {
     this.onChangeForm = this.onChangeForm.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.defaultValue = this.defaultValue.bind(this);
+    this.onSelectRow = this.onSelectRow.bind(this);
 
     this.changeChildIstitutoId = React.createRef();
     this.changeChildTipostudenteId = React.createRef();
@@ -44,6 +46,9 @@ class SEC_Iscrizione extends React.Component {
     this.changeChildAccademicoId.current.setIndex(0);
     this.changeChildCreditiId.current.setText("0");
     this.changeChildImportoId.current.setText("0");
+    this.onChangeForm(this.state.creditiId, "0");
+    this.onChangeForm(this.state.importoId, "0");
+    this.onChangeForm("gridId", 0);
   }
 
   componentDidMount() {
@@ -55,6 +60,7 @@ class SEC_Iscrizione extends React.Component {
   }
 
   onChangeForm(id, data) {
+    // console.log("onChangeForm");
     switch (id) {
       case this.state.istitutoId:
         this.setState({ istitutoValue: data });
@@ -74,6 +80,9 @@ class SEC_Iscrizione extends React.Component {
       case this.state.importoId:
         this.setState({ importoValue: data });
         break;
+      case "gridId":
+        this.setState({ selectedId: data });
+        break;
       default:
         console.log(id);
         console.log(data);
@@ -90,6 +99,29 @@ class SEC_Iscrizione extends React.Component {
     };
     // console.log(rowData);
     this.props.onDelete(id, rowData);
+  }
+
+  onSelectRow(id, data) {
+    // console.log(data);
+
+    this.changeChildAnnofreqId.current.setText(data.row.col1);
+    this.changeChildIstitutoId.current.setText(data.row.col2);
+    this.changeChildAccademicoId.current.setText(data.row.col3);
+    this.changeChildTipostudenteId.current.setText(data.row.col5);
+    this.changeChildCreditiId.current.setText(data.row.col8);
+    this.changeChildImportoId.current.setText(data.row.col9);
+
+    this.onChangeForm(this.state.creditiId, data.row.col8);
+    this.onChangeForm(this.state.importoId, data.row.col9);
+    this.onChangeForm("gridId", id);
+
+    this.setState({
+      selectedId: id,
+      annofreqValue: data.row.col1,
+      istitutoValue: data.row.col2,
+      accademicoValue: data.row.col3,
+      tipostudenteValue: data.row.col5,
+    });
   }
 
   render() {
@@ -180,8 +212,9 @@ class SEC_Iscrizione extends React.Component {
               onChange={this.onChangeForm}
               onDelete={this.onDeleteRow}
               onNextStep={this.props.onNextStep}
+              onSelect={this.onSelectRow}
               action={this.props.action}
-              actionWidth={130}
+              actionWidth={150}
               onFireAction={this.props.onFireAction}
             />
           </Grid>

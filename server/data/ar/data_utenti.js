@@ -35,18 +35,18 @@ const rows = [
 const cols = [
   {
     field: "col1",
-    headerName: "Username",
-    flex: 1,
-    minWidth: 50,
-    maxWidth: 300,
-  },
-  {
-    field: "col2",
     headerName: "Codice Fiscale",
     flex: 1,
     minWidth: 50,
     maxWidth: 180,
     align: "center",
+  },
+  {
+    field: "col2",
+    headerName: "Username",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 300,
   },
   {
     field: "col3",
@@ -57,6 +57,7 @@ const cols = [
   { field: "col4", headerName: "eMail", flex: 1, minWidth: 50, maxWidth: 190 },
   {
     field: "col5",
+    type: "boolean",
     headerName: "Utente Attivo",
     flex: 1,
     minWidth: 50,

@@ -71,6 +71,7 @@ class DCT_CheckList extends React.Component {
           p: 0,
           maxHeight: this.props.size,
           overflow: "auto",
+          width: this.props.width ? this.props.width : 1,
           // bgcolor: "#B34A9D",
         }}
         // classes={{ root: jnStyles.jnDCT_Text_Border }}

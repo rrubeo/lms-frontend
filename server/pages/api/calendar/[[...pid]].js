@@ -1,9 +1,14 @@
 const utils = require("../../../lib/utils");
 const apic = require("../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../data/data_sidemenu";
+import {
+  sidemenu,
+  navmenu,
+  navmenustudenti,
+  usermenu,
+} from "../../../data/data_sidemenu";
 
-import { getFunzioniForm } from "../../../data/common";
+import { getFunzioniForm, getRuoloUtente } from "../../../data/common";
 
 let todayStr = new Date().toISOString().replace(/T.*$/, ""); // YYYY-MM-DD of today
 
@@ -30,10 +35,12 @@ async function getHandler(userLogin, pid) {
     "FRM_ProgBase_Ricerca"
   );
 
+  const db_ruolo = await getRuoloUtente(userLogin.token, userLogin.userID, 0);
+
   const data = {
     title: "Calendario",
     menu: sidemenu,
-    navmenu: navmenu,
+    navmenu: db_ruolo[0].idRuolo == 6 ? navmenustudenti : navmenu,
     usermenu: usermenu,
     funzioni: db_funzioni,
     inevents: INITIAL_EVENTS,

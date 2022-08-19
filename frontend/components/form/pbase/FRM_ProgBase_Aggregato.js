@@ -48,9 +48,7 @@ class FRM_ProgBase_Aggregato extends React.Component {
     this.changeChildListId = React.createRef();
   }
 
-  async componentDidMount() {
-    // await this.loadComboClasse(this.state.annoValue);
-  }
+  async componentDidMount() {}
 
   async loadListLezioni(value) {
     const data = await utils.fetchJson("/api/loadcomboasync", {

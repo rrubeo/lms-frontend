@@ -87,6 +87,36 @@ function GetDocenteMateria(IdRuoloUtente, IdMateriaScolastica) {
   return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_DOCENTE_MATERIA}/${IdRuoloUtente}/${IdMateriaScolastica}`;
 }
 
+const CLOUD_API_TBL_PBASE_NOAGG_COMBO =
+  "api/Tables/GetProgrammaBaseNoAggrCombo";
+function GetProgrammaBaseNoAggrCombo(IdProgrammaBase) {
+  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_PBASE_NOAGG_COMBO}/${IdProgrammaBase}`;
+}
+
+const CLOUD_API_TBL_CLASSE_COMBO =
+  "api/Tables/GetClasseArgomentoXProgrammaBaseCombo";
+function GetClasseArgomentoXProgrammaBaseCombo(IdProgrammaBase) {
+  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_CLASSE_COMBO}/${IdProgrammaBase}`;
+}
+
+const CLOUD_API_TBL_ARGOMENTO = "api/Tables/GetArgomentoXClasseArgomento";
+function GetArgomentoXClasseArgomento(IdClasseArgomento) {
+  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_ARGOMENTO}/${IdClasseArgomento}`;
+}
+
+const CLOUD_API_TBL_LEZIONI = "api/Tables/GetLezione";
+function GetLezione(IdArgomento, IdClasseArgomento) {
+  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_LEZIONI}/${IdArgomento}/${IdClasseArgomento}`;
+}
+
+const CLOUD_API_TBL_PIANOSTUDI = "api/Tables/GetPianoStudiIndividuale";
+function GetPianoStudiIndividuale(IdIscrizioneStudente, IdLezione) {
+  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_PIANOSTUDI}/${IdIscrizioneStudente}/${IdLezione}`;
+}
+
+const CLOUD_API_PIANOSTUDI = "api/PistPianoStudiIndividualeDats";
+const PistPianoStudiIndividualeDats = `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_PIANOSTUDI}`;
+
 module.exports = {
   GetAnagraficaStudente,
   GetIscrizioneStudentexIdPersona,
@@ -108,4 +138,10 @@ module.exports = {
   GetStudenteDocente,
   GetMateriaScolasticaCombo,
   GetDocenteMateria,
+  GetProgrammaBaseNoAggrCombo,
+  GetClasseArgomentoXProgrammaBaseCombo,
+  GetArgomentoXClasseArgomento,
+  GetLezione,
+  GetPianoStudiIndividuale,
+  PistPianoStudiIndividualeDats,
 };

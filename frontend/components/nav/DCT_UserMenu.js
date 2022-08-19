@@ -101,7 +101,14 @@ class DCT_UserMenu extends React.Component {
               aria-haspopup="true"
               aria-expanded={this.state.open ? "true" : undefined}
             >
-              <Avatar sx={{ width: 32, height: 32 }}>
+              <Avatar
+                sx={{
+                  width: 32,
+                  height: 32,
+                  color: "secondary.white",
+                  bgcolor: "secondary.magenta",
+                }}
+              >
                 {this.state.nominativo}
               </Avatar>
             </IconButton>

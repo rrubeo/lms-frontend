@@ -6,19 +6,24 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 
-import DTC_TextBox from "../../DTC_TextBox";
+import DCT_ComboBox from "../../selector/DCT_ComboBox";
 import DTC_DataGrid from "../../grid/DTC_DataGrid";
 import DTC_DatePick from "../../DTC_DatePick";
+import DCT_CheckList from "../../selector/DCT_CheckList";
 
 import jnStyles from "../../../styles/utils.module.css";
 import {
+  defaultLogin,
+  sessionOptions,
+  getAuthSession,
   validationMessage,
   MSG_SUCCESS,
   MSG_ERROR,
   MSG_INFO,
+  forceNavigateUtil,
 } from "../../../lib";
 
-import { validateForm, frm_SEC_Pagamenti } from "./validator";
+import { validateForm, frm_SEC_PianoStudi } from "./validator";
 
 const utils = require("../../../lib");
 const gd_cfg = require("../../grid/config");
@@ -32,30 +37,47 @@ const GSTU_ACTION = [
   },
 ];
 
-class SEC_Pagamenti extends React.Component {
+const API_CLASSE = `${process.env.server}/gstu/cbclasse`;
+const API_ARGOMENTO = `${process.env.server}/gstu/cbargomento`;
+const API_LEZIONE = `${process.env.server}/gstu/cblezione`;
+
+class SEC_PianoStudi extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       idPersona: this.props.query ? this.props.query?.param[2] : 0,
       idIscrizione: this.props.query ? this.props.query?.param[1] : 0,
-      pagamentoId: "tx_pagamento",
-      pagamentoValue: new Date(),
-      pagamentoLabel: "TextBox",
-      importoId: "tx_importo",
-      importoValue: "",
-      importoLabel: "TextBox",
+      prgbaseId: "cb_prgbase",
+      prgbaseValue: { label: "", id: 0 },
+      prgbaseList: [{ label: "Seleziona", id: 0 }],
+      prgbaseLabel: "Programma Base",
+      classeId: "cb_classe",
+      classeValue: { label: "", id: 0 },
+      classeList: [{ label: "Seleziona", id: 0 }],
+      classeLabel: "Classe Argomento",
+      argomentoId: "cb_argomento",
+      argomentoValue: { label: "", id: 0 },
+      argomentoList: [{ label: "Seleziona", id: 0 }],
+      argomentoLabel: "Argomento",
+      lezioniId: "lbox_lezioni",
+      lezioniValue: { label: "", id: 0 },
+      lezioniList: [],
+      lezioniLabel: "Lezioni",
       rows: [],
     };
 
     this.loadData = this.loadData.bind(this);
+    this.loadComboClasse = this.loadComboClasse.bind(this);
     this.defaultValue = this.defaultValue.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.onChangeForm = this.onChangeForm.bind(this);
     this.onDeleteRow = this.onDeleteRow.bind(this);
 
-    this.changeChildPagamentoId = React.createRef();
-    this.changeChildImportoId = React.createRef();
+    this.changeChildPrgbaseId = React.createRef();
+    this.changeChildClasseId = React.createRef();
+    this.changeChildArgomentoId = React.createRef();
+    this.changeChildLezioniId = React.createRef();
   }
 
   async loadData(pid) {
@@ -71,15 +93,56 @@ class SEC_Pagamenti extends React.Component {
         }),
       });
       // console.log(data);
+      this.changeChildPrgbaseId.current.setIndex(0);
+      this.changeChildClasseId.current.setIndex(0);
+      this.changeChildArgomentoId.current.setIndex(0);
+
       this.setState({
-        pagamentoLabel: data.pagato_label,
-        pagamentoValue: new Date(),
-        importoLabel: data.importo_label,
-        importoValue: "0",
+        prgbaseLabel: data.pbase_label,
+        prgbaseList: data.pbase,
+        classeLabel: data.classe_label,
+        argomentoLabel: data.argomento_label,
+        lezioniLabel: data.lezione_label,
         rows: data.rows,
       });
-      this.changeChildImportoId.current.setText("0");
-      this.changeChildPagamentoId.current.setText(new Date());
+    } catch (e) {
+      if (e instanceof utils.FetchError) {
+        console.error(e.data.message);
+      }
+    }
+  }
+
+  async loadComboClasse(endpoint, value) {
+    // console.log("loadComboClasse", value);
+    try {
+      const data = await utils.fetchJson("/api/loadcomboasync", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          form: this.props.id,
+          combo: value,
+          api: endpoint,
+        }),
+      });
+      // console.log(data);
+
+      switch (endpoint) {
+        case API_CLASSE:
+          this.changeChildClasseId.current.handleReset();
+          this.changeChildArgomentoId.current.handleReset();
+          this.changeChildLezioniId.current.handleReset();
+          this.setState({ classeList: data, lezioniList: [] });
+          break;
+        case API_ARGOMENTO:
+          this.changeChildArgomentoId.current.handleReset();
+          this.changeChildLezioniId.current.handleReset();
+          this.setState({ argomentoList: data, lezioniList: [] });
+          break;
+        case API_LEZIONE:
+          this.changeChildLezioniId.current.handleReset();
+          this.setState({ lezioniList: data });
+          break;
+      }
     } catch (e) {
       if (e instanceof utils.FetchError) {
         console.error(e.data.message);
@@ -99,9 +162,11 @@ class SEC_Pagamenti extends React.Component {
     event.preventDefault();
 
     const formData = {
-      id: frm_SEC_Pagamenti,
-      pagamento: this.state.pagamentoValue,
-      importo: this.state.importoValue,
+      id: frm_SEC_PianoStudi,
+      prgbase: this.state.prgbaseValue,
+      classe: this.state.classeValue,
+      argomento: this.state.argomentoValue,
+      lezioni: this.state.lezioniValue,
     };
 
     // console.log(formData);
@@ -132,13 +197,24 @@ class SEC_Pagamenti extends React.Component {
     this.defaultValue();
   }
 
-  onChangeForm(id, data) {
+  async onChangeForm(id, data) {
     switch (id) {
-      case this.state.pagamentoId:
-        this.setState({ pagamentoValue: data });
+      case this.state.prgbaseId:
+        this.setState({ prgbaseValue: data });
+        await this.loadComboClasse(API_CLASSE, data);
         break;
-      case this.state.importoId:
-        this.setState({ importoValue: data });
+      case this.state.classeId:
+        this.setState({ classeValue: data });
+        await this.loadComboClasse(API_ARGOMENTO, data);
+        break;
+      case this.state.argomentoId:
+        this.setState({ argomentoValue: data });
+        if (data.id != 0) {
+          await this.loadComboClasse(API_LEZIONE, data);
+        }
+        break;
+      case this.state.lezioniId:
+        this.setState({ lezioniValue: data });
         break;
       default:
         console.log(id);
@@ -163,6 +239,10 @@ class SEC_Pagamenti extends React.Component {
   }
 
   render() {
+    // console.log(this.props.query);
+    // console.log("Persona:", this.state.idPersona);
+    // console.log("Iscrizione:", this.state.idIscrizione);
+    // console.log(this.props.data);
     return (
       <Box
         component="form"
@@ -194,27 +274,46 @@ class SEC_Pagamenti extends React.Component {
               sx={{ py: "1%", px: 0 }}
             >
               <Grid item xs={12} sm={12} md={4}>
-                <DTC_TextBox
-                  required
-                  type="number"
-                  id={this.state.importoId}
-                  label={this.state.importoLabel}
+                <DCT_ComboBox
+                  id={this.state.prgbaseId}
+                  list={this.state.prgbaseList}
+                  label={this.state.prgbaseLabel}
                   onChange={this.onChangeForm}
                   size={1}
-                  ref={this.changeChildImportoId}
+                  ref={this.changeChildPrgbaseId}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={4}>
-                <DTC_DatePick
-                  required
-                  id={this.state.pagamentoId}
-                  label={this.state.pagamentoLabel}
+                <DCT_ComboBox
+                  id={this.state.classeId}
+                  list={this.state.classeList}
+                  label={this.state.classeLabel}
                   onChange={this.onChangeForm}
                   size={1}
-                  ref={this.changeChildPagamentoId}
+                  ref={this.changeChildClasseId}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={4}>
+                <DCT_ComboBox
+                  id={this.state.argomentoId}
+                  list={this.state.argomentoList}
+                  label={this.state.argomentoLabel}
+                  onChange={this.onChangeForm}
+                  size={1}
+                  ref={this.changeChildArgomentoId}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={12} align="center">
+                <DCT_CheckList
+                  id={this.state.lezioniId}
+                  label={this.state.lezioniLabel}
+                  list={this.state.lezioniList}
+                  ref={this.changeChildLezioniId}
+                  onChange={this.onChangeForm}
+                  size={1}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={12} align="center">
                 <ButtonGroup
                   variant="contained"
                   aria-label="outlined primary button group"
@@ -225,7 +324,7 @@ class SEC_Pagamenti extends React.Component {
                     variant="contained"
                     classes={{ root: jnStyles.jnBT }}
                   >
-                    Salva
+                    Assegna Lezioni
                   </Button>
                   <Button
                     type="reset"
@@ -236,10 +335,10 @@ class SEC_Pagamenti extends React.Component {
                   </Button>
                 </ButtonGroup>
               </Grid>
-              <Grid item xs={12} sm={12} md={8}>
+              <Grid item xs={12} sm={12} md={12}>
                 <DTC_DataGrid
-                  id="gd_pagamenti"
-                  cols={this.props.data.cols_pagamenti}
+                  id="gd_piano"
+                  cols={this.props.data.cols_piano}
                   rows={this.state.rows}
                   onChange={this.onChangeForm}
                   onDelete={this.onDeleteRow}
@@ -255,4 +354,4 @@ class SEC_Pagamenti extends React.Component {
   }
 }
 
-export default SEC_Pagamenti;
+export default SEC_PianoStudi;

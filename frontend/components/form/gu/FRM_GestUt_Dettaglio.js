@@ -7,19 +7,6 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import Grid from "@mui/material/Grid";
-import FormLabel from "@mui/material/FormLabel";
-import FormControl from "@mui/material/FormControl";
-import FormGroup from "@mui/material/FormGroup";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import DCT_LinkButton from "../../DCT_LinkButton";
-import DCT_Stepper from "../../DCT_Stepper";
-import DTC_DataGrid from "../../grid/DTC_DataGrid";
-import DTC_TextBox from "../../DTC_TextBox";
-import DCT_ComboBox from "../../selector/DCT_ComboBox";
-import DCT_Breadcrumbs from "../../DCT_Breadcrumbs";
 import jnStyles from "../../../styles/utils.module.css";
 
 import SEC_Contatti from "../anagrafica/SEC_Contatti";
@@ -36,13 +23,14 @@ function TabPanel(props) {
   return (
     <div
       role="tabpanel"
+      className={jnStyles.jnTabPanel}
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: 0 }}>
           <Typography component="span">{children}</Typography>
         </Box>
       )}

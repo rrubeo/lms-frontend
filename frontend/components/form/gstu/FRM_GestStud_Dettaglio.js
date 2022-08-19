@@ -25,13 +25,14 @@ function TabPanel(props) {
   return (
     <div
       role="tabpanel"
+      className={jnStyles.jnTabPanel}
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: 0 }}>
           <Typography component="span">{children}</Typography>
         </Box>
       )}
@@ -91,6 +92,7 @@ class FRM_GestStud_Dettaglio extends React.Component {
       accademicoValue: { label: "", id: 0 },
       creditiValue: "",
       importoValue: "",
+      gridIscrizioniValue: 0,
     };
 
     this.getData = this.getData.bind(this);
@@ -127,8 +129,14 @@ class FRM_GestStud_Dettaglio extends React.Component {
     event.preventDefault();
     const data = this.getData();
     data.upid = this.state.key;
-    console.log(data);
+    // console.log(data);
     await this.props.onSubmit(event, data);
+
+    switch (this.state.selectedId) {
+      case 1:
+        this.changeChildIscrizione.current.handleReset();
+        break;
+    }
   }
 
   getData() {
@@ -170,6 +178,7 @@ class FRM_GestStud_Dettaglio extends React.Component {
       case 1:
         const data1 = {
           id: this.props.id,
+          gridId: this.state.gridIscrizioniValue,
           tab: this.state.selectedId,
           idPersona: this.state.key,
           iscr_istituto: this.state.istitutoValue,
@@ -186,8 +195,14 @@ class FRM_GestStud_Dettaglio extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
     const data = this.getData();
-    console.log(data);
+    // console.log(data);
     await this.props.onSubmit(event, data);
+
+    switch (this.state.selectedId) {
+      case 1:
+        this.changeChildIscrizione.current.handleReset();
+        break;
+    }
   }
 
   handleChange(event, newValue) {
@@ -308,6 +323,9 @@ class FRM_GestStud_Dettaglio extends React.Component {
         break;
       case "tx_importo":
         this.setState({ importoValue: data });
+        break;
+      case "gridId":
+        this.setState({ gridIscrizioniValue: data });
         break;
       default:
         console.log(id);

@@ -1,15 +1,19 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  sidemenu,
+  navmenu,
+  navmenustudenti,
+  usermenu,
+} from "../../../../data/data_sidemenu";
 
-import { 
+import {
   getFunzioniForm,
   getIscrizioneStudente,
   getLezioni,
   getLezioniSeguite,
 } from "../../../../data/fs/common";
-
 
 async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
@@ -18,19 +22,27 @@ async function getHandler(userLogin, pid) {
     ""
   );
 
-  const profile = await getIscrizioneStudente(userLogin.token, userLogin.userID);
+  const profile = await getIscrizioneStudente(
+    userLogin.token,
+    userLogin.userID
+  );
   const subjects = await getLezioni(userLogin.token, userLogin.userID, 0);
-  const recentLessons = await getLezioniSeguite(userLogin.token, userLogin.userID, profile.idIscrizione, 0);
-  
+  const recentLessons = await getLezioniSeguite(
+    userLogin.token,
+    userLogin.userID,
+    profile.idIscrizione,
+    0
+  );
+
   const data = {
     title: "Configurazione Iscrizione studente",
     menu: sidemenu,
-    navmenu: navmenu,
+    navmenu: navmenustudenti,
     usermenu: usermenu,
     funzioni: db_funzioni,
     profilo: profile,
     materie: subjects,
-    lezioniViste: recentLessons
+    lezioniViste: recentLessons,
   };
   return data;
 }

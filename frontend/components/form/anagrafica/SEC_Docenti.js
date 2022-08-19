@@ -6,21 +6,15 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 
-import DTC_TextBox from "../../DTC_TextBox";
 import DCT_ComboBox from "../../selector/DCT_ComboBox";
 import DTC_DataGrid from "../../grid/DTC_DataGrid";
-import DTC_DatePick from "../../DTC_DatePick";
 
 import jnStyles from "../../../styles/utils.module.css";
 import {
-  defaultLogin,
-  sessionOptions,
-  getAuthSession,
   validationMessage,
   MSG_SUCCESS,
   MSG_ERROR,
   MSG_INFO,
-  forceNavigateUtil,
 } from "../../../lib";
 
 import { validateForm, frm_SEC_Docenti } from "./validator";
@@ -36,6 +30,8 @@ const GSTU_ACTION = [
     callBack: gd_cfg.GRID_DELETE_ACTION,
   },
 ];
+
+const API_DOCENTE = `${process.env.server}/gstu/cbdocente`;
 
 class SEC_Docenti extends React.Component {
   constructor(props) {
@@ -55,6 +51,7 @@ class SEC_Docenti extends React.Component {
     };
 
     this.loadData = this.loadData.bind(this);
+    this.loadComboClasse = this.loadComboClasse.bind(this);
     this.defaultValue = this.defaultValue.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleReset = this.handleReset.bind(this);
@@ -66,7 +63,7 @@ class SEC_Docenti extends React.Component {
   }
 
   async loadData(pid) {
-    console.log("loadData", pid);
+    // console.log("loadData", pid);
     try {
       const data = await utils.fetchJson("/api/flydata", {
         method: "POST",
@@ -77,14 +74,38 @@ class SEC_Docenti extends React.Component {
           pid: pid,
         }),
       });
-      console.log(data);
+      // console.log(data);
+      this.changeChildMaterieId.current.setIndex(0);
+      this.changeChildNominativoId.current.setIndex(0);
       this.setState({
         materieLabel: data.materie_label,
         materieList: data.materie,
         nominativoLabel: data.docente_label,
-        nominativoList: data.docente,
+        nominativoList: [{ label: "Seleziona", id: 0 }],
         rows: data.rows,
       });
+    } catch (e) {
+      if (e instanceof utils.FetchError) {
+        console.error(e.data.message);
+      }
+    }
+  }
+
+  async loadComboClasse(value) {
+    // console.log("loadComboClasse", value);
+    try {
+      const data = await utils.fetchJson("/api/loadcomboasync", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          form: this.props.id,
+          combo: value,
+          api: API_DOCENTE,
+        }),
+      });
+      // console.log(data);
+      this.changeChildNominativoId.current.handleReset();
+      this.setState({ nominativoList: data });
     } catch (e) {
       if (e instanceof utils.FetchError) {
         console.error(e.data.message);
@@ -109,7 +130,7 @@ class SEC_Docenti extends React.Component {
       nominativo: this.state.nominativoValue,
     };
 
-    console.log(formData);
+    // console.log(formData);
 
     let param = "";
     for (let i = 1; i < this.props.query.param.length; i++) {
@@ -137,10 +158,11 @@ class SEC_Docenti extends React.Component {
     this.defaultValue();
   }
 
-  onChangeForm(id, data) {
+  async onChangeForm(id, data) {
     switch (id) {
       case this.state.materieId:
-        this.setState({ materieValue: data });
+        this.setState({ materieValue: data });        
+        await this.loadComboClasse(data);
         break;
       case this.state.nominativoId:
         this.setState({ nominativoValue: data });
@@ -205,7 +227,7 @@ class SEC_Docenti extends React.Component {
                   label={this.state.materieLabel}
                   onChange={this.onChangeForm}
                   size={1}
-                  ref={this.changeChildNominativoId}
+                  ref={this.changeChildMaterieId}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={4}>
@@ -215,7 +237,7 @@ class SEC_Docenti extends React.Component {
                   label={this.state.nominativoLabel}
                   onChange={this.onChangeForm}
                   size={1}
-                  ref={this.changeChildMaterieId}
+                  ref={this.changeChildNominativoId}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={4} align="center">

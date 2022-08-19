@@ -2,9 +2,9 @@ const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
 import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
-import { rows, cols } from "../../../../data/ar/data_ruoli";
+import { cols } from "../../../../data/ar/data_ruoli";
 
-import { getFunzioniForm, getYesNoCombo } from "../../../../data/common";
+import { getFunzioniForm } from "../../../../data/common";
 import {
   getRuoliPersona,
   getUtente,
@@ -70,8 +70,9 @@ async function postHandler(userLogin, postData, pid) {
       utnt_data.utntFlagAttiva = 1;
       utnt_data.utntPasswordHash = provvisoria;
       utnt_data.utntFlagResetPassword = 1;
+      console.log(utnt_data);
       p3 = await insertUtente(userLogin.token, utnt_data);
-      // console.log(p3);
+      console.log(p3);
       if (p3.status) {
         res.status = p3.status;
         res.message = p3.statusText;
@@ -137,10 +138,23 @@ async function postHandler(userLogin, postData, pid) {
 }
 
 async function deleteHandler(userLogin, deleteData) {
+  let res = { status: 500, message: "Seleziona Action" };
   console.log("deleteHandler");
   console.log(deleteData);
-  let d1 = await deleteRuoloUtente(userLogin.token, deleteData.key);
-  const res = { status: 200, message: "Ruolo disattivato" };
+
+  switch (deleteData.action) {
+    case "DISABLEUSER":
+      let d2 = await deleteUtente(userLogin.token, deleteData.key);
+      console.log(d2);
+      res = { status: 200, message: "Utente disattivato" };
+      break;
+    case "DISABLEROLE":
+      let d1 = await deleteRuoloUtente(userLogin.token, deleteData.key);
+      console.log(d1);
+      res = { status: 200, message: "Ruolo disattivato" };
+      break;
+  }
+
   return res;
 }
 

@@ -34,12 +34,13 @@ class FRM_Ruoli_Assegna extends React.Component {
     this.onChangeForm = this.onChangeForm.bind(this);
     this.onDeleteRow = this.onDeleteRow.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.dafaultValue = this.dafaultValue.bind(this);
 
     this.changeChildUserNameId = React.createRef();
     this.changeChildSelectRuoliId = React.createRef();
-    this.changeChildPwdIdId = React.createRef();
+    this.changeChildPwdId = React.createRef();
   }
 
   dafaultValue() {
@@ -55,7 +56,7 @@ class FRM_Ruoli_Assegna extends React.Component {
       );
 
       if (!this.props.data.utente[0].attivo) {
-        this.changeChildPwdIdId.current.setText(
+        this.changeChildPwdId.current.setText(
           this.props.data.utente[0].provvisoria
         );
         this.onChangeForm(
@@ -76,10 +77,23 @@ class FRM_Ruoli_Assegna extends React.Component {
     this.dafaultValue();
   }
 
+  async handleUpdate(event) {
+    event.preventDefault();
+    console.log("Disattiva");
+    const rowData = {
+      id: this.props.id,
+      key: this.state.userNameValue,
+      action: "DISABLEUSER",
+    };
+    await this.props.onDelete(rowData);
+    this.setState({ provvisoriaState: true });
+    this.dafaultValue();
+  }
+
   async handleSubmit(event) {
     event.preventDefault();
     const data = {
-      id: ar_cfg.FRM_AR_STEP_1,
+      id: this.props.id,
       username: this.state.userNameValue,
       provvisoria: this.state.pwdValue,
       ruoli: this.state.selectRuoliValue,
@@ -113,8 +127,9 @@ class FRM_Ruoli_Assegna extends React.Component {
 
   onDeleteRow(id, data) {
     const rowData = {
-      id: ar_cfg.FRM_AR_STEP_1,
+      id: this.props.id,
       key: data,
+      action: "DISABLEROLE",
     };
     this.props.onDelete(rowData);
   }
@@ -124,11 +139,8 @@ class FRM_Ruoli_Assegna extends React.Component {
     // console.log(this.props.data);
     return (
       <>
-        <DCT_LinkButton
-          href={linkBack}
-          text={this.props.data.back_label}          
-        />
-        <Divider sx={{ pt: "1%" }} light  />
+        <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
+        <Divider sx={{ pt: "1%" }} light />
         <Stack
           direction={{ xs: "column", sm: "column", md: "column", lg: "row" }}
           spacing={2}
@@ -192,7 +204,7 @@ class FRM_Ruoli_Assegna extends React.Component {
             <Stack direction="column" spacing={3} mt={0} mb={0} p={0}>
               <Box
                 component="form"
-                id={ar_cfg.FRM_AR_STEP_1}
+                id={this.props.id}
                 onSubmit={this.handleSubmit}
                 onReset={this.handleReset}
                 sx={{ display: "inline", py: "2%", px: "2%" }}
@@ -211,6 +223,15 @@ class FRM_Ruoli_Assegna extends React.Component {
                     size={1}
                     ref={this.changeChildUserNameId}
                   />
+                  {!this.state.provvisoriaState && (
+                    <Button
+                      variant="contained"
+                      onClick={this.handleUpdate}
+                      classes={{ root: jnStyles.jnBT }}
+                    >
+                      Disattiva Utente
+                    </Button>
+                  )}
                   {this.state.provvisoriaState && (
                     <DTC_TextBox
                       required
@@ -218,7 +239,7 @@ class FRM_Ruoli_Assegna extends React.Component {
                       label={this.props.data.pwd_label}
                       onChange={this.onChangeForm}
                       size={1}
-                      ref={this.changeChildPwdIdId}
+                      ref={this.changeChildPwdId}
                     />
                   )}
                   <DCT_CheckList

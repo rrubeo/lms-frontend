@@ -8,6 +8,7 @@ import {
   GetToponimoCombo,
   GetAnagraficaPersone,
   PersPersonaDats,
+  GetRuoloUtente,
 } from "../data/config";
 
 const utils = require("../lib/utils");
@@ -142,7 +143,7 @@ const getRicercaPersone = async (token) => {
       col2: x.nome + " " + x.cognome,
       col3: x.dataNascita,
       col4: x.paeseNascita + " " + x.comuneNascita,
-      col5: x.attivo === 1 ? "Si" : "No",
+      col5: x.attivo,
     };
   });
   return data;
@@ -181,6 +182,19 @@ const getYesNoCombo = async (token) => {
   return data;
 };
 
+const getRuoloUtente = async (token, IdUtenteUserName, IdRuoloUtente) => {
+  const f = await utils.getFetch(
+    token,
+    GetRuoloUtente(IdUtenteUserName, IdRuoloUtente)
+  );
+
+  console.log("getRuoloUtente");
+  // console.log(f);
+  if (f.status) return [];
+
+  return f;
+};
+
 module.exports = {
   getToken,
   getFunzioniForm,
@@ -195,4 +209,5 @@ module.exports = {
   insertPersona,
   deletePersona,
   getYesNoCombo,
+  getRuoloUtente,
 };

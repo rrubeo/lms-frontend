@@ -1,15 +1,13 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
-import { cols_pagamenti } from "../../../../data/gstu/data_studenti";
-
 import { getFunzioniForm } from "../../../../data/common";
 
 import {
-  getPagamentoStudente,
-  insertPagamento,
-  deletePagamento,
+  insertPianoStudi,
+  deletePianoStudi,
+  getProgrammaBaseNoAggrCombo,
+  getPianoStudiIndividuale,
 } from "../../../../data/gstu/common";
 
 async function getHandler(userLogin, pid) {
@@ -19,18 +17,18 @@ async function getHandler(userLogin, pid) {
     "FRM_ProgBase_Ricerca"
   );
 
-  const db_pagamenti = await getPagamentoStudente(userLogin.token, pid);
+  const db_pbase = await getProgrammaBaseNoAggrCombo(userLogin.token, 0);
+  const db_piano = await getPianoStudiIndividuale(userLogin.token, pid);
 
   const data = {
-    title: "Pagamenti",
-    menu: sidemenu,
-    navmenu: navmenu,
-    usermenu: usermenu,
+    title: "Piano Studi",
+    pbase_label: "Programma Base",
+    pbase: db_pbase,
+    classe_label: "Classe Argomento",
+    argomento_label: "Argomento",
+    lezione_label: "Lezioni",
     funzioni: db_funzioni,
-    importo_label: "Importo Pagato",
-    pagato_label: "Data Pagamento",
-    cols: cols_pagamenti,
-    rows: db_pagamenti,
+    rows: db_piano,
   };
   return data;
 }
@@ -38,42 +36,37 @@ async function getHandler(userLogin, pid) {
 async function postHandler(userLogin, postData, pid) {
   let res = { status: 200, message: "OK" };
   let p3 = {};
-  console.log("************ RICEVUTO PAGAMENTO");
+  console.log("************ RICEVUTO PIANO STUDI");
   console.log(postData);
 
-  let past = {
-    // pastId: 0,
-    pastFkIstuId: pid,
-    pastDataPagamento: postData.pagamento,
-    pastImportoPagato: postData.importo,
-    pastDataScadenza: null,
-    pastImportoRata: null,
-    pastSysuser: userLogin.userID,
-    pastFlagAttiva: 1,
-    pastFkMopaId: null,
-  };
+  for (let m of postData.lezioni) {
+    let pist = {
+      pistFkIstuId: pid,
+      pistFkLeziId: m.id,
+      pistSysuser: userLogin.userID,
+      pistFlagAttiva: 1,
+    };
+    console.log("************ POST PIANO STUDI");
+    console.log(pist);
+    p3 = await insertPianoStudi(userLogin.token, pist);
+    console.log(p3);
 
-  console.log("************ POST PAGAMENTO");
-  console.log(past);
-  p3 = await insertPagamento(userLogin.token, past);
-
-  console.log(p3);
-
-  if (p3.status) {
-    res.status = p3.status;
-    res.message = p3.statusText;
-  } else {
-    res.id = p3.istuId;
+    if (p3.status) {
+      res.status = p3.status;
+      res.message = p3.statusText;
+    } else {
+      res.id = p3.istuId;
+      return res;
+    }
   }
-
   return res;
 }
 
 async function deleteHandler(userLogin, deleteData) {
   console.log("deleteHandler");
   console.log(deleteData);
-  let d1 = await deletePagamento(userLogin.token, deleteData.key);
-  const res = { status: 200, message: "Pagamento eliminato" };
+  let d1 = await deletePianoStudi(userLogin.token, deleteData.key);
+  const res = { status: 200, message: "Lezione eliminata" };
   return res;
 }
 
@@ -81,7 +74,7 @@ export default async function handler(req, res) {
   // Run cors
   await utils.cors(req, res);
 
-  console.log("PAGAMENTI");
+  console.log("SERVIZI");
   const pid = apic.getPid(req);
   const userLogin = await apic.getLogin(req);
 

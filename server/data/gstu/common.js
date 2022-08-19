@@ -22,6 +22,12 @@ import {
   GetStudenteDocente,
   GetMateriaScolasticaCombo,
   GetDocenteMateria,
+  GetProgrammaBaseNoAggrCombo,
+  GetClasseArgomentoXProgrammaBaseCombo,
+  GetArgomentoXClasseArgomento,
+  GetLezione,
+  GetPianoStudiIndividuale,
+  PistPianoStudiIndividualeDats,
 } from "./config";
 
 const getRicercaStudenti = async (token) => {
@@ -31,12 +37,20 @@ const getRicercaStudenti = async (token) => {
   // console.log(f);
   if (f.status) return [];
 
+  const options = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  };
+
   const data = f.map((x) => {
     return {
       id: x.idPersona,
       col1: x.codiceFiscale,
       col2: x.nome + " " + x.cognome,
-      col3: x.dataNascita,
+      col3: x.dataNascita
+        ? new Date(x.dataNascita).toLocaleDateString("it-IT", options)
+        : "",
       col4: x.paeseNascita + " " + x.comuneNascita,
     };
   });
@@ -63,16 +77,34 @@ const getIscrizioniPersona = async (token, idPersona) => {
   // console.log(f);
   if (f.status) return [];
 
+  const options = {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  };
+
   const data = f.map((x) => {
     return {
       id: x.idIscrizione,
       col1: x.annoFrequenza,
       col2: x.indirizzoIstituto,
       col3: x.annoAccademico,
-      col4: x.dataIscrizione,
+      col4: x.dataIscrizione
+        ? new Date(x.dataIscrizione).toLocaleDateString("it-IT", options)
+        : "",
       col5: x.tipoStudente,
-      col6: x.dataAttivazioneIscrizione,
-      col7: x.dataDisattivazioneIscrizione,
+      col6: x.dataAttivazioneIscrizione
+        ? new Date(x.dataAttivazioneIscrizione).toLocaleDateString(
+            "it-IT",
+            options
+          )
+        : "",
+      col7: x.dataDisattivazioneIscrizione
+        ? new Date(x.dataDisattivazioneIscrizione).toLocaleDateString(
+            "it-IT",
+            options
+          )
+        : "",
       col8: x.numeroCreditiBonus ? x.numeroCreditiBonus : 0,
       col9: x.importoTotale ? x.importoTotale : 0,
     };
@@ -215,7 +247,7 @@ const getServizioSottoscritto = async (token, IdIscrizioneStudente) => {
   );
 
   console.log("getServizioSottoscritto");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -235,7 +267,7 @@ const getPagamentoStudente = async (token, IdIscrizioneStudente) => {
   );
 
   console.log("getPagamentoStudente");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -390,6 +422,112 @@ const getStudenteDocente = async (token, IdIscrizioneStudente) => {
   return data;
 };
 
+const getProgrammaBaseNoAggrCombo = async (token, idProgrammaBase) => {
+  const f = await utils.getFetch(
+    token,
+    GetProgrammaBaseNoAggrCombo(idProgrammaBase)
+  );
+
+  console.log("getProgrammaBaseNoAggrCombo");
+  // console.log(f);
+  if (f.status) return [];
+
+  // const arr1 = [{ label: "Seleziona", id: 0 }];
+
+  const data = f.map((x) => {
+    return {
+      label: (x.annoFrequenza + " " + x.materia).trim(),
+      id: x.idProgrammaBase,
+    };
+  });
+
+  // const data = arr1.concat(arr2);
+
+  return data;
+};
+
+const getClasseArgomentoXProgrammaBaseCombo = async (
+  token,
+  idProgrammaBase
+) => {
+  const f = await utils.getFetch(
+    token,
+    GetClasseArgomentoXProgrammaBaseCombo(idProgrammaBase)
+  );
+  console.log("getClasseArgomentoXProgrammaBaseCombo");
+  // console.log(f);
+  if (f.status) return [];
+  const arr1 = [{ label: "Seleziona", id: 0 }];
+  const arr2 = f.map((x) => {
+    return { label: x.classeArgomento.trim(), id: x.idClasseArgomento };
+  });
+  const data = arr1.concat(arr2);
+  return data;
+};
+
+const getArgomentoXClasseArgomento = async (token, idClasseArgomento) => {
+  const f = await utils.getFetch(
+    token,
+    GetArgomentoXClasseArgomento(idClasseArgomento)
+  );
+  console.log("getArgomentoXClasseArgomento");
+  // console.log(f);
+  if (f.status) return [];
+  const arr1 = [{ label: "Seleziona", id: 0 }];
+  const arr2 = f.map((x) => {
+    return { label: x.argomento.trim(), id: x.idArgomento };
+  });
+  const data = arr1.concat(arr2);
+  return data;
+};
+
+const getLezione = async (token, IdArgomento) => {
+  const f = await utils.getFetch(token, GetLezione(IdArgomento, 0));
+  console.log("getLezione");
+  // console.log(f);
+  if (f.status) return [];
+  // const arr1 = [{ label: "Seleziona", id: 0 }];
+  const data = f.map((x) => {
+    return { label: x.lezioneDesc.trim(), id: x.idLezione };
+  });
+  // const data = arr1.concat(arr2);
+  return data;
+};
+
+const getPianoStudiIndividuale = async (token, IdIscrizioneStudente) => {
+  const f = await utils.getFetch(
+    token,
+    GetPianoStudiIndividuale(IdIscrizioneStudente, 0)
+  );
+
+  console.log("getPianoStudiIndividuale");
+  // console.log(f);
+  if (f.status) return [];
+
+  const data = f.map((x) => {
+    return {
+      id: x.idPianoStudiIndividuale,
+      col1: (x.annoFrequenza + " " + x.materia).trim(),
+      col2: x.classeArgomento,
+      col3: x.argomento,
+      col4: x.lezione,
+    };
+  });
+  return data;
+};
+
+const insertPianoStudi = async (token, body) => {
+  let res = await utils.postFetch(token, PistPianoStudiIndividualeDats, body);
+  return res;
+};
+
+const deletePianoStudi = async (token, id) => {
+  return await commMain.deleteObjectURL(
+    token,
+    `${PistPianoStudiIndividualeDats}/${id}`
+  );
+};
+
 module.exports = {
   getRicercaStudenti,
   getStudente,
@@ -418,4 +556,11 @@ module.exports = {
   getStudenteDocente,
   getMateriaScolasticaCombo,
   getDocenteMateria,
+  getProgrammaBaseNoAggrCombo,
+  getClasseArgomentoXProgrammaBaseCombo,
+  getArgomentoXClasseArgomento,
+  getLezione,
+  getPianoStudiIndividuale,
+  insertPianoStudi,
+  deletePianoStudi,
 };

@@ -1,12 +1,9 @@
 import * as React from "react";
-import Stack from "@mui/material/Stack";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import jnStyles from "../../../styles/utils.module.css";
 
 import DCT_LinkButton from "../../DCT_LinkButton";
@@ -14,6 +11,7 @@ import SEC_Servizi from "../anagrafica/SEC_Servizi";
 import SEC_Pagamenti from "../anagrafica/SEC_Pagamenti";
 import SEC_Tutor from "../anagrafica/SEC_Tutor";
 import SEC_Docenti from "../anagrafica/SEC_Docenti";
+import SEC_PianoStudi from "../anagrafica/SEC_PianoStudi";
 
 const utils = require("../../../lib");
 const gs_cfg = require("./config");
@@ -24,13 +22,14 @@ function TabPanel(props) {
   return (
     <div
       role="tabpanel"
+      className={jnStyles.jnTabPanel}
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: 0 }}>
           <Typography component="span">{children}</Typography>
         </Box>
       )}
@@ -115,13 +114,12 @@ class FRM_GestStud_Iscrizione extends React.Component {
           </Tabs>
         </Box>
         <TabPanel value={this.state.selectedId} index={0}>
-          <Box
-            component="form"
+          <SEC_PianoStudi
             id={this.props.id}
-            onSubmit={this.handleSubmit}
-            onReset={this.handleReset}
-            sx={{ display: "inline" }}
-          ></Box>
+            data={this.props.data}
+            query={this.props.query}
+            api={gs_cfg.GSTU_STEP_2_API_2}
+          />
         </TabPanel>
         <TabPanel value={this.state.selectedId} index={1}>
           <SEC_Servizi

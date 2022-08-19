@@ -13,12 +13,6 @@ const AR_STEP_0_API = `${process.env.server}/ar`;
 const AR_STEP_0_ACTION = [
   {
     id: "1",
-    title: "Elimina",
-    icon: "icon-delete2",
-    callBack: GRID_DELETE_ACTION,
-  },
-  {
-    id: "2",
     title: "Dettaglio",
     icon: "icon-arrow-right4",
     callBack: GRID_ROUTE_ACTION,

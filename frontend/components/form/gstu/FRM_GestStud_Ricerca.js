@@ -41,7 +41,7 @@ class FRM_GestStud_Ricerca extends React.Component {
     console.log(data);
 
     const rowData = {
-      id: pb_cfg.FRM_GSTU_STEP_0,
+      id: this.props.id,
       key: data,
     };
     this.props.onDelete(rowData);
@@ -67,7 +67,7 @@ class FRM_GestStud_Ricerca extends React.Component {
           onDelete={this.onDeleteRow}
           onNextStep={this.props.onNextStep}
           action={this.props.action}
-          actionWidth={150}
+          actionWidth={90}
         />
       </Stack>
     );

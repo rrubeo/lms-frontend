@@ -10,8 +10,6 @@ export default async function handler(req, res) {
   console.log(req.query);
   const userLogin = await apic.getLogin(req);
 
-  console.log("COMBO AGGREGATO /Tables/GetLezionePerClasseArgomento", pid);
-
   const db_rows = await getLezClasseArgomentoId(userLogin.token, pid);
   // console.log(db_rows);
   res.status(200).json(db_rows);

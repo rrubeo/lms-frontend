@@ -14,7 +14,7 @@ const DrawerHeader = styled("div")(() => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "flex-end",
-  padding: 8,
+  padding: 0,
 }));
 
 class DCT_Layout extends React.Component {
@@ -75,6 +75,7 @@ class DCT_Layout extends React.Component {
             )}
             <Box
               component="main"
+              className={styles.main}
               sx={{
                 flexGrow: 1,
                 p: 3,
@@ -89,7 +90,7 @@ class DCT_Layout extends React.Component {
               }}
             >
               <DrawerHeader />
-              <main>{children}</main>
+              <section className={styles.section}>{children}</section>
             </Box>
           </Box>
         </Container>

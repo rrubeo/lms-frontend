@@ -109,7 +109,7 @@ async function postHandler(userLogin, postData, pid) {
   let res = { status: 200, message: "OK" };
   let p3 = {};
   console.log("************ RICEVUTA ISCRIZIONE");
-  // console.log(postData);
+  console.log(postData);
   switch (postData.tab) {
     case 0:
       let poba = {
@@ -222,14 +222,31 @@ async function postHandler(userLogin, postData, pid) {
           postData.iscr_istituto.id
         );
         console.log(chekIscrizione);
+
         if (chekIscrizione.length > 0) {
-          res.status = 200;
-          res.message =
-            chekIscrizione[0].annoFrequenza +
-            " " +
-            chekIscrizione[0].indirizzoIstituto +
-            ": iscrizione presente.";
-          return res;
+          if (postData.gridId) {
+            console.log("************ MODIFICA ? ", postData.gridId);
+            if (postData.gridId != 0) {
+              console.log("************ UPDATE", postData.gridId);
+              prepIstu.istuId = postData.gridId;
+            } else {
+              res.status = 500;
+              res.message =
+                chekIscrizione[0].annoFrequenza +
+                " " +
+                chekIscrizione[0].indirizzoIstituto +
+                ": modifica fallita.";
+              return res;
+            }
+          } else {
+            res.status = 200;
+            res.message =
+              chekIscrizione[0].annoFrequenza +
+              " " +
+              chekIscrizione[0].indirizzoIstituto +
+              ": iscrizione presente.";
+            return res;
+          }
         }
 
         prepIstu.istuFkAnacId = postData.iscr_accademico.label;

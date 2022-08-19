@@ -1,15 +1,19 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  sidemenu,
+  navmenu,
+  navmenustudenti,
+  usermenu,
+} from "../../../../data/data_sidemenu";
 
-import { 
+import {
   getFunzioniForm,
-  getIscrizioneStudente, 
-  getDocentiAula, 
-  getTutorAula
+  getIscrizioneStudente,
+  getDocentiAula,
+  getTutorAula,
 } from "../../../../data/fs/common";
-
 
 async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
@@ -18,19 +22,31 @@ async function getHandler(userLogin, pid) {
     ""
   );
 
-  const profile = await getIscrizioneStudente(userLogin.token, userLogin.userID);
-  const docenti = await getDocentiAula(userLogin.token, 5, profile.idIscrizione, userLogin.userID);
-  const tutor = await getTutorAula(userLogin.token, 4, profile.idIscrizione, userLogin.userID);
-
+  const profile = await getIscrizioneStudente(
+    userLogin.token,
+    userLogin.userID
+  );
+  const docenti = await getDocentiAula(
+    userLogin.token,
+    5,
+    profile.idIscrizione,
+    userLogin.userID
+  );
+  const tutor = await getTutorAula(
+    userLogin.token,
+    4,
+    profile.idIscrizione,
+    userLogin.userID
+  );
 
   const data = {
     title: "Configurazione Aula",
     menu: sidemenu,
-    navmenu: navmenu,
+    navmenu: navmenustudenti,
     usermenu: usermenu,
     funzioni: db_funzioni,
     docenti: docenti,
-    tutor: tutor
+    tutor: tutor,
   };
   return data;
 }

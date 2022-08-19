@@ -10,6 +10,8 @@ const theme = createTheme({
     },
     secondary: {
       main: "#788CB4",
+      white: "#ffffff",
+      magenta: "#B34A9D",
     },
     background: {
       paper: "#ffffff",

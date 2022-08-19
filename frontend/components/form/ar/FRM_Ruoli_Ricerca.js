@@ -47,7 +47,7 @@ class FRM_Ruoli_Ricerca extends React.Component {
           onDelete={this.onDeleteRow}
           onNextStep={this.props.onNextStep}
           action={this.props.action}
-          actionWidth={150}
+          actionWidth={90}
         />
       </Stack>
     );

@@ -20,11 +20,11 @@ const getRicercaUtenti = async (token) => {
   const data = f.map((x) => {
     return {
       id: x.idPersona,
-      col1: x.userName,
-      col2: x.codiceFiscale,
+      col1: x.codiceFiscale,
+      col2: x.userName,
       col3: x.nome + " " + x.cognome,
       col4: x.mail,
-      col5: x.attivo === 1 ? "Si" : "No",
+      col5: x.attivo,
     };
   });
   return data;

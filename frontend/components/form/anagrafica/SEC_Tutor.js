@@ -6,24 +6,18 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 
-import DTC_TextBox from "../../DTC_TextBox";
 import DCT_ComboBox from "../../selector/DCT_ComboBox";
 import DTC_DataGrid from "../../grid/DTC_DataGrid";
-import DTC_DatePick from "../../DTC_DatePick";
 
 import jnStyles from "../../../styles/utils.module.css";
 import {
-  defaultLogin,
-  sessionOptions,
-  getAuthSession,
   validationMessage,
   MSG_SUCCESS,
   MSG_ERROR,
   MSG_INFO,
-  forceNavigateUtil,
 } from "../../../lib";
 
-import { validateForm, frm_SEC_Pagamenti } from "./validator";
+import { validateForm, frm_SEC_Tutor } from "./validator";
 
 const utils = require("../../../lib");
 const gd_cfg = require("../../grid/config");
@@ -61,7 +55,7 @@ class SEC_Tutor extends React.Component {
   }
 
   async loadData(pid) {
-    console.log("loadData", pid);
+    // console.log("loadData", pid);
     try {
       const data = await utils.fetchJson("/api/flydata", {
         method: "POST",
@@ -78,6 +72,7 @@ class SEC_Tutor extends React.Component {
         tutorList: data.tutor,
         rows: data.rows,
       });
+      this.changeChildTutorId.current.setIndex(0);
     } catch (e) {
       if (e instanceof utils.FetchError) {
         console.error(e.data.message);
@@ -97,11 +92,11 @@ class SEC_Tutor extends React.Component {
     event.preventDefault();
 
     const formData = {
-      id: frm_SEC_Pagamenti,
+      id: frm_SEC_Tutor,
       tutor: this.state.tutorValue,
     };
 
-    console.log(formData);
+    // console.log(formData);
 
     let param = "";
     for (let i = 1; i < this.props.query.param.length; i++) {

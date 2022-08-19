@@ -7,6 +7,7 @@ import {
   cols_pagamenti,
   cols_tutor,
   cols_docenti,
+  cols_piano,
 } from "../../../../data/gstu/data_studenti";
 
 import { getFunzioniForm } from "../../../../data/common";
@@ -49,6 +50,7 @@ async function getHandler(userLogin, pid) {
     cols_servizi: cols_servizi,
     cols_tutor: cols_tutor,
     cols_docenti: cols_docenti,
+    cols_piano: cols_piano,
   };
   return data;
 }

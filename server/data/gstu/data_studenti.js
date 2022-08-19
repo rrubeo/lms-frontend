@@ -43,10 +43,12 @@ const cols = [
   { field: "col2", headerName: "Nominativo", flex: 1, minWidth: 50 },
   {
     field: "col3",
+    type: "dateTime",
     headerName: "Data di nascita",
     flex: 1,
     minWidth: 50,
     maxWidth: 200,
+    align: "center",
   },
   { field: "col4", headerName: "Luogo di nascita", flex: 1, minWidth: 50 },
 ];
@@ -63,7 +65,7 @@ const cols_iscrizioni = [
     field: "col2",
     headerName: "Indirizzo Istituto",
     flex: 1,
-    minWidth: 200,
+    minWidth: 50,
   },
   {
     field: "col3",
@@ -74,10 +76,12 @@ const cols_iscrizioni = [
   },
   {
     field: "col4",
+    type: "date",
     headerName: "Data Iscrizione",
     flex: 1,
     minWidth: 50,
     maxWidth: 150,
+    align: "center",
   },
   {
     field: "col5",
@@ -92,6 +96,7 @@ const cols_iscrizioni = [
     flex: 1,
     minWidth: 50,
     maxWidth: 150,
+    align: "center",
   },
   {
     field: "col7",
@@ -99,6 +104,7 @@ const cols_iscrizioni = [
     flex: 1,
     minWidth: 50,
     maxWidth: 150,
+    align: "center",
   },
   {
     field: "col8",
@@ -193,6 +199,36 @@ const cols_docenti = [
   },
 ];
 
+const cols_piano = [
+  {
+    field: "col1",
+    headerName: "Programma Base",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 100,
+  },
+  {
+    field: "col2",
+    headerName: "Classe Argomento",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 150,
+  },
+  {
+    field: "col3",
+    headerName: "Argomento",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 200,
+  },
+  {
+    field: "col4",
+    headerName: "Lezione",
+    flex: 1,
+    minWidth: 50,
+  },
+];
+
 module.exports = {
   rows,
   cols,
@@ -201,4 +237,5 @@ module.exports = {
   cols_pagamenti,
   cols_tutor,
   cols_docenti,
+  cols_piano,
 };

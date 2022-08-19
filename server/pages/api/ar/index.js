@@ -2,10 +2,10 @@ const utils = require("../../../lib/utils");
 const apic = require("../../../lib/apicommon");
 
 import { sidemenu, navmenu, usermenu } from "../../../data/data_sidemenu";
-import { rows, cols } from "../../../data/ar/data_utenti";
+import { cols } from "../../../data/ar/data_utenti";
 
 import { getFunzioniForm } from "../../../data/common";
-import { getRicercaUtenti, deleteUtente } from "../../../data/ar/common";
+import { getRicercaUtenti } from "../../../data/ar/common";
 
 async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
@@ -27,13 +27,6 @@ async function getHandler(userLogin, pid) {
   return data;
 }
 
-async function deleteHandler(userLogin, deleteData) {
-  let d1 = await deleteUtente(userLogin.token, deleteData.key);
-  console.log(d1);
-  const res = { status: 200, message: "Utente disattivato" };
-  return res;
-}
-
 export default async function handler(req, res) {
   await utils.cors(req, res);
 
@@ -45,10 +38,6 @@ export default async function handler(req, res) {
     case "GET":
       const dataGet = await getHandler(userLogin, pid);
       res.status(200).json(dataGet);
-      break;
-    case "DELETE":
-      const dataDel = await deleteHandler(userLogin, req.body);
-      res.status(dataDel.status).json(dataDel);
       break;
   }
 }

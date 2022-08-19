@@ -49,7 +49,7 @@ class SEC_Servizi extends React.Component {
       servizioValue: { label: "", id: 0 },
       servizioList: [{ label: "Seleziona", id: 0 }],
       servizioLabel: "Combo",
-      rows: [],      
+      rows: [],
     };
 
     this.loadData = this.loadData.bind(this);
@@ -64,7 +64,7 @@ class SEC_Servizi extends React.Component {
   }
 
   async loadData(pid) {
-    console.log("loadData", pid);
+    // console.log("loadData", pid);
     try {
       const data = await utils.fetchJson("/api/flydata", {
         method: "POST",
@@ -75,13 +75,16 @@ class SEC_Servizi extends React.Component {
           pid: pid,
         }),
       });
-      console.log(data);
+      // console.log(data);
       this.setState({
         servizioLabel: data.servizio_label,
         servizioList: data.servizio,
-        sottoscrittoLabel: data.sottoscritto_label,        
+        sottoscrittoLabel: data.sottoscritto_label,
+        sottoscrittoValue: new Date(),
         rows: data.rows,
       });
+      this.changeChildServizioId.current.setIndex(0);
+      this.changeChildSottoscrittoId.current.setText(new Date());
     } catch (e) {
       if (e instanceof utils.FetchError) {
         console.error(e.data.message);
@@ -106,7 +109,7 @@ class SEC_Servizi extends React.Component {
       sottoscritto: this.state.sottoscrittoValue,
     };
 
-    console.log(formData);
+    // console.log(formData);
 
     let param = "";
     for (let i = 1; i < this.props.query.param.length; i++) {
@@ -122,7 +125,7 @@ class SEC_Servizi extends React.Component {
       if (res.status != 200) {
         validationMessage(res.message, MSG_ERROR);
       } else {
-        // await reloadData();
+        await this.defaultValue();
         validationMessage(res.message, MSG_SUCCESS);
       }
     } else {
@@ -149,7 +152,20 @@ class SEC_Servizi extends React.Component {
     }
   }
 
-  onDeleteRow(id, data) {}
+  async onDeleteRow(id, data) {
+    const rowData = {
+      id: this.props.id,
+      key: data,
+    };
+    // console.log(rowData);
+    const res = await utils.deleteData(this.props.api, rowData);
+    if (res.status != 200) {
+      validationMessage(res.message, MSG_ERROR);
+    } else {
+      await this.defaultValue();
+      validationMessage(res.message, MSG_INFO);
+    }
+  }
 
   render() {
     // console.log(this.props.query);

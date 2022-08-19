@@ -87,25 +87,30 @@ const sidemenu = [
     icon: "icon-lesson-management",
     link: `${process.env.frontend}/ese/${cfg.ESE_STEP_0}`,
   },
+];
+
+const navmenu = [
   {
     id: utils.getUID(),
-    link: "br",
+    text: "Home",
+    icon: "icon-home",
+    link: `${process.env.frontend}/${cfg.HOME_0}`,
   },
   {
     id: utils.getUID(),
-    text: "Monitoraggio",
-    icon: "icon-dashboard-subscribers",
-    link: "#",
+    text: "Calendario",
+    icon: "icon-calendar",
+    link: `${process.env.frontend}/${cfg.CALENDAR}`,
   },
   {
     id: utils.getUID(),
-    text: "Cruscotto Iscritti",
-    icon: "icon-dashboard-subscribers",
+    text: "News",
+    icon: "icon-bell",
     link: `${process.env.frontend}/${cfg.HOME_0}`,
   },
 ];
 
-const navmenu = [
+const navmenustudenti = [
   {
     id: utils.getUID(),
     text: "Home",
@@ -155,4 +160,5 @@ module.exports = {
   sidemenu,
   usermenu,
   navmenu,
+  navmenustudenti,
 };

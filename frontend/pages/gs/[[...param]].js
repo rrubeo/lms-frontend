@@ -79,7 +79,7 @@ function Main() {
   if (data.status != 200) return <Wip>{data.message}</Wip>;
 
   const reloadData = async () => {
-    console.log("reloadData");
+    // console.log("reloadData");
     const options = {
       revalidate: true,
       revalidateIfStale: true,
@@ -90,6 +90,8 @@ function Main() {
   };
 
   const handleSubmit = async (event, formData) => {
+    // console.log("handleSubmit");
+    // console.log(formData);
     event.preventDefault();
 
     const vres = await validateForm(formData);
@@ -123,7 +125,7 @@ function Main() {
     forceNavigateUtil(route, filter, fallback.subIndex);
   };
 
-  const onActionRow = async (id, data) => {    
+  const onActionRow = async (id, data) => {
     // console.log(id);
     // console.log(data);
 
@@ -173,7 +175,7 @@ function Main() {
             onSubmit={handleSubmit}
             onDelete={handleDelete}
             data={data}
-            onNextStep={handleNextStep}            
+            onNextStep={handleNextStep}
             query={pageQuery}
             onFireAction={onActionRow}
           />

@@ -2,7 +2,6 @@ const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
 import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
-import { cols_servizi } from "../../../../data/gstu/data_studenti";
 
 import { getFunzioniForm } from "../../../../data/common";
 
@@ -33,7 +32,6 @@ async function getHandler(userLogin, pid) {
     sottoscritto_label: "Data Sottoscrizione",
     funzioni: db_funzioni,
     rows: db_sottoscritto,
-    cols: cols_servizi,
   };
   return data;
 }
@@ -69,6 +67,14 @@ async function postHandler(userLogin, postData, pid) {
   return res;
 }
 
+async function deleteHandler(userLogin, deleteData) {
+  console.log("deleteHandler");
+  console.log(deleteData);
+  let d1 = await deleteServizio(userLogin.token, deleteData.key);
+  const res = { status: 200, message: "Servizio eliminato" };
+  return res;
+}
+
 export default async function handler(req, res) {
   // Run cors
   await utils.cors(req, res);
@@ -85,6 +91,10 @@ export default async function handler(req, res) {
     case "POST":
       const dataPost = await postHandler(userLogin, req.body, pid);
       res.status(dataPost.status).json(dataPost);
+      break;
+    case "DELETE":
+      const dataDel = await deleteHandler(userLogin, req.body);
+      res.status(dataDel.status).json(dataDel);
       break;
   }
 }

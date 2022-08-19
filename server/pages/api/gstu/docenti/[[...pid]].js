@@ -22,10 +22,10 @@ async function getHandler(userLogin, pid) {
 
   const db_docenti = await getStudenteDocente(userLogin.token, pid);
   const db_materie = await getMateriaScolasticaCombo(userLogin.token);
-  const db_filtra = await getDocenteMateria(userLogin.token, 0);
+  // const db_filtra = await getDocenteMateria(userLogin.token, 0);
 
   const data = {
-    title: "Pagamenti",
+    title: "Docenti",
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,
@@ -33,7 +33,7 @@ async function getHandler(userLogin, pid) {
     materie_label: "Materia",
     materie: db_materie,
     docente_label: "Nominativo Docente",
-    docente: db_filtra,
+    // docente: db_filtra,
     rows: db_docenti,
   };
   return data;

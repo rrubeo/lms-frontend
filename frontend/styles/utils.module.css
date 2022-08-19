@@ -371,6 +371,12 @@
     margin: 0;
 }
 
+.jnTabPanel {
+    padding: 1vh;
+    margin: 0;
+}
+
+
 .jnDCT_Text_Input {
     font-size: 11pt;
     font-weight: 800;

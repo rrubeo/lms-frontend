@@ -15,12 +15,6 @@ const GSTU_STEP_0_API = `${process.env.server}/gstu`;
 const GSTU_STEP_0_ACTION = [
   {
     id: "1",
-    title: "Elimina",
-    icon: "icon-delete2",
-    callBack: GRID_DELETE_ACTION,
-  },
-  {
-    id: "2",
     title: "Dettaglio",
     icon: "icon-arrow-right4",
     callBack: GRID_ROUTE_ACTION,
@@ -56,6 +50,7 @@ const GSTU_STEP_1_ACTION = [
 const FRM_GSTU_STEP_2 = "FRM_GestStud_Iscrizione";
 const GSTU_STEP_2_API = `${process.env.server}/gstu/iscrizione`;
 const GSTU_STEP_2_API_1 = `${process.env.server}/gstu/servizi`;
+const GSTU_STEP_2_API_2 = `${process.env.server}/gstu/piano`;
 const GSTU_STEP_2_API_3 = `${process.env.server}/gstu/pagamenti`;
 const GSTU_STEP_2_API_4 = `${process.env.server}/gstu/tutor`;
 const GSTU_STEP_2_API_5 = `${process.env.server}/gstu/docenti`;
@@ -108,6 +103,7 @@ module.exports = {
   FRM_GSTU_STEP_2,
   GSTU_STEP_2_API,
   GSTU_STEP_2_API_1,
+  GSTU_STEP_2_API_2,
   GSTU_STEP_2_API_3,
   GSTU_STEP_2_API_4,
   GSTU_STEP_2_API_5,

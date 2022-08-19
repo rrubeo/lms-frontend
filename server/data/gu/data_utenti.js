@@ -43,6 +43,7 @@ const cols = [
   { field: "col2", headerName: "Nominativo", flex: 1, minWidth: 50 },
   {
     field: "col3",
+    type: 'date',
     headerName: "Data di nascita",
     flex: 1,
     minWidth: 50,
@@ -51,6 +52,7 @@ const cols = [
   { field: "col4", headerName: "Luogo di nascita", flex: 1, minWidth: 50 },
   {
     field: "col5",
+    type: "boolean",
     headerName: "Anagr.Attivo",
     flex: 1,
     minWidth: 50,

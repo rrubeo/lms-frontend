@@ -53,6 +53,11 @@ function GetMenuNonStudenti(utenza) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_MENU_NONSTU}/${utenza}`;
 }
 
+const CLOUD_API_TBL_RUOLO_USER = "api/Tables/GetRuoloUtente";
+function GetRuoloUtente(IdUtenteUserName, IdRuoloUtente) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_RUOLO_USER}/${IdUtenteUserName}/${IdRuoloUtente}`;
+}
+
 module.exports = {
   CLOUD_BASE_URL,
   UserAuthenticate,
@@ -67,4 +72,5 @@ module.exports = {
   PersPersonaDats,
   GetMenuNonStudenti,
   GetIscrizioneStudente,
+  GetRuoloUtente,
 };

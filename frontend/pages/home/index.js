@@ -79,8 +79,7 @@ function HomeMain() {
               width={1200}
               height={650}
               priority
-            />
-            {/* <DTC_Player video="59777392" /> */}
+            />            
           </Box>
         </Container>
       </DCT_Layout>

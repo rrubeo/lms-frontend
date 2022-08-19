@@ -9,15 +9,15 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+h1 {
+  padding: 0;
+  margin: 1vw;
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
-
-/* * {
-  box-sizing: border-box;  
-} */
-
 
 .fc-theme-standard .fc-scrollgrid {
   background-color: #798DB4;
@@ -28,4 +28,3 @@ a {
   font-size: 12pt;
   font-weight: 800;
 }
-
