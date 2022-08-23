@@ -3,9 +3,9 @@ import useSWR, { useSWRConfig, SWRConfig } from "swr";
 import Loader from "../../components/layout/loader";
 import Wip from "../../components/layout/wip";
 import DCT_Layout from "../../components/layout/DCT_Layout";
-import FRM_GestUt_Ricerca from "../../components/form/gu/FRM_GestUt_Ricerca";
-import FRM_GestUt_Dettaglio from "../../components/form/gu/FRM_GestUt_Dettaglio";
-import { validateForm } from "../../components/form/gu/validator";
+import FRM_Tutor_Ricerca from "../../components/form/tutor/FRM_Tutor_Ricerca";
+
+import { validateForm } from "../../components/form/tutor/validator";
 import useUser from "../../lib/useUser";
 import { PAGE_401 } from "../../lib/redirect";
 
@@ -23,7 +23,7 @@ import {
 import { withIronSessionSsr } from "iron-session/next";
 
 const utils = require("../../lib/utils");
-const gu_cfg = require("../../components/form/gu/config");
+const tu_cfg = require("../../components/form/tutor/config");
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
@@ -49,7 +49,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   }
 
   fallback.pageName = utils.getPageName(query);
-  fallback.apiUrl = gu_cfg.getApiUrl(query);
+  fallback.apiUrl = tu_cfg.getApiUrl(query);
   fallback.authenticated = true;
   fallback.userInfo = authSession;
   fallback.subIndex = utils.getPageIds(query);
@@ -70,16 +70,14 @@ function Main() {
   //Recupera info utente
   const { fallback, mutate } = useSWRConfig();
   const { userInfo, pageName, apiUrl, pageQuery, subIndex } = fallback;
-  // console.log("pageQuery", pageQuery);
-  // console.log("subIndex", subIndex);
+
   let { data, error } = useSWR(apiUrl, utils.getData);
 
   if (error) return <div>{error.message}</div>;
-  if (!data) return <Loader id="gu" />;
+  if (!data) return <Loader id="tu" />;
   if (data.status != 200) return <Wip>{data.message}</Wip>;
 
   const reloadData = async () => {
-    console.log("data changed");
     const options = {
       revalidate: true,
       revalidateIfStale: true,
@@ -89,16 +87,11 @@ function Main() {
     await mutate(apiUrl, utils.getData(apiUrl), options);
   };
 
-  const handleSearch = async (event, formData) => {
-    // data.lezione = formData.lezione;
-  };
-
   const handleSubmit = async (event, formData) => {
     event.preventDefault();
 
     const vres = await validateForm(formData);
 
-    // console.log(formData);
     if (vres.valid) {
       const res = await utils.postData(apiUrl, formData);
       if (res.status != 200) {
@@ -123,35 +116,32 @@ function Main() {
   };
 
   const handleNextStep = async (event, filter, route) => {
-    event.preventDefault();  
+    event.preventDefault();
     forceNavigateUtil(route, filter, fallback.subIndex);
+  };
+
+  const onActionRow = async (id, data) => {
+    const res = await utils.postData(apiUrl, data);
+    if (res.status != 200) {
+      validationMessage(res.message, MSG_ERROR);
+    } else {
+      await reloadData();
+      validationMessage(res.message, MSG_SUCCESS);
+    }
   };
 
   return (
     <DCT_Layout id="Layout" data={data} user={user}>
       <section>
         <h1>{data.title}</h1>
-        {pageName === gu_cfg.GU_STEP_0 ? (
-          <FRM_GestUt_Ricerca
-            id={gu_cfg.FRM_GU_STEP_0}
+        {pageName === tu_cfg.TUT_STEP_0 ? (
+          <FRM_Tutor_Ricerca
+            id={tu_cfg.FRM_TUT_STEP_0}
             onSubmit={handleSubmit}
             onDelete={handleDelete}
             data={data}
             onNextStep={handleNextStep}
-            action={gu_cfg.GU_STEP_0_ACTION}
-            query={pageQuery}
-          />
-        ) : (
-          <></>
-        )}
-        {pageName === gu_cfg.GU_STEP_1 ? (
-          <FRM_GestUt_Dettaglio
-            id={gu_cfg.FRM_GU_STEP_1}
-            onSubmit={handleSubmit}
-            onDelete={handleDelete}
-            data={data}
-            onNextStep={handleNextStep}
-            action={gu_cfg.GU_STEP_1_ACTION}
+            action={tu_cfg.TUT_STEP_0_ACTION}
             query={pageQuery}
           />
         ) : (

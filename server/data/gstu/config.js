@@ -83,8 +83,8 @@ const CLOUD_API_TBL_MATERIE = "api/Tables/GetMateriaScolasticaCombo";
 const GetMateriaScolasticaCombo = `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_MATERIE}`;
 
 const CLOUD_API_TBL_DOCENTE_MATERIA = "api/Tables/GetDocenteMateria";
-function GetDocenteMateria(IdRuoloUtente, IdMateriaScolastica) {
-  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_DOCENTE_MATERIA}/${IdRuoloUtente}/${IdMateriaScolastica}`;
+function GetDocenteMateria(IdRuoloUtente, IdMateriaScolastica, IdPersona) {
+  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_DOCENTE_MATERIA}/${IdRuoloUtente}/${IdMateriaScolastica}/${IdPersona}`;
 }
 
 const CLOUD_API_TBL_PBASE_NOAGG_COMBO =

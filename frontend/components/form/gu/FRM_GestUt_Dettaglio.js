@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import jnStyles from "../../../styles/utils.module.css";
 
+import DCT_LinkButton from "../../DCT_LinkButton";
 import SEC_Contatti from "../anagrafica/SEC_Contatti";
 import SEC_Anagrafici from "../anagrafica/SEC_Anagrafici";
 import SEC_Residenza from "../anagrafica/SEC_Residenza";
@@ -103,7 +104,7 @@ class FRM_GestUt_Dettaglio extends React.Component {
     event.preventDefault();
     const data = this.getData();
     data.upid = this.state.key;
-    console.log(data);
+    // console.log(data);
     await this.props.onSubmit(event, data);
   }
 
@@ -154,7 +155,6 @@ class FRM_GestUt_Dettaglio extends React.Component {
   }
 
   handleReset(event) {
-    console.log("rESET");
     this.changeChildContatti.current.handleReset();
     this.changeChildAnagrafica.current.handleReset();
     this.changeChildResidenza.current.handleReset();
@@ -252,14 +252,11 @@ class FRM_GestUt_Dettaglio extends React.Component {
   }
 
   render() {
-    // const linkBack = utils.getBackLink(
-    //   "gstu",
-    //   gu_cfg.GU_STEP_0,
-    //   this.props.query
-    // );
+    const linkBack = `/gu/${gu_cfg.GU_STEP_0}`;
 
     return (
       <Box sx={{ width: "100%" }}>
+        <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={this.state.selectedId}

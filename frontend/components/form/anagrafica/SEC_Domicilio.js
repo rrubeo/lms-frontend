@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import FormLabel from "@mui/material/FormLabel";
 import DTC_TextBox from "../../DTC_TextBox";
 import DCT_ComboBox from "../../selector/DCT_ComboBox";
+import COM_Geolocal from "./COM_Geolocal";
 import jnStyles from "../../../styles/utils.module.css";
 
 class SEC_Domicilio extends React.Component {
@@ -25,11 +26,14 @@ class SEC_Domicilio extends React.Component {
       civicoValue: "",
       capId: "tx_dom_cap",
       capValue: "",
+      editMode: false,
     };
 
     this.onChangeForm = this.onChangeForm.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.dafaultValue = this.dafaultValue.bind(this);
+
+    this.changeChildGeoLocal = React.createRef();
 
     this.changeChildPaeseId = React.createRef();
     this.changeChildRegioneId = React.createRef();
@@ -42,7 +46,7 @@ class SEC_Domicilio extends React.Component {
     this.changeChildCapId = React.createRef();
   }
 
-  dafaultValue() {
+  async dafaultValue() {
     // console.log(this.props.data.utenza);
     let reloadOldData = false;
     if (this.props.data.utenza) {
@@ -51,19 +55,26 @@ class SEC_Domicilio extends React.Component {
 
     const l_paeseValue = reloadOldData
       ? this.props.data.utenza.persFkGpaeIdPaeseDomicilio
-      : 0;
+      : 118;
 
     const l_regioneValue = reloadOldData
-      ? this.props.data.utenza.idRegioneResidenza
+      ? this.props.data.utenza.idRegioneDomicilio
       : 0;
 
     const l_provinciaValue = reloadOldData
-      ? this.props.data.utenza.idProvinciaResidenza
+      ? this.props.data.utenza.idProvinciaDomicilio
       : 0;
 
     const l_comuneValue = reloadOldData
       ? this.props.data.utenza.persFkGcomIdComuneDomicilio
       : 0;
+
+    await this.changeChildGeoLocal.current.setIndex(
+      l_paeseValue,
+      l_regioneValue,
+      l_provinciaValue,
+      l_comuneValue
+    );
 
     const l_toponimoValue = reloadOldData
       ? this.props.data.utenza.persFkGtopToponimoDomicilio
@@ -81,10 +92,6 @@ class SEC_Domicilio extends React.Component {
       ? this.props.data.utenza.persCapDomicilio
       : "";
 
-    this.changeChildPaeseId.current.setIndex(l_paeseValue);
-    this.changeChildRegioneId.current.setIndex(l_regioneValue);
-    this.changeChildProvinciaId.current.setIndex(l_provinciaValue);
-    this.changeChildComuneId.current.setIndex(l_comuneValue);
     this.changeChildToponimoId.current.setText(l_toponimoValue);
 
     this.changeChildIndirizzoId.current.setText(l_indirizzoValue);
@@ -104,7 +111,7 @@ class SEC_Domicilio extends React.Component {
     this.dafaultValue();
   }
 
-  onChangeForm(id, data) {
+  async onChangeForm(id, data) {
     switch (id) {
       case this.state.paeseId:
         this.setState({ paeseValue: data });
@@ -194,46 +201,20 @@ class SEC_Domicilio extends React.Component {
               ref={this.changeChildCapId}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={3}>
-            <DCT_ComboBox
-              id={this.state.paeseId}
-              list={this.props.data.paese}
-              label={this.props.data.paese_label}
-              onChange={this.onChangeForm}
-              size={1}
-              ref={this.changeChildPaeseId}
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={3}>
-            <DCT_ComboBox
-              id={this.state.regioneId}
-              list={this.props.data.regione}
-              label={this.props.data.regione_label}
-              onChange={this.onChangeForm}
-              size={1}
-              ref={this.changeChildRegioneId}
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={3}>
-            <DCT_ComboBox
-              id={this.state.provinciaId}
-              list={this.props.data.provincia}
-              label={this.props.data.provincia_label}
-              onChange={this.onChangeForm}
-              size={1}
-              ref={this.changeChildProvinciaId}
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={3}>
-            <DCT_ComboBox
-              id={this.state.comuneId}
-              list={this.props.data.comune}
-              label={this.props.data.comune_label}
-              onChange={this.onChangeForm}
-              size={1}
-              ref={this.changeChildComuneId}
-            />
-          </Grid>
+          <COM_Geolocal
+            id="GeoDomicilio"
+            idPaese={this.state.paeseId}
+            lbPaese={this.props.data.paese_label}
+            idRegione={this.state.regioneId}
+            lbRegione={this.props.data.regione_label}
+            idProvincia={this.state.provinciaId}
+            lbProvincia={this.props.data.provincia_label}
+            idComune={this.state.comuneId}
+            lbComune={this.props.data.comune_label}
+            editMode={this.state.editMode}
+            onChange={this.onChangeForm}
+            ref={this.changeChildGeoLocal}
+          />
         </Grid>
       </FormLabel>
     );

@@ -5,10 +5,6 @@ import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
 
 import {
   getFunzioniForm,
-  getPaese,
-  getRegione,
-  getProvincia,
-  getComune,
   getToponimo,
   insertPersona,
   getPersona,
@@ -22,16 +18,13 @@ async function getHandler(userLogin, pid) {
   );
 
   const db_toponimo = await getToponimo(userLogin.token);
-  const db_paese = await getPaese(userLogin.token);
-  const db_regione = await getRegione(userLogin.token);
-  const db_provincia = await getProvincia(userLogin.token);
-  const db_comune = await getComune(userLogin.token);
-
+ 
   const data = {
     title: "Scheda Utente",
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,
+    back_label: "Torna indietro",
     utenza_label: "Utenza",
     email_label: "eMail",
     cell_label: "Cellulare",
@@ -40,14 +33,10 @@ async function getHandler(userLogin, pid) {
     nome_label: "Nome",
     cognome_label: "Cognome",
     nascita_label: "Data Nascita",
-    paese_label: "Paese",
-    paese: db_paese,
-    regione_label: "Regione",
-    regione: db_regione,
-    provincia_label: "Provincia",
-    provincia: db_provincia,
-    comune_label: "Comune",
-    comune: db_comune,
+    paese_label: "Paese",    
+    regione_label: "Regione",    
+    provincia_label: "Provincia",   
+    comune_label: "Comune",   
     toponimo_label: "Toponimo",
     toponimo: db_toponimo,
     cap_label: "CAP",

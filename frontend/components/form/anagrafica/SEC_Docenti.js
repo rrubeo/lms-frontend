@@ -19,6 +19,8 @@ import {
 
 import { validateForm, frm_SEC_Docenti } from "./validator";
 
+import { API_DOCENTE } from "./config";
+
 const utils = require("../../../lib");
 const gd_cfg = require("../../grid/config");
 
@@ -30,8 +32,6 @@ const GSTU_ACTION = [
     callBack: gd_cfg.GRID_DELETE_ACTION,
   },
 ];
-
-const API_DOCENTE = `${process.env.server}/gstu/cbdocente`;
 
 class SEC_Docenti extends React.Component {
   constructor(props) {
@@ -161,7 +161,7 @@ class SEC_Docenti extends React.Component {
   async onChangeForm(id, data) {
     switch (id) {
       case this.state.materieId:
-        this.setState({ materieValue: data });        
+        this.setState({ materieValue: data });
         await this.loadComboClasse(data);
         break;
       case this.state.nominativoId:

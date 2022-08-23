@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
   const userLogin = await apic.getLogin(req);
 
-  const db_filtra = await getDocenteMateria(userLogin.token, pid);
+  const db_filtra = await getDocenteMateria(userLogin.token, pid, 0);
 
   res.status(200).json(db_filtra);
 }

@@ -44,9 +44,9 @@ class FRM_Ruoli_Assegna extends React.Component {
   }
 
   dafaultValue() {
-    console.log(this.props.data.utente);
+    // console.log(this.props.data.utente);
     if (this.props.data.utente.length > 0) {
-      console.log("dafaultValue");
+      // console.log("dafaultValue");
       this.changeChildUserNameId.current.setText(
         this.props.data.utente[0].userName
       );
@@ -79,7 +79,7 @@ class FRM_Ruoli_Assegna extends React.Component {
 
   async handleUpdate(event) {
     event.preventDefault();
-    console.log("Disattiva");
+    // console.log("Disattiva");
     const rowData = {
       id: this.props.id,
       key: this.state.userNameValue,

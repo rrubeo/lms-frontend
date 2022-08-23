@@ -25,6 +25,8 @@ import {
 
 import { validateForm, frm_SEC_PianoStudi } from "./validator";
 
+import { API_CLASSE, API_ARGOMENTO, API_LEZIONE } from "./config";
+
 const utils = require("../../../lib");
 const gd_cfg = require("../../grid/config");
 
@@ -36,10 +38,6 @@ const GSTU_ACTION = [
     callBack: gd_cfg.GRID_DELETE_ACTION,
   },
 ];
-
-const API_CLASSE = `${process.env.server}/gstu/cbclasse`;
-const API_ARGOMENTO = `${process.env.server}/gstu/cbargomento`;
-const API_LEZIONE = `${process.env.server}/gstu/cblezione`;
 
 class SEC_PianoStudi extends React.Component {
   constructor(props) {

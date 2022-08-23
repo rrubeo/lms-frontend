@@ -21,14 +21,30 @@ const sidemenu = [
   {
     id: utils.getUID(),
     text: "Gestione Tutor",
-    icon: "icon-user-tie",
+    icon: "icon-tutor-assignment",
     link: "#",
   },
   {
     id: utils.getUID(),
     text: "Tutor",
-    icon: "icon-user-tie",
-    link: `${process.env.frontend}/gs/${cfg.GSTU_STEP_0}`,
+    icon: "icon-tutor-assignment",
+    link: `${process.env.frontend}/tutor/${cfg.TUT_STEP_0}`,
+  },
+  {
+    id: utils.getUID(),
+    link: "br",
+  },
+  {
+    id: utils.getUID(),
+    text: "Gestione Docenti",
+    icon: "icon-teacher-assignment",
+    link: "#",
+  },
+  {
+    id: utils.getUID(),
+    text: "Docenti",
+    icon: "icon-teacher-assignment",
+    link: `${process.env.frontend}/doce/${cfg.DOCE_STEP_0}`,
   },
   {
     id: utils.getUID(),
@@ -37,14 +53,8 @@ const sidemenu = [
   {
     id: utils.getUID(),
     text: "Gestione Utenti",
-    icon: "icon-teacher-assignment",
+    icon: "icon-users",
     link: "#",
-  },
-  {
-    id: utils.getUID(),
-    text: "Reset Password",
-    icon: "icon-reset-password",
-    link: `${process.env.frontend}/${cfg.HOME_0}`,
   },
   {
     id: utils.getUID(),

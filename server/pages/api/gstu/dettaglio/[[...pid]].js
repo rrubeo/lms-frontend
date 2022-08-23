@@ -6,10 +6,6 @@ import { cols_iscrizioni } from "../../../../data/gstu/data_studenti";
 
 import {
   getFunzioniForm,
-  getPaese,
-  getRegione,
-  getProvincia,
-  getComune,
   getToponimo,
   insertPersona,
   getPersona,
@@ -36,10 +32,6 @@ async function getHandler(userLogin, pid) {
   );
 
   const db_toponimo = await getToponimo(userLogin.token);
-  const db_paese = await getPaese(userLogin.token);
-  const db_regione = await getRegione(userLogin.token);
-  const db_provincia = await getProvincia(userLogin.token);
-  const db_comune = await getComune(userLogin.token);
   const db_istituto = await getIstitutoIndirizzoCombo(userLogin.token);
   const db_accademico = await getAnnoAccademicoCombo(userLogin.token);
   const db_tipostudente = await getTipoStudenteCombo(userLogin.token);
@@ -60,13 +52,9 @@ async function getHandler(userLogin, pid) {
     cognome_label: "Cognome",
     nascita_label: "Data Nascita",
     paese_label: "Paese",
-    paese: db_paese,
     regione_label: "Regione",
-    regione: db_regione,
     provincia_label: "Provincia",
-    provincia: db_provincia,
     comune_label: "Comune",
-    comune: db_comune,
     toponimo_label: "Toponimo",
     toponimo: db_toponimo,
     cap_label: "CAP",

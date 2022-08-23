@@ -360,10 +360,10 @@ const getMateriaScolasticaCombo = async (token) => {
   return data;
 };
 
-const getDocenteMateria = async (token, IdMateriaScolastica) => {
+const getDocenteMateria = async (token, IdMateriaScolastica, IdPersona) => {
   const f = await utils.getFetch(
     token,
-    GetDocenteMateria(0, IdMateriaScolastica)
+    GetDocenteMateria(0, IdMateriaScolastica, IdPersona)
   );
 
   console.log("getDocenteMateria");
@@ -457,11 +457,11 @@ const getClasseArgomentoXProgrammaBaseCombo = async (
   console.log("getClasseArgomentoXProgrammaBaseCombo");
   // console.log(f);
   if (f.status) return [];
-  const arr1 = [{ label: "Seleziona", id: 0 }];
-  const arr2 = f.map((x) => {
+  // const arr1 = [{ label: "Seleziona", id: 0 }];
+  const data = f.map((x) => {
     return { label: x.classeArgomento.trim(), id: x.idClasseArgomento };
   });
-  const data = arr1.concat(arr2);
+  // const data = arr1.concat(arr2);
   return data;
 };
 

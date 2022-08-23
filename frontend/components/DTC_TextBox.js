@@ -28,6 +28,10 @@ class DTC_TextBox extends React.Component {
   }
 
   setText(text) {
+    if (!text || text == null) {
+      text = "";
+    }
+    // console.log("setText", text);
     this.setState({ value: text });
   }
 

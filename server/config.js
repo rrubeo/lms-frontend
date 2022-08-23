@@ -22,6 +22,9 @@ const AR_STEP_1 = "ar_ruoli";
 const ESE_STEP_0 = "ese_search";
 const ESE_STEP_1 = "ese_dett";
 
+const TUT_STEP_0 = "tut_search";
+const DOCE_STEP_0 = "doce_search";
+
 const HOME_0 = "home";
 const HOME_STUDENT = "fs";
 const STUDENT_AULA = "fs/aula";
@@ -49,4 +52,6 @@ module.exports = {
   GU_STEP_1,
   AR_STEP_0,
   AR_STEP_1,
+  TUT_STEP_0,
+  DOCE_STEP_0,
 };

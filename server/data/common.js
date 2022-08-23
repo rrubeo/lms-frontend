@@ -49,6 +49,16 @@ const deleteObjectURL = async (token, url) => {
   return f;
 };
 
+const getNullGeo = async () => {
+  console.log("getNullGeo");
+  const data = [
+    { label: "Seleziona", id: 0 },
+    { label: "Non Disponibile", id: -1 },
+  ];
+
+  return data;
+};
+
 const getPaese = async (token) => {
   const f = await utils.getFetch(token, GetPaeseCombo(0));
 
@@ -65,8 +75,8 @@ const getPaese = async (token) => {
   return data;
 };
 
-const getRegione = async (token) => {
-  const f = await utils.getFetch(token, GetRegioneCombo(0));
+const getRegione = async (token, IdRegione) => {
+  const f = await utils.getFetch(token, GetRegioneCombo(IdRegione));
 
   console.log("getRegione");
   // console.log(f);
@@ -81,8 +91,11 @@ const getRegione = async (token) => {
   return data;
 };
 
-const getProvincia = async (token) => {
-  const f = await utils.getFetch(token, GetProvinciaCombo(0, 0));
+const getProvincia = async (token, IdRegione, IdProvincia) => {
+  const f = await utils.getFetch(
+    token,
+    GetProvinciaCombo(IdRegione, IdProvincia)
+  );
 
   console.log("getProvincia");
   // console.log(f);
@@ -97,8 +110,8 @@ const getProvincia = async (token) => {
   return data;
 };
 
-const getComune = async (token) => {
-  const f = await utils.getFetch(token, GetComuneCombo(0));
+const getComune = async (token, IdProvincia) => {
+  const f = await utils.getFetch(token, GetComuneCombo(IdProvincia));
 
   console.log("getComune");
   // console.log(f);
@@ -150,13 +163,18 @@ const getRicercaPersone = async (token) => {
 };
 
 const getPersona = async (token, idPersona) => {
-  // const f = await utils.getFetch(token, GetAnagraficaPersone(idPersona));
   const f = await utils.getFetch(token, `${PersPersonaDats}/${idPersona}`);
-
   console.log("getPersona");
-  // console.log(f);
   if (f.status) return [];
-
+  const c = await utils.getFetch(token, GetAnagraficaPersone(idPersona));
+  // console.log(c);
+  f.idRegioneNascita = c[0].idRegioneNascita;
+  f.idProvinciaNascita = c[0].idProvinciaNascita;
+  f.idRegioneResidenza = c[0].idRegioneResidenza;
+  f.idProvinciaResidenza = c[0].idProvinciaResidenza;
+  f.idRegioneDomicilio = c[0].idRegioneDomicilio;
+  f.idProvinciaDomicilio = c[0].idProvinciaDomicilio;
+  // console.log(f);
   return f;
 };
 
@@ -199,6 +217,7 @@ module.exports = {
   getToken,
   getFunzioniForm,
   deleteObjectURL,
+  getNullGeo,
   getPaese,
   getRegione,
   getProvincia,
