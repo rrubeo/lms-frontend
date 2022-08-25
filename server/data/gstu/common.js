@@ -353,9 +353,13 @@ const getMateriaScolasticaCombo = async (token) => {
 
   if (f.status) return [];
 
-  const data = f.map((x) => {
+  const arr1 = [{ label: "Seleziona", id: 0 }];
+
+  const arr2 = f.map((x) => {
     return { label: x.materia, id: x.idMateria };
   });
+
+  const data = arr1.concat(arr2);
 
   return data;
 };

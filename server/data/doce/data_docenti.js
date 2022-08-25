@@ -21,4 +21,13 @@ const cols = [
   { field: "col4", headerName: "Luogo di nascita", flex: 1, minWidth: 50 },
 ];
 
-module.exports = { cols };
+const cols_materie = [
+  {
+    field: "col1",
+    headerName: "Materia",
+    flex: 1,
+    minWidth: 50,
+  },
+];
+
+module.exports = { cols, cols_materie };

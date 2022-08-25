@@ -4,6 +4,8 @@ import Loader from "../../components/layout/loader";
 import Wip from "../../components/layout/wip";
 import DCT_Layout from "../../components/layout/DCT_Layout";
 import FRM_Docenti_Ricerca from "../../components/form/doce/FRM_Docenti_Ricerca";
+import FRM_Docenti_Materie from "../../components/form/doce/FRM_Docenti_Materie";
+import FRM_Docenti_Orario from "../../components/form/doce/FRM_Docenti_Orario";
 
 import { validateForm } from "../../components/form/doce/validator";
 import useUser from "../../lib/useUser";
@@ -145,6 +147,30 @@ function Main() {
             data={data}
             onNextStep={handleNextStep}
             action={do_cfg.DOCE_STEP_0_ACTION}
+            query={pageQuery}
+          />
+        ) : (
+          <></>
+        )}
+        {pageName === do_cfg.DOCE_STEP_1 ? (
+          <FRM_Docenti_Materie
+            id={do_cfg.FRM_DOCE_STEP_1}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            data={data}
+            onNextStep={handleNextStep}
+            action={do_cfg.DOCE_STEP_1_ACTION}
+            query={pageQuery}
+          />
+        ) : (
+          <></>
+        )}
+        {pageName === do_cfg.DOCE_STEP_2 ? (
+          <FRM_Docenti_Orario
+            id={do_cfg.FRM_DOCE_STEP_2}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            data={data}
             query={pageQuery}
           />
         ) : (
