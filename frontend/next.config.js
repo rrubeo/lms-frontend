@@ -35,6 +35,7 @@ module.exports = withTM({
     frontend: isProd ? FRONT_PROD : FRONT_DEV,
     server: isProd ? SERVER_PROD : SERVER_DEV,
     SECRET_COOKIE_PASSWORD: "t0Kb5wKyD1yaybCwhipeG4r7YmzGNa6c",
+    version: "1.0.0",
   },
   basePath: "",
   nextConfig,

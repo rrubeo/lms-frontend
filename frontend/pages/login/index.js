@@ -118,7 +118,7 @@ export default function Login(props) {
                   id="userName"
                   label="Username"
                   size={{ xs: 100, sm: 150, md: 270 }}
-                  onChange={onChangeForm}                  
+                  onChange={onChangeForm}
                 />
                 <DTC_TextBox
                   required
@@ -126,7 +126,7 @@ export default function Login(props) {
                   label="Password"
                   type="password"
                   size={{ xs: 100, sm: 150, md: 270 }}
-                  onChange={onChangeForm}                  
+                  onChange={onChangeForm}
                 />
               </Stack>
             </CardContent>
@@ -141,7 +141,7 @@ export default function Login(props) {
               <Stack
                 component="div"
                 direction={{ xs: "column", sm: "column" }}
-                spacing={{ xs: 1, sm: 2, md: 3 }}
+                spacing={{ xs: 1, sm: 2, md: 1 }}
                 sx={{
                   minWidth: { xs: 120, sm: 170, md: 290 },
                   maxWidth: { xs: 120, sm: 170, md: 290 },
@@ -165,6 +165,19 @@ export default function Login(props) {
                 <Link href="#" variant="body2" className={jnStyles.jnN7}>
                   Reset password
                 </Link>
+                <Typography
+                  elevation={1}
+                  // minWidth="90pt"
+                  align="center"
+                  noWrap={true}
+                  variant="body2"
+                  classes={{
+                    body2: jnStyles.jnL2Copy,
+                  }}
+                  sx={{ zIndex: "tooltip" ,px:2}}
+                >
+                  v.{process.env.version}
+                </Typography>
               </Stack>
             </CardActions>
           </Card>

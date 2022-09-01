@@ -3,68 +3,198 @@ import Checkbox from "@mui/material/Checkbox";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import FormControl from "@mui/material/FormControl";
+import jnStyles from "../styles/utils.module.css";
 
 const label = { inputProps: { "aria-label": "Checkbox orario" } };
-const days = [
-  "lunedì",
-  "martedì",
-  "mercoledì",
-  "giovedì",
-  "venerdì",
-  "sabato",
-  "domenica",
-];
 
 class DCT_PianoOrario extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      giorni: this.props.data.rows.giorniSettimana
-        ? this.props.data.rows.giorniSettimana
-        : [],
+      giorni: this.props.data.rows ? this.props.data.rows : [],
+      days: this.props.data.days
+        ? this.props.data.days
+        : [
+            "lunedì",
+            "martedì",
+            "mercoledì",
+            "giovedì",
+            "venerdì",
+            "sabato",
+            "domenica",
+          ],
+      orari: this.props.data.orari
+        ? this.props.data.orari
+        : [
+            "9-10",
+            "10-11",
+            "11-12",
+            "12-13",
+            "13-14",
+            "14-15",
+            "15-16",
+            "16-17",
+            "17-18",
+            "18-19",
+            "20-21",
+            "21-22",
+          ],
+      fasceOrarie: 12,
+      checked: Array(7)
+        .fill()
+        .map(() => Array(12).fill(false)),
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
+    this.handleReset = this.handleReset.bind(this);
     this.getGiorno = this.getGiorno.bind(this);
+    this.getOrari = this.getOrari.bind(this);
   }
 
-  handleChange(i, id) {
-    console.log(i);
-    console.log(id);
+  handleReset(event) {
+    let newChecked = Array(7)
+      .fill()
+      .map(() => Array(12).fill(false));
+
+    this.setState({
+      checked: newChecked,
+    });
   }
 
-  getOrarioLabel(g, i) {
-    
+  handleToggle(event, gise, index) {
+    event.preventDefault();
+    // console.log(this.state.checked);
+    const giorno = gise - 1;
+    const ora = index - 1;
+    // console.log("handleToggle " + gise + " " + index);
+    // console.log(
+    //   "handleToggle " + this.state.days[giorno] + " " + this.state.orari[ora]
+    // );
+
+    let newChecked = [...this.state.checked];
+    newChecked[gise - 1][index - 1] = !newChecked[gise - 1][index - 1];
+
+    this.setState({
+      checked: newChecked,
+    });
+
+    this.props.onChange(this.props.id, newChecked);
   }
 
-  getGiorno(g, i) {
-    const f = g.fasceOrarie.map((f, index) => (
-      <Checkbox
-        key={index}
-        id={`${index}`}
-        {...label}
-        onChange={this.handleChange(i, index)}
-        sx={{
-          p: 0,
-          m: 0,
+  getOrari() {
+    let f = [];
+    const keyDay = "orario";
+
+    const titleLabel = (
+      <Typography
+        key="orarioTitle"
+        noWrap
+        component="span"
+        variant="body2"
+        classes={{
+          body2: jnStyles.jnO2greyBread,
         }}
-      />
-    ));
+      >
+        Orario
+      </Typography>
+    );
+    f.push(titleLabel);
+    for (let i = 0; i < this.state.fasceOrarie; i++) {
+      const timeLabel = (
+        <Typography
+          key={"orario" + i}
+          noWrap
+          component="span"
+          variant="body2"
+          classes={{
+            body2: jnStyles.jnO2greyBread,
+          }}
+        >
+          {this.state.orari[i]}
+        </Typography>
+      );
+      f.push(timeLabel);
+    }
 
     return (
-      <Grid key={days[i]} item xs={1} sm={1} md={1} align="center">
+      <Grid key={keyDay} item xs={1} sm={1} md={1} align="center">
         <Stack
-          key={days[i]}
-          id={`${days[i]}`}
+          key={keyDay}
+          id={`${keyDay}`}
           direction="column"
           spacing={0}
           mt={0}
           mb={0}
           p={0}
         >
-          <Typography variant="h6" noWrap component="div">
-            {days[i]}
-          </Typography>
+          {f}
+        </Stack>
+      </Grid>
+    );
+  }
+
+  getGiorno(g, dayIndex) {
+    // console.log(g);
+    const giseId = g["GISE_ID"];
+    const weekDayIndex = Number.parseInt(giseId) - 1;
+    const keyDay = dayIndex;
+    let f = [];
+    const titleLabel = (
+      <Typography
+        key={giseId + "_0"}
+        id={`${giseId + "_0"}`}
+        noWrap
+        component="span"
+        variant="body2"
+        classes={{
+          body2: jnStyles.jnO2greyBread,
+        }}
+      >
+        {this.state.days[dayIndex]}
+      </Typography>
+    );
+    f.push(titleLabel);
+    for (let i = 1; i < this.state.fasceOrarie + 1; i++) {
+      if (g.hasOwnProperty(i.toString())) {
+        // console.log("ORA ", g[i]);
+        const keyfinal = giseId + "_" + i;
+        const timeCheck = (
+          <Checkbox
+            disableRipple
+            key={keyfinal}
+            id={`${keyfinal}`}
+            {...label}
+            onClick={(event) => this.handleToggle(event, giseId, i)}
+            checked={this.state.checked[weekDayIndex][i - 1]}
+            sx={{
+              px: 1,
+              py: 0.32,
+              m: 0,
+            }}
+            size="medium"
+            classes={{
+              root: jnStyles.jnCheckRoot,
+              checked: jnStyles.jnChecked,
+            }}
+            color="primary"
+          />
+        );
+        f.push(timeCheck);
+      }
+    }
+
+    return (
+      <Grid key={keyDay} item xs={1} sm={1} md={1} align="center">
+        <Stack
+          key={keyDay}
+          id={`${keyDay}`}
+          direction="column"
+          spacing={0}
+          mt={0}
+          mb={0}
+          p={0}
+        >
           {f}
         </Stack>
       </Grid>
@@ -73,17 +203,30 @@ class DCT_PianoOrario extends React.Component {
 
   render() {
     return (
-      <Grid
-        container
-        spacing={{ xs: "0", md: "30" }}
-        columns={{ xs: 4, sm: 8, md: 12 }}
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ py: "1%", px: 0 }}
+      <FormControl
+        sx={{
+          m: 0,
+          p: 0,
+          maxHeight: this.props.size,
+          overflow: "auto",
+          width: this.props.width ? this.props.width : 1,
+          // bgcolor: "#B34A9D",
+        }}
+        // classes={{ root: jnStyles.jnDCT_Text_Border }}
       >
-        {this.state.giorni.map((g, index) => this.getGiorno(g, index))}
-      </Grid>
+        <Grid
+          container
+          spacing={{ xs: "0", md: "0" }}
+          columns={{ xs: 4, sm: 8, md: 8 }}
+          direction="row"
+          justifyContent="center"
+          alignItems="flex-start"
+          sx={{ py: "1%", px: 0 }}
+        >
+          {this.getOrari()}
+          {this.state.giorni.map((g, index) => this.getGiorno(g, index))}
+        </Grid>
+      </FormControl>
     );
   }
 }

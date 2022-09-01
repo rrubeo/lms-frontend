@@ -22,13 +22,45 @@ const do_cfg = require("./config");
 class FRM_Docenti_Orario extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      pianoId: "gridPianoOrario",
+      pianoValue: Array(7)
+        .fill()
+        .map(() => Array(12).fill(false)),
+    };
 
+    this.dafaultValue = this.dafaultValue.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleReset = this.handleReset.bind(this);
     this.onChangeForm = this.onChangeForm.bind(this);
+
+    this.changeChildPianoId = React.createRef();
+  }
+
+  dafaultValue() {
+    this.changeChildPianoId.current.handleReset();
+
+    let newChecked = Array(7)
+      .fill()
+      .map(() => Array(12).fill(false));
+
+    this.setState({
+      pianoValue: newChecked,
+    });
+  }
+
+  async handleSubmit(event) {}
+
+  handleReset(event) {
+    this.dafaultValue();
   }
 
   onChangeForm(id, data) {
+    console.log(data);
     switch (id) {
+      case this.state.pianoId:
+        this.setState({ pianoValue: data });
+        break;
       default:
         console.log(id);
         console.log(data);
@@ -37,11 +69,58 @@ class FRM_Docenti_Orario extends React.Component {
   }
 
   render() {
-    console.log(this.props.data);
+    const linkBack = `/doce/${do_cfg.DOCE_STEP_0}`;
     return (
-      <Stack direction="column" spacing={4} mt={0} mb={2} p={0}>
-        <DCT_PianoOrario data={this.props.data} />
-      </Stack>
+      <>
+        <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
+        <Divider sx={{ pt: "1%" }} light />
+        <Box
+          component="form"
+          id={this.props.id}
+          onSubmit={this.handleSubmit}
+          onReset={this.handleReset}
+          sx={{ display: "inline", py: "2%", px: "2%" }}
+        >
+          <Stack
+            direction="column"
+            spacing={4}
+            mt={0}
+            mb={2}
+            p={0}
+            justifyContent="flex-start"
+            alignItems="center"
+          >
+            <DCT_PianoOrario
+              id={this.state.pianoId}
+              data={this.props.data}
+              size={450}
+              width={1}
+              onChange={this.onChangeForm}
+              ref={this.changeChildPianoId}
+            />
+            <ButtonGroup
+              variant="contained"
+              aria-label="outlined primary button group"
+              classes={{ root: jnStyles.jnBT }}
+            >
+              <Button
+                type="submit"
+                variant="contained"
+                classes={{ root: jnStyles.jnBT }}
+              >
+                Salva
+              </Button>
+              <Button
+                type="reset"
+                variant="contained"
+                classes={{ root: jnStyles.jnBT }}
+              >
+                Reset
+              </Button>
+            </ButtonGroup>
+          </Stack>
+        </Box>
+      </>
     );
   }
 }

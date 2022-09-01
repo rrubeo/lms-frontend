@@ -25,9 +25,10 @@ export const forceNavigateUtil = (route, filter, subIndex) => {
   }
 
   Router.push(buildRoute);
+  // console.log(buildRoute);
 };
 
 export const forceSearchUtil = (buildRoute) => {
-  console.log("forceSearchUtil");
+  // console.log("forceSearchUtil");
   Router.push(buildRoute);
 };

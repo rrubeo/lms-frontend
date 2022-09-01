@@ -352,6 +352,13 @@
     color: #afaeae;
 }
 
+.jnL2Copy {
+    font-size: 10pt;
+    font-weight: 400;
+    color: #afaeae;
+    font-style: italic;
+}
+
 .jnDCT_Text {
     font-size: 11pt;
     font-weight: 800;
@@ -677,4 +684,17 @@
     font-size: 11pt;
     font-weight: 400;
     color: #798DB4;
+}
+
+.jnChecked {
+    background-color: #aabcdf;
+
+}
+
+.jnCheckRoot {
+    color: #798DB4;
+    /* border: 0.1px solid #8A8A8A; */
+    border-radius: 26px;
+    -webkit-box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
 }

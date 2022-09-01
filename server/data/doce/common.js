@@ -42,7 +42,7 @@ const getDocenteMateria = async (token, IdPersona) => {
   const f = await utils.getFetch(token, GetDocenteMateria(0, 0, IdPersona));
 
   console.log("getDocenteMateria");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {

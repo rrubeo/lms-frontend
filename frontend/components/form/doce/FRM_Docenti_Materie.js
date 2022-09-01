@@ -86,6 +86,8 @@ class FRM_Docenti_Materie extends React.Component {
           mt={0}
           mb={2}
           p={0}
+          justifyContent="center"
+          alignItems="flex-start"
         >
           <Box
             component="form"
@@ -94,35 +96,45 @@ class FRM_Docenti_Materie extends React.Component {
             onReset={this.handleReset}
             sx={{ display: "inline", py: "2%", px: "2%" }}
           >
-            <DCT_CheckList
-              id={this.state.selectMaterieId}
-              label={this.props.data.materie_label}
-              list={this.props.data.materie}
-              ref={this.changeChildSelectMaterieId}
-              onChange={this.onChangeForm}
-              size={300}
-              width={300}
-            />
-            <ButtonGroup
-              variant="contained"
-              aria-label="outlined primary button group"
-              classes={{ root: jnStyles.jnBT }}
+            <Stack
+              direction="column"
+              spacing={4}
+              mt={0}
+              mb={2}
+              p={0}
+              justifyContent="center"
+              alignItems="center"
             >
-              <Button
-                type="submit"
+              <DCT_CheckList
+                id={this.state.selectMaterieId}
+                label={this.props.data.materie_label}
+                list={this.props.data.materie}
+                ref={this.changeChildSelectMaterieId}
+                onChange={this.onChangeForm}
+                size={300}
+                width={400}
+              />
+              <ButtonGroup
                 variant="contained"
+                aria-label="outlined primary button group"
                 classes={{ root: jnStyles.jnBT }}
               >
-                Salva
-              </Button>
-              <Button
-                type="reset"
-                variant="contained"
-                classes={{ root: jnStyles.jnBT }}
-              >
-                Reset
-              </Button>
-            </ButtonGroup>{" "}
+                <Button
+                  type="submit"
+                  variant="contained"
+                  classes={{ root: jnStyles.jnBT }}
+                >
+                  Salva
+                </Button>
+                <Button
+                  type="reset"
+                  variant="contained"
+                  classes={{ root: jnStyles.jnBT }}
+                >
+                  Reset
+                </Button>
+              </ButtonGroup>
+            </Stack>
           </Box>
           <DTC_DataGrid
             id="gd_ricerca"

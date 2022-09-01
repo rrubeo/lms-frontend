@@ -18,6 +18,7 @@ import {
   MSG_ERROR,
   MSG_INFO,
   forceNavigateUtil,
+  forceSearchUtil,
 } from "../../lib";
 
 import { withIronSessionSsr } from "iron-session/next";
@@ -77,6 +78,7 @@ function Main() {
   if (error) return <div>{error.message}</div>;
   if (!data) return <Loader id="gu" />;
   if (data.status != 200) return <Wip>{data.message}</Wip>;
+  // console.log(data);
 
   const reloadData = async () => {
     console.log("data changed");
@@ -104,8 +106,9 @@ function Main() {
       if (res.status != 200) {
         validationMessage(res.message, MSG_ERROR);
       } else {
-        await reloadData();
+        // await reloadData();
         validationMessage(res.message, MSG_SUCCESS);
+        forceSearchUtil(gu_cfg.GU_STEP_0);
       }
     } else {
       validationMessage(vres.data.message, MSG_ERROR);
@@ -123,7 +126,7 @@ function Main() {
   };
 
   const handleNextStep = async (event, filter, route) => {
-    event.preventDefault();  
+    event.preventDefault();
     forceNavigateUtil(route, filter, fallback.subIndex);
   };
 

@@ -208,7 +208,7 @@ const getFrequenzaPagamentoCombo = async (token) => {
   const f = await utils.getFetch(token, FpagFrequenzaPagamentoTyps);
 
   console.log("getFrequenzaPagamentoCombo");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   const arr1 = [{ label: "Seleziona", id: 0 }];
@@ -371,7 +371,7 @@ const getDocenteMateria = async (token, IdMateriaScolastica, IdPersona) => {
   );
 
   console.log("getDocenteMateria");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   const arr1 = [{ label: "Seleziona", id: 0 }];
@@ -412,7 +412,7 @@ const getStudenteDocente = async (token, IdIscrizioneStudente) => {
   );
 
   console.log("getStudenteDocente");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {

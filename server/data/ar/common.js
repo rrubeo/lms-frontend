@@ -43,7 +43,7 @@ const getUtente = async (token, IdPersona) => {
   const f = await utils.getFetch(token, GetUtente(IdPersona));
 
   console.log("getUtente");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   if (!f[0].userName) {
@@ -105,7 +105,7 @@ const getUserName = async (token, UserName) => {
   const f = await utils.getFetch(token, `${UtntUtenteDats}/${UserName}`);
 
   console.log("getUserName");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
   return f;
 };

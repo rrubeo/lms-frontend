@@ -4,9 +4,8 @@ const apic = require("../../../../lib/apicommon");
 import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
 import { cols_materie } from "../../../../data/doce/data_docenti";
 
-import { getFunzioniForm } from "../../../../data/common";
+import { getFunzioniForm, getPersona } from "../../../../data/common";
 import {
-  getAnagraficaDocenti,
   getDocenteMateria,
   insertDocenteMateria,
   deleteDocenteMateria,
@@ -20,18 +19,19 @@ async function getHandler(userLogin, pid) {
     "FRM_ProgBase_Ricerca"
   );
 
-  const db_docente = await getAnagraficaDocenti(userLogin.token, pid, 0);
+  const db_persona = await getPersona(userLogin.token, pid);
+
   const db_rows = await getDocenteMateria(userLogin.token, pid);
   const db_materie = await getMateriaScolasticaCombo(userLogin.token);
   const data = {
-    title: "Materie",
+    title: `Docente ${db_persona.persNome} ${db_persona.persCognome}`,
     menu: sidemenu,
     navmenu: navmenu,
     usermenu: usermenu,
     back_label: "Torna indietro",
     rows: db_rows,
     cols: cols_materie,
-    docente: db_docente,
+    docente: db_persona,
     materie_label: "Materie",
     materie: db_materie,
     funzioni: db_funzioni,
