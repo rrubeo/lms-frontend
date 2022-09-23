@@ -25,6 +25,11 @@ const ESE_STEP_1 = "ese_dett";
 const TUT_STEP_0 = "tut_search";
 const DOCE_STEP_0 = "doce_search";
 
+const FSME_STEP_0 = "fsme_home";
+const FSME_STEP_1 = "fsme_dettaglio";
+const FSME_STEP_2 = "fsme_aula";
+const FSME_STEP_3 = "fsme_esercitazione";
+
 const HOME_0 = "home";
 const HOME_STUDENT = "fs";
 const STUDENT_AULA = "fs/aula";
@@ -54,4 +59,5 @@ module.exports = {
   AR_STEP_1,
   TUT_STEP_0,
   DOCE_STEP_0,
+  FSME_STEP_0,
 };

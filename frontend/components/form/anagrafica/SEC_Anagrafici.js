@@ -85,10 +85,12 @@ class SEC_Anagrafici extends React.Component {
       ? this.props.data.utenza.persDataNascita
       : "1900-01-01";
 
-    this.changeChildCFId.current.setText(l_cfValue);
-    this.changeChildNomeId.current.setText(l_nomeValue);
-    this.changeChildCognomeId.current.setText(l_cognomeValue);
-    this.changeChildNascitaId.current.setText(l_nascitaValue);
+    try {
+      this.changeChildCFId.current.setText(l_cfValue);
+      this.changeChildNomeId.current.setText(l_nomeValue);
+      this.changeChildCognomeId.current.setText(l_cognomeValue);
+      this.changeChildNascitaId.current.setText(l_nascitaValue);
+    } catch (error) {}
 
     this.onChangeForm(this.state.cfId, l_cfValue);
     this.onChangeForm(this.state.nomeId, l_nomeValue);

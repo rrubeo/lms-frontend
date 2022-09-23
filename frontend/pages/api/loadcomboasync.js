@@ -14,8 +14,10 @@ export default withIronSessionApiRoute(async (req, res) => {
     res.json([{ label: " Seleziona", id: 0 }]);
     return;
   }
-  console.log("ASYNC COMBO", id);
-  console.log("ASYNC URL", api);
+  // console.log("ASYNC COMBO", id);
+  // console.log("ASYNC URL", api);
+  // console.log("ASYNC MORE", req.body.morekey);
+
   if (id == 0) {
     if (req.body.hasOwnProperty("isCheckList")) {
       if (req.body.isCheckList) {
@@ -29,7 +31,12 @@ export default withIronSessionApiRoute(async (req, res) => {
   }
   const userLogin = req.session.user;
   try {
-    const data = await fetchWithUser(`${api}/${id}`, userLogin);
+    let data;
+    if (req.body.morekey) {
+      data = await fetchWithUser(`${api}/${req.body.morekey}`, userLogin);
+    } else {
+      data = await fetchWithUser(`${api}/${id}`, userLogin);
+    }
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: error.message });

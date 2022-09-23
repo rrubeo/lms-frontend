@@ -15,6 +15,8 @@ import { fetchJson, FetchError, validationMessage, MSG_ERROR } from "../../lib";
 import useUser from "../../lib/useUser";
 import { PAGE_HOME } from "../../lib/redirect";
 
+const CryptoJS = require("crypto-js");
+
 export default function Login(props) {
   const { mutateUser } = useUser({
     redirectTo: PAGE_HOME,
@@ -34,12 +36,19 @@ export default function Login(props) {
       password: data.get("password"),
     };
 
+    const ciphertext = CryptoJS.AES.encrypt(
+      JSON.stringify(credential),
+      process.env.SECRET_COOKIE_PASSWORD
+    ).toString();
+    // console.log(ciphertext);
+
     try {
       mutateUser(
         await fetchJson("/api/login", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(credential),
+          // headers: { "Content-Type": "application/json" },
+          // body: JSON.stringify(credential),
+          body: ciphertext,
         }),
         false
       );
@@ -174,7 +183,7 @@ export default function Login(props) {
                   classes={{
                     body2: jnStyles.jnL2Copy,
                   }}
-                  sx={{ zIndex: "tooltip" ,px:2}}
+                  sx={{ zIndex: "tooltip", px: 2 }}
                 >
                   v.{process.env.version}
                 </Typography>

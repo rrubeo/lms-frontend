@@ -10,7 +10,11 @@ const CLOUD_API_TBL_LIST_LEZ_CLAS_ARG =
   "api/Tables/GetLezionePerClasseArgomento";
 const CLOUD_API_PINDI = "api/PrinProgrammaIndirizzoDats";
 const CLOUD_API_IND_IST = "api/AninAnnoIndirizzoAnas";
+const CLOUD_API_TBL_LEZ_PINDI = "api/Tables/GetLezionePerProgrammaIndirizzo";
 
+function GetLezionePerProgrammaIndirizzo(IdClasseArgomento, IdAnnoIndirizzo) {
+  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_LEZ_PINDI}/${IdClasseArgomento}/${IdAnnoIndirizzo}`;
+}
 function GetIndirizzoIstituto(id) {
   return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_PINDI}/${id}`;
 }
@@ -42,4 +46,5 @@ module.exports = {
   GetProgrammaIndirizzo,
   PrinProgrammaIndirizzoDats,
   AninAnnoIndirizzoAnas,
+  GetLezionePerProgrammaIndirizzo,
 };

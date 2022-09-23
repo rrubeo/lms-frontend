@@ -1,6 +1,8 @@
 import React from "react";
 import { useEffect, useState } from "react";
+
 import DCT_Layout from "../../components/layout/DCT_Layout";
+import DCT_DownloadButton from "../../components/DCT_DownloadButton";
 import Loader from "../../components/layout/loader";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
@@ -19,6 +21,11 @@ import FS_Image_Carousel from "../../components/form/fs/FS_Image_Carousel";
 import FS_Footer from "../../components/form/fs/FS_Footer";
 import fsStyle from "../../styles/Fs.module.css";
 import jnStyles from "../../styles/utils.module.css";
+import Image from "next/image";
+import IconButton from "@mui/material/IconButton";
+import ZoomIn from "@mui/icons-material/ZoomIn";
+import PictureAsPdf from "@mui/icons-material/PictureAsPdf";
+import Skeleton from "@mui/material/Skeleton";
 
 const utils = require("../../lib/utils");
 const fs_cfg = require("../../components/form/fs/config");
@@ -47,12 +54,16 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   }
 
   fallback.pageName = "home";
-  
+
   fallback.authenticated = true;
   fallback.userInfo = authSession;
   fallback.pageQuery = query;
-  fallback.apiUrl = fs_cfg.FS_FUNZIONI_DETTAGLIO+"/"+query.classeArgomento+"/"+query.lezione;
-
+  fallback.apiUrl =
+    fs_cfg.FS_FUNZIONI_DETTAGLIO +
+    "/" +
+    query.classeArgomento +
+    "/" +
+    query.lezione;
 
   return {
     props: {
@@ -69,13 +80,13 @@ function Dettaglio() {
 
   const { fallback } = useSWRConfig();
   const { userInfo, pageName, apiUrl, pageQuery } = fallback;
-
+  const [selectedFile, setSelectedFile] = useState();
   let { data, error } = useSWR(apiUrl, utils.getData);
 
   if (error) return <div>{error.message}</div>;
   if (!data) return <Loader id="home" />;
   if (data.status != 200) return <div>{data.message}</div>;
-
+  console.log(data);
 
   const breadcrumbs = [
     <Link
@@ -92,27 +103,37 @@ function Dettaglio() {
     </Link>,
   ];
 
-  
   //CLICK SU BREADCRUMBS
   function handleClick() {
     window.location.href = "../fs";
   }
 
+  function handleOnClick(event, path) {
+    console.log(path);
+    window.open(path, "page");
+    // window.location.href = path;
+  }
+
   //CLICK SU FRECCIA LISTA
-  function handleClickArg(clickable, itemId, lessonId){
-    if (clickable){
-      window.location.href = "../fs/dettaglio?classeArgomento="+itemId+"&lezione="+lessonId;
-    }   
-  };
+  function handleClickArg(clickable, itemId, lessonId) {
+    if (clickable) {
+      window.location.href =
+        "../fs/dettaglio?classeArgomento=" + itemId + "&lezione=" + lessonId;
+    }
+  }
 
   //CLICK PROSSIMA LEZIONE
   function handleClickNext(list, index) {
-    if (list.length>0){
-      if (index < (list.length-1)){
-        index = index+1;
+    if (list.length > 0) {
+      if (index < list.length - 1) {
+        index = index + 1;
         const queryParams = new URLSearchParams(window.location.search);
-        const itemId = queryParams.get('classeArgomento');
-        window.location.href = "../fs/dettaglio?classeArgomento="+itemId+"&lezione="+list[index].idArgomento;
+        const itemId = queryParams.get("classeArgomento");
+        window.location.href =
+          "../fs/dettaglio?classeArgomento=" +
+          itemId +
+          "&lezione=" +
+          list[index].idArgomento;
       }
     }
   }
@@ -139,25 +160,39 @@ function Dettaglio() {
     return data;
   }
 
-  function handleClickImage(index){
-    for (var i= 0; i< data.immagini.length; i++){
-      document.getElementById('imgCarousel'+i).style.borderColor = "#000000";   
-      if (i == index){
-        document.getElementById('imgCarousel'+i).style.borderColor = "#B34B9E"; 
+  function handleClickImage(index) {
+    console.log("handleClickImage");
+    for (var i = 0; i < data.immagini.length; i++) {
+      document.getElementById("imgCarousel" + i).style.borderColor = "#000000";
+      if (i == index) {
+        document.getElementById("imgCarousel" + i).style.borderColor =
+          "#B34B9E";
       }
     }
-    document.getElementById('image').src= data.immagini[index].imagePath;  
+    document.getElementById("image").src = data.immagini[index].imagePath;
+    setSelectedFile(data.immagini[index].imagePath);
   }
 
-
-  function getImage(list){
-    if (Array.isArray(list)){
-      if (list.length>0){
-        return <img style={{width: '100%'}} id="image" src={list[0].imagePath}/>  
+  function getImage(list) {
+    if (Array.isArray(list)) {
+      if (list.length > 0) {
+        return (
+          <>
+            <img style={{ width: "100%" }} id="image" src={list[0].imagePath} />
+            {/* <Image
+              layout="responsive"
+              height={600}
+              width={400}
+              id="image"
+              src={list[0].imagePath}
+            /> */}
+          </>
+        );
       }
+    } else {
+      return <Skeleton variant="rounded" width="100%" height="100%" />;
     }
   }
-
 
   return (
     <>
@@ -173,7 +208,10 @@ function Dettaglio() {
           <Grid container sx={{ alignItems: "center" }}>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
               <Typography variant="h1" className={jnStyles.jnA1}>
-                {data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteMateria.lezioniStudenteMateria.descr}
+                {
+                  data.argomento[0].lezioniStudenteMATERIA1[0]
+                    .lezioniStudenteMateria.lezioniStudenteMateria.descr
+                }
               </Typography>
             </Grid>
             <Grid
@@ -185,19 +223,36 @@ function Dettaglio() {
               xl={4}
               className={fsStyle.progressContentGrid}
             >
-              <FS_Progress type="dettaglio" title="Completato" percentage={data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteMateria.lezioniStudenteMateria.percentualeAvanzamento} />
+              <FS_Progress
+                type="dettaglio"
+                title="Completato"
+                percentage={
+                  data.argomento[0].lezioniStudenteMATERIA1[0]
+                    .lezioniStudenteMateria.lezioniStudenteMateria
+                    .percentualeAvanzamento
+                }
+              />
             </Grid>
           </Grid>
         </Container>
 
         <Container disableGutters maxWidth="false" sx={{ paddingTop: "2%" }}>
-          <Grid container>
+          <Grid container spacing={{ xs: "1%", md: "1%" }}>
             <Grid item xs={12} sm={12} md={12} lg={3} xl={3}>
               <FS_List
                 background="#B34B9E"
-                title={data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteClasse.descr}
-                arg={data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteClasse.id}
-                array={setArray(data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteLezione1)}
+                title={
+                  data.argomento[0].lezioniStudenteMATERIA1[0]
+                    .lezioniStudenteCLASSE1[0].lezioniStudenteClasse.descr
+                }
+                arg={
+                  data.argomento[0].lezioniStudenteMATERIA1[0]
+                    .lezioniStudenteCLASSE1[0].lezioniStudenteClasse.id
+                }
+                array={setArray(
+                  data.argomento[0].lezioniStudenteMATERIA1[0]
+                    .lezioniStudenteCLASSE1[0].lezioniStudenteLezione1
+                )}
                 clickable={true}
                 type="text"
                 height="510px"
@@ -205,27 +260,57 @@ function Dettaglio() {
               />
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={5} xl={5}>
-              <FS_Video_Player
-                title={data.lezione.lezione}
-                url={data.contenuti.pathVideo ? data.contenuti.pathVideo : ' '}
-              />
-
-              <FS_Image_Carousel
-                array={data.immagini ? setArrayImages(data.immagini): null}
-                index={0}
-                onClickFunction={handleClickImage}
-              />
+              {data.contenuti.idVideo != 0 ? (
+                <FS_Video_Player
+                  title={data.lezione.lezione}
+                  url={
+                    data.contenuti.pathVideo ? data.contenuti.pathVideo : " "
+                  }
+                />
+              ) : (
+                <Skeleton variant="rounded" width="100%" height="50%" />
+              )}
+              {data.contenuti.idPdf != 0 ? (
+                <FS_Image_Carousel
+                  array={data.immagini ? setArrayImages(data.immagini) : null}
+                  index={0}
+                  onClickFunction={handleClickImage}
+                />
+              ) : (
+                <Skeleton variant="rounded" width="100%" height="50%" />
+              )}
             </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={4} xl={4} sx={{maxHeight: '600px', overflow: 'scroll'}}>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={12}
+              lg={4}
+              xl={4}
+              sx={{ maxHeight: "600px", overflow: "scroll" }}
+            >
+              <DCT_DownloadButton
+                id="zoomIgm"
+                src={selectedFile}
+                img="icon-zoom-in"
+              />
+              <DCT_DownloadButton
+                id="downPdf"
+                src={data.linkpdf}
+                img="icon-file-pdf"
+              />
               {getImage(data.immagini)}
             </Grid>
           </Grid>
         </Container>
 
-        <Container disableGutters maxWidth="false" sx={{marginTop: '2%'}}>
+        <Container disableGutters maxWidth="false" sx={{ marginTop: "2%" }}>
           <FS_Footer
             index={data.index}
-            array={data.argomento[0].lezioniStudenteMATERIA1[0].lezioniStudenteCLASSE1[0].lezioniStudenteLezione1}
+            array={
+              data.argomento[0].lezioniStudenteMATERIA1[0]
+                .lezioniStudenteCLASSE1[0].lezioniStudenteLezione1
+            }
             onClickNext={handleClickNext}
           />
         </Container>

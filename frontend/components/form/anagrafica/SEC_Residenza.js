@@ -90,11 +90,12 @@ class SEC_Residenza extends React.Component {
       ? this.props.data.utenza.persCapResidenza
       : "";
 
-    this.changeChildToponimoId.current.setText(l_toponimoValue);
-
-    this.changeChildIndirizzoId.current.setText(l_indirizzoValue);
-    this.changeChildCivicoId.current.setText(l_civicoValue);
-    this.changeChildCapId.current.setText(l_capValue);
+    try {
+      this.changeChildToponimoId.current.setText(l_toponimoValue);
+      this.changeChildIndirizzoId.current.setText(l_indirizzoValue);
+      this.changeChildCivicoId.current.setText(l_civicoValue);
+      this.changeChildCapId.current.setText(l_capValue);
+    } catch (error) {}
 
     this.onChangeForm(this.state.indirizzoId, l_indirizzoValue);
     this.onChangeForm(this.state.civicoId, l_civicoValue);

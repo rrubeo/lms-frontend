@@ -8,6 +8,8 @@ import {
   usermenu,
 } from "../../../../data/data_sidemenu";
 
+import { getFunzioniForm } from "../../../../data/common";
+
 import { getLezioni, getLezione, getPDF } from "../../../../data/fs/common";
 
 function getIndex(list, itemId) {
@@ -45,6 +47,7 @@ async function getHandler(userLogin, classeArgomento, lezione) {
     argomento: arg,
     contenuti: contents[0],
     immagini: images.testoImages,
+    linkpdf: images.urlFile,
     lezione: subject,
     index: selectedIndex,
   };

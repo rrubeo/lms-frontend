@@ -28,6 +28,8 @@ class FRM_ProgIndi_Lezione extends React.Component {
       lezioneLoading: false,
       selectedValue: [],
       rows: this.props.data.rows,
+      idPindi:
+        this.props.query.param.length > 1 ? this.props.query.param[1] : 0,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -56,6 +58,7 @@ class FRM_ProgIndi_Lezione extends React.Component {
         combo: this.state.classeValue,
         api: pi_cfg.PINDI_STEP_1_API_COMBO_CLASSE,
         isCheckList: true,
+        morekey: `${this.state.classeValue.id}/${this.state.idPindi}`,
       }),
     });
     // console.log(data);
@@ -97,6 +100,7 @@ class FRM_ProgIndi_Lezione extends React.Component {
       id: pi_cfg.FRM_PINDI_STEP_1,
       classe: this.state.classeValue,
       lezione: this.state.lezioneValue,
+      idPindi: this.state.idPindi,
     };
     await this.props.onSearch(event, data);
     this.setState({ lezioneLoading: false });
@@ -139,7 +143,8 @@ class FRM_ProgIndi_Lezione extends React.Component {
 
   render() {
     // console.log(`<${pi_cfg.FRM_PINDI_STEP_1}='${this.props.id}'>`);
-    // console.log(this.props.selection);
+    // console.log(this.props.query);
+    // console.log(this.state.idPindi);
 
     // let comboClasseSelection = 0;
     // if (this.props.selection) {

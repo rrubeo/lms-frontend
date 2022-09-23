@@ -70,6 +70,7 @@ async function postHandler(userLogin, postData, pid) {
       utnt_data.utntFlagAttiva = 1;
       utnt_data.utntPasswordHash = provvisoria;
       utnt_data.utntFlagResetPassword = 1;
+      utnt_data.utntDataAbilitazione = new Date();
       console.log(utnt_data);
       p3 = await insertUtente(userLogin.token, utnt_data);
       console.log(p3);
@@ -104,6 +105,7 @@ async function postHandler(userLogin, postData, pid) {
           utntFlagResetPassword: 1,
           utntSysuser: userLogin.userID,
           utntFlagAttiva: 1,
+          utntDataAbilitazione: new Date(),
         };
         console.log(utnt);
         console.log("************ CREATO", username);

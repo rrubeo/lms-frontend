@@ -1,13 +1,25 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { getToken, getRoles, sessionOptions } from "../../lib/session";
 
+const CryptoJS = require("crypto-js");
+
 export default withIronSessionApiRoute(async (req, res) => {
   console.log("API LOGIN");
-  const { username, password } = await req.body;
+  const ciphertext = await req.body;
+  // console.log("Encrypt Data -");
+  // console.log(ciphertext);
+
+  const bytes = CryptoJS.AES.decrypt(ciphertext, process.env.SECRET_COOKIE_PASSWORD);
+  const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+  console.log("decrypted Data -");
+  console.log(decryptedData);
+
+  const { username, password } = decryptedData;
 
   try {
     const userLogin = await getToken(username, password);
-    // console.log(userLogin);
+    console.log(userLogin);
     let user = {
       isLoggedIn: true,
       login: userLogin.userID,

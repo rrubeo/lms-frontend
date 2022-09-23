@@ -45,13 +45,13 @@ const getToken = async (user, password) => {
     utntUserName: user,
     utntPasswordHash: password,
   };
-
+  console.log(credential);
   const data = await fetchJson(UserAuthenticate, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(credential),
   });
-  // console.log(data);
+  console.log(data);
 
   return data;
 };

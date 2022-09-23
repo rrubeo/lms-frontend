@@ -9,6 +9,7 @@ import {
   GetPindiClasseArgomentoCombo,
   GetProgrammaIndirizzo,
   PrinProgrammaIndirizzoDats,
+  GetLezionePerProgrammaIndirizzo,
 } from "./config";
 
 const getIndirizzoIstituto = async (token) => {
@@ -47,7 +48,10 @@ const insertAnnoIndIstituto = async (token, body) => {
   return res;
 };
 const deleteAnnoIndIstituto = async (token, id) => {
-  return await commMain.deleteObjectURL(token, `${AninAnnoIndirizzoAnas}/${id}`);
+  return await commMain.deleteObjectURL(
+    token,
+    `${AninAnnoIndirizzoAnas}/${id}`
+  );
 };
 const getLezClasseArgomento = async (token) => {
   const f = await utils.getFetch(token, GetLezionePerClasseArgomento(0));
@@ -64,6 +68,29 @@ const getLezClasseArgomento = async (token) => {
   });
   return data;
 };
+const getLezionePerProgrammaIndirizzo = async (
+  token,
+  IdClasseArgomento,
+  IdAnnoIndirizzo
+) => {
+  const f = await utils.getFetch(
+    token,
+    GetLezionePerProgrammaIndirizzo(IdClasseArgomento, IdAnnoIndirizzo)
+  );
+
+  console.log("getLezionePerProgrammaIndirizzo");
+  // console.log(f);
+  if (f.status) return [];
+
+  const data = f.map((x) => {
+    return {
+      label: x.classeArgomento + "-" + x.argomento + "-" + x.lezioneDesc,
+      id: x.idLezione,
+    };
+  });
+  return data;
+};
+
 const getLezClasseArgomentoId = async (token, id) => {
   const f = await utils.getFetch(token, GetLezionePerClasseArgomento(id));
 
@@ -79,6 +106,7 @@ const getLezClasseArgomentoId = async (token, id) => {
   });
   return data;
 };
+
 const getClasseArgomentoIndiCombo = async (token, id) => {
   const f = await utils.getFetch(token, GetPindiClasseArgomentoCombo(id));
 
@@ -129,7 +157,10 @@ const insertProgrammaIndi = async (token, body) => {
   return res;
 };
 const deleteProgrammaIndi = async (token, id) => {
-  return await commMain.deleteObjectURL(token, `${PrinProgrammaIndirizzoDats}/${id}`);
+  return await commMain.deleteObjectURL(
+    token,
+    `${PrinProgrammaIndirizzoDats}/${id}`
+  );
 };
 
 module.exports = {
@@ -144,4 +175,5 @@ module.exports = {
   getProgrammaIndiBread,
   insertProgrammaIndi,
   deleteProgrammaIndi,
+  getLezionePerProgrammaIndirizzo,
 };

@@ -8,8 +8,9 @@ import {
   usermenu,
 } from "../../../../data/data_sidemenu";
 
+import { getFunzioniForm } from "../../../../data/common";
+
 import {
-  getFunzioniForm,
   getIscrizioneStudente,
   getDocentiAula,
   getTutorAula,

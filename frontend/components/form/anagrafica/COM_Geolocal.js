@@ -5,7 +5,7 @@ import DTC_TextBox from "../../DTC_TextBox";
 import DTC_DatePick from "../../DTC_DatePick";
 import DCT_ComboBox from "../../selector/DCT_ComboBox";
 import jnStyles from "../../../styles/utils.module.css";
-
+import DCT_Loader from "../../DCT_Loader";
 import { API_PAESE, API_REGIONE, API_PROVINCIA, API_COMUNE } from "./config";
 
 const utils = require("../../../lib");
@@ -15,6 +15,7 @@ class COM_Geolocal extends React.Component {
     super(props);
 
     this.state = {
+      geoLoading: true,
       paeseId: this.props.idPaese ? this.props.idPaese : "cb_paese",
       paeseLabel: this.props.lbPaese ? this.props.lbPaese : "Paese",
       paeseList: [{ label: "Seleziona", id: 0 }],
@@ -52,6 +53,7 @@ class COM_Geolocal extends React.Component {
   async componentDidMount() {
     // console.log("componentDidMount");
     await this.loadComboClasse(API_PAESE, { label: "", id: 1 });
+    this.setState({ geoLoading: false });
   }
 
   async setIndex(valPaese, valRegione, valProvincia, valComune) {
@@ -60,15 +62,20 @@ class COM_Geolocal extends React.Component {
     // );
 
     // console.log("CARICA");
+
     await this.loadComboClasse(API_PAESE, { label: "", id: valPaese });
     await this.loadComboClasse(API_REGIONE, { label: "", id: valPaese });
     await this.loadComboClasse(API_PROVINCIA, { label: "", id: valRegione });
     await this.loadComboClasse(API_COMUNE, { label: "", id: valProvincia });
+
     // console.log("SET");
-    this.changeChildPaeseId.current.setIndex(valPaese);
-    this.changeChildRegioneId.current.setIndex(valRegione);
-    this.changeChildProvinciaId.current.setIndex(valProvincia);
-    this.changeChildComuneId.current.setIndex(valComune);
+
+    try {
+      this.changeChildPaeseId.current.setIndex(valPaese);
+      this.changeChildRegioneId.current.setIndex(valRegione);
+      this.changeChildProvinciaId.current.setIndex(valProvincia);
+      this.changeChildComuneId.current.setIndex(valComune);
+    } catch (error) {}
   }
 
   handleReset(event) {
@@ -144,46 +151,53 @@ class COM_Geolocal extends React.Component {
     // console.log(this.props);
     return (
       <>
-        <Grid item xs={2} sm={8} md={3}>
-          <DCT_ComboBox
-            id={this.state.paeseId}
-            list={this.state.paeseList}
-            label={this.state.paeseLabel}
-            onChange={this.onChangeForm}
-            size={1}
-            ref={this.changeChildPaeseId}
-          />
-        </Grid>
-        <Grid item xs={2} sm={8} md={3}>
-          <DCT_ComboBox
-            id={this.state.regioneId}
-            list={this.state.regioneList}
-            label={this.state.regioneLabel}
-            onChange={this.onChangeForm}
-            size={1}
-            ref={this.changeChildRegioneId}
-          />
-        </Grid>
-        <Grid item xs={2} sm={8} md={3}>
-          <DCT_ComboBox
-            id={this.state.provinciaId}
-            list={this.state.provinciaList}
-            label={this.state.provinciaLabel}
-            onChange={this.onChangeForm}
-            size={1}
-            ref={this.changeChildProvinciaId}
-          />
-        </Grid>
-        <Grid item xs={2} sm={8} md={3}>
-          <DCT_ComboBox
-            id={this.state.comuneId}
-            list={this.state.comuneList}
-            label={this.state.comuneLabel}
-            onChange={this.onChangeForm}
-            size={1}
-            ref={this.changeChildComuneId}
-          />
-        </Grid>
+        {this.state.geoLoading ? (
+          <DCT_Loader />
+        ) : (
+          <>
+            {" "}
+            <Grid item xs={2} sm={8} md={3}>
+              <DCT_ComboBox
+                id={this.state.paeseId}
+                list={this.state.paeseList}
+                label={this.state.paeseLabel}
+                onChange={this.onChangeForm}
+                size={1}
+                ref={this.changeChildPaeseId}
+              />
+            </Grid>
+            <Grid item xs={2} sm={8} md={3}>
+              <DCT_ComboBox
+                id={this.state.regioneId}
+                list={this.state.regioneList}
+                label={this.state.regioneLabel}
+                onChange={this.onChangeForm}
+                size={1}
+                ref={this.changeChildRegioneId}
+              />
+            </Grid>
+            <Grid item xs={2} sm={8} md={3}>
+              <DCT_ComboBox
+                id={this.state.provinciaId}
+                list={this.state.provinciaList}
+                label={this.state.provinciaLabel}
+                onChange={this.onChangeForm}
+                size={1}
+                ref={this.changeChildProvinciaId}
+              />
+            </Grid>
+            <Grid item xs={2} sm={8} md={3}>
+              <DCT_ComboBox
+                id={this.state.comuneId}
+                list={this.state.comuneList}
+                label={this.state.comuneLabel}
+                onChange={this.onChangeForm}
+                size={1}
+                ref={this.changeChildComuneId}
+              />
+            </Grid>
+          </>
+        )}
       </>
     );
   }
