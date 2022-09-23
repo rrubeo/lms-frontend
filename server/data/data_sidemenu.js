@@ -97,18 +97,6 @@ const sidemenu = [
     icon: "icon-lesson-management",
     link: `${process.env.frontend}/ese/${cfg.ESE_STEP_0}`,
   },
-  {
-    id: utils.getUID(),
-    text: "Studente",
-    icon: "icon-library",
-    link: "#",
-  },
-  {
-    id: utils.getUID(),
-    text: "Studente Home",
-    icon: "icon-lesson-management",
-    link: `${process.env.frontend}/fsme/${cfg.FSME_STEP_0}`,
-  },
 ];
 
 const navmenu = [
