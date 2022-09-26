@@ -135,8 +135,78 @@ class DCT_PianoOrario extends React.Component {
   }
 
   getGiorno(g, dayIndex) {
-    // console.log(g);
+    console.log("Giorno", g);
+    const giseId = g["gisE_ID"];
+    console.log("gisE_ID", giseId);
+    const weekDayIndex = Number.parseInt(giseId) - 1;
+    const keyDay = dayIndex;
+    let f = [];
+    const titleLabel = (
+      <Typography
+        key={giseId + "_0"}
+        id={`${giseId + "_0"}`}
+        noWrap
+        component="span"
+        variant="body2"
+        classes={{
+          body2: jnStyles.jnO2greyBread,
+        }}
+      >
+        {this.state.days[dayIndex]}
+      </Typography>
+    );
+    f.push(titleLabel);
+    for (let i = 1; i < this.state.fasceOrarie + 1; i++) {
+      let disp = g.faor[0];
+      if (disp.hasOwnProperty("v" + i.toString())) {
+        console.log("ORA ", disp["v" + i]);
+        const keyfinal = giseId + "_" + i;
+        //     const timeCheck = (
+        //       <Checkbox
+        //         disableRipple
+        //         key={keyfinal}
+        //         id={`${keyfinal}`}
+        //         {...label}
+        //         onClick={(event) => this.handleToggle(event, giseId, i)}
+        //         checked={this.state.checked[weekDayIndex][i - 1]}
+        //         sx={{
+        //           px: 1,
+        //           py: 0.32,
+        //           m: 0,
+        //         }}
+        //         size="medium"
+        //         classes={{
+        //           root: jnStyles.jnCheckRoot,
+        //           checked: jnStyles.jnChecked,
+        //         }}
+        //         color="primary"
+        //       />
+        //     );
+        //     f.push(timeCheck);
+      }
+    }
+
+    return (
+      <Grid key={keyDay} item xs={1} sm={1} md={1} align="center">
+        <Stack
+          key={keyDay}
+          id={`${keyDay}`}
+          direction="column"
+          spacing={0}
+          mt={0}
+          mb={0}
+          p={0}
+        >
+          {f}
+        </Stack>
+      </Grid>
+    );
+  }
+
+  getGiorno2(g, dayIndex) {
+    console.log("Giorno", g);
     const giseId = g["GISE_ID"];
+    console.log("GISE_ID", giseId);
     const weekDayIndex = Number.parseInt(giseId) - 1;
     const keyDay = dayIndex;
     let f = [];
@@ -202,6 +272,7 @@ class DCT_PianoOrario extends React.Component {
   }
 
   render() {
+    console.log(this.state.giorni);
     return (
       <FormControl
         sx={{

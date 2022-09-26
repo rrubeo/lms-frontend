@@ -19,13 +19,13 @@ export default function ControlledAccordions(props) {
     setExpanded(isExpanded ? panel : false);
   };
 
-
-  var handleClick = function(itemId, lessonId){
-    window.location.href = "../fs/dettaglio?classeArgomento="+itemId+"&lezione="+lessonId;
+  var handleClick = function (itemId, lessonId) {
+    window.location.href =
+      "../fs/dettaglio?classeArgomento=" + itemId + "&lezione=" + lessonId;
   };
 
   return (
-    <Container disableGutters maxWidth="false" sx={{paddingBottom: '2.5%'}}>
+    <Container disableGutters maxWidth="false" sx={{ p: 0 }}>
       <Typography variant="h6" className={jnStyles.jnD1}>
         {props.title}
       </Typography>
@@ -39,47 +39,73 @@ export default function ControlledAccordions(props) {
           >
             <Accordion
               className={fsStyle.accordionElement}
-              expanded={expanded === item.lezioniStudenteMateria.lezioniStudenteMateria.id}
-              onChange={handleChange(item.lezioniStudenteMateria.lezioniStudenteMateria.id)}
+              expanded={
+                expanded ===
+                item.lezioniStudenteMateria.lezioniStudenteMateria.id
+              }
+              onChange={handleChange(
+                item.lezioniStudenteMateria.lezioniStudenteMateria.id
+              )}
             >
               <AccordionSummary
-                classes={{content: fsStyle.accordionSummaryContent}}
+                classes={{ content: fsStyle.accordionSummaryContent }}
                 className={fsStyle.accordionSummary}
                 sx={{ minHeight: "90px" }}
                 expandIcon={
-                  expanded === item.lezioniStudenteMateria.lezioniStudenteMateria.id ? (
+                  expanded ===
+                  item.lezioniStudenteMateria.lezioniStudenteMateria.id ? (
                     <Typography
                       variant="h4"
                       className="icon-arrow-down3"
-                      sx={{ color: "#000000", fontSize: '30px' }}
+                      sx={{ color: "#000000", fontSize: "30px" }}
                     ></Typography>
                   ) : (
                     <Typography
                       variant="h4"
                       className="icon-arrow-down3"
-                      sx={{ color: "#000000", fontSize: '30px' }}
+                      sx={{ color: "#000000", fontSize: "30px" }}
                     ></Typography>
                   )
                 }
               >
                 <Box className={fsStyle.accordionImgContainer}>
-                  <Typography variant="h3" className={item.lezioniStudenteMateria.lezioniStudenteMateria.percorsoImmagineMateria}></Typography>
+                  <Typography
+                    variant="h3"
+                    className={
+                      item.lezioniStudenteMateria.lezioniStudenteMateria
+                        .percorsoImmagineMateria
+                    }
+                  ></Typography>
                 </Box>
 
                 <Box className={fsStyle.accordionTitleContainer}>
                   <Stack direction="row">
                     <Box className={fsStyle.accordionTitleDivContainer}>
-                      <Typography variant="h6" className={jnStyles.jnD4}>{item.lezioniStudenteMateria.lezioniStudenteMateria.descr}</Typography>
+                      <Typography variant="h6" className={jnStyles.jnD4}>
+                        {
+                          item.lezioniStudenteMateria.lezioniStudenteMateria
+                            .descr
+                        }
+                      </Typography>
                     </Box>
                     <Box className={fsStyle.accordionPercentageContainer}>
-                      <Typography variant="h6" className={jnStyles.jnD5}>{parseInt(item.lezioniStudenteMateria.lezioniStudenteMateria.percentualeAvanzamento)}%</Typography>
+                      <Typography variant="h6" className={jnStyles.jnD5}>
+                        {parseInt(
+                          item.lezioniStudenteMateria.lezioniStudenteMateria
+                            .percentualeAvanzamento
+                        )}
+                        %
+                      </Typography>
                     </Box>
                   </Stack>
                   <Stack>
                     <LinearProgress
                       className={fsStyle.accordionProgress}
                       variant="determinate"
-                      value={parseInt(item.lezioniStudenteMateria.lezioniStudenteMateria.percentualeAvanzamento)}
+                      value={parseInt(
+                        item.lezioniStudenteMateria.lezioniStudenteMateria
+                          .percentualeAvanzamento
+                      )}
                     />
                   </Stack>
                 </Box>
@@ -97,7 +123,10 @@ export default function ControlledAccordions(props) {
                     </Typography>
                     <List dense={true}>
                       {subitem.lezioniStudenteLezione1.map((lezioneItem) => (
-                        <ListItem key={lezioneItem.idLezione} sx={{ padding: "0" }}>
+                        <ListItem
+                          key={lezioneItem.idLezione}
+                          sx={{ padding: "0" }}
+                        >
                           <Box
                             sx={{
                               width: "70%",
@@ -110,16 +139,34 @@ export default function ControlledAccordions(props) {
                             </Typography>
                           </Box>
                           <Box sx={{ width: "30%", textAlign: "right" }}>
-                            <Typography variant="p" className={jnStyles.jnL2} sx={{marginRight: '25px'}}>
-                              Stimato {lezioneItem.durataMinutiLezione ? lezioneItem.durataMinutiLezione : 0} m
+                            <Typography
+                              variant="p"
+                              className={jnStyles.jnL2}
+                              sx={{ marginRight: "25px" }}
+                            >
+                              Stimato{" "}
+                              {lezioneItem.durataMinutiLezione
+                                ? lezioneItem.durataMinutiLezione
+                                : 0}{" "}
+                              m
                             </Typography>
 
                             <Typography
                               variant="h4"
                               className="icon-arrow-right3"
-                              sx={{ color: "#000000", fontSize: '20px', display: 'inline', cursor: 'pointer' }}
-                              onClick={event => handleClick(subitem.lezioniStudenteClasse.id, lezioneItem.idArgomento)}
-                            ></Typography>   
+                              sx={{
+                                color: "#000000",
+                                fontSize: "20px",
+                                display: "inline",
+                                cursor: "pointer",
+                              }}
+                              onClick={(event) =>
+                                handleClick(
+                                  subitem.lezioniStudenteClasse.id,
+                                  lezioneItem.idArgomento
+                                )
+                              }
+                            ></Typography>
                           </Box>
                         </ListItem>
                       ))}

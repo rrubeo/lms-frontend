@@ -20,7 +20,7 @@ class ErrorBoundary extends React.Component {
       error: error,
       errorInfo: errorInfo,
     });
-    // forceReloadUtil();
+    forceReloadUtil();
   }
   render() {
     // Check if the error is thrown

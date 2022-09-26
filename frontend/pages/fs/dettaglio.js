@@ -16,8 +16,7 @@ import { defaultLogin, sessionOptions, getAuthSession } from "../../lib";
 import useUser from "../../lib/useUser";
 import FS_List from "../../components/form/fs/FS_List";
 import FS_Progress from "../../components/form/fs/FS_Progress.js";
-import DTC_Player from "../../components/video/DTC_Player";
-
+import FS_Video_Player from "../../components/form/fs/FS_Video_Player";
 import FS_Image_Carousel from "../../components/form/fs/FS_Image_Carousel";
 import FS_Footer from "../../components/form/fs/FS_Footer";
 import fsStyle from "../../styles/Fs.module.css";
@@ -27,6 +26,9 @@ import IconButton from "@mui/material/IconButton";
 import ZoomIn from "@mui/icons-material/ZoomIn";
 import PictureAsPdf from "@mui/icons-material/PictureAsPdf";
 import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
+import DTC_Player from "../../components/video/DTC_Player";
+import Box from "@mui/material/Box";
 
 const utils = require("../../lib/utils");
 const fs_cfg = require("../../components/form/fs/config");
@@ -195,13 +197,10 @@ function Dettaglio() {
     }
   }
 
-  function OnVideoEnd2(data) {
-    console.log ("OnVideoEnd");
-    console.log (data);
+  function OnVideoEnd(data) {
+    console.log("OnVideoEnd");
+    console.log(data);
   }
-
-
-
   return (
     <>
       <DCT_Layout id="Layout" data={data} user={user}>
@@ -215,7 +214,7 @@ function Dettaglio() {
           </Breadcrumbs>
           <Grid container sx={{ alignItems: "center" }}>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
-              <Typography variant="h1" className={jnStyles.jnA1}>
+              <Typography variant="h3" className={jnStyles.jnA1}>
                 {
                   data.argomento[0].lezioniStudenteMATERIA1[0]
                     .lezioniStudenteMateria.lezioniStudenteMateria.descr
@@ -241,45 +240,60 @@ function Dettaglio() {
                 }
               />
             </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
+              <Typography variant="h3" className={jnStyles.jnA1}>
+                {
+                  data.argomento[0].lezioniStudenteMATERIA1[0]
+                    .lezioniStudenteCLASSE1[0].lezioniStudenteClasse.descr
+                }
+              </Typography>
+            </Grid>
           </Grid>
         </Container>
 
         <Container disableGutters maxWidth="false" sx={{ paddingTop: "2%" }}>
-          <Grid container spacing={{ xs: "1%", md: "1%" }}>
-            <Grid item xs={12} sm={12} md={12} lg={3} xl={3}>
-              <FS_List
-                background="#B34B9E"
-                title={
-                  data.argomento[0].lezioniStudenteMATERIA1[0]
-                    .lezioniStudenteCLASSE1[0].lezioniStudenteClasse.descr
-                }
-                arg={
-                  data.argomento[0].lezioniStudenteMATERIA1[0]
-                    .lezioniStudenteCLASSE1[0].lezioniStudenteClasse.id
-                }
-                array={setArray(
-                  data.argomento[0].lezioniStudenteMATERIA1[0]
-                    .lezioniStudenteCLASSE1[0].lezioniStudenteLezione1
-                )}
-                clickable={true}
-                type="text"
-                height="510px"
-                onClickFunction={handleClickArg}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={5} xl={5}>
+          <Stack
+            direction={{ xs: "column", sm: "column", md: "column", lg: "row" }}
+            spacing={{ xs: 0, sm: 0, md: 0, lg: 5 }}
+            mt={0}
+            mb={0}
+            p={0}
+            justifyContent="flex-start"
+            alignItems="flex-start"
+          >
+            <FS_List
+              background="#B34B9E"
+              arg={
+                data.argomento[0].lezioniStudenteMATERIA1[0]
+                  .lezioniStudenteCLASSE1[0].lezioniStudenteClasse.id
+              }
+              array={setArray(
+                data.argomento[0].lezioniStudenteMATERIA1[0]
+                  .lezioniStudenteCLASSE1[0].lezioniStudenteLezione1
+              )}
+              clickable={true}
+              type="text"
+              height="500px"
+              width="700px"
+              onClickFunction={handleClickArg}
+            />
+            <Box
+              component="div"
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
               {data.contenuti.idVideo != 0 ? (
-                // <FS_Video_Player
-                //   title={data.lezione.lezione}
-                //   url={data.contenuti.pathVideo ? data.contenuti.pathVideo : " " }
-                //   OnEnd={OnVideoEnd}
-                // />
-                <DTC_Player 
-                    video={data.contenuti.pathVideo ? data.contenuti.pathVideo : " " }
-                    OnVideoEnd={OnVideoEnd2}
-                    title={data.lezione.lezione}
-                    
-
+                <DTC_Player
+                  OnVideoEnd={OnVideoEnd}
+                  video={
+                    data.contenuti.pathVideo ? data.contenuti.pathVideo : " "
+                  }
+                  title={data.lezione.lezione}
+                  width="400"
+                  responsive={true}
                 />
               ) : (
                 <Skeleton variant="rounded" width="100%" height="50%" />
@@ -291,34 +305,37 @@ function Dettaglio() {
                   onClickFunction={handleClickImage}
                 />
               ) : (
-                <Skeleton variant="rounded" width="100%" height="50%" />
-              )}
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={12}
-              lg={4}
-              xl={4}
-              sx={{ maxHeight: "600px", overflow: "scroll" }}
-            >
-              <DCT_DownloadButton
-                id="zoomIgm"
-                src={selectedFile}
-                img="icon-zoom-in"
-              />
-              <DCT_DownloadButton
-                id="downPdf"
-                src={data.linkpdf}
-                img="icon-file-pdf"
-              />
-              {getImage(data.immagini)}
-            </Grid>
-          </Grid>
+                <></>
+              )}{" "}
+            </Box>
+            {data.contenuti.idPdf != 0 ? (
+              <Box
+                component="div"
+                sx={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: { xs: 1, sm: 1, md: 1, lg: "60%" },
+                }}
+              >
+                <DCT_DownloadButton
+                  id="zoomIgm"
+                  src={selectedFile}
+                  img="icon-zoom-in"
+                />
+                <DCT_DownloadButton
+                  id="downPdf"
+                  src={data.linkpdf}
+                  img="icon-file-pdf"
+                />
+                {getImage(data.immagini)}
+              </Box>
+            ) : (
+              <></>
+            )}
+          </Stack>
         </Container>
 
-        <Container disableGutters maxWidth="false" sx={{ marginTop: "2%" }}>
+        {/* <Container disableGutters maxWidth="false" sx={{ marginTop: "2%" }}>
           <FS_Footer
             index={data.index}
             array={
@@ -327,7 +344,7 @@ function Dettaglio() {
             }
             onClickNext={handleClickNext}
           />
-        </Container>
+        </Container> */}
       </DCT_Layout>
     </>
   );

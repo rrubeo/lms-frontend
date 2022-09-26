@@ -69,7 +69,7 @@ function HomepageStudente() {
   let { data, error } = useSWR(apiUrl, utils.getData);
 
   if (error) return <div>{error.message}</div>;
-  if (!data) return <Loader id="fs" />;  
+  if (!data) return <Loader id="fs" />;
   if (data.status != 200) return <Wip>{data.message}</Wip>;
 
   const handleSubmit = async (event, formData) => {};
@@ -82,7 +82,7 @@ function HomepageStudente() {
     <>
       <DCT_Layout id="Layout" data={data} user={user}>
         <Container disableGutters maxWidth="false">
-          <Grid container sx={{ alignItems: "center" }}>
+          <Grid container sx={{ alignItems: "center" }} spacing={0}>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
               <FS_ProfileStudent
                 profile={data.profilo}
@@ -108,7 +108,7 @@ function HomepageStudente() {
         </Container>
 
         <Container disableGutters maxWidth="false" sx={{ paddingTop: "2%" }}>
-          <Grid container>
+          <Grid container spacing={4}>
             <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
               <FS_List
                 background="#B34B9E"
@@ -119,14 +119,13 @@ function HomepageStudente() {
                 height="120px"
                 clickable={false}
               />
-
               <FS_List
                 background="#798CB4"
                 class="lessonsCard"
                 title="Ultime lezioni viste"
                 array={data.lezioniViste.splice(0, 5)}
                 type="text"
-                height="510px"
+                height="400px"
                 clickable={false}
               />
 
@@ -138,14 +137,11 @@ function HomepageStudente() {
               >
                 Classe virtuale
               </Button> */}
-
-              <Button
-                sx={{ marginTop: "3%" }}
+              <Button                
                 variant="contained"
                 classes={{ root: jnStyles.jnBT }}
                 href={"https://courses.youcanmath.com/login/index.php"}
                 target={"_blank"}
-                
               >
                 Lezioni di matematica
               </Button>

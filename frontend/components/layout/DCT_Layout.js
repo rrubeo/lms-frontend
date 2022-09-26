@@ -48,7 +48,7 @@ class DCT_Layout extends React.Component {
           <title>{process.env.component}</title>
         </Head>
         <Container maxWidth="false" className={styles.container}>
-          <Box sx={{ py: 14, px: 7, display: "flex" }}>
+          <Box sx={{ py: { xs: 9, sm: 9, md: 10, lg: 10 }, px: "1vw", display: "flex" }}>
             <DCT_Nav
               loaded={loaded}
               id="Nav"

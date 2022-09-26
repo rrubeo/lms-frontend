@@ -26,7 +26,7 @@ class FS_Video_Player extends React.Component {
 
         <ReactPlayer
           url={"https://vimeo.com/"+this.state.url}
-          controls={false}
+          controls={true}
           width='100%'
         />
       </Container>

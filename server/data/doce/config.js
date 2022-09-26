@@ -16,6 +16,11 @@ const GetMateriaScolasticaCombo = `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_MAT
 const CLOUD_API_DOC_MATERIE = "api/DomaDocenteMateriaRels";
 const DomaDocenteMateriaRels = `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_DOC_MATERIE}`;
 
+const CLOUD_API_TBL_GET_ORARIO = "api/Tables/GetDisponibilitaOrarie";
+function GetDisponibilitaOrarie(UserName) {
+  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_GET_ORARIO}/${UserName}`;
+}
+
 module.exports = {
   GetAnagraficaDocenti,
   GetDocenteMateria,

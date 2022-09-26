@@ -60,9 +60,7 @@
     text-align: left;
 }
 
-.lessonsCard{
-    width: 90%;
-    max-width: 400px;
+.lessonsCard{    
     padding: 0.5rem 1.5rem;
     border-radius: 26px;
     box-shadow: none;

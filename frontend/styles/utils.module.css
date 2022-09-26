@@ -690,6 +690,10 @@
     background-color: #aabcdf;
 
 }
+.jnChecked2 {
+    background-color: #aabcdf;
+    border: 1px solid #8A8A8A;
+}
 
 .jnCheckRoot {
     color: #798DB4;
