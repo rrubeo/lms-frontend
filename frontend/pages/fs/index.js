@@ -130,13 +130,24 @@ function HomepageStudente() {
                 clickable={false}
               />
 
-              <Button
+              {/* <Button
                 sx={{ marginTop: "3%" }}
                 variant="contained"
                 classes={{ root: jnStyles.jnBT }}
                 href="../fs/aula"
               >
                 Classe virtuale
+              </Button> */}
+
+              <Button
+                sx={{ marginTop: "3%" }}
+                variant="contained"
+                classes={{ root: jnStyles.jnBT }}
+                href={"https://courses.youcanmath.com/login/index.php"}
+                target={"_blank"}
+                
+              >
+                Lezioni di matematica
               </Button>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>

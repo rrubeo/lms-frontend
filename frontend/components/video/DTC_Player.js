@@ -15,6 +15,7 @@ class DTC_Player extends React.Component {
     super(props);
 
     this.refContainer = this.refContainer.bind(this);
+    // this.handleOnVideoEnd = this.handleOnVideoEnd.bind(this);
   }
 
   componentDidMount() {
@@ -60,6 +61,7 @@ class DTC_Player extends React.Component {
       quality: this.props.quality,
       texttrack: this.props.textTrack,
       transparent: this.props.transparent,
+      // onEnd: this.handleOnVideoEnd()
     };
   }
 
@@ -124,6 +126,7 @@ class DTC_Player extends React.Component {
    * @private
    */
   createPlayer() {
+    console.log("create player");
     const { start, volume } = this.props;
 
     this.player = new Player(this.container, this.getInitialOptions());
@@ -152,7 +155,17 @@ class DTC_Player extends React.Component {
           throw err;
         }
       }
+
     );
+
+    var OnEnd= function (data){
+
+      console.log("fine video");
+      console.log(data);
+      this.props.OnVideoEnd(data);
+    };
+
+    this.player.on('ended',OnEnd);
 
     if (typeof start === "number") {
       this.player.setCurrentTime(start);
@@ -169,6 +182,7 @@ class DTC_Player extends React.Component {
   refContainer(container) {
     this.container = container;
   }
+
 
   render() {
     const { id, className, style } = this.props;
@@ -401,7 +415,12 @@ if (process.env.NODE_ENV !== "production") {
 
     /* eslint-enable react/no-unused-prop-types */
   };
-}
+
+
+
+};
+
+
 
 DTC_Player.defaultProps = {
   autopause: true,
@@ -409,7 +428,7 @@ DTC_Player.defaultProps = {
   showByline: true,
   controls: true,
   loop: false,
-  showPortrait: true,
+  showPortrait: false,
   showTitle: true,
   muted: false,
   background: false,

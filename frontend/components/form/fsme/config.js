@@ -1,5 +1,5 @@
 //nomi di pagina
-const IMAGE_BASE_URL = "http://lmsfilesdev.cloudandpartners.com";
+const IMAGE_BASE_URL = "http://lmsfiles.bitreloaded.com";
 
 const FSME_STEP_0 = "fsme_home";
 const FSME_STEP_1 = "fsme_dettaglio";

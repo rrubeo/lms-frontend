@@ -16,7 +16,8 @@ import { defaultLogin, sessionOptions, getAuthSession } from "../../lib";
 import useUser from "../../lib/useUser";
 import FS_List from "../../components/form/fs/FS_List";
 import FS_Progress from "../../components/form/fs/FS_Progress.js";
-import FS_Video_Player from "../../components/form/fs/FS_Video_Player";
+import DTC_Player from "../../components/video/DTC_Player";
+
 import FS_Image_Carousel from "../../components/form/fs/FS_Image_Carousel";
 import FS_Footer from "../../components/form/fs/FS_Footer";
 import fsStyle from "../../styles/Fs.module.css";
@@ -194,6 +195,13 @@ function Dettaglio() {
     }
   }
 
+  function OnVideoEnd2(data) {
+    console.log ("OnVideoEnd");
+    console.log (data);
+  }
+
+
+
   return (
     <>
       <DCT_Layout id="Layout" data={data} user={user}>
@@ -261,11 +269,17 @@ function Dettaglio() {
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={5} xl={5}>
               {data.contenuti.idVideo != 0 ? (
-                <FS_Video_Player
-                  title={data.lezione.lezione}
-                  url={
-                    data.contenuti.pathVideo ? data.contenuti.pathVideo : " "
-                  }
+                // <FS_Video_Player
+                //   title={data.lezione.lezione}
+                //   url={data.contenuti.pathVideo ? data.contenuti.pathVideo : " " }
+                //   OnEnd={OnVideoEnd}
+                // />
+                <DTC_Player 
+                    video={data.contenuti.pathVideo ? data.contenuti.pathVideo : " " }
+                    OnVideoEnd={OnVideoEnd2}
+                    title={data.lezione.lezione}
+                    
+
                 />
               ) : (
                 <Skeleton variant="rounded" width="100%" height="50%" />
