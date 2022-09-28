@@ -4,6 +4,7 @@ import Loader from "../../components/layout/loader";
 import Wip from "../../components/layout/wip";
 import DCT_Layout from "../../components/layout/DCT_Layout";
 import FRM_Tutor_Ricerca from "../../components/form/tutor/FRM_Tutor_Ricerca";
+import FRM_Tutor_Orario from "../../components/form/tutor/FRM_Tutor_Orario";
 
 import { validateForm } from "../../components/form/tutor/validator";
 import useUser from "../../lib/useUser";
@@ -142,6 +143,17 @@ function Main() {
             data={data}
             onNextStep={handleNextStep}
             action={tu_cfg.TUT_STEP_0_ACTION}
+            query={pageQuery}
+          />
+        ) : (
+          <></>
+        )}
+        {pageName === tu_cfg.TUT_STEP_1 ? (
+          <FRM_Tutor_Orario
+            id={tu_cfg.FRM_TUT_STEP_1}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            data={data}
             query={pageQuery}
           />
         ) : (

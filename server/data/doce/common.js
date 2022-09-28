@@ -6,6 +6,8 @@ import {
   GetDocenteMateria,
   GetMateriaScolasticaCombo,
   DomaDocenteMateriaRels,
+  GetDisponibilitaOrarie,
+  SetDisponibilitaOrarie,
 } from "./config";
 
 const getAnagraficaDocenti = async (token, IdPersona, UserName) => {
@@ -54,6 +56,14 @@ const getDocenteMateria = async (token, IdPersona) => {
   return data;
 };
 
+const getDisponibilitaOrarie = async (token, IdPersona) => {
+  const f = await utils.getFetch(token, GetDisponibilitaOrarie(IdPersona));
+  console.log("getDisponibilitaOrarie");
+  // console.log(f);
+  if (f.status) return [];
+  return f;
+};
+
 const getMateriaScolasticaCombo = async (token) => {
   const f = await utils.getFetch(token, GetMateriaScolasticaCombo);
 
@@ -72,6 +82,15 @@ const insertDocenteMateria = async (token, body) => {
   return res;
 };
 
+const setDisponibilitaOrarie = async (token, IdPersona, body) => {
+  let res = await utils.postFetch(
+    token,
+    `${SetDisponibilitaOrarie}/${IdPersona}`,
+    body
+  );
+  return res;
+};
+
 const deleteDocenteMateria = async (token, id) => {
   return await commMain.deleteObjectURL(
     token,
@@ -85,4 +104,6 @@ module.exports = {
   getMateriaScolasticaCombo,
   insertDocenteMateria,
   deleteDocenteMateria,
+  getDisponibilitaOrarie,
+  setDisponibilitaOrarie,
 };

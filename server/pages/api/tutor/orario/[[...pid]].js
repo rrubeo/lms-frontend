@@ -81,7 +81,7 @@ async function postHandler(userLogin, postData, pid) {
 export default async function handler(req, res) {
   await utils.cors(req, res);
 
-  console.log("GESTIONE DOCENTI");
+  console.log("GESTIONE TUTOR");
   const pid = apic.getPid(req);
   const userLogin = await apic.getLogin(req);
 

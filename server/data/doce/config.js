@@ -17,13 +17,18 @@ const CLOUD_API_DOC_MATERIE = "api/DomaDocenteMateriaRels";
 const DomaDocenteMateriaRels = `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_DOC_MATERIE}`;
 
 const CLOUD_API_TBL_GET_ORARIO = "api/Tables/GetDisponibilitaOrarie";
-function GetDisponibilitaOrarie(UserName) {
-  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_GET_ORARIO}/${UserName}`;
+function GetDisponibilitaOrarie(IdPersona) {
+  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_GET_ORARIO}/${IdPersona}`;
 }
+
+const CLOUD_API_TBL_SET_ORARIO = "api/Tables/SetDisponibilitaOrarie";
+const SetDisponibilitaOrarie = `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_SET_ORARIO}`;
 
 module.exports = {
   GetAnagraficaDocenti,
   GetDocenteMateria,
   GetMateriaScolasticaCombo,
   DomaDocenteMateriaRels,
+  GetDisponibilitaOrarie,
+  SetDisponibilitaOrarie,
 };

@@ -10,9 +10,9 @@ import DCT_PianoOrario from "../../DCT_PianoOrario";
 
 import jnStyles from "../../../styles/utils.module.css";
 
-const do_cfg = require("./config");
+const tu_cfg = require("./config");
 
-class FRM_Docenti_Orario extends React.Component {
+class FRM_Tutor_Orario extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -71,7 +71,8 @@ class FRM_Docenti_Orario extends React.Component {
   }
 
   render() {
-    const linkBack = `/doce/${do_cfg.DOCE_STEP_0}`;
+    // console.log(this.props.data);
+    const linkBack = `/tutor/${tu_cfg.TUT_STEP_0}`;
     return (
       <>
         <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
@@ -127,4 +128,4 @@ class FRM_Docenti_Orario extends React.Component {
   }
 }
 
-export default FRM_Docenti_Orario;
+export default FRM_Tutor_Orario;
