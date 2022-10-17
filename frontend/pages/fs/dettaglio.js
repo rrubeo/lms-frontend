@@ -29,7 +29,6 @@ import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import DTC_Player from "../../components/video/DTC_Player";
 import Box from "@mui/material/Box";
-import { SetFineLezione } from "../../../server/data/fs/config";
 
 const utils = require("../../lib/utils");
 const fs_cfg = require("../../components/form/fs/config");
