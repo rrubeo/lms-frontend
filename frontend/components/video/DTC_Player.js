@@ -16,6 +16,7 @@ class DTC_Player extends React.Component {
 
     this.refContainer = this.refContainer.bind(this);
     this.videoEnd = this.videoEnd.bind(this);
+    this.videoLoaded= this.videoLoaded.bind(this);
   }
 
   componentDidMount() {
@@ -126,6 +127,12 @@ class DTC_Player extends React.Component {
     this.props.OnVideoEnd(data);
   }
 
+  videoLoaded(data) {
+    console.log("videoLoaded");
+    this.props.OnVideoLoaded(data);
+  }
+  
+
   /**
    * @private
    */
@@ -161,6 +168,8 @@ class DTC_Player extends React.Component {
     );
 
     this.player.on("ended", this.videoEnd);
+    this.player.on("loaded", this.videoLoaded);
+    
 
     if (typeof start === "number") {
       this.player.setCurrentTime(start);

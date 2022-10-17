@@ -29,9 +29,14 @@ import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import DTC_Player from "../../components/video/DTC_Player";
 import Box from "@mui/material/Box";
+import { SetFineLezione } from "../../../server/data/fs/config";
 
 const utils = require("../../lib/utils");
 const fs_cfg = require("../../components/form/fs/config");
+const CLOUD_BASE_URL = process.env.API_SERVER;
+const CLOUD_API_TBL_LIST_INIZIO_LEZIONE = "api/Tables/StudenteSetInizioLezione";
+const CLOUD_API_TBL_LIST_FINE_LEZIONE = "api/Tables/StudenteSetFineLezione";
+
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
@@ -197,10 +202,57 @@ function Dettaglio() {
     }
   }
 
+  async function SetFineLezione() {
+    console.log(fallback.userInfo.login);
+    const queryParams = new URLSearchParams(window.location.search);
+    const lezione = queryParams.get("lezione");
+
+    const data = await utils.fetchJson(`${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_FINE_LEZIONE}/${fallback.userInfo.login}/${lezione}`,      
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + userInfo.token,
+        UserId: userInfo.login,
+        Token: userInfo.token,
+      },
+    });
+    }
+
+    async function SetInizioLezione() {
+
+      const queryParams = new URLSearchParams(window.location.search);
+      const lezione = queryParams.get("lezione");
+      console.log(fallback.userInfo.login);
+      console.log(lezione);
+
+      const data = await utils.fetchJson(`${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_INIZIO_LEZIONE}/${fallback.userInfo.login}/${lezione}`,      
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + userInfo.token,
+          UserId: userInfo.login,
+          Token: userInfo.token,
+        },
+      });
+      }
+
   function OnVideoEnd(data) {
     console.log("OnVideoEnd");
     console.log(data);
+    SetFineLezione();
+    
   }
+
+  function OnVideoLoaded(data) {
+    console.log("OnVideoLoaded");
+    console.log(data);
+    SetInizioLezione();
+  }
+
   return (
     <>
       <DCT_Layout id="Layout" data={data} user={user}>
@@ -288,10 +340,11 @@ function Dettaglio() {
               {data.contenuti.idVideo != 0 ? (
                 <DTC_Player
                   OnVideoEnd={OnVideoEnd}
+                  OnVideoLoaded={OnVideoLoaded}
                   video={
                     data.contenuti.pathVideo ? data.contenuti.pathVideo : " "
                   }
-                  title={data.lezione.lezione}
+                  // title={data.lezione.lezione}
                   width="400"
                   responsive={true}
                 />

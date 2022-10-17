@@ -20,6 +20,7 @@ import jnStyles from "../../styles/utils.module.css";
 
 const utils = require("../../lib/utils");
 const fs_cfg = require("../../components/form/fs/config");
+const CLOUD_FILES = "http://lmsfiles.bitreloaded.com/calendariostudente/";
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
@@ -72,6 +73,7 @@ function HomepageStudente() {
   if (!data) return <Loader id="fs" />;
   if (data.status != 200) return <Wip>{data.message}</Wip>;
 
+  console.log(data);
   const handleSubmit = async (event, formData) => {};
 
   const handleDelete = async (rowData) => {};
@@ -144,6 +146,14 @@ function HomepageStudente() {
                 target={"_blank"}
               >
                 Lezioni di matematica
+              </Button>
+              <Button                
+                variant="contained"
+                classes={{ root: jnStyles.jnBT }}
+                href={CLOUD_FILES + fallback.userInfo.login + ".pdf"}
+                target={"_blank"}
+              >
+                Calendario
               </Button>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>

@@ -20,6 +20,7 @@ export default function ControlledAccordions(props) {
   };
 
   var handleClick = function (itemId, lessonId) {
+    console.log("lessonId="+lessonId);
     window.location.href =
       "../fs/dettaglio?classeArgomento=" + itemId + "&lezione=" + lessonId;
   };
@@ -153,6 +154,21 @@ export default function ControlledAccordions(props) {
 
                             <Typography
                               variant="h4"
+                               className={lezioneItem.lezioneCompletata  ? "icon-checkmark" : " "}
+                              //className={lezioneItem.lezioneCompletata }
+                              sx={{
+                                color: "#00FF90",
+                                fontSize: "20px",
+                                display: "inline",
+                                cursor: "pointer",
+                              }}
+                              
+                            >
+                              
+                            </Typography>
+
+                            <Typography
+                              variant="h4"
                               className="icon-arrow-right3"
                               sx={{
                                 color: "#000000",
@@ -163,10 +179,12 @@ export default function ControlledAccordions(props) {
                               onClick={(event) =>
                                 handleClick(
                                   subitem.lezioniStudenteClasse.id,
-                                  lezioneItem.idArgomento
+                                  lezioneItem.idLezione
                                 )
                               }
                             ></Typography>
+
+
                           </Box>
                         </ListItem>
                       ))}
