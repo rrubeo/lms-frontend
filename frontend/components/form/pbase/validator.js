@@ -77,7 +77,7 @@ async function validateForm(formData) {
       } else {
         schema = yup.object().shape({
           nome: yup.string().required("Inserire un valore per Nome contenuto."),
-          file: yup.string().required("Alleagare un file."),
+          file: yup.string().required("Allegare un file."),
         });
       }
 

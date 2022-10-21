@@ -7,14 +7,14 @@ const nextConfig = {
 
 const isProd = process.env.NODE_ENV === "production";
 
-const LMS_PROD = "http://lmsapi.bitreloaded.com";
-const LMS_DEV = "http://lmsapi.bitreloaded.com";
+const LMS_PROD = "http://lmswebapi.cloudandpartners.com";
+const LMS_DEV = "http://lmswebapidev.cloudandpartners.com";
 
-const FRONT_PROD = "http://lms.istitutojanus.it:3000";
-const FRONT_DEV = "http://lms.istitutojanus.it:3000";
+const FRONT_PROD = "http://192.168.1.3:3000";
+const FRONT_DEV = "http://localhost:3000";
 
-const SERVER_PROD = "http://lms.istitutojanus.it:3002/school/api";
-const SERVER_DEV = "http://lms.istitutojanus.it:3002/school/api";
+const SERVER_PROD = "http://192.168.1.3:3002/school";
+const SERVER_DEV = "http://localhost:3002/school";
 
 module.exports = {
   // assetPrefix: isProd ? "https://cdn.mydomain.com" : "",

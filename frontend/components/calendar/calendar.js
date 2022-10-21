@@ -34,7 +34,7 @@ export function createEventId() {
 }
 
 export default function DTC_Calendar(props) {
-  console.log(props);
+  // console.log(props);
 
   const handleDateSelect = (selectInfo) => {
     let title = prompt("Please enter a new title for your event");

@@ -58,6 +58,16 @@ function GetRuoloUtente(IdUtenteUserName, IdRuoloUtente) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_RUOLO_USER}/${IdUtenteUserName}/${IdRuoloUtente}`;
 }
 
+const CLOUD_API_TBL_APPUNTAMENTI = "api/Tables/GetElencoAppuntamentiConfermati";
+function GetAppuntamentiConfermati(UserName, DataInizio, DataFine) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_APPUNTAMENTI}/${UserName}/${DataInizio}/${DataFine}/0/0/0`;
+}
+
+const CLOUD_API_TBL_MOVE = "api/Tables/MoveRec";
+function MoveRec(id, TipoTabella, Spostamento) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_MOVE}/${id}/${TipoTabella}/${Spostamento}`;
+}
+
 module.exports = {
   CLOUD_BASE_URL,
   UserAuthenticate,
@@ -73,4 +83,6 @@ module.exports = {
   GetMenuNonStudenti,
   GetIscrizioneStudente,
   GetRuoloUtente,
+  GetAppuntamentiConfermati,
+  MoveRec,
 };

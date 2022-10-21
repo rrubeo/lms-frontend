@@ -55,7 +55,7 @@ export default function DCT_Login({ children }) {
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="og:title" content={process.env.sitetitle} />
-        <title>{process.env.component}</title>
+        <title>{process.env.sitetitle}</title>
       </Head>
       <CssBaseline />
       <Grid

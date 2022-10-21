@@ -108,7 +108,11 @@ function Main() {
       } else {
         // await reloadData();
         validationMessage(res.message, MSG_SUCCESS);
-        forceSearchUtil(gu_cfg.GU_STEP_0);
+        if (formData.idPersona) {
+          if (formData.idPersona == -1) {
+            forceSearchUtil(gu_cfg.GU_STEP_0);
+          }
+        }
       }
     } else {
       validationMessage(vres.data.message, MSG_ERROR);

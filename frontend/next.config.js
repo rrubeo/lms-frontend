@@ -5,14 +5,14 @@ const nextConfig = {
 
 const isProd = process.env.NODE_ENV === "production";
 
-const LMS_PROD = "http://lmsapi.bitreloaded.com";
-const LMS_DEV = "http://lmsapi.bitreloaded.com";
+const LMS_PROD = "http://lmswebapi.cloudandpartners.com";
+const LMS_DEV = "http://lmswebapidev.cloudandpartners.com";
 
-const FRONT_PROD = "http://lms.istitutojanus.it:3000";
-const FRONT_DEV = "http://lms.istitutojanus.it:3000";
+const FRONT_PROD = "http://192.168.1.3:3000";
+const FRONT_DEV = "http://localhost:3000";
 
-const SERVER_PROD = "http://lms.istitutojanus.it:3002/school/api";
-const SERVER_DEV = "http://lms.istitutojanus.it:3002/school/api";
+const SERVER_PROD = "http://192.168.1.3:3002/school/api";
+const SERVER_DEV = "http://localhost:3002/school/api";
 
 const withTM = require("next-transpile-modules")([
   "@fullcalendar/common",
@@ -28,17 +28,18 @@ const withTM = require("next-transpile-modules")([
 module.exports = withTM({
   optimizeFonts: false,
   images: {
-    domains: ["lmsfiles.bitreloaded.com"],
+    domains: ["lmsfilesdev.cloudandpartners.com"],
   },
   env: {
-    sitetitle: "School Project",
+    sitetitle: "JANUS - Istituto Superiore per la Formazione",
     component: "frontend",
     basepath: "/school",
     API_SERVER: isProd ? LMS_PROD : LMS_DEV,
     frontend: isProd ? FRONT_PROD : FRONT_DEV,
     server: isProd ? SERVER_PROD : SERVER_DEV,
     SECRET_COOKIE_PASSWORD: "t0Kb5wKyD1yaybCwhipeG4r7YmzGNa6c",
-    version: "1.2.0",
+    MUI_LICENCE: "d1fbab155841cc4db5a63f2e70fee1bdTz01MjYyOSxFPTE2OTc2NDI4MTExNjAsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI=",
+    version: "1.3.0",
   },
   basePath: "",
   nextConfig,

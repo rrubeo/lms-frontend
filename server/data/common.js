@@ -9,6 +9,8 @@ import {
   GetAnagraficaPersone,
   PersPersonaDats,
   GetRuoloUtente,
+  GetAppuntamentiConfermati,
+  MoveRec,
 } from "../data/config";
 
 const utils = require("../lib/utils");
@@ -213,6 +215,54 @@ const getRuoloUtente = async (token, IdUtenteUserName, IdRuoloUtente) => {
   return f;
 };
 
+const getAppuntamentiConfermati = async (
+  token,
+  UserName,
+  DataInizio,
+  DataFine
+) => {
+  const f = await utils.getFetch(
+    token,
+    GetAppuntamentiConfermati(UserName, DataInizio, DataFine)
+  );
+
+  console.log("getAppuntamentiConfermati");
+  // console.log(f);
+  if (f.status) return [];
+
+  const data = f.map((x, index) => {
+    return {
+      id: index,
+      title: x.oggetto + ": " + x.nominativoRichiedente,
+      start: x.inizioAppuntamento,
+      end: x.fineAppuntamento,
+    };
+  });
+
+  return data;
+};
+
+const moveRec = async (token, id, TipoTabella, Spostamento) => {
+  let tabella = 0;
+  switch (TipoTabella) {
+    case "GD_FRM_ProgBase_Classe_Argomento":
+      tabella = 3;
+      break;
+    case "GD_FRM_ProgBase_Argomento":
+      tabella = 2;
+      break;
+    case "GD_FRM_ProgBase_Lezione":
+      tabella = 1;
+      break;
+    default:
+      tabella = 0;
+      break;
+  }
+  const urlPost = MoveRec(id, tabella, Spostamento);
+  let res = await utils.postFetch(token, urlPost, {});
+  return res;
+};
+
 module.exports = {
   getToken,
   getFunzioniForm,
@@ -229,4 +279,6 @@ module.exports = {
   deletePersona,
   getYesNoCombo,
   getRuoloUtente,
+  getAppuntamentiConfermati,
+  moveRec,
 };

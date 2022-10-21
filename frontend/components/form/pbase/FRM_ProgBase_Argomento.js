@@ -155,13 +155,15 @@ class FRM_ProgBase_Argomento extends React.Component {
           </Stack>
         </Box>
         <DTC_DataGrid
-          id="gd_argomento"
+          id={`GD_${this.props.id}`}
           cols={this.props.data.cols}
           rows={this.props.data.rows}
           onChange={this.onChangeForm}
           onDelete={this.onDeleteRow}
           onNextStep={this.props.onNextStep}
           action={this.props.action}
+          onFireAction={this.props.onFireAction}
+          actionWidth={180}
         />
       </Stack>
     );

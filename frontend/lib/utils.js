@@ -10,7 +10,7 @@ async function fetchJson(input, init) {
   if (response.ok) {
     return data;
   }
-  console.log("fetchJson error", data);
+  // console.log("fetchJson error", data);
   throw new FetchError({
     message: response.statusText,
     response,
@@ -19,7 +19,7 @@ async function fetchJson(input, init) {
 }
 
 async function postData(url, postedData) {
-  console.log("postData URL", url);
+  // console.log("postData URL", url);
   const packBody = {
     extUrl: url,
     data: postedData,
@@ -47,8 +47,8 @@ async function postData(url, postedData) {
 }
 
 async function postFileCors(url, postedData, userInfo) {
-  console.log("postFileCors 1");
-  console.log("TIPO", typeof postedData.file);
+  // console.log("postFileCors 1");
+  // console.log("TIPO", typeof postedData.file);
   const endpoint = `${process.env.frontend}/api/apicors`;
 
   let myHeaders = new Headers();
@@ -77,15 +77,15 @@ async function postFileCors(url, postedData, userInfo) {
 
   const response = await fetch(endpoint, requestOptions);
   const result = await response.json();
-  console.log("postFileCors 2");
-  console.log(result);
+  // console.log("postFileCors 2");
+  // console.log(result);
 
   return result;
 }
 
 async function postFile(url, postedData, userInfo) {
-  console.log(url);
-  console.log("postFile");
+  // console.log(url);
+  // console.log("postFile");
 
   let formData = new FormData();
   formData.append("file", postedData.file, postedData.file.name);
@@ -113,7 +113,7 @@ async function postFile(url, postedData, userInfo) {
   let data = { url: url, message: "" };
 
   try {
-    console.log("FETCH", url);
+    // console.log("FETCH", url);
     // const data = await fetchJson(url, requestOptions);
 
     const response = await fetch(url, requestOptions);
@@ -140,7 +140,7 @@ async function postFile(url, postedData, userInfo) {
 }
 
 async function getData(url) {
-  console.log("getData URL", url);
+  // console.log("getData URL", url);
   const packBody = {
     extUrl: url,
   };
@@ -192,7 +192,7 @@ async function deleteData(url, postedData) {
 }
 
 async function fetchWithUser(url, userInfo) {
-  console.log("fetchWithUser", url);
+  // console.log("fetchWithUser", url);
   // console.log(url);
   // console.log(userInfo);
   const data = await fetchJson(url, {
@@ -263,7 +263,7 @@ function getPageIds(query) {
   let ids = [];
   if (query.param instanceof Array) {
     if (query.param.length > 1) {
-      console.log(query);
+      // console.log(query);
       for (let i = 1; i < query.param.length; i++) {
         const myArray = query.param[i].split("_");
         for (let j = 0; j < myArray.length; j++) {

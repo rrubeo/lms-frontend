@@ -54,7 +54,7 @@ async function postHandler(userLogin, postData, pid) {
       newFaor["v" + newOra] = ora ? 1 : 0;
       newOra++;
     }
-    console.log(newFaor);
+    // console.log(newFaor);
     newGise.faor.push(newFaor);
     newPiano.push(newGise);
     gise++;
