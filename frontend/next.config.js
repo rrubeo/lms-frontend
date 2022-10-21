@@ -5,6 +5,9 @@ const nextConfig = {
 
 const isProd = process.env.NODE_ENV === "production";
 
+const IMAGES_PROD = "lmsfiles.bitreloaded.com";
+const IMAGES_DEV = "lmsfilesdev.cloudandpartners.com";
+
 const LMS_PROD = "http://lmswebapi.cloudandpartners.com";
 const LMS_DEV = "http://lmswebapidev.cloudandpartners.com";
 
@@ -28,7 +31,7 @@ const withTM = require("next-transpile-modules")([
 module.exports = withTM({
   optimizeFonts: false,
   images: {
-    domains: ["lmsfilesdev.cloudandpartners.com"],
+    domains: [isProd ? IMAGES_PROD : IMAGES_DEV],
   },
   env: {
     sitetitle: "JANUS - Istituto Superiore per la Formazione",
