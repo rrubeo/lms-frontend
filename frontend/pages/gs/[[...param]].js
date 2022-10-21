@@ -91,7 +91,7 @@ function Main() {
   };
 
   const handleSubmit = async (event, formData) => {
-    console.log("handleSubmit");
+    // console.log("handleSubmit");
     // console.log(formData);
     event.preventDefault();
 
@@ -104,7 +104,11 @@ function Main() {
       } else {
         await reloadData();
         validationMessage(res.message, MSG_SUCCESS);
-        forceSearchUtil(gs_cfg.GSTU_STEP_0);
+        if (formData.idPersona) {
+          if (formData.idPersona == -1) {
+            forceSearchUtil(gs_cfg.GSTU_STEP_0);
+          }
+        }
       }
     } else {
       validationMessage(vres.data.message, MSG_ERROR);

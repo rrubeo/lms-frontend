@@ -1,5 +1,6 @@
 import * as React from "react";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+// import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGridPro, GridToolbar } from "@mui/x-data-grid-pro";
 import {
   randomInt,
   randomUserName,
@@ -31,6 +32,8 @@ class DTC_DataGrid extends React.Component {
     this.handleAddClick = this.handleAddClick.bind(this);
     this.handleRouteClick = this.handleRouteClick.bind(this);
     this.handleUpdateClick = this.handleUpdateClick.bind(this);
+    this.handleMoveUpClick = this.handleMoveUpClick.bind(this);
+    this.handleMoveDownClick = this.handleMoveDownClick.bind(this);
   }
 
   getActiveAction(cfgAction) {
@@ -51,6 +54,12 @@ class DTC_DataGrid extends React.Component {
             return elem;
           case gd_cfg.GRID_UPDATE_ACTION:
             elem.callBack = this.handleUpdateClick;
+            return elem;
+          case gd_cfg.GRID_MOVEUP_ACTION:
+            elem.callBack = this.handleMoveUpClick;
+            return elem;
+          case gd_cfg.GRID_MOVEDOWN_ACTION:
+            elem.callBack = this.handleMoveDownClick;
             return elem;
         }
       } else {
@@ -122,6 +131,28 @@ class DTC_DataGrid extends React.Component {
     };
   }
 
+  handleMoveUpClick(params, event, route) {
+    // console.log("MOVE UP GRID");
+    // console.log(params);
+    const data = {
+      gd: this.props.id,
+      action: 1,
+      row: params.row,
+    };
+    this.props.onFireAction(params.id, data);
+  }
+
+  handleMoveDownClick(params, event, route) {
+    // console.log("MOVE DOWN GRID");
+    // console.log(params);
+    const data = {
+      gd: this.props.id,
+      action: 2,
+      row: params.row,
+    };
+    this.props.onFireAction(params.id, data);
+  }
+
   handleUpdateClick(params, event, route) {
     event.defaultMuiPrevented = true;
     this.setState({ currentId: params.id });
@@ -191,9 +222,10 @@ class DTC_DataGrid extends React.Component {
   }
 
   render() {
+    // console.log(this.props.id);
     return (
       <Box component="div" sx={{ display: "inline", overflow: "hidden" }}>
-        <DataGrid
+        <DataGridPro
           scrollbarSize={1000}
           autoHeight
           pagination

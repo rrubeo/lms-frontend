@@ -49,10 +49,12 @@ class SEC_PianoStudi extends React.Component {
       prgbaseValue: { label: "", id: 0 },
       prgbaseList: [{ label: "Seleziona", id: 0 }],
       prgbaseLabel: "Programma Base",
+      prgbaseCurrent: 0,
       classeId: "cb_classe",
       classeValue: { label: "", id: 0 },
       classeList: [{ label: "Seleziona", id: 0 }],
       classeLabel: "Classe Argomento",
+      classeCurrent: 0,
       argomentoId: "cb_argomento",
       argomentoValue: { label: "", id: 0 },
       argomentoList: [{ label: "Seleziona", id: 0 }],
@@ -91,9 +93,9 @@ class SEC_PianoStudi extends React.Component {
         }),
       });
       // console.log(data);
-      this.changeChildPrgbaseId.current.setIndex(0);
-      this.changeChildClasseId.current.setIndex(0);
-      this.changeChildArgomentoId.current.setIndex(0);
+      this.changeChildPrgbaseId.current.setIndex(this.state.prgbaseCurrent);
+      // this.changeChildClasseId.current.setIndex(this.state.classeCurrent);
+      // this.changeChildArgomentoId.current.setIndex(0);
 
       this.setState({
         prgbaseLabel: data.pbase_label,
@@ -126,17 +128,21 @@ class SEC_PianoStudi extends React.Component {
 
       switch (endpoint) {
         case API_CLASSE:
+          // console.log("Reset Classe");
           this.changeChildClasseId.current.handleReset();
+          this.changeChildClasseId.current.setIndex(this.state.classeCurrent);
           this.changeChildArgomentoId.current.handleReset();
           this.changeChildLezioniId.current.handleReset();
           this.setState({ classeList: data, lezioniList: [] });
           break;
         case API_ARGOMENTO:
+          // console.log("Reset Argomento");
           this.changeChildArgomentoId.current.handleReset();
           this.changeChildLezioniId.current.handleReset();
           this.setState({ argomentoList: data, lezioniList: [] });
           break;
         case API_LEZIONE:
+          // console.log("Reset Lezione");
           this.changeChildLezioniId.current.handleReset();
           this.setState({ lezioniList: data });
           break;
@@ -196,13 +202,22 @@ class SEC_PianoStudi extends React.Component {
   }
 
   async onChangeForm(id, data) {
+    // console.log("onChangeForm", id);
     switch (id) {
       case this.state.prgbaseId:
-        this.setState({ prgbaseValue: data });
+        this.setState({
+          prgbaseValue: data,
+          prgbaseCurrent:
+            this.state.prgbaseCurrent == data.id
+              ? this.state.prgbaseCurrent
+              : data.id,
+          classeCurrent:
+            this.state.prgbaseCurrent == data.id ? this.state.classeCurrent : 0,
+        });
         await this.loadComboClasse(API_CLASSE, data);
         break;
       case this.state.classeId:
-        this.setState({ classeValue: data });
+        this.setState({ classeValue: data, classeCurrent: data.id });
         await this.loadComboClasse(API_ARGOMENTO, data);
         break;
       case this.state.argomentoId:

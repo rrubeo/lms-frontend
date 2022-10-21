@@ -172,6 +172,19 @@ function Main() {
     }
   };
 
+  const onActionRow = async (id, data) => {
+    // console.log(id);
+    // console.log(data);
+    // console.log(apiUrl);
+    const res = await utils.postData(apiUrl, data);
+    if (res.status != 200) {
+      validationMessage(res.message, MSG_ERROR);
+    } else {
+      await reloadData();
+      validationMessage(res.message, MSG_SUCCESS);
+    }
+  };
+
   return (
     <DCT_Layout id="Layout" data={data} user={user}>
       <section>
@@ -231,6 +244,7 @@ function Main() {
             action={pb_cfg.PBASE_STEP_2_ACTION}
             query={pageQuery}
             pbaseId={subIndex}
+            onFireAction={onActionRow}
           />
         ) : (
           <></>
@@ -246,6 +260,7 @@ function Main() {
             action={pb_cfg.PBASE_STEP_3_ACTION}
             query={pageQuery}
             pbaseId={subIndex}
+            onFireAction={onActionRow}
           />
         ) : (
           <></>
@@ -261,6 +276,7 @@ function Main() {
             action={pb_cfg.PBASE_STEP_4_ACTION}
             query={pageQuery}
             pbaseId={subIndex}
+            onFireAction={onActionRow}
           />
         ) : (
           <></>

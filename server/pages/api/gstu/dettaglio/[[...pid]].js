@@ -97,7 +97,7 @@ async function postHandler(userLogin, postData, pid) {
   let res = { status: 200, message: "OK" };
   let p3 = {};
   console.log("************ RICEVUTA ISCRIZIONE");
-  console.log(postData);
+  // console.log(postData);
   switch (postData.tab) {
     case 0:
       let poba = {

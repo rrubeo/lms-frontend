@@ -12,7 +12,7 @@ import {
   insertLezione,
 } from "../../../../data/pbase/common";
 
-import { getFunzioniForm } from "../../../../data/common";
+import { getFunzioniForm, moveRec } from "../../../../data/common";
 
 async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
@@ -47,23 +47,42 @@ async function deleteHandler(userLogin, deleteData) {
 }
 
 async function postHandler(userLogin, postData, pid) {
-  let poba = {
-    leziDescr: postData.lezione,
-    leziSysuser: userLogin.userID,
-    leziFkArgoId: pid,
-    leziPathVideo: "asasdasd",
-    leziPathDocumento: "asdasd",
-  };
-  console.log(poba);
-  let p3 = await insertLezione(userLogin.token, poba);
-  console.log(p3);
+  let res = { status: 200 };
+  let p3 = {};
+  if (postData.hasOwnProperty("gd")) {
+    p3 = await moveRec(
+      userLogin.token,
+      postData.row.id,
+      postData.gd,
+      postData.action
+    );
+    console.log(p3);
 
-  const msg =
-    process.env.NODE_ENV === "production"
-      ? "OK"
-      : JSON.stringify(poba) + " RESULT:" + JSON.stringify(p3);
+    const msg =
+      process.env.NODE_ENV === "production"
+        ? "OK"
+        : JSON.stringify(postData) + " RESULT:" + JSON.stringify(p3);
 
-  let res = { status: 200, message: msg };
+    res.message = msg;
+  } else {
+    let poba = {
+      leziDescr: postData.lezione,
+      leziSysuser: userLogin.userID,
+      leziFkArgoId: pid,
+      leziPathVideo: "asasdasd",
+      leziPathDocumento: "asdasd",
+    };
+    console.log(poba);
+    let p3 = await insertLezione(userLogin.token, poba);
+    console.log(p3);
+
+    const msg =
+      process.env.NODE_ENV === "production"
+        ? "OK"
+        : JSON.stringify(poba) + " RESULT:" + JSON.stringify(p3);
+
+    res.message = msg;
+  }
   if (p3.status) {
     res.status = p3.status;
     res.message = p3.statusText;

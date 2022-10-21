@@ -1,7 +1,8 @@
 import React from "react";
 import useUser from "../lib/useUser";
 import { useRouter } from "next/router";
-import { fetchJson, FetchError } from "../lib";
+import Head from "next/head";
+import CssBaseline from "@mui/material/CssBaseline";
 import Image from "next/image";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -23,6 +24,12 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="og:title" content={process.env.sitetitle} />
+        <title>{process.env.sitetitle}</title>
+      </Head>
+      <CssBaseline />
       <Image alt="home" src="/images/login_bkg.png" layout="fill" priority />
       <Grid
         container

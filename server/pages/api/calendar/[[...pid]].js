@@ -8,7 +8,11 @@ import {
   usermenu,
 } from "../../../data/data_sidemenu";
 
-import { getFunzioniForm, getRuoloUtente } from "../../../data/common";
+import {
+  getFunzioniForm,
+  getRuoloUtente,
+  getAppuntamentiConfermati,
+} from "../../../data/common";
 
 let todayStr = new Date().toISOString().replace(/T.*$/, ""); // YYYY-MM-DD of today
 
@@ -36,6 +40,12 @@ async function getHandler(userLogin, pid) {
   );
 
   const db_ruolo = await getRuoloUtente(userLogin.token, userLogin.userID, 0);
+  const db_appuntamenti = await getAppuntamentiConfermati(
+    userLogin.token,
+    userLogin.userID,
+    "2022-10-01",
+    "2100-10-01"
+  );
 
   const data = {
     title: "Calendario",
@@ -43,7 +53,7 @@ async function getHandler(userLogin, pid) {
     navmenu: db_ruolo[0].idRuolo == 6 ? navmenustudenti : navmenu,
     usermenu: usermenu,
     funzioni: db_funzioni,
-    inevents: INITIAL_EVENTS,
+    inevents: db_appuntamenti,
   };
 
   return data;

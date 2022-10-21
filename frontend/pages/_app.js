@@ -17,6 +17,9 @@ import { Toaster } from "react-hot-toast";
 import useUser from "../lib/useUser";
 import ErrorBoundary from "../components/ErrorBoundary";
 import { PAGE_LOGIN } from "../lib/redirect";
+import { LicenseInfo } from '@mui/x-license-pro';
+
+LicenseInfo.setLicenseKey(process.env.MUI_LICENCE);
 
 const clientSideEmotionCache = createEmotionCache();
 

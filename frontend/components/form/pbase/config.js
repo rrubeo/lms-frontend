@@ -1,8 +1,9 @@
-import { array } from "yup/lib/locale";
 import {
   GRID_ROUTE_ACTION,
   GRID_DELETE_ACTION,
   GRID_ADD_ACTION,
+  GRID_MOVEUP_ACTION,
+  GRID_MOVEDOWN_ACTION,
 } from "../../grid/config";
 
 //nomi di pagina
@@ -67,12 +68,24 @@ const PBASE_STEP_2_API = `${process.env.server}/pbase/classe`;
 const PBASE_STEP_2_ACTION = [
   {
     id: "1",
+    title: "Move Up",
+    icon: "icon-menu4",
+    callBack: GRID_MOVEUP_ACTION,
+  },
+  {
+    id: "2",
+    title: "Move Down",
+    icon: "icon-menu3",
+    callBack: GRID_MOVEDOWN_ACTION,
+  },
+  {
+    id: "3",
     title: "Elimina",
     icon: "icon-delete2",
     callBack: GRID_DELETE_ACTION,
   },
   {
-    id: "2",
+    id: "4",
     title: "Argomento",
     icon: "icon-arrow-right4",
     callBack: GRID_ROUTE_ACTION,
@@ -85,12 +98,24 @@ const PBASE_STEP_3_API = `${process.env.server}/pbase/argomento`;
 const PBASE_STEP_3_ACTION = [
   {
     id: "1",
+    title: "Move Up",
+    icon: "icon-menu4",
+    callBack: GRID_MOVEUP_ACTION,
+  },
+  {
+    id: "2",
+    title: "Move Down",
+    icon: "icon-menu3",
+    callBack: GRID_MOVEDOWN_ACTION,
+  },
+  {
+    id: "3",
     title: "Elimina",
     icon: "icon-delete2",
     callBack: GRID_DELETE_ACTION,
   },
   {
-    id: "2",
+    id: "4",
     title: "Lezione",
     icon: "icon-arrow-right4",
     callBack: GRID_ROUTE_ACTION,
@@ -103,12 +128,24 @@ const PBASE_STEP_4_API = `${process.env.server}/pbase/lezione`;
 const PBASE_STEP_4_ACTION = [
   {
     id: "1",
+    title: "Move Up",
+    icon: "icon-menu4",
+    callBack: GRID_MOVEUP_ACTION,
+  },
+  {
+    id: "2",
+    title: "Move Down",
+    icon: "icon-menu3",
+    callBack: GRID_MOVEDOWN_ACTION,
+  },
+  {
+    id: "3",
     title: "Elimina",
     icon: "icon-delete2",
     callBack: GRID_DELETE_ACTION,
   },
   {
-    id: "2",
+    id: "4",
     title: "Contenuto",
     icon: "icon-arrow-right4",
     callBack: GRID_ROUTE_ACTION,

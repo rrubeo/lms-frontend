@@ -33,7 +33,7 @@ class FRM_ProgBase_Classe_Argomento extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
     const data = {
-      id: pb_cfg.FRM_PBASE_STEP_2,
+      id: this.props.id,
       classe: this.state.classeValue,
     };
     await this.props.onSubmit(event, data);
@@ -63,7 +63,7 @@ class FRM_ProgBase_Classe_Argomento extends React.Component {
     console.log(data);
 
     const rowData = {
-      id: pb_cfg.FRM_PBASE_STEP_2,
+      id: this.props.id,
       key: data,
     };
     this.props.onDelete(rowData);
@@ -85,7 +85,7 @@ class FRM_ProgBase_Classe_Argomento extends React.Component {
         >
           <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
           <DCT_Breadcrumbs
-            id={`bread_${pb_cfg.FRM_PBASE_STEP_2}`}
+            id={`bread_${this.props.id}`}
             list={this.props.data.bread}
             page={[pb_cfg.PBASE_STEP_1, pb_cfg.PBASE_STEP_2]}
             pageId={this.props.pbaseId}
@@ -99,7 +99,7 @@ class FRM_ProgBase_Classe_Argomento extends React.Component {
         />
         <Box
           component="form"
-          id={pb_cfg.FRM_PBASE_STEP_2}
+          id={this.props.id}
           onSubmit={this.handleSubmit}
           onReset={this.handleReset}
           sx={{ display: "inline" }}
@@ -142,13 +142,15 @@ class FRM_ProgBase_Classe_Argomento extends React.Component {
           </Stack>
         </Box>
         <DTC_DataGrid
-          id="gd_classe"
+          id={`GD_${this.props.id}`}
           cols={this.props.data.cols}
           rows={this.props.data.rows}
           onChange={this.onChangeForm}
           onDelete={this.onDeleteRow}
           onNextStep={this.props.onNextStep}
           action={this.props.action}
+          onFireAction={this.props.onFireAction}
+          actionWidth={180}
         />
       </Stack>
     );

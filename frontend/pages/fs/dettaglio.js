@@ -36,7 +36,6 @@ const CLOUD_BASE_URL = process.env.API_SERVER;
 const CLOUD_API_TBL_LIST_INIZIO_LEZIONE = "api/Tables/StudenteSetInizioLezione";
 const CLOUD_API_TBL_LIST_FINE_LEZIONE = "api/Tables/StudenteSetFineLezione";
 
-
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
   res,
@@ -93,7 +92,7 @@ function Dettaglio() {
   if (error) return <div>{error.message}</div>;
   if (!data) return <Loader id="home" />;
   if (data.status != 200) return <div>{data.message}</div>;
-  console.log(data);
+  // console.log(data);
 
   const breadcrumbs = [
     <Link
@@ -116,7 +115,7 @@ function Dettaglio() {
   }
 
   function handleOnClick(event, path) {
-    console.log(path);
+    // console.log(path);
     window.open(path, "page");
     // window.location.href = path;
   }
@@ -168,7 +167,7 @@ function Dettaglio() {
   }
 
   function handleClickImage(index) {
-    console.log("handleClickImage");
+    // console.log("handleClickImage");
     for (var i = 0; i < data.immagini.length; i++) {
       document.getElementById("imgCarousel" + i).style.borderColor = "#000000";
       if (i == index) {
@@ -202,31 +201,12 @@ function Dettaglio() {
   }
 
   async function SetFineLezione() {
-    console.log(fallback.userInfo.login);
+    // console.log(fallback.userInfo.login);
     const queryParams = new URLSearchParams(window.location.search);
     const lezione = queryParams.get("lezione");
 
-    const data = await utils.fetchJson(`${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_FINE_LEZIONE}/${fallback.userInfo.login}/${lezione}`,      
-    {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + userInfo.token,
-        UserId: userInfo.login,
-        Token: userInfo.token,
-      },
-    });
-    }
-
-    async function SetInizioLezione() {
-
-      const queryParams = new URLSearchParams(window.location.search);
-      const lezione = queryParams.get("lezione");
-      console.log(fallback.userInfo.login);
-      console.log(lezione);
-
-      const data = await utils.fetchJson(`${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_INIZIO_LEZIONE}/${fallback.userInfo.login}/${lezione}`,      
+    const data = await utils.fetchJson(
+      `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_FINE_LEZIONE}/${fallback.userInfo.login}/${lezione}`,
       {
         method: "POST",
         headers: {
@@ -236,19 +216,40 @@ function Dettaglio() {
           UserId: userInfo.login,
           Token: userInfo.token,
         },
-      });
       }
+    );
+  }
+
+  async function SetInizioLezione() {
+    const queryParams = new URLSearchParams(window.location.search);
+    const lezione = queryParams.get("lezione");
+    // console.log(fallback.userInfo.login);
+    // console.log(lezione);
+
+    const data = await utils.fetchJson(
+      `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_INIZIO_LEZIONE}/${fallback.userInfo.login}/${lezione}`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + userInfo.token,
+          UserId: userInfo.login,
+          Token: userInfo.token,
+        },
+      }
+    );
+  }
 
   function OnVideoEnd(data) {
-    console.log("OnVideoEnd");
-    console.log(data);
+    // console.log("OnVideoEnd");
+    // console.log(data);
     SetFineLezione();
-    
   }
 
   function OnVideoLoaded(data) {
-    console.log("OnVideoLoaded");
-    console.log(data);
+    // console.log("OnVideoLoaded");
+    // console.log(data);
     SetInizioLezione();
   }
 

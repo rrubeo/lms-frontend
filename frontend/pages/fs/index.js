@@ -73,7 +73,7 @@ function HomepageStudente() {
   if (!data) return <Loader id="fs" />;
   if (data.status != 200) return <Wip>{data.message}</Wip>;
 
-  console.log(data);
+  // console.log(data);
   const handleSubmit = async (event, formData) => {};
 
   const handleDelete = async (rowData) => {};

@@ -12,7 +12,7 @@ import {
   insertClasseArgomento,
 } from "../../../../data/pbase/common";
 
-import { getFunzioniForm } from "../../../../data/common";
+import { getFunzioniForm, moveRec } from "../../../../data/common";
 
 async function getHandler(userLogin, pid) {
   const db_rows = await getClasseArgomento(userLogin.token, pid);
@@ -41,24 +41,48 @@ async function getHandler(userLogin, pid) {
 }
 
 async function postHandler(userLogin, postData, pid) {
-  let poba = {
-    clarDescr: postData.classe,
-    clarSysuser: userLogin.userID,
-    clarFkPobaId: pid,
-  };
-  let p3 = await insertClasseArgomento(userLogin.token, poba);
-  console.log(p3);
+  let res = { status: 200 };
+  let p3 = {};
+  // console.log(postData);
 
-  const msg =
-    process.env.NODE_ENV === "production"
-      ? "OK"
-      : JSON.stringify(poba) + " RESULT:" + JSON.stringify(p3);
+  if (postData.hasOwnProperty("gd")) {
+    p3 = await moveRec(
+      userLogin.token,
+      postData.row.id,
+      postData.gd,
+      postData.action
+    );
+    console.log(p3);
 
-  let res = { status: 200, message: msg };
+    const msg =
+      process.env.NODE_ENV === "production"
+        ? "OK"
+        : JSON.stringify(postData) + " RESULT:" + JSON.stringify(p3);
+
+    res.message = msg;
+  } else {
+    let poba = {
+      clarDescr: postData.classe,
+      clarSysuser: userLogin.userID,
+      clarFkPobaId: pid,
+    };
+
+    p3 = await insertClasseArgomento(userLogin.token, poba);
+    console.log(p3);
+
+    const msg =
+      process.env.NODE_ENV === "production"
+        ? "OK"
+        : JSON.stringify(poba) + " RESULT:" + JSON.stringify(p3);
+
+    res.message = msg;
+  }
+
   if (p3.status) {
     res.status = p3.status;
     res.message = p3.statusText;
   }
+
   return res;
 }
 

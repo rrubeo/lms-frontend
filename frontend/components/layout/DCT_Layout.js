@@ -45,7 +45,7 @@ class DCT_Layout extends React.Component {
         <Head>
           <link rel="icon" href="/favicon.ico" />
           <meta name="og:title" content={process.env.sitetitle} />
-          <title>{process.env.component}</title>
+          <title>{process.env.sitetitle}</title>
         </Head>
         <Container maxWidth="false" className={styles.container}>
           <Box sx={{ py: { xs: 9, sm: 9, md: 10, lg: 10 }, px: "1vw", display: "flex" }}>
