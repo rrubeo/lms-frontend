@@ -148,7 +148,7 @@ function Dettaglio() {
   function setArray(list) {
     const data = list.map((x) => {
       return {
-        id: x.idArgomento,
+        id: x.idLezione,
         name: x.lezione,
       };
     });
