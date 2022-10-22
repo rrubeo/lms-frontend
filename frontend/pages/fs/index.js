@@ -17,10 +17,11 @@ import FS_List from "../../components/form/fs/FS_List";
 import { PAGE_401 } from "../../lib/redirect";
 import fsStyle from "../../styles/Fs.module.css";
 import jnStyles from "../../styles/utils.module.css";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 const utils = require("../../lib/utils");
 const fs_cfg = require("../../components/form/fs/config");
-const CLOUD_FILES = "http://lmsfiles.bitreloaded.com/calendariostudente/";
+const CLOUD_FILES = process.env.cloudfiles;
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
