@@ -1,6 +1,8 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import { Link } from "react-router-dom";
+import { Image } from '@nextui-org/react';
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
@@ -24,8 +26,22 @@ class FS_List extends React.Component {
       padding: this.props.type == "avatar" ? "0!important" : null,
       arg: this.props.arg ? this.props.arg : null,
       width: this.props.width ? this.props.width : 1,
+      showImage: this.props.showImage ? this.props.showImage : false,
+      imageLink: this.props.imageLink ? this.props.imageLink : ""
     };
   }
+
+  handleListItemClick = function (item) {
+    console.log(item)
+    window.location.href = item.linkUrl
+  };
+
+  handleListItemCalendarClick = function (item) {
+    console.log(item)
+    //TODO: fare controllo crediti utente tramite API
+    // 
+    window.location.href = this.state.imageLink+"&username="+item.username
+  };
 
   render() {
     const queryParams = new URLSearchParams(window.location.search);
@@ -75,14 +91,18 @@ class FS_List extends React.Component {
         >
           {this.props.type == "text"
             ? this.state.list.map((item) => (
-                <ListItem
+
+              <ListItem
                   key={item.id}
                   sx={{ paddingLeft: 0, paddingRight: 0 }}
-                >
+
+                  onClick={() => this.handleListItemClick(item)}
+                >              
+
                   <ListItemText
                     primaryTypographyProps={getPrimaryPropsCSS(item.id)}
                     primary={item.name ? item.name : "Single-line item"}
-                  />
+                  />                               
                   {this.props.clickable ? (
                     <ListItemIcon
                       sx={{
@@ -121,6 +141,21 @@ class FS_List extends React.Component {
                         : item.name + " " + item.surname
                     }
                   />
+                  {this.state.showImage ? (
+                    <Image 
+                      priority="true"
+                      src="/images/janus_calendar.png"
+                      alt="Prenota appuntamento"
+                      width="30px"
+                      height="30px"
+                      layout="intrinsic"
+                      onClick={() => this.handleListItemCalendarClick(item)}
+                      style={{cursor: 'pointer'}}
+                    />
+                  ): (
+                    <Image />
+                  )}
+
                 </ListItem>
               ))}
         </List>

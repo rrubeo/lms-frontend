@@ -8,6 +8,8 @@ import {
   GetTutorAula,
   GetLezione,
   GetPDF,
+  GetDisponibilitaCrediti,
+  GetDisponibilitaCalendario 
 } from "../../data/fs/config";
 
 const utils = require("../../lib/utils");
@@ -84,6 +86,7 @@ const getDocentiAula = async (token, idRuolo, idIscrizione, username) => {
       id: x.idMateria,
       name: x.nomeDocenteTutor,
       surname: x.cognomeDocenteTutor,
+      username: x.userNameDocenteTutor,
       subject: x.materia,
       roleId: x.idRuolo,
       imagePath: x.pathImmagineDocenteTutor,
@@ -131,6 +134,57 @@ const getPDF = async (token, idContenuto) => {
   return data;
 };
 
+const getDisponibilitaCrediti = async (token, idIscrizione, numMinimoMinuti, numMaxMinuti) => {
+  const f = await utils.getFetch(
+    token,
+    GetDisponibilitaCrediti(idIscrizione, numMinimoMinuti, numMaxMinuti)
+  );
+  console.log("getDisponibilitaCrediti");
+  console.log(f);
+  if (f.status) return [];
+  //TODO: verificare mapping
+/*
+  const data = f.map((x) => {
+    return {
+      id: x.idMateria,
+      name: x.nomeDocenteTutor,
+      surname: x.cognomeDocenteTutor,
+      subject: x.materia,
+      roleId: x.idRuolo,
+      imagePath: x.pathImmagineDocenteTutor,
+    };
+  });
+ */ 
+  const data = f;
+  return data;
+};
+
+const getDisponibilitaCalendario = async (token, usernameDocente, date, numeroGiorniCalendario, idIscrizione, idIscrizioneAppuntamento, idDocenteStudente) => {
+  const f = await utils.getFetch(
+    token,
+    GetDisponibilitaCalendario(usernameDocente, date, numeroGiorniCalendario, idIscrizione, idIscrizioneAppuntamento, idDocenteStudente)
+  );
+  console.log("getDisponibilitaCalendario");
+  console.log(f);
+  if (f.status) return [];
+  //TODO: verificare mapping
+/*
+  const data = f.map((x) => {
+    return {
+      id: x.idMateria,
+      name: x.nomeDocenteTutor,
+      surname: x.cognomeDocenteTutor,
+      roleId: x.idRuolo,
+      imagePath: x.pathImmagineDocenteTutor,
+    };
+  });
+*/
+  const data = f;
+  
+  return data;
+};
+
+
 module.exports = {
   getIscrizioneStudente,
   getLezioni,
@@ -140,4 +194,6 @@ module.exports = {
   getLezione,
   getPDF,
   getIscrizioneStudenteMulti,
+  getDisponibilitaCrediti,
+  getDisponibilitaCalendario
 };

@@ -14,6 +14,7 @@ import {
   getAppuntamentiConfermati,
 } from "../../../data/common";
 
+
 let todayStr = new Date().toISOString().replace(/T.*$/, ""); // YYYY-MM-DD of today
 
 const INITIAL_EVENTS = [

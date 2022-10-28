@@ -68,17 +68,26 @@ function Aula() {
       <DCT_Layout id="Layout" data={data} user={user}>
         <Container disableGutters maxWidth="false" sx={{ minHeight: "800px" }}>
           <Grid container>
-            <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
+            <Grid item xs={12} sm={12} md={12} lg={5} xl={5}>
               <FS_List
                 title="I miei insegnanti"
                 array={data.docenti}
                 type="avatar"
+                showImage={true}
+                imageLink="/fs/calendarreservation?destType=docente"
               />
             </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={4} xl={4}>
-              <FS_List title="Il mio tutor" array={data.tutor} type="avatar" />
+            <Grid item xs={12} sm={12} md={12} lg={2} xl={2}></Grid>
+            <Grid item xs={12} sm={12} md={12} lg={5} xl={5}>
+              <FS_List 
+                title="Il mio tutor" 
+                array={data.tutor} 
+                type="avatar"
+                showImage={true}
+                imageLink="/fs/calendarreservation?destType=tutor"
+              />
             </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={4} xl={4}></Grid>
+            
           </Grid>
         </Container>
       </DCT_Layout>
