@@ -37,7 +37,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   res,
   query,
 }) {
-  // console.dir(query);
+  //console.dir(query);
   let fallback = {
     authenticated: false,
     userInfo: defaultLogin,
@@ -63,7 +63,8 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   fallback.apiUrl =
     call_cfg.CALL_API +
     "?roomId=" +
-    query.roomId;
+    query.param[0];
+
 
   return {
     props: {
@@ -142,28 +143,34 @@ function Main() {
 
   // console.log(token);
 
-  const validRoomId = data.appuntamento != null;
+  const validRoomId = data.appuntamento.appuId != null;
   var activeRoom =false;
+  var validUser = false;
   if (validRoomId){
     activeRoom = (new Date() >=new Date(data.appuntamento.appuDataInizioAppuntamento) && new Date()<=new Date(data.appuntamento.appuDataFineAppuntamento));
   }
+  if (activeRoom){
+    validUser = (userInfo.login.toUpperCase() === data.appuntamento.appuFkUtntRichiedente.toUpperCase() || userInfo.login.toUpperCase() === data.appuntamento.appuFkUtntRichiesta.toUpperCase())
+  }
+
   console.log(validRoomId);
   console.log(activeRoom);
+  console.log(validUser);
 
   return (
     <DCT_Layout id="Layout" data={data} user={user}>
       <Container disableGutters maxWidth="false">
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
             <Typography variant="h3" className={jnStyles.jnA1}>
-              {
-                data.appuntamento.appuTitolo
-              }
+              
+                 {validRoomId && activeRoom && validUser ? data.appuntamento.appuTitolo : ''}
+              
             </Typography>
           </Grid>
       </Container>
       <Container disableGutters maxWidth="false">
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-            {validRoomId && activeRoom ? (
+            {validRoomId && activeRoom && validUser ? (
             <JaaSMeeting
               getIFrameRef = { iframeRef => { iframeRef.style.height = '700px'; } }
               appId = { JAAS_ID }
@@ -191,15 +198,19 @@ function Main() {
                         'videoquality', 'stats', 'shortcuts',
                         'tileview'
                     ]
-                  
+              
               }}
+
+              
               // spinner = { SpinnerView }
               moderator= {false}
             />) : (
               <Typography variant="h3" className={jnStyles.jnA1}>
               
-                {validRoomId && !activeRoom ? 'Fuori orario appuntamento' : 'Non è stata trovata nessuna lezione valida'
-              }
+                {validRoomId && !activeRoom ? 'Fuori orario appuntamento' : ''}
+                <><br></br></>
+                {validRoomId && activeRoom && !validUser ? 'Utente non abilitato' : ''}
+
             </Typography>
             )}
           </Grid>      
