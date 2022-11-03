@@ -1,0 +1,9 @@
+Esempio di comando di pubblicazione
+
+Server
+docker tag lmswebbe:1.3.1.dev rrubeo/lmswebbe:1.3.1.dev
+docker push rrubeo/lmswebbe:1.3.1.dev
+
+Frontend
+docker tag lmswebfe:1.3.1.dev rrubeo/lmswebfe:1.3.1.dev
+docker push rrubeo/lmswebfe:1.3.1.dev

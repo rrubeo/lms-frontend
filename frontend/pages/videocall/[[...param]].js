@@ -55,14 +55,22 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     };
   }
 
-  fallback.pageName = "home";
+  // var roomIdParam = "0";
+  // if (typeof query.param !== undefined){
+  //   // roomIdParam =  query.param[0]
+  //   console.log("OK");
+  // };
 
+
+  // console.log(roomIdParam);
+
+  fallback.pageName = "home";
   fallback.authenticated = true;
   fallback.userInfo = authSession;
   fallback.pageQuery = query;
   fallback.apiUrl =
     call_cfg.CALL_API +
-    "?roomId=" +
+    "?roomId=" + 
     query.param[0];
 
 
@@ -97,8 +105,10 @@ function Main() {
     };
     await mutate(apiUrl, utils.getData(apiUrl), options);
   };
+  
   console.log(apiUrl);
-   console.log(data);
+  console.log(data);
+  console.log(fallback.pageQuery);
 
   var jsonwebtoken = require('jsonwebtoken');
   var roomId = data.appuntamento.appuRoomID;
@@ -114,13 +124,13 @@ function Main() {
           name,
           avatar,
           email: email,
-          moderator: 'true'
+          moderator: 'false'
         },
         features: {
-          livestreaming: 'true',
-          recording: 'true',
-          transcription: 'true',
-          "outbound-call": 'true'
+          livestreaming: 'false',
+          recording: 'false',
+          transcription: 'false',
+          "outbound-call": 'false'
         }
       },
       iss: 'chat',
@@ -135,13 +145,13 @@ function Main() {
   const token = generate(JAAS_PK, {
     id: roomId,
     name: userInfo.login,
-    email: "my user email",
-    avatar: "my avatar url",
-    appId: JAAS_ID, // Your AppID ( previously tenant )
+    email: "email",
+    avatar: "avatar",
+    appId: JAAS_ID, 
     kid: JAAS_APP_KEY
   });
 
-  // console.log(token);
+  console.log(token);
 
   const validRoomId = data.appuntamento.appuId != null;
   var activeRoom =false;
@@ -180,7 +190,7 @@ function Main() {
                   disableThirdPartyRequests: true,
                   disableLocalVideoFlip: true,
                   backgroundAlpha: 0.5,
-                  prejoinPageEnabled: false,
+                  prejoinPageEnabled: true,
                   disableModeratorIndicator: true,
                   enableEmailInStats: false
                 
@@ -207,6 +217,8 @@ function Main() {
             />) : (
               <Typography variant="h3" className={jnStyles.jnA1}>
               
+                {!validRoomId ? 'Videocall non valida' : ''}
+                <><br></br></>
                 {validRoomId && !activeRoom ? 'Fuori orario appuntamento' : ''}
                 <><br></br></>
                 {validRoomId && activeRoom && !validUser ? 'Utente non abilitato' : ''}
