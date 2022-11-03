@@ -1,6 +1,4 @@
 import {
-  UserAuthenticate,
-  GetFunzioniForm,
   GetAppuntamento,
 } from "../../data/videocall/config";
 
@@ -17,5 +15,5 @@ const getAppuntamento = async (token, roomId) => {
 };
 
 module.exports = {
-  getAppuntamento
+  getAppuntamento,
 };

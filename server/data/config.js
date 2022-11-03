@@ -60,7 +60,7 @@ function GetRuoloUtente(IdUtenteUserName, IdRuoloUtente) {
 
 const CLOUD_API_TBL_APPUNTAMENTI = "api/Tables/GetElencoAppuntamentiConfermati";
 function GetAppuntamentiConfermati(UserName, DataInizio, DataFine) {
-  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_APPUNTAMENTI}/${UserName}/${DataInizio}/${DataFine}/0/0/0`;
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_APPUNTAMENTI}/${UserName}/${DataInizio}/${DataFine}/0/0/0/0`;
 }
 
 const CLOUD_API_TBL_MOVE = "api/Tables/MoveRec";

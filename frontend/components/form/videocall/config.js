@@ -5,8 +5,7 @@ const NO_DATA_DESC = "Nessun dato";
 
 function getApiUrl(query) {
   const page = query.param[0];
-  let apiUrl =  CALL_API;
-
+  let apiUrl = CALL_API;
 
   let param = "";
   for (let i = 1; i < query.param.length; i++) {
@@ -18,10 +17,9 @@ function getApiUrl(query) {
   // console.log(param);
 
   return apiUrl;
-
 }
 
 module.exports = {
   getApiUrl,
-  CALL_API
+  CALL_API,
 };

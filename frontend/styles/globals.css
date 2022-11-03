@@ -20,11 +20,18 @@ a {
 }
 
 .fc-theme-standard .fc-scrollgrid {
-  background-color: #798DB4;
+  background-color: #b4c7ee;
   /* border: 2px solid !important; */
-  border: 2px solid #000000 !important;
-  /* border-radius: 26px; */
-  color: #ffffff;
+  border: 2px solid #ffffff !important;
+  border-radius: 26px !important;
+  color: #000000;
   font-size: 12pt;
   font-weight: 800;
+}
+
+.fc .fc-button {
+  font-size: 10pt !important;
+  border-radius: 46px !important;
+  background-color: #B34A9D !important;
+  border: 2px solid #ffffff !important;
 }

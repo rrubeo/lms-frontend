@@ -230,15 +230,54 @@ const getAppuntamentiConfermati = async (
   // console.log(f);
   if (f.status) return [];
 
+  const minute = 1000 * 60;
+  const hour = minute * 60;
+
   const data = f.map((x, index) => {
+    const msInizio = Date.parse(x.inizioAppuntamento);
+    const msFine = Date.parse(x.fineAppuntamento);
+
+    const DataInizio = isNaN(msInizio) ? 0 : new Date(msInizio);
+    const DataFine = isNaN(msFine) ? 0 : new Date(msFine);
+
+    const Orario =
+      DataInizio == 0
+        ? "00:00"
+        : `${DataInizio.getHours()}:${String(DataInizio.getMinutes()).padStart(
+            2,
+            "0"
+          )}-${DataFine.getHours()}:${String(DataFine.getMinutes()).padStart(
+            2,
+            "0"
+          )}`;
+
+    const nominativo =
+      UserName.toLowerCase() == x.altroUtente.toLowerCase()
+        ? x.nominativoRichiedente
+        : x.nominativoAltro;
+
+    // console.log("UserName", UserName);
+    // console.log("altroUtente", x.altroUtente);
+    // console.log("nominativo", nominativo);
+
     return {
       id: index,
-      title: x.oggetto + ": " + x.nominativoRichiedente,
+      title: nominativo + ": " + x.tipoAppuntamento + " (" + x.oggetto + ")",
       start: x.inizioAppuntamento,
       end: x.fineAppuntamento,
+      statoAppuntamento: x.statoAppuntamento,
+      commento: x.commento,
+      tipoAppuntamento: x.tipoAppuntamento,
+      nominativoRichiedente: x.nominativoRichiedente,
+      orario: Orario,
+      linkStanza: x.linkStanza,
+      nominativo: nominativo,
+      idAppuntamento: x.idAppuntamento,
+      idStatoAppuntamento: x.idStatoAppuntamento,
+      cancellabile: x.appuntamentoCancellabileDalloStudente,
     };
   });
-
+  // console.log(data);
   return data;
 };
 

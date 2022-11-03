@@ -14,6 +14,7 @@ import {
   getAppuntamentiConfermati,
 } from "../../../data/common";
 
+import { insertAppuntamento } from "../../../data/fs/common";
 
 let todayStr = new Date().toISOString().replace(/T.*$/, ""); // YYYY-MM-DD of today
 
@@ -37,70 +38,57 @@ async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
     userLogin.token,
     userLogin.userID,
-    "FRM_ProgBase_Ricerca"
+    "FRM_Calendario"
   );
 
   const db_ruolo = await getRuoloUtente(userLogin.token, userLogin.userID, 0);
   const db_appuntamenti = await getAppuntamentiConfermati(
     userLogin.token,
     userLogin.userID,
-    "2022-10-01",
-    "2100-10-01"
+    "2022-01-01",
+    "2100-12-31"
   );
 
   const data = {
     title: "Calendario",
     menu: sidemenu,
-    navmenu: db_ruolo[0].idRuolo == 6 ? navmenustudenti : navmenu,
+    navmenu: db_ruolo[0].idRuolo != 6 ? navmenu : navmenustudenti,
     usermenu: usermenu,
     funzioni: db_funzioni,
     inevents: db_appuntamenti,
+    ruolo: db_ruolo[0].idRuolo,
   };
 
   return data;
 }
 
-async function deleteHandler(userLogin, deleteData) {
-  //   console.log("deleteHandler");
-  //   console.log(deleteData);
-  //   let d1 = await deleteLezioneAggr(
-  //     userLogin.token,
-  //     deleteData.key,
-  //     deleteData.pbaseId
-  //   );
-  //   // console.log(d1);
-  //   const res = { status: 200, message: "Aggregato eliminato" };
-  //   return res;
-}
+async function postHandler(userLogin, postData, pid) {
+  let res = { status: 200, message: "OK" };
+  let p3 = {};
+  console.log("************ RICEVUTO RICHIESTA APPUNTAMENTO");
+  console.log(postData);
 
-async function postHandler(userLogin, postData, response, pid) {
-  //   let res = { status: 200, message: "" };
-  //   for (let m of postData.lezione) {
-  //     if (m != 0) {
-  //       let poba = {
-  //         lezaFkPobaId: parseInt(pid),
-  //         lezaFkLeziId: m.id,
-  //         lezaSysuser: userLogin.userID,
-  //       };
-  //       console.log(poba);
-  //       let p3 = await insertLezioneAggr(userLogin.token, poba);
-  //       console.log(p3);
+  const appu = {
+    appuId: postData.idAppuntamento,
+    appuFkStapId: postData.conferma == true ? 2 : 5,
+    appuFlagAttiva: postData.conferma == true ? 1 : 0,
+    appuSysuser: userLogin.userID,
+    appuCommento: postData.commento,
+  };
 
-  //       const msg =
-  //         process.env.NODE_ENV === "production"
-  //           ? "OK"
-  //           : JSON.stringify(poba) + " RESULT:" + JSON.stringify(p3);
+  console.log("************ POST APPUNTAMENTO");
+  // console.log(appu);
+  p3 = await insertAppuntamento(userLogin.token, appu);
+  console.log(p3);
 
-  //       res = { status: 200, message: msg };
-
-  //       if (p3.status) {
-  //         res.status = p3.status;
-  //         res.message = p3.statusText;
-  //         break;
-  //       }
-  //     }
-  //   }
-
+  if (p3.status) {
+    res.status = p3.status;
+    res.message = p3.statusText;
+  } else {
+    process.env.NODE_ENV === "production"
+      ? (res.message = "OK")
+      : (res.message = p3.errDesc);
+  }
   return res;
 }
 
@@ -118,12 +106,8 @@ export default async function handler(req, res) {
       res.status(200).json(dataGet);
       break;
     case "POST":
-      //   const dataPost = await postHandler(userLogin, req.body, res, pid);
-      //   res.status(dataPost.status).json(dataPost);
-      break;
-    case "DELETE":
-      //   const dataDel = await deleteHandler(userLogin, req.body);
-      //   res.status(dataDel.status).json(dataDel);
+      const dataPost = await postHandler(userLogin, req.body, pid);
+      res.status(dataPost.status).json(dataPost);
       break;
   }
 }

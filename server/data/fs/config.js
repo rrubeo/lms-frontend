@@ -1,31 +1,26 @@
 //Percorso di base API
 const CLOUD_BASE_URL = process.env.API_SERVER;
 
-//API autorizzazione token
-const CLOUD_API_TOKEN = "api/User/authenticate";
-const CLOUD_API_VALID_TOKEN = "api/User/ValidateToken";
-//Endpoint
-const UserAuthenticate = `${CLOUD_BASE_URL}/${CLOUD_API_TOKEN}`;
-const UserValidate = `${CLOUD_BASE_URL}/${CLOUD_API_VALID_TOKEN}`;
-
-//API autorizzazione funzioni FORM
-const CLOUD_API_FORM = "api/Tables/GetFunzioniRuoliForm";
-
-//Endpoint
-function GetFunzioniForm(user, formName) {
-  return `${CLOUD_BASE_URL}/${CLOUD_API_FORM}/${user}/${formName}`;
-}
-
 //API GET lettura profilo studente
-const CLOUD_API_TBL_LIST_ISCRIZIONE_STUDENTE = "api/Tables/GetIscrizioneStudente";
+const CLOUD_API_TBL_LIST_ISCRIZIONE_STUDENTE =
+  "api/Tables/GetIscrizioneStudente";
 const CLOUD_API_TBL_LIST_LEZIONI = "api/Tables/GetLezioniStudente";
-const CLOUD_API_TBL_LIST_LEZIONI_SEGUITE = "api/Tables/GetStudenteLezioniSeguite";
+const CLOUD_API_TBL_LIST_LEZIONI_SEGUITE =
+  "api/Tables/GetStudenteLezioniSeguite";
 const CLOUD_API_TBL_LIST_DOCENTI_AULA = "api/Tables/GetTUtorDocentexStudente";
 const CLOUD_API_TBL_LIST_MATERIA = "api/Tables/GetLezioneContenuto";
 const CLOUD_API_TBL_LIST_PDF = "api/Tables/GetColeContenutoLezioneTestoImages";
-
+const CLOUD_API_TBL_DISP_CALENDAR = "api/Tables/GetDisponibilitaCalendario";
+const CLOUD_API_TBL_DISP_CALENDAR_TUTOR =
+  "api/Tables/GetDisponibilitaCalendarioTutor";
+const CLOUD_API_TBL_STUD_DOC = "api/Tables/GetStudenteDocente";
+const CLOUD_API_TBL_CREDITI = "api/Tables/GetDisponibilitaCrediti";
 
 //Endpoint
+function GetDisponibilitaCrediti(IdIscrizione, NumMinimoMinuti, NumMaxMinuti) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_CREDITI}/${IdIscrizione}/${NumMinimoMinuti}/${NumMaxMinuti}`;
+}
+
 function GetIscrizioneStudente(username) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_ISCRIZIONE_STUDENTE}/${username}`;
 }
@@ -54,23 +49,52 @@ function GetPDF(idContenuto) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_PDF}/${idContenuto}`;
 }
 
+function GetDisponibilitaCalendario(
+  UserNameDocente,
+  Data,
+  NumeroGiorniCalendario,
+  IdIscrizione,
+  IdIscrizioneAppuntamento,
+  IdDocenteStudente
+) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_DISP_CALENDAR}/${UserNameDocente}/${Data}/${NumeroGiorniCalendario}/${IdIscrizione}/${IdIscrizioneAppuntamento}/${IdDocenteStudente}`;
+}
 
-//const IscrizioneStudente = `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_ISCRIZIONE_STUDENTE}`;
+function GetDisponibilitaCalendarioTutor(
+  UserNameTutor,
+  Data,
+  NumeroGiorniCalendario,
+  IdIscrizione,
+  IdIscrizioneAppuntamento,
+  IdTutorStudente
+) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_DISP_CALENDAR_TUTOR}/${UserNameTutor}/${Data}/${NumeroGiorniCalendario}/${IdIscrizione}/${IdIscrizioneAppuntamento}/${IdTutorStudente}`;
+}
 
+function GetStudenteDocente(IdIscrizione, UserNameDocente, IdPersona) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_STUD_DOC}/${IdIscrizione}/${UserNameDocente}/${IdPersona}`;
+}
+
+const CLOUD_API_TBL_STUD = "api/Tables/GetStudTutor";
+function GetStudTutor(IdIscrizioneStudente, UserNameTutor, IdRuoloUtente) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_STUD}/${IdIscrizioneStudente}/${UserNameTutor}/${IdRuoloUtente}`;
+}
+
+const CLOUD_API_APPUNTAMENTI = "api/AppuAppuntamentiDats";
+const AppuAppuntamentiDats = `${CLOUD_BASE_URL}/${CLOUD_API_APPUNTAMENTI}`;
 
 module.exports = {
-  UserAuthenticate,
-  UserValidate,
-  GetFunzioniForm,
+  GetDisponibilitaCrediti,
   GetIscrizioneStudente,
   GetLezioni,
   GetLezioniSeguite,
   GetDocentiAula,
   GetTutorAula,
   GetLezione,
-  GetPDF
+  GetPDF,
+  GetDisponibilitaCalendario,
+  GetDisponibilitaCalendarioTutor,
+  GetStudenteDocente,
+  GetStudTutor,
+  AppuAppuntamentiDats,
 };
-
-
-
-

@@ -27,6 +27,7 @@ async function getHandler(userLogin, pid) {
     userLogin.token,
     userLogin.userID
   );
+  
   const docenti = await getDocentiAula(
     userLogin.token,
     5,

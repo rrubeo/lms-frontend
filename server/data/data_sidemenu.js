@@ -78,7 +78,6 @@ const sidemenu = [
     icon: "icon-library",
     link: "#",
   },
-
   {
     id: utils.getUID(),
     text: "Gestione Programma Base",
@@ -96,6 +95,18 @@ const sidemenu = [
     text: "Gestione Esercitazioni",
     icon: "icon-lesson-management",
     link: `${process.env.frontend}/ese/${cfg.ESE_STEP_0}`,
+  },
+  {
+    id: utils.getUID(),
+    text: "Tutor",
+    icon: "icon-tutor-assignment",
+    link: "#",
+  },
+  {
+    id: utils.getUID(),
+    text: "I miei studenti",
+    icon: "icon-users",
+    link: `${process.env.frontend}/tutorop/${cfg.TUTOP_STEP_0}`,
   },
   // {
   //   id: utils.getUID(),
@@ -143,7 +154,7 @@ const navmenustudenti = [
     id: utils.getUID(),
     text: "Aula Virtuale",
     icon: "icon-student-teacher-assignment",
-    link: `${process.env.frontend}/${cfg.STUDENT_AULA}`,
+    link: `${process.env.frontend}/fsme/${cfg.FSME_STEP_2}`,
   },
   {
     id: utils.getUID(),

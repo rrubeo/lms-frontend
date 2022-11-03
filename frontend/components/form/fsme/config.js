@@ -5,6 +5,7 @@ const FSME_STEP_0 = "fsme_home";
 const FSME_STEP_1 = "fsme_dettaglio";
 const FSME_STEP_2 = "fsme_aula";
 const FSME_STEP_3 = "fsme_esercitazione";
+const FSME_STEP_4 = "fsme_richiesta";
 
 const FRM_FSME_STEP_0 = "FRM_Studente_Home";
 const FSME_STEP_0_API = `${process.env.server}/fsme`;
@@ -13,10 +14,13 @@ const FRM_FSME_STEP_1 = "FRM_Studente_Lezione";
 const FSME_STEP_1_API = `${process.env.server}/fsme`;
 
 const FRM_FSME_STEP_2 = "FRM_Studente_Aula";
-const FSME_STEP_2_API = `${process.env.server}/fsme`;
+const FSME_STEP_2_API = `${process.env.server}/fsme/aula`;
 
 const FRM_FSME_STEP_3 = "FRM_Studente_Esercitazione";
 const FSME_STEP_3_API = `${process.env.server}/fsme`;
+
+const FRM_FSME_STEP_4 = "FRM_Studente_Richiesta";
+const FSME_STEP_4_API = `${process.env.server}/fsme/richiesta`;
 
 function getApiUrl(query) {
   const page = query.param[0];
@@ -33,6 +37,9 @@ function getApiUrl(query) {
       break;
     case FSME_STEP_3:
       apiUrl = FSME_STEP_3_API;
+      break;
+    case FSME_STEP_4:
+      apiUrl = FSME_STEP_4_API;
       break;
   }
 
@@ -54,6 +61,7 @@ module.exports = {
   FSME_STEP_1,
   FSME_STEP_2,
   FSME_STEP_3,
+  FSME_STEP_4,
   FRM_FSME_STEP_0,
   FSME_STEP_0_API,
   FRM_FSME_STEP_1,
@@ -62,4 +70,6 @@ module.exports = {
   FSME_STEP_2_API,
   FRM_FSME_STEP_3,
   FSME_STEP_3_API,
+  FRM_FSME_STEP_4,
+  FSME_STEP_4_API,
 };

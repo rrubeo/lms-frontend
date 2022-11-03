@@ -1,6 +1,7 @@
 import React from "react";
 import DCT_Layout from "../../components/layout/DCT_Layout";
 import Loader from "../../components/layout/loader";
+import Wip from "../../components/layout/wip";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import useSWR, { useSWRConfig, SWRConfig } from "swr";
@@ -61,7 +62,7 @@ function Aula() {
 
   if (error) return <div>{error.message}</div>;
   if (!data) return <Loader id="aula" />;
-  if (data.status != 200) return <div>{data.message}</div>;
+  if (data.status != 200) return <Wip>{data.message}</Wip>;
 
   return (
     <>
@@ -79,15 +80,14 @@ function Aula() {
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={2} xl={2}></Grid>
             <Grid item xs={12} sm={12} md={12} lg={5} xl={5}>
-              <FS_List 
-                title="Il mio tutor" 
-                array={data.tutor} 
+              <FS_List
+                title="Il mio tutor"
+                array={data.tutor}
                 type="avatar"
                 showImage={true}
                 imageLink="/fs/calendarreservation?destType=tutor"
               />
             </Grid>
-            
           </Grid>
         </Container>
       </DCT_Layout>

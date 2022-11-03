@@ -7,11 +7,6 @@ function GetAppuntamento(roomId) {
   return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_APPUNTAMENTO}/${roomId}`;
 }
 
-
 module.exports = {
-  GetAppuntamento
+  GetAppuntamento,
 };
-
-
-
-

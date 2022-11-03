@@ -71,12 +71,12 @@ function GetRuoloUtente(IdUtenteUserName, IdRuoloUtente) {
 
 const CLOUD_API_TBL_STUD = "api/Tables/GetStudenteTutor";
 function GetStudenteTutor(IdIscrizioneStudente, IdRuoloUtente) {
-  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_STUD}/${IdIscrizioneStudente}/${IdRuoloUtente}`;
+  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_STUD}/${IdIscrizioneStudente}/${IdRuoloUtente}/0`;
 }
 
 const CLOUD_API_TBL_STUD_DOCENTE = "api/Tables/GetStudenteDocente";
 function GetStudenteDocente(IdIscrizioneStudente, IdRuoloUtente) {
-  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_STUD_DOCENTE}/${IdIscrizioneStudente}/${IdRuoloUtente}`;
+  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_STUD_DOCENTE}/${IdIscrizioneStudente}/${IdRuoloUtente}/0`;
 }
 
 const CLOUD_API_TBL_MATERIE = "api/Tables/GetMateriaScolasticaCombo";

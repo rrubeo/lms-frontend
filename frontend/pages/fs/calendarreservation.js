@@ -83,8 +83,6 @@ function CalendarReservationStudente() {
   if (!data) return <Loader id="fs" />;
   if (data.status != 200) return <Wip>{data.message}</Wip>;
 
-  
-
   // console.log(data);
   const handleSubmit = async (event, formData) => {};
 
@@ -111,9 +109,7 @@ function CalendarReservationStudente() {
               lg={4}
               xl={4}
               className={fsStyle.progressContentGrid}
-            >
-
-            </Grid>
+            ></Grid>
           </Grid>
         </Container>
 
@@ -124,25 +120,31 @@ function CalendarReservationStudente() {
                 background="#B34B9E"
                 class="lessonsCard"
                 title=""
-                array={[{ id: 1, name: "I miei appuntamenti", isLink: true, linkUrl:"/fs/calendarlist" }]}
+                array={[
+                  {
+                    id: 1,
+                    name: "I miei appuntamenti",
+                    isLink: true,
+                    linkUrl: "/fs/calendarlist",
+                  },
+                ]}
                 type="text"
                 height="120px"
                 clickable={false}
               />
-
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
               <CalendarReservation
-                    title={"Richiedi una lezione al professore "}
-                  />
-              <Button                
+                title={"Richiedi una lezione al professore "}
+              />
+              <Button
                 variant="contained"
                 classes={{ root: jnStyles.jnBT }}
                 href={"./calenderreservationfeedback"}
                 target={"_blank"}
               >
                 Procedi
-              </Button>              
+              </Button>
             </Grid>
           </Grid>
         </Container>

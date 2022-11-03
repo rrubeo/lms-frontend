@@ -1,10 +1,6 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
-import FormLabel from "@mui/material/FormLabel";
-import DTC_TextBox from "../../DTC_TextBox";
-import DTC_DatePick from "../../DTC_DatePick";
 import DCT_ComboBox from "../../selector/DCT_ComboBox";
-import jnStyles from "../../../styles/utils.module.css";
 import DCT_Loader from "../../DCT_Loader";
 import { API_PAESE, API_REGIONE, API_PROVINCIA, API_COMUNE } from "./config";
 
@@ -154,8 +150,7 @@ class COM_Geolocal extends React.Component {
         {this.state.geoLoading ? (
           <DCT_Loader />
         ) : (
-          <>
-            {" "}
+          <>           
             <Grid item xs={2} sm={8} md={3}>
               <DCT_ComboBox
                 id={this.state.paeseId}

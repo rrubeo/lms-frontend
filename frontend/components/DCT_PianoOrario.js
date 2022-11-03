@@ -37,8 +37,8 @@ class DCT_PianoOrario extends React.Component {
             "16-17",
             "17-18",
             "18-19",
+            "19-20",
             "20-21",
-            "21-22",
           ],
       fasceOrarie: 12,
       checked: Array(7)

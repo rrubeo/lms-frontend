@@ -1,6 +1,6 @@
+const utils = require("../../lib/utils");
+
 import {
-  UserAuthenticate,
-  GetFunzioniForm,
   GetIscrizioneStudente,
   GetLezioni,
   GetLezioniSeguite,
@@ -9,24 +9,17 @@ import {
   GetLezione,
   GetPDF,
   GetDisponibilitaCrediti,
-  GetDisponibilitaCalendario 
+  GetDisponibilitaCalendario,
+  GetStudenteDocente,
+  GetStudTutor,
+  AppuAppuntamentiDats,
+  GetDisponibilitaCalendarioTutor,
 } from "../../data/fs/config";
-
-const utils = require("../../lib/utils");
-
-const deleteObjectURL = async (token, url) => {
-  const f = await utils.deleteFetch(token, url);
-  console.log("ELIMINA!!");
-  console.log("delete-" + url);
-  // console.log(f);
-  if (f.status) return [];
-  return f;
-};
 
 const getIscrizioneStudente = async (token, username) => {
   const f = await utils.getFetch(token, GetIscrizioneStudente(username));
   console.log("getIscrizioneStudente");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
   const data = f[0];
   return data;
@@ -34,21 +27,22 @@ const getIscrizioneStudente = async (token, username) => {
 
 const getIscrizioneStudenteMulti = async (token, username) => {
   const f = await utils.getFetch(token, GetIscrizioneStudente(username));
-  console.log("getIscrizioneStudente");
-  console.log(f);
+  console.log("getIscrizioneStudenteMulti");
+  // console.log(f);
   if (f.status) return [];
   const data = f.map((x) => {
     x.id = x.idIscrizione;
     x.text = x.iscrizione;
     return x;
   });
+  console.log(data);
   return data;
 };
 
 const getLezioni = async (token, username, classeArgomento) => {
   const f = await utils.getFetch(token, GetLezioni(username, classeArgomento));
   console.log("getLezioni");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
   const data = f;
   return data;
@@ -60,7 +54,7 @@ const getLezioniSeguite = async (token, username, idIscrizione, maxNumber) => {
     GetLezioniSeguite(username, idIscrizione, maxNumber)
   );
   console.log("getLezioniSeguite");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -78,18 +72,19 @@ const getDocentiAula = async (token, idRuolo, idIscrizione, username) => {
     GetDocentiAula(idRuolo, idIscrizione, username)
   );
   console.log("getDocentiAula");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
-  const data = f.map((x) => {
+  const data = f.map((x, index) => {
     return {
-      id: x.idMateria,
+      id: x.userNameDocenteTutor,
       name: x.nomeDocenteTutor,
       surname: x.cognomeDocenteTutor,
       username: x.userNameDocenteTutor,
       subject: x.materia,
       roleId: x.idRuolo,
       imagePath: x.pathImmagineDocenteTutor,
+      text: `${x.materia} - ${x.nomeDocenteTutor} ${x.cognomeDocenteTutor}`,
     };
   });
   return data;
@@ -101,16 +96,18 @@ const getTutorAula = async (token, idRuolo, idIscrizione, username) => {
     GetTutorAula(idRuolo, idIscrizione, username)
   );
   console.log("getTutorAula");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
 
-  const data = f.map((x) => {
+  const data = f.map((x, index) => {
     return {
-      id: x.idMateria,
+      id: x.userNameDocenteTutor,
       name: x.nomeDocenteTutor,
       surname: x.cognomeDocenteTutor,
+      username: x.userNameDocenteTutor,
       roleId: x.idRuolo,
       imagePath: x.pathImmagineDocenteTutor,
+      text: `${x.nomeDocenteTutor} ${x.cognomeDocenteTutor}`,
     };
   });
   return data;
@@ -119,7 +116,7 @@ const getTutorAula = async (token, idRuolo, idIscrizione, username) => {
 const getLezione = async (token, idLezione) => {
   const f = await utils.getFetch(token, GetLezione(idLezione));
   console.log("getLezione");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
   const data = f;
   return data;
@@ -128,47 +125,37 @@ const getLezione = async (token, idLezione) => {
 const getPDF = async (token, idContenuto) => {
   const f = await utils.getFetch(token, GetPDF(idContenuto));
   console.log("getPDF");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
   const data = f;
   return data;
 };
 
-const getDisponibilitaCrediti = async (token, idIscrizione, numMinimoMinuti, numMaxMinuti) => {
+const getDisponibilitaCalendario = async (
+  token,
+  usernameDocente,
+  date,
+  numeroGiorniCalendario,
+  idIscrizione,
+  idIscrizioneAppuntamento,
+  idDocenteStudente
+) => {
   const f = await utils.getFetch(
     token,
-    GetDisponibilitaCrediti(idIscrizione, numMinimoMinuti, numMaxMinuti)
-  );
-  console.log("getDisponibilitaCrediti");
-  console.log(f);
-  if (f.status) return [];
-  //TODO: verificare mapping
-/*
-  const data = f.map((x) => {
-    return {
-      id: x.idMateria,
-      name: x.nomeDocenteTutor,
-      surname: x.cognomeDocenteTutor,
-      subject: x.materia,
-      roleId: x.idRuolo,
-      imagePath: x.pathImmagineDocenteTutor,
-    };
-  });
- */ 
-  const data = f;
-  return data;
-};
-
-const getDisponibilitaCalendario = async (token, usernameDocente, date, numeroGiorniCalendario, idIscrizione, idIscrizioneAppuntamento, idDocenteStudente) => {
-  const f = await utils.getFetch(
-    token,
-    GetDisponibilitaCalendario(usernameDocente, date, numeroGiorniCalendario, idIscrizione, idIscrizioneAppuntamento, idDocenteStudente)
+    GetDisponibilitaCalendario(
+      usernameDocente,
+      date,
+      numeroGiorniCalendario,
+      idIscrizione,
+      idIscrizioneAppuntamento,
+      idDocenteStudente
+    )
   );
   console.log("getDisponibilitaCalendario");
-  console.log(f);
+  // console.log(f);
   if (f.status) return [];
   //TODO: verificare mapping
-/*
+  /*
   const data = f.map((x) => {
     return {
       id: x.idMateria,
@@ -180,10 +167,96 @@ const getDisponibilitaCalendario = async (token, usernameDocente, date, numeroGi
   });
 */
   const data = f;
-  
+
   return data;
 };
 
+const getDisponibilitaCalendarioTutor = async (
+  token,
+  usernameDocente,
+  date,
+  numeroGiorniCalendario,
+  idIscrizione,
+  idIscrizioneAppuntamento,
+  idDocenteStudente
+) => {
+  const f = await utils.getFetch(
+    token,
+    GetDisponibilitaCalendarioTutor(
+      usernameDocente,
+      date,
+      numeroGiorniCalendario,
+      idIscrizione,
+      idIscrizioneAppuntamento,
+      idDocenteStudente
+    )
+  );
+  console.log("getDisponibilitaCalendarioTutor");
+  if (f.status) return [];
+  return f;
+};
+
+const getStudenteDocente = async (
+  token,
+  IdIscrizione,
+  UserNameDocente,
+  IdPersona
+) => {
+  const f = await utils.getFetch(
+    token,
+    GetStudenteDocente(IdIscrizione, UserNameDocente, IdPersona)
+  );
+  console.log("getStudenteDocente");
+  // console.log(f);
+  if (f.status) return [];
+  const data = f;
+  return data;
+};
+
+const getDisponibilitaCrediti = async (
+  token,
+  IdIscrizione,
+  NumMinimoMinuti,
+  NumMaxMinuti
+) => {
+  const f = await utils.getFetch(
+    token,
+    GetDisponibilitaCrediti(IdIscrizione, NumMinimoMinuti, NumMaxMinuti)
+  );
+  console.log("getDisponibilitaCrediti");
+  // console.log(f);
+  if (f.status) return [];
+  return f;
+};
+
+const getStudenteTutor = async (
+  token,
+  IdIscrizioneStudente,
+  UserNameTutor,
+  IdRuoloUtente
+) => {
+  const f = await utils.getFetch(
+    token,
+    GetStudTutor(IdIscrizioneStudente, UserNameTutor, IdRuoloUtente)
+  );
+  console.log("getStudenteTutor");
+  // console.log(f);
+  if (f.status) return [];
+
+  const data = f.map((x, index) => {
+    return {
+      nome: x.nomeTutor,
+      cognome: x.cognomeTutor,
+    };
+  });
+
+  return data;
+};
+
+const insertAppuntamento = async (token, body) => {
+  let res = await utils.postFetch(token, AppuAppuntamentiDats, body);
+  return res;
+};
 
 module.exports = {
   getIscrizioneStudente,
@@ -195,5 +268,9 @@ module.exports = {
   getPDF,
   getIscrizioneStudenteMulti,
   getDisponibilitaCrediti,
-  getDisponibilitaCalendario
+  getDisponibilitaCalendario,
+  getDisponibilitaCalendarioTutor,
+  getStudenteDocente,
+  getStudenteTutor,
+  insertAppuntamento,
 };

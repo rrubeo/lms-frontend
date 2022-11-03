@@ -12,7 +12,7 @@ import { getFunzioniForm } from "../../../../data/common";
 
 import {
   getDisponibilitaCrediti,
-  getDisponibilitaCalendario 
+  getDisponibilitaCalendario,
 } from "../../../../data/fs/common";
 
 async function getHandler(userLogin, pid) {
@@ -25,15 +25,15 @@ async function getHandler(userLogin, pid) {
   const disponibilitaCrediti = await getDisponibilitaCrediti(
     userLogin.token,
     profile.idIscrizione,
-    1, 
+    1,
     1000000
   );
 
   const disponibilitaCalendario = await getDisponibilitaCalendario(
     userLogin.token,
     usernameDocente,
-    date, 
-    7,  
+    date,
+    7,
     profile.idIscrizione,
     0,
     0

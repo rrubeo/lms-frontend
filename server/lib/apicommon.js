@@ -3,21 +3,22 @@ import { getToken } from "../data/common";
 function getPid(request) {
   let { pid } = request.query;
   console.log("getPid ########");
+  // console.log(request.query);
   // console.log(pid);
   console.log(pid ? pid : "getPid NON PRESENTE");
   if (!pid) pid = 0;
   else pid = pid[0];
-  // console.log("getPid", pid);
+  console.log("getPid", pid);
   return pid;
 }
 
 function getParentPid(request, pos) {
   let { pid } = request.query;
   console.log("getParentPid ########");
-  console.log(pid);
+  // console.log(pid);
   if (!pid) pid = 0;
   else pid = pid[pos];
-  // console.log("getParentPid", pid);
+  console.log("getParentPid", pid);
   return pid;
 }
 

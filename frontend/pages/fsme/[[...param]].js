@@ -4,7 +4,9 @@ import Loader from "../../components/layout/loader";
 import Wip from "../../components/layout/wip";
 import DCT_Layout from "../../components/layout/DCT_Layout";
 import FRM_Studente_Home from "../../components/form/fsme/FRM_Studente_Home";
-import { validateForm } from "../../components/form/gstu/validator";
+import FRM_Studente_Aula from "../../components/form/fsme/FRM_Studente_Aula";
+import FRM_Studente_Richiesta from "../../components/form/fsme/FRM_Studente_Richiesta";
+import { validateForm } from "../../components/form/fsme/validator";
 import useUser from "../../lib/useUser";
 import { PAGE_401 } from "../../lib/redirect";
 
@@ -72,7 +74,7 @@ function Main() {
   let { data, error } = useSWR(apiUrl, utils.getData);
 
   if (error) return <div>{error.message}</div>;
-  if (!data) return <Loader id="gs" />;
+  if (!data) return <Loader id="fsme" />;
   if (data.status != 200) return <Wip>{data.message}</Wip>;
 
   const reloadData = async () => {
@@ -118,8 +120,9 @@ function Main() {
 
   const handleNextStep = async (event, filter, route) => {
     event.preventDefault();
-    // console.log(route);
-    forceNavigateUtil(route, filter, fallback.subIndex);
+    // console.log(filter);
+    fallback.subIndex = [filter.id, filter.startDate];
+    forceNavigateUtil(route, filter.item, fallback.subIndex);
   };
 
   const onActionRow = async (id, data) => {
@@ -143,6 +146,27 @@ function Main() {
             id={fsme_cfg.FRM_FSME_STEP_0}
             data={data}
             query={pageQuery}
+          />
+        ) : (
+          <></>
+        )}
+        {pageName === fsme_cfg.FSME_STEP_2 ? (
+          <FRM_Studente_Aula
+            id={fsme_cfg.FRM_FSME_STEP_2}
+            data={data}
+            query={pageQuery}
+            onClick={handleNextStep}
+          />
+        ) : (
+          <></>
+        )}
+        {pageName === fsme_cfg.FSME_STEP_4 ? (
+          <FRM_Studente_Richiesta
+            id={fsme_cfg.FRM_FSME_STEP_4}
+            data={data}
+            query={pageQuery}
+            onClick={handleNextStep}
+            onSubmit={handleSubmit}
           />
         ) : (
           <></>

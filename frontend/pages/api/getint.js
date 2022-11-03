@@ -29,8 +29,7 @@ export default withIronSessionApiRoute(async (req, res) => {
     res.end();
     return;
   }
-
-  // console.log("Mo basta pero.");
+  
   try {
     const validation = await validateToken(userInfo.login, userInfo.token);
     // console.log(validation.status);

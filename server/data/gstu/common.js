@@ -411,7 +411,7 @@ const getStudenteDocente = async (token, IdIscrizioneStudente) => {
     GetStudenteDocente(IdIscrizioneStudente, 0)
   );
 
-  console.log("getStudenteDocente");
+  console.log("GSTU getStudenteDocente");
   // console.log(f);
   if (f.status) return [];
 

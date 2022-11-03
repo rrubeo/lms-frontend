@@ -1,23 +1,24 @@
 const utils = require("../../../lib/utils");
 const apic = require("../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../data/data_sidemenu";
+import {
+  sidemenu,
+  navmenu,
+  usermenu,
+  navmenustudenti,
+} from "../../../data/data_sidemenu";
 
-import { getFunzioniForm } from "../../../data/common";
+import { getFunzioniForm, getRuoloUtente } from "../../../data/common";
 import { getAppuntamento } from "../../../data/videocall/common";
 
-
-
 async function getHandler(userLogin, roomId) {
-  const db_funzioni = await getFunzioniForm(
-    userLogin.token,
-    userLogin.userID
-  );
-  const appuntamento = await getAppuntamento(userLogin.token,roomId);
+  const db_funzioni = await getFunzioniForm(userLogin.token, userLogin.userID);
+  const db_ruolo = await getRuoloUtente(userLogin.token, userLogin.userID, 0);
+  const appuntamento = await getAppuntamento(userLogin.token, roomId);
   const data = {
     title: "VideoCall",
     menu: sidemenu,
-    navmenu: navmenu,
+    navmenu: db_ruolo[0].idRuolo != 6 ? navmenu : navmenustudenti,
     usermenu: usermenu,
     appuntamento: appuntamento,
     funzioni: db_funzioni,
@@ -33,10 +34,8 @@ export default async function handler(req, res) {
   // const pid = apic.getPid(req);
   const userLogin = await apic.getLogin(req);
 
-  
-  
   const roomId = req.query.roomId;
-  
+
   switch (req.method) {
     case "GET":
       const dataGet = await getHandler(userLogin, roomId);
