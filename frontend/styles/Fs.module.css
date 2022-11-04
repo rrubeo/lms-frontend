@@ -79,7 +79,7 @@
 }
 
 .accordion{
-    min-height: 300px;
+    min-height: 120px;
     max-height: 675px;
     overflow-y: scroll;
 }
