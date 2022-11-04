@@ -32,7 +32,7 @@ export default function DTC_Calendar(props) {
   useEffect(() => {
     // console.log("useEffect");
     if (myInput.current) {
-    //   console.log(myInput);
+      //   console.log(myInput);
       myInput.current.setText(stateDialog.commento);
     }
   });
@@ -48,6 +48,7 @@ export default function DTC_Calendar(props) {
       commento,
       cancellabile,
       idStatoAppuntamento,
+      oggetto,
     } = eventInfo?.event?.extendedProps;
 
     const curStyle =
@@ -61,9 +62,9 @@ export default function DTC_Calendar(props) {
       case "listMonth":
       case "timeGridDay":
         if (props.data.ruolo != 6) {
-          curText = `${tipoAppuntamento} con ${nominativo} - (${statoAppuntamento}) ${commento}`;
+          curText = `${tipoAppuntamento} con ${nominativo} - ${oggetto} - (${statoAppuntamento}) ${commento}`;
         } else {
-          curText = `${tipoAppuntamento} con ${nominativo} - (${statoAppuntamento})`;
+          curText = `${tipoAppuntamento} con ${nominativo} - ${oggetto} - (${statoAppuntamento})`;
         }
         break;
       default:
@@ -97,20 +98,26 @@ export default function DTC_Calendar(props) {
     const {
       tipoAppuntamento,
       nominativo,
+      nominativoRichiedente,
       statoAppuntamento,
       orario,
       linkStanza,
       commento,
       cancellabile,
       idStatoAppuntamento,
+      username,
+      utenteRichiedente,
     } = info?.event?.extendedProps;
+
+    const richiestodame = username == utenteRichiedente ? true : false;
 
     const dialogNewState = {
       dialogTitle: `${tipoAppuntamento} - ${nominativo} `,
       dialogText: `Orario ${orario} - ${statoAppuntamento}`,
       dialogOpen: true,
       ruolo: props.data.ruolo,
-      btConferma: idStatoAppuntamento == 2 ? false : true,
+      btConferma:
+        idStatoAppuntamento == 2 ? false : richiestodame ? false : true,
       btPartecipa: true,
       btCommenta: props.data.ruolo == 6 ? false : true,
       linkPartecipa: linkStanza,

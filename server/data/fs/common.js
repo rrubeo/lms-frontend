@@ -4,8 +4,6 @@ import {
   GetIscrizioneStudente,
   GetLezioni,
   GetLezioniSeguite,
-  GetDocentiAula,
-  GetTutorAula,
   GetLezione,
   GetPDF,
   GetDisponibilitaCrediti,
@@ -66,10 +64,15 @@ const getLezioniSeguite = async (token, username, idIscrizione, maxNumber) => {
   return data;
 };
 
-const getDocentiAula = async (token, idRuolo, idIscrizione, username) => {
+const getDocentiAula = async (
+  token,
+  IdIscrizione,
+  UserNameDocente,
+  IdPersona
+) => {
   const f = await utils.getFetch(
     token,
-    GetDocentiAula(idRuolo, idIscrizione, username)
+    GetStudenteDocente(IdIscrizione, UserNameDocente, IdPersona)
   );
   console.log("getDocentiAula");
   // console.log(f);
@@ -77,14 +80,13 @@ const getDocentiAula = async (token, idRuolo, idIscrizione, username) => {
 
   const data = f.map((x, index) => {
     return {
-      id: x.userNameDocenteTutor,
-      name: x.nomeDocenteTutor,
-      surname: x.cognomeDocenteTutor,
-      username: x.userNameDocenteTutor,
-      subject: x.materia,
-      roleId: x.idRuolo,
+      id: x.userNameDocente,
+      name: x.nomeDocente,
+      surname: x.cognomeDocente,
+      username: x.userNameDocente,
+      subject: x.materia,      
       imagePath: x.pathImmagineDocenteTutor,
-      text: `${x.materia} - ${x.nomeDocenteTutor} ${x.cognomeDocenteTutor}`,
+      text: `${x.materia} - ${x.nomeDocente} ${x.cognomeDocente}`,
     };
   });
   return data;
@@ -93,7 +95,7 @@ const getDocentiAula = async (token, idRuolo, idIscrizione, username) => {
 const getTutorAula = async (token, idRuolo, idIscrizione, username) => {
   const f = await utils.getFetch(
     token,
-    GetTutorAula(idRuolo, idIscrizione, username)
+    GetStudTutor(idRuolo, idIscrizione, username)
   );
   console.log("getTutorAula");
   // console.log(f);
@@ -101,13 +103,12 @@ const getTutorAula = async (token, idRuolo, idIscrizione, username) => {
 
   const data = f.map((x, index) => {
     return {
-      id: x.userNameDocenteTutor,
-      name: x.nomeDocenteTutor,
-      surname: x.cognomeDocenteTutor,
-      username: x.userNameDocenteTutor,
-      roleId: x.idRuolo,
+      id: x.userNameTutor,
+      name: x.nomeTutor,
+      surname: x.cognomeTutor,
+      username: x.userNameTutor,      
       imagePath: x.pathImmagineDocenteTutor,
-      text: `${x.nomeDocenteTutor} ${x.cognomeDocenteTutor}`,
+      text: `${x.nomeTutor} ${x.cognomeTutor}`,
     };
   });
   return data;

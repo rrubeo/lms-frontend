@@ -227,7 +227,7 @@ const getAppuntamentiConfermati = async (
   );
 
   console.log("getAppuntamentiConfermati");
-  // console.log(f);
+  console.log(f);
   if (f.status) return [];
 
   const minute = 1000 * 60;
@@ -262,6 +262,8 @@ const getAppuntamentiConfermati = async (
 
     return {
       id: index,
+      username: UserName,
+      utenteRichiedente: x.utenteRichiedente,
       title: nominativo + ": " + x.tipoAppuntamento + " (" + x.oggetto + ")",
       start: x.inizioAppuntamento,
       end: x.fineAppuntamento,
@@ -275,6 +277,7 @@ const getAppuntamentiConfermati = async (
       idAppuntamento: x.idAppuntamento,
       idStatoAppuntamento: x.idStatoAppuntamento,
       cancellabile: x.appuntamentoCancellabileDalloStudente,
+      oggetto: x.oggetto,
     };
   });
   // console.log(data);
