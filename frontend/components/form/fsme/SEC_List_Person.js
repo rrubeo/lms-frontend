@@ -31,6 +31,7 @@ class SEC_List_Person extends React.Component {
       id: this.props.id,
       item: item,
     };
+    // console.log(data);
     this.props.onClick(event, data);
   }
 

@@ -34,18 +34,8 @@ async function getHandler(userLogin, pid) {
 
   const singleCrediti = crediti.length > 0 ? crediti[0] : {};
 
-  const docenti = await getDocentiAula(
-    userLogin.token,
-    6,
-    idIscrizione,
-    userLogin.userID
-  );
-  const tutor = await getTutorAula(
-    userLogin.token,
-    4,
-    idIscrizione,
-    userLogin.userID
-  );
+  const docenti = await getDocentiAula(userLogin.token, idIscrizione, 0, 0);
+  const tutor = await getTutorAula(userLogin.token, idIscrizione, 0, 0);
 
   const data = {
     title: "Aula",

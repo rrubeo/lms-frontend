@@ -12,7 +12,11 @@ import { getFunzioniForm, getRuoloUtente } from "../../../data/common";
 import { getAppuntamento } from "../../../data/videocall/common";
 
 async function getHandler(userLogin, roomId) {
-  const db_funzioni = await getFunzioniForm(userLogin.token, userLogin.userID);
+  const db_funzioni = await getFunzioniForm(
+    userLogin.token,
+    userLogin.userID,
+    "FRM_Tutor_Studenti"
+  );
   const db_ruolo = await getRuoloUtente(userLogin.token, userLogin.userID, 0);
   const appuntamento = await getAppuntamento(userLogin.token, roomId);
   const data = {

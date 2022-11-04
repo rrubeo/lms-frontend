@@ -7,7 +7,6 @@ const CLOUD_API_TBL_LIST_ISCRIZIONE_STUDENTE =
 const CLOUD_API_TBL_LIST_LEZIONI = "api/Tables/GetLezioniStudente";
 const CLOUD_API_TBL_LIST_LEZIONI_SEGUITE =
   "api/Tables/GetStudenteLezioniSeguite";
-const CLOUD_API_TBL_LIST_DOCENTI_AULA = "api/Tables/GetTUtorDocentexStudente";
 const CLOUD_API_TBL_LIST_MATERIA = "api/Tables/GetLezioneContenuto";
 const CLOUD_API_TBL_LIST_PDF = "api/Tables/GetColeContenutoLezioneTestoImages";
 const CLOUD_API_TBL_DISP_CALENDAR = "api/Tables/GetDisponibilitaCalendario";
@@ -31,14 +30,6 @@ function GetLezioni(username, classeArgomento) {
 
 function GetLezioniSeguite(username, idIscrizione, maxNumber) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_LEZIONI_SEGUITE}/${username}/${idIscrizione}/${maxNumber}`;
-}
-
-function GetDocentiAula(idRuolo, idIscrizione, username) {
-  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_DOCENTI_AULA}/${idRuolo}/${idIscrizione}/${username}`;
-}
-
-function GetTutorAula(idRuolo, idIscrizione, username) {
-  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_LIST_DOCENTI_AULA}/${idRuolo}/${idIscrizione}/${username}`;
 }
 
 function GetLezione(idLezione) {
@@ -88,8 +79,6 @@ module.exports = {
   GetIscrizioneStudente,
   GetLezioni,
   GetLezioniSeguite,
-  GetDocentiAula,
-  GetTutorAula,
   GetLezione,
   GetPDF,
   GetDisponibilitaCalendario,
