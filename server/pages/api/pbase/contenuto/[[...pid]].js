@@ -1,9 +1,13 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 import { stepper, tornaIndietro } from "../../../../data/pbase/data_common";
-import { contenuto, rows, cols } from "../../../../data/pbase/data_contenuto";
+import { cols } from "../../../../data/pbase/data_contenuto";
 
 import {
   getTipoContenuto,
@@ -13,7 +17,7 @@ import {
   insertContenuto,
 } from "../../../../data/pbase/common";
 
-import { getFunzioniForm, uploadContenuto } from "../../../../data/common";
+import { getFunzioniForm } from "../../../../data/common";
 
 export const config = {
   api: {
@@ -32,11 +36,12 @@ async function getHandler(userLogin, pid) {
   );
   const db_rows = await getContenuto(userLogin.token, pid);
   const db_bread = await getContenutoBread(userLogin.token, pid);
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
     title: "Configurazione Programma Base",
     stepper: stepper,
     login: false,
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     tipo_label: "Tipo Contenuto",

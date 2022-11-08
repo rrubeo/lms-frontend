@@ -1,7 +1,11 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 
 import { getFunzioniForm } from "../../../../data/common";
 
@@ -21,10 +25,10 @@ async function getHandler(userLogin, pid) {
 
   const db_tutor = await getTutorCombo(userLogin.token);
   const db_rows = await getStudenteTutor(userLogin.token, pid);
-
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
     title: "Tutor",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     funzioni: db_funzioni,

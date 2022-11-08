@@ -1,7 +1,11 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 import { cols } from "../../../../data/doce/data_docenti";
 
 import {
@@ -19,10 +23,11 @@ async function getHandler(userLogin, pid) {
 
   const db_persona = await getPersona(userLogin.token, pid);
   const db_orario = await getDisponibilitaOrarie(userLogin.token, pid);
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
 
   const data = {
     title: `Piano Orario ${db_persona.persNome} ${db_persona.persCognome}`,
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     back_label: "Torna indietro",

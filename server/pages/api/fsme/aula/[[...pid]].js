@@ -1,7 +1,10 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { navmenustudenti, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenustudenti,
+  usermenu,
+} from "../../../../data/data_sidemenu";
 import { getFunzioniForm } from "../../../../data/common";
 
 import {
@@ -9,6 +12,7 @@ import {
   getDocentiAula,
   getTutorAula,
   getDisponibilitaCrediti,
+  getSideUserMenu,
 } from "../../../../data/fs/common";
 
 async function getHandler(userLogin, pid) {

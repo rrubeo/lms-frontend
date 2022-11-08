@@ -1,8 +1,11 @@
 const utils = require("../../../lib/utils");
 const apic = require("../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../data/data_sidemenu";
-import { rows } from "../../../data/pbase/data_materie";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../data/data_sidemenu";
 
 import { getRiepilogoProgrammaBase } from "../../../data/pbase/common";
 
@@ -14,7 +17,7 @@ export default async function handler(req, res) {
   console.log("RICERCA");
   const pid = apic.getPid(req);
   const userLogin = await apic.getLogin(req);
-
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const cols = [
     {
       field: "col1",
@@ -63,7 +66,7 @@ export default async function handler(req, res) {
       const db_rows = await getRiepilogoProgrammaBase(userLogin.token);
       const data = {
         title: "Ricerca Programma Base",
-        menu: sidemenu,
+        menu: db_menu,
         navmenu: navmenu,
         usermenu: usermenu,
         config_label: "Configurazione Programma Base",

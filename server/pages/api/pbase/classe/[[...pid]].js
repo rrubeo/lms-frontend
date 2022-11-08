@@ -1,9 +1,13 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 import { stepper, tornaIndietro } from "../../../../data/pbase/data_common";
-import { rows, cols } from "../../../../data/pbase/data_classe";
+import { cols } from "../../../../data/pbase/data_classe";
 
 import {
   getClasseArgomentoBread,
@@ -17,7 +21,7 @@ import { getFunzioniForm, moveRec } from "../../../../data/common";
 async function getHandler(userLogin, pid) {
   const db_rows = await getClasseArgomento(userLogin.token, pid);
   const db_bread = await getClasseArgomentoBread(userLogin.token, pid);
-
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const db_funzioni = await getFunzioniForm(
     userLogin.token,
     userLogin.userID,
@@ -27,7 +31,7 @@ async function getHandler(userLogin, pid) {
     title: "Configurazione Programma Base",
     stepper: stepper,
     login: false,
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     classe_label: "Classe Argomento",

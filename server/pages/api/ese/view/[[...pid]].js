@@ -1,9 +1,13 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 import { stepper, tornaIndietro } from "../../../../data/ese/data_common";
-import { rows, cols } from "../../../../data/ese/data_view";
+import { cols } from "../../../../data/ese/data_view";
 
 import { getFunzioniForm } from "../../../../data/common";
 import {
@@ -26,9 +30,10 @@ async function getHandler(userLogin, pid) {
   const db_tipo = await getTipoEsercitazioneCombo(userLogin.token);
   const db_livello = await getLivelloDiffCombo(userLogin.token);
   const db_bread = await getBreadView(userLogin.token, pid);
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
     title: "Esercitazioni/Verifiche",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     rows: db_rows,
@@ -57,7 +62,7 @@ async function deleteHandler(userLogin, deleteData) {
 }
 
 async function postHandler(userLogin, postData, pid) {
-  console.log(postData);
+  // console.log(postData);
   let poba = {
     eserId: postData.upid ? postData.upid : -1,
     eserNome: postData.nome,
@@ -67,10 +72,10 @@ async function postHandler(userLogin, postData, pid) {
     eserPunteggio: postData.punteggio,
     eserFlagVerifica: postData.tipo.id == 2 ? 1 : 0,
   };
-  console.log("########################################################");
-  console.log(poba);
+  // console.log("########################################################");
+  // console.log(poba);
   let p3 = await insertEsercitazione(userLogin.token, poba);
-  console.log(p3);
+  // console.log(p3);
 
   let res = { status: 200, message: "OK" };
   if (p3.status) {
@@ -84,8 +89,8 @@ async function postHandler(userLogin, postData, pid) {
       esleFkEserId: p3.eserId,
       esleSysuser: userLogin.userID,
     };
-    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-    console.log(esle);
+    // console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    // console.log(esle);
     let p4 = await insertEsercitazioneIntoLezione(userLogin.token, esle);
     console.log(p4);
     if (p4.status) {

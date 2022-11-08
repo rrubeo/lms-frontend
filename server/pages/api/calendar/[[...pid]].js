@@ -2,10 +2,10 @@ const utils = require("../../../lib/utils");
 const apic = require("../../../lib/apicommon");
 
 import {
-  sidemenu,
   navmenu,
   navmenustudenti,
   usermenu,
+  getSideUserMenu,
 } from "../../../data/data_sidemenu";
 
 import {
@@ -42,6 +42,7 @@ async function getHandler(userLogin, pid) {
   );
 
   const db_ruolo = await getRuoloUtente(userLogin.token, userLogin.userID, 0);
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const db_appuntamenti = await getAppuntamentiConfermati(
     userLogin.token,
     userLogin.userID,
@@ -51,7 +52,7 @@ async function getHandler(userLogin, pid) {
 
   const data = {
     title: "Calendario",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: db_ruolo[0].idRuolo != 6 ? navmenu : navmenustudenti,
     usermenu: usermenu,
     funzioni: db_funzioni,
@@ -66,7 +67,7 @@ async function postHandler(userLogin, postData, pid) {
   let res = { status: 200, message: "OK" };
   let p3 = {};
   console.log("************ RICEVUTO RICHIESTA APPUNTAMENTO");
-  console.log(postData);
+  // console.log(postData);
 
   const appu = {
     appuId: postData.idAppuntamento,

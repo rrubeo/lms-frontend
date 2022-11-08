@@ -1,7 +1,11 @@
 const utils = require("../../../lib/utils");
 const apic = require("../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../data/data_sidemenu";
 import { cols_studenti } from "../../../data/tutorop/data_tutorop";
 
 import { getFunzioniForm } from "../../../data/common";
@@ -14,9 +18,11 @@ async function getHandler(userLogin, pid) {
     "FRM_Tutor_Studenti"
   );
   const db_rows = await getStudTutor(userLogin.token, 0, userLogin.userID);
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
+
   const data = {
     title: "I miei studenti",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     rows: db_rows,

@@ -1,7 +1,11 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 import { cols_iscrizioni } from "../../../../data/gstu/data_studenti";
 
 import {
@@ -36,10 +40,10 @@ async function getHandler(userLogin, pid) {
   const db_accademico = await getAnnoAccademicoCombo(userLogin.token);
   const db_tipostudente = await getTipoStudenteCombo(userLogin.token);
   const db_annofreq = await getAnnoFrequenza(userLogin.token);
-
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
     title: "Scheda Utente",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     back_label: "Torna indietro",

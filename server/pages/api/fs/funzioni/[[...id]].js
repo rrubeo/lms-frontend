@@ -2,10 +2,9 @@ const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
 import {
-  sidemenu,
-  navmenu,
   navmenustudenti,
   usermenu,
+  getSideUserMenu,
 } from "../../../../data/data_sidemenu";
 
 import { getFunzioniForm } from "../../../../data/common";
@@ -36,10 +35,10 @@ async function getHandler(userLogin, pid) {
     profile.idIscrizione,
     0
   );
-
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
     title: "Configurazione Iscrizione studente",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenustudenti,
     usermenu: usermenu,
     funzioni: db_funzioni,

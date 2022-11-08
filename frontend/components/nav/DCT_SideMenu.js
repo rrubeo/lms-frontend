@@ -114,7 +114,9 @@ class DCT_SideMenu extends React.Component {
         </DrawerHeader>
         <List>
           {this.props.sideMenu.map((item, index) =>
-            item.link === "#" ? (
+            item.visible === false ? (
+              <span key={item.id} />
+            ) : item.link === "#" ? (
               <ListItemButton
                 onClick={this.handleOpenSubClick}
                 key={item.id}

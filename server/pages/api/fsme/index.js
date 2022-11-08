@@ -2,14 +2,12 @@ const utils = require("../../../lib/utils");
 const apic = require("../../../lib/apicommon");
 
 import {
-  sidemenu,
-  navmenu,
   navmenustudenti,
   usermenu,
+  getSideUserMenu,
 } from "../../../data/data_sidemenu";
 import { getFunzioniForm } from "../../../data/common";
 import {
-  getIscrizioneStudente,
   getIscrizioneStudenteMulti,
   getLezioni,
   getLezioniSeguite,
@@ -52,11 +50,11 @@ export default async function handler(req, res) {
         iscrizione.idIscrizione,
         0
       );
-
+      const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
       const data = {
         title: "Home Studenti",
         label_corsi: "Corsi attivi",
-        menu: sidemenu,
+        menu: db_menu,
         navmenu: navmenustudenti,
         usermenu: usermenu,
         funzioni: db_funzioni,

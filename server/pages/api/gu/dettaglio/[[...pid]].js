@@ -1,7 +1,11 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 
 import {
   getFunzioniForm,
@@ -18,10 +22,10 @@ async function getHandler(userLogin, pid) {
   );
 
   const db_toponimo = await getToponimo(userLogin.token);
- 
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
     title: "Scheda Utente",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     back_label: "Torna indietro",
@@ -33,10 +37,10 @@ async function getHandler(userLogin, pid) {
     nome_label: "Nome",
     cognome_label: "Cognome",
     nascita_label: "Data Nascita",
-    paese_label: "Paese",    
-    regione_label: "Regione",    
-    provincia_label: "Provincia",   
-    comune_label: "Comune",   
+    paese_label: "Paese",
+    regione_label: "Regione",
+    provincia_label: "Provincia",
+    comune_label: "Comune",
     toponimo_label: "Toponimo",
     toponimo: db_toponimo,
     cap_label: "CAP",

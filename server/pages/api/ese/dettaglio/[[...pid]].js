@@ -1,7 +1,11 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 import { tornaIndietro } from "../../../../data/ese/data_common";
 import { rows, cols } from "../../../../data/ese/data_dettaglio";
 
@@ -13,10 +17,10 @@ async function getHandler(userLogin, pid) {
     userLogin.userID,
     "FRM_ProgBase_Ricerca"
   );
-
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
     title: "Gestione Esercitazione",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     back_label: tornaIndietro,
@@ -26,50 +30,6 @@ async function getHandler(userLogin, pid) {
   };
 
   return data;
-}
-
-async function deleteHandler(userLogin, deleteData) {
-  //   console.log("deleteHandler");
-  //   console.log(deleteData);
-  //   let d1 = await deleteLezioneAggr(
-  //     userLogin.token,
-  //     deleteData.key,
-  //     deleteData.pbaseId
-  //   );
-  //   // console.log(d1);
-  //   const res = { status: 200, message: "Aggregato eliminato" };
-  //   return res;
-}
-
-async function postHandler(userLogin, postData, response, pid) {
-  //   let res = { status: 200, message: "" };
-  //   for (let m of postData.lezione) {
-  //     if (m != 0) {
-  //       let poba = {
-  //         lezaFkPobaId: parseInt(pid),
-  //         lezaFkLeziId: m.id,
-  //         lezaSysuser: userLogin.userID,
-  //       };
-  //       console.log(poba);
-  //       let p3 = await insertLezioneAggr(userLogin.token, poba);
-  //       console.log(p3);
-
-  //       const msg =
-  //         process.env.NODE_ENV === "production"
-  //           ? "OK"
-  //           : JSON.stringify(poba) + " RESULT:" + JSON.stringify(p3);
-
-  //       res = { status: 200, message: msg };
-
-  //       if (p3.status) {
-  //         res.status = p3.status;
-  //         res.message = p3.statusText;
-  //         break;
-  //       }
-  //     }
-  //   }
-
-  return res;
 }
 
 export default async function handler(req, res) {
@@ -84,14 +44,6 @@ export default async function handler(req, res) {
     case "GET":
       const dataGet = await getHandler(userLogin, pid);
       res.status(200).json(dataGet);
-      break;
-    case "POST":
-      //   const dataPost = await postHandler(userLogin, req.body, res, pid);
-      //   res.status(dataPost.status).json(dataPost);
-      break;
-    case "DELETE":
-      //   const dataDel = await deleteHandler(userLogin, req.body);
-      //   res.status(dataDel.status).json(dataDel);
       break;
   }
 }

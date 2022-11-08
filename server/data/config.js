@@ -42,15 +42,15 @@ function GetAnagraficaPersone(IdPersona) {
 const CLOUD_API_PERSONA = "api/PersPersonaDats";
 const PersPersonaDats = `${CLOUD_BASE_URL}/${CLOUD_API_PERSONA}`;
 
-const CLOUD_API_TBL_MENU_NONSTU = "api/Tables/GetMenuNonStudenti";
-const CLOUD_API_TBL_ISCR_STUD = "api/Tables/GetIscrizioneStudente";
 
+const CLOUD_API_TBL_ISCR_STUD = "api/Tables/GetIscrizioneStudente";
 function GetIscrizioneStudente(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_ISCR_STUD}/${id}`;
 }
 
-function GetMenuNonStudenti(utenza) {
-  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_MENU_NONSTU}/${utenza}`;
+const CLOUD_API_TBL_MENU = "api/Tables/GetMenuXUserName";
+function GetMenuXUserName(utenza) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_MENU}/${utenza}`;
 }
 
 const CLOUD_API_TBL_RUOLO_USER = "api/Tables/GetRuoloUtente";
@@ -80,7 +80,7 @@ module.exports = {
   GetToponimoCombo,
   GetAnagraficaPersone,
   PersPersonaDats,
-  GetMenuNonStudenti,
+  GetMenuXUserName,
   GetIscrizioneStudente,
   GetRuoloUtente,
   GetAppuntamentiConfermati,

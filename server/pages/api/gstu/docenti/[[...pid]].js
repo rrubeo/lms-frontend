@@ -1,7 +1,11 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 
 import { getFunzioniForm } from "../../../../data/common";
 
@@ -10,7 +14,6 @@ import {
   insertDocente,
   deleteDocente,
   getMateriaScolasticaCombo,
-  getDocenteMateria,
 } from "../../../../data/gstu/common";
 
 async function getHandler(userLogin, pid) {
@@ -23,10 +26,10 @@ async function getHandler(userLogin, pid) {
   const db_docenti = await getStudenteDocente(userLogin.token, pid);
   const db_materie = await getMateriaScolasticaCombo(userLogin.token);
   // const db_filtra = await getDocenteMateria(userLogin.token, 0);
-
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
     title: "Docenti",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     funzioni: db_funzioni,

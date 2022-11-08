@@ -2,10 +2,10 @@ const utils = require("../../../lib/utils");
 const apic = require("../../../lib/apicommon");
 
 import {
-  sidemenu,
   navmenu,
   usermenu,
   navmenustudenti,
+  getSideUserMenu,
 } from "../../../data/data_sidemenu";
 
 import { getFunzioniForm, getRuoloUtente } from "../../../data/common";
@@ -17,11 +17,12 @@ async function getHandler(userLogin, roomId) {
     userLogin.userID,
     "FRM_Tutor_Studenti"
   );
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const db_ruolo = await getRuoloUtente(userLogin.token, userLogin.userID, 0);
   const appuntamento = await getAppuntamento(userLogin.token, roomId);
   const data = {
     title: "VideoCall",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: db_ruolo[0].idRuolo != 6 ? navmenu : navmenustudenti,
     usermenu: usermenu,
     appuntamento: appuntamento,

@@ -1,7 +1,11 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 import {
   cols_servizi,
   cols_pagamenti,
@@ -33,9 +37,10 @@ async function getHandler(userLogin, pid) {
       " " +
       db_iscrizione[0].cognome;
   }
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
     title: title,
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     back_label: "Torna indietro",

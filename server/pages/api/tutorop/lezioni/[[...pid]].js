@@ -1,7 +1,11 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 import { cols_lezioni } from "../../../../data/tutorop/data_tutorop";
 
 import {
@@ -16,6 +20,7 @@ async function getHandler(userLogin, pid) {
     userLogin.userID,
     "FRM_Tutor_Lezioni"
   );
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const db_rows = await getElencoAppuntamentiLezione(
     userLogin.token,
     0,
@@ -35,7 +40,7 @@ async function getHandler(userLogin, pid) {
   const data = {
     title: "Lezioni: " + studente,
     back_label: "Torna indietro",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     rows: db_rows,
