@@ -1,8 +1,12 @@
 const utils = require("../../../lib/utils");
 const apic = require("../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../data/data_sidemenu";
-import { rows, cols } from "../../../data/gu/data_utenti";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../data/data_sidemenu";
+import { cols } from "../../../data/gu/data_utenti";
 
 import {
   getFunzioniForm,
@@ -18,9 +22,10 @@ async function getHandler(userLogin, pid) {
     "FRM_ProgBase_Ricerca"
   );
   const db_rows = await getRicercaPersone(userLogin.token);
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
     title: "Gestione Utenti",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     config_label: "Inserisci nuovo utente",

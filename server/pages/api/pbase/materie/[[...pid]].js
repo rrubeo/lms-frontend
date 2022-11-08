@@ -1,14 +1,13 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
-import { stepper, tornaIndietro } from "../../../../data/pbase/data_common";
 import {
-  anno_frequenza,
-  materie,
-  rows,
-  cols,
-} from "../../../../data/pbase/data_materie";
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
+import { stepper, tornaIndietro } from "../../../../data/pbase/data_common";
+import { cols } from "../../../../data/pbase/data_materie";
 
 import {
   getAnnoFrequenza,
@@ -26,7 +25,7 @@ async function getHandler(userLogin, pid) {
   const db_materie = await getMaterie(userLogin.token);
   const db_rows = await getProgrammaBase(userLogin.token, pid);
   const db_bread = await getClasseArgomentoBread(userLogin.token, pid);
-
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const db_funzioni = await getFunzioniForm(
     userLogin.token,
     userLogin.userID,
@@ -36,7 +35,7 @@ async function getHandler(userLogin, pid) {
     title: "Configurazione Programma Base",
     stepper: stepper,
     login: false,
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     annofreq_label: "Anno Frequenza",
@@ -53,7 +52,7 @@ async function getHandler(userLogin, pid) {
 }
 
 async function deleteHandler(userLogin, deleteData) {
-  let d1 = await deleteProgrammaBase(userLogin.token, deleteData.key);  
+  let d1 = await deleteProgrammaBase(userLogin.token, deleteData.key);
   const res = { status: 200, message: "Materia eliminata" };
   return res;
 }

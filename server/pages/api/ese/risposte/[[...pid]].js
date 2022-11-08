@@ -1,7 +1,11 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 import { stepper, tornaIndietro } from "../../../../data/ese/data_common";
 import { cols } from "../../../../data/ese/data_risposte";
 
@@ -27,6 +31,7 @@ async function getHandler(
     userLogin.userID,
     "FRM_ProgBase_Ricerca"
   );
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const db_rows = await getRisposte(userLogin.token, pid, 0, 0, 0);
   const db_tipo = await getTipoRispostaCombo(userLogin.token);
   const db_domanda = await getDomande(
@@ -43,7 +48,7 @@ async function getHandler(
 
   const data = {
     title: "Esercitazioni - Risposte",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     rows: db_rows,
@@ -63,8 +68,8 @@ async function getHandler(
 }
 
 async function deleteHandler(userLogin, deleteData) {
-  console.log("#################### deleteHandler #################");
-  console.log(deleteData);
+  // console.log("#################### deleteHandler #################");
+  // console.log(deleteData);
   let d1 = await deleteRisposta(userLogin.token, deleteData.key);
   console.log(d1);
   const res = { status: 200, message: "Risposta eliminata" };
@@ -81,8 +86,8 @@ async function postHandler(userLogin, postData, pid) {
     ridoFlagRispostaCorretta: postData.tipo.id == 1 ? 1 : 0,
     ridoNumeroRisposta: postData.numero,
   };
-  console.log("########################################################");
-  console.log(poba);
+  // console.log("########################################################");
+  // console.log(poba);
   let p3 = await insertRisposta(userLogin.token, poba);
   console.log(p3);
 

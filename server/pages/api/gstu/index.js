@@ -1,8 +1,12 @@
 const utils = require("../../../lib/utils");
 const apic = require("../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../data/data_sidemenu";
-import { rows, cols } from "../../../data/gstu/data_studenti";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../data/data_sidemenu";
+import { cols } from "../../../data/gstu/data_studenti";
 
 import { getFunzioniForm } from "../../../data/common";
 import { getRicercaStudenti } from "../../../data/gstu/common";
@@ -22,9 +26,10 @@ export default async function handler(req, res) {
         "FRM_ProgBase_Ricerca"
       );
       const db_rows = await getRicercaStudenti(userLogin.token);
+      const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
       const data = {
         title: "Gestione Studenti",
-        menu: sidemenu,
+        menu: db_menu,
         navmenu: navmenu,
         usermenu: usermenu,
         config_label: "Inserisci nuovo studente",

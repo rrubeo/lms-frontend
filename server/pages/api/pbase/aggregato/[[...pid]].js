@@ -1,12 +1,16 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 import {
   stepperIndirizzo,
   tornaIndietro,
 } from "../../../../data/pbase/data_common";
-import { rows, cols } from "../../../../data/pbase/data_lezione";
+import { cols } from "../../../../data/pbase/data_lezione";
 
 import {
   getAnnoFrequenzaAggr,
@@ -30,11 +34,12 @@ async function getHandler(userLogin, pid) {
   const db_classe = await getClasseArgomentoCombo(userLogin.token, pid);
   const db_rows = await getLezioneAggr(userLogin.token, pid);
   const db_bread = await getClasseArgomentoBread(userLogin.token, pid);
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
     title: "Configurazione Programma Base Aggregato",
     stepper: stepperIndirizzo,
     login: false,
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     anno_label: "Anno Frequenza",

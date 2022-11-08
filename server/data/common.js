@@ -11,6 +11,7 @@ import {
   GetRuoloUtente,
   GetAppuntamentiConfermati,
   MoveRec,
+  GetMenuXUserName,
 } from "../data/config";
 
 const utils = require("../lib/utils");
@@ -305,6 +306,16 @@ const moveRec = async (token, id, TipoTabella, Spostamento) => {
   return res;
 };
 
+const getMenuXUserName = async (token, IdUtenteUserName) => {
+  const f = await utils.getFetch(token, GetMenuXUserName(IdUtenteUserName));
+
+  console.log("getRuoloUtente");
+  // console.log(f);
+  if (f.status) return [];
+
+  return f;
+};
+
 module.exports = {
   getToken,
   getFunzioniForm,
@@ -323,4 +334,5 @@ module.exports = {
   getRuoloUtente,
   getAppuntamentiConfermati,
   moveRec,
+  getMenuXUserName,
 };

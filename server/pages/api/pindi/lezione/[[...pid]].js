@@ -1,12 +1,16 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 import {
   stepperIndirizzo,
   tornaIndietro,
 } from "../../../../data/pbase/data_common";
-import { rows, cols, classe_select } from "../../../../data/pindi/data_lezione";
+import { cols } from "../../../../data/pindi/data_lezione";
 
 import {
   getClasseArgomentoIndiCombo,
@@ -27,10 +31,11 @@ async function getHandler(userLogin, pid) {
   const db_classe = await getClasseArgomentoIndiCombo(userLogin.token, pid);
   const db_rows = await getProgrammaIndi(userLogin.token, pid);
   const db_bread = await getProgrammaIndiBread(userLogin.token, pid);
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
     title: "Configurazione Programma Indirizzo",
     stepper: stepperIndirizzo,
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     classe_label: "Classe Argomento",

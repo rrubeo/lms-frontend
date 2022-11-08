@@ -1,9 +1,13 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 import { stepper, tornaIndietro } from "../../../../data/ese/data_common";
-import { rows, cols } from "../../../../data/ese/data_esercita";
+import { cols } from "../../../../data/ese/data_esercita";
 
 import { getFunzioniForm } from "../../../../data/common";
 import {
@@ -21,10 +25,10 @@ async function getHandler(userLogin, pid, pidLezione) {
   );
   const db_rows = await getGruppoDomande(userLogin.token, pid);
   const db_bread = await getBreadEsercita(userLogin.token, pidLezione, pid);
-
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
     title: "Esercitazioni - Gruppo Domande",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     rows: db_rows,
@@ -53,7 +57,7 @@ async function deleteHandler(userLogin, deleteData) {
 }
 
 async function postHandler(userLogin, postData, pid) {
-  console.log(postData);
+  // console.log(postData);
   let poba = {
     grudId: postData.upid ? postData.upid : -1,
     grudNome: postData.nomeGruppo,
@@ -63,10 +67,10 @@ async function postHandler(userLogin, postData, pid) {
     grudFkTifiId: 0,
     grudFkEserId: pid,
   };
-  console.log("########################################################");
-  console.log(poba);
+  // console.log("########################################################");
+  // console.log(poba);
   let p3 = await insertGruppoDomande(userLogin.token, poba);
-  console.log(p3);
+  // console.log(p3);
 
   let res = { status: 200, message: "OK" };
   if (p3.status) {

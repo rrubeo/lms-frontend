@@ -1,8 +1,12 @@
 const utils = require("../../../lib/utils");
 const apic = require("../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../data/data_sidemenu";
-import { cols, rows } from "../../../data/ese/data_ricerca";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../data/data_sidemenu";
+import { cols } from "../../../data/ese/data_ricerca";
 
 import { getFunzioniForm } from "../../../data/common";
 import { getRicercaLezioni } from "../../../data/ese/common";
@@ -22,9 +26,10 @@ export default async function handler(req, res) {
         "FRM_ProgBase_Ricerca"
       );
       const db_rows = await getRicercaLezioni(userLogin.token);
+      const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
       const data = {
         title: "Ricerca Esercitazione",
-        menu: sidemenu,
+        menu: db_menu,
         navmenu: navmenu,
         usermenu: usermenu,
         rows: db_rows,

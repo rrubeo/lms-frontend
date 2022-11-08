@@ -1,7 +1,11 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 import { cols } from "../../../../data/ar/data_ruoli";
 
 import { getFunzioniForm } from "../../../../data/common";
@@ -27,14 +31,15 @@ async function getHandler(userLogin, pid) {
   let db_utente = await getUtente(userLogin.token, pid);
   const db_ruoli = await getRuoliCombo(userLogin.token);
   const db_rows = await getRuoliPersona(userLogin.token, pid);
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
 
   if (!db_utente[0].attivo) {
     db_utente[0].provvisoria = db_utente[0].mail;
   }
-  console.log(db_utente);
+  // console.log(db_utente);
   const data = {
     title: "Assegna Ruolo",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     back_label: "Torna indietro",
@@ -52,7 +57,7 @@ async function getHandler(userLogin, pid) {
 }
 
 async function postHandler(userLogin, postData, pid) {
-  console.log(postData);
+  // console.log(postData);
   let res = { status: 200, message: "OK" };
   let p3 = {};
   let username = postData.username.trim();

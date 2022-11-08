@@ -2,13 +2,10 @@ const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
 import {
-  sidemenu,
-  navmenu,
   navmenustudenti,
   usermenu,
+  getSideUserMenu,
 } from "../../../../data/data_sidemenu";
-
-import { getFunzioniForm } from "../../../../data/common";
 
 import { getLezioni, getLezione, getPDF } from "../../../../data/fs/common";
 
@@ -23,6 +20,7 @@ function getIndex(list, itemId) {
 }
 
 async function getHandler(userLogin, classeArgomento, lezione) {
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const arg = await getLezioni(
     userLogin.token,
     userLogin.userID,
@@ -41,7 +39,7 @@ async function getHandler(userLogin, classeArgomento, lezione) {
 
   const data = {
     title: "Configurazione dettaglio",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenustudenti,
     usermenu: usermenu,
     argomento: arg,
@@ -66,14 +64,6 @@ export default async function handler(req, res) {
     case "GET":
       const dataGet = await getHandler(userLogin, classeArgomento, lezione);
       res.status(200).json(dataGet);
-      break;
-    case "POST":
-      //   const dataPost = await postHandler(userLogin, req.body, res, pid);
-      //   res.status(dataPost.status).json(dataPost);
-      break;
-    case "DELETE":
-      //   const dataDel = await deleteHandler(userLogin, req.body);
-      //   res.status(dataDel.status).json(dataDel);
       break;
   }
 }

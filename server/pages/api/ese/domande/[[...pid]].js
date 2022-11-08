@@ -1,7 +1,11 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 import { stepper, tornaIndietro } from "../../../../data/ese/data_common";
 import { cols } from "../../../../data/ese/data_domande";
 
@@ -27,6 +31,7 @@ async function getHandler(
     userLogin.userID,
     "FRM_ProgBase_Ricerca"
   );
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const db_rows = await getDomande(
     userLogin.token,
     0,
@@ -46,7 +51,7 @@ async function getHandler(
 
   const data = {
     title: "Esercitazioni - Domande",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     rows: db_rows,
@@ -82,7 +87,7 @@ async function postHandler(
   pidGruppo,
   pidEsercitazione
 ) {
-  console.log(postData);
+  // console.log(postData);
   let poba = {
     doesId: postData.upid ? postData.upid : -1,
     doesSysuser: userLogin.userID,
@@ -100,10 +105,10 @@ async function postHandler(
         : pidGruppo,
     doesFkTifiId: 0,
   };
-  console.log("########################################################");
-  console.log(poba);
+  // console.log("########################################################");
+  // console.log(poba);
   let p3 = await insertDomanda(userLogin.token, poba);
-  console.log(p3);
+  // console.log(p3);
 
   let res = { status: 200, message: "OK" };
   if (p3.status) {

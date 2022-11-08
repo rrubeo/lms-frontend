@@ -63,7 +63,7 @@ module.exports = withTM({
     SECRET_COOKIE_PASSWORD: "t0Kb5wKyD1yaybCwhipeG4r7YmzGNa6c",
     MUI_LICENCE:
       "d1fbab155841cc4db5a63f2e70fee1bdTz01MjYyOSxFPTE2OTc2NDI4MTExNjAsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI=",
-    version: "1.4.0",
+    version: "1.5.0",
     JAAS_ID: isProd ? JAAS_ID_PROD : JAAS_ID_DEV,
     JAAS_PRIVATE_KEY: isProd ? JAAS_PRIVATE_KEY_PROD : JAAS_PRIVATE_KEY_DEV,
     JAAS_APP_KEY: isProd ? JAAS_APP_KEY_PROD : JAAS_APP_KEY_DEV,

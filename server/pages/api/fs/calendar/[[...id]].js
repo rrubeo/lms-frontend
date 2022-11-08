@@ -2,10 +2,9 @@ const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
 import {
-  sidemenu,
-  navmenu,
   navmenustudenti,
   usermenu,
+  getSideUserMenu,
 } from "../../../../data/data_sidemenu";
 
 import { getFunzioniForm } from "../../../../data/common";
@@ -38,10 +37,10 @@ async function getHandler(userLogin, pid) {
     0,
     0
   );
-
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
     title: "Configurazione Aula",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenustudenti,
     usermenu: usermenu,
     funzioni: db_funzioni,
@@ -62,14 +61,6 @@ export default async function handler(req, res) {
     case "GET":
       const dataGet = await getHandler(userLogin, pid);
       res.status(200).json(dataGet);
-      break;
-    case "POST":
-      //   const dataPost = await postHandler(userLogin, req.body, res, pid);
-      //   res.status(dataPost.status).json(dataPost);
-      break;
-    case "DELETE":
-      //   const dataDel = await deleteHandler(userLogin, req.body);
-      //   res.status(dataDel.status).json(dataDel);
       break;
   }
 }

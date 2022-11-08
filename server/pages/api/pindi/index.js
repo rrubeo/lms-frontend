@@ -1,17 +1,13 @@
 const utils = require("../../../lib/utils");
 const apic = require("../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../data/data_sidemenu";
 import {
-  stepperIndirizzo,
-  tornaIndietro,
-} from "../../../data/pbase/data_common";
-import {
-  indirizzo_istituto,
-  programma_base,
-  rows,
-  cols,
-} from "../../../data/pindi/data_indirizzo";
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../data/data_sidemenu";
+import { stepperIndirizzo } from "../../../data/pbase/data_common";
+import { cols } from "../../../data/pindi/data_indirizzo";
 
 import {
   getIndirizzoIstituto,
@@ -26,10 +22,11 @@ async function getHandler(userLogin, pid) {
   const db_indirizzo = await getIndirizzoIstituto(userLogin.token);
   const db_pbase = await getProgrammaBaseCombo(userLogin.token);
   const db_rows = await getAnnoIndIstituto(userLogin.token);
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
     title: "Configurazione Programma Indirizzo",
     stepper: stepperIndirizzo,
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     indirizzo_label: "Indirizzo Istituto",

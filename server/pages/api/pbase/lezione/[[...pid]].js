@@ -1,9 +1,13 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 import { stepper, tornaIndietro } from "../../../../data/pbase/data_common";
-import { rows, cols } from "../../../../data/pbase/data_lezione";
+import { cols } from "../../../../data/pbase/data_lezione";
 
 import {
   getLezione,
@@ -22,11 +26,12 @@ async function getHandler(userLogin, pid) {
   );
   const db_rows = await getLezione(userLogin.token, pid);
   const db_bread = await getLezioneBread(userLogin.token, pid);
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
     title: "Configurazione Programma Base",
     stepper: stepper,
     login: false,
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     lezione_label: "Lezione",

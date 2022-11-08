@@ -1,7 +1,11 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 
-import { sidemenu, navmenu, usermenu } from "../../../../data/data_sidemenu";
+import {
+  navmenu,
+  usermenu,
+  getSideUserMenu,
+} from "../../../../data/data_sidemenu";
 import { cols_appuntamenti } from "../../../../data/tutorop/data_tutorop";
 
 import {
@@ -32,10 +36,12 @@ async function getHandler(userLogin, pid) {
       ? `${db_iscrizione[0].cognome}, ${db_iscrizione[0].nome} - ${db_iscrizione[0].annoFrequenza} ${db_iscrizione[0].indirizzoIstituto}`
       : `Studente non presente`;
 
+  const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
+
   const data = {
     title: "Appuntamenti: " + studente,
     back_label: "Torna indietro",
-    menu: sidemenu,
+    menu: db_menu,
     navmenu: navmenu,
     usermenu: usermenu,
     rows: db_rows,
