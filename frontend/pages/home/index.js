@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import useSWR, { useSWRConfig, SWRConfig } from "swr";
 import Image from "next/image";
 import { withIronSessionSsr } from "iron-session/next";
-import { defaultLogin, sessionOptions, getAuthSession } from "../../lib/";
+import { sessionOptions, getFallback } from "../../lib/";
 import useUser from "../../lib/useUser";
 import { PAGE_401 } from "../../lib/redirect";
 
@@ -21,30 +21,10 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   res,
   query,
 }) {
-  let fallback = {
-    authenticated: false,
-    userInfo: defaultLogin,
-  };
-
-  const authSession = await getAuthSession(req);
-
-  if (!authSession) {
-    res.setHeader("location", "/login");
-    res.statusCode = 302;
-    res.end();
-    return {
-      props: {
-        fallback: fallback,
-      },
-    };
+  let fallback = await getFallback(req, res, query);
+  if (fallback.authenticated) {
+    fallback.apiUrl = API;
   }
-
-  fallback.pageName = "home";
-  fallback.apiUrl = API;
-  fallback.authenticated = true;
-  fallback.userInfo = authSession;
-  fallback.pageQuery = query;
-
   return {
     props: {
       fallback: fallback,
@@ -79,7 +59,7 @@ function HomeMain() {
               width={1200}
               height={650}
               priority
-            />            
+            />
           </Box>
         </Container>
       </DCT_Layout>

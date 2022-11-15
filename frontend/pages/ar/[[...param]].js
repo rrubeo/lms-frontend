@@ -10,9 +10,8 @@ import useUser from "../../lib/useUser";
 import { PAGE_401 } from "../../lib/redirect";
 
 import {
-  defaultLogin,
+  getFallback,
   sessionOptions,
-  getAuthSession,
   validationMessage,
   MSG_SUCCESS,
   MSG_ERROR,
@@ -30,31 +29,10 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   res,
   query,
 }) {
-  // console.dir(query);
-  let fallback = {
-    authenticated: false,
-    userInfo: defaultLogin,
-  };
-
-  const authSession = await getAuthSession(req);
-  if (!authSession) {
-    res.setHeader("location", "/login");
-    res.statusCode = 302;
-    res.end();
-    return {
-      props: {
-        fallback: fallback,
-      },
-    };
+  let fallback = await getFallback(req, res, query);
+  if (fallback.authenticated) {
+    fallback.apiUrl = ar_cfg.getApiUrl(query);
   }
-
-  fallback.pageName = utils.getPageName(query);
-  fallback.apiUrl = ar_cfg.getApiUrl(query);
-  fallback.authenticated = true;
-  fallback.userInfo = authSession;
-  fallback.subIndex = utils.getPageIds(query);
-  fallback.pageQuery = query;
-
   return {
     props: {
       fallback: fallback,

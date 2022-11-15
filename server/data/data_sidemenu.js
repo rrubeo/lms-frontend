@@ -115,6 +115,12 @@ const sidemenu = [
     link: `${process.env.frontend}/tutorop/${cfg.TUTOP_STEP_0}`,
   },
   {
+    id: "6_2_12",
+    text: "Piano Orario",
+    icon: "icon-clock",
+    link: `${process.env.frontend}/tutor/${cfg.TUT_STEP_1}`,
+  },
+  {
     id: utils.getUID(),
     link: "br",
   },
@@ -129,6 +135,12 @@ const sidemenu = [
     text: "I miei studenti",
     icon: "icon-teacher-assignment",
     link: `${process.env.frontend}/tutorop/${cfg.TUTOP_STEP_0}`,
+  },
+  {
+    id: "7_2_13",
+    text: "Piano Orario",
+    icon: "icon-clock",
+    link: `${process.env.frontend}/doce/${cfg.DOCE_STEP_2}`,
   },
   // {
   //   id: utils.getUID(),

@@ -107,7 +107,7 @@ const cols_appuntamenti = [
     headerName: "Oggetto",
     flex: 1,
     minWidth: 50,
-    maxWidth: 120,
+    maxWidth: 210,
   },
   {
     field: "col6",

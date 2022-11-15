@@ -8,8 +8,11 @@ export default function useUser({
   redirectTo = "",
   redirectIfFound = false,
 } = {}) {
+  // console.log("useUser");
   const { data: user, mutate: mutateUser } = useSWR("/api/user", fetchJson);
   useEffect(() => {
+    // console.log("useEffect");
+    // console.log(redirectTo);
     // if no redirect needed, just return (example: already on /dashboard)
     // if user data not yet there (fetch in progress, logged in or not) then don't do anything yet
     if (!redirectTo || !user) return;
@@ -21,8 +24,10 @@ export default function useUser({
       (redirectIfFound && user?.isLoggedIn)
     ) {
       if (redirectTo == PAGE_HOME && user?.isStudent == 1) {
+        // console.log("STUDENTE");
         Router.push(PAGE_HOME_STUDENT);
       } else {
+        // console.log("ALTRO");
         Router.push(redirectTo);
       }
     }
