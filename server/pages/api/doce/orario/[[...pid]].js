@@ -12,7 +12,11 @@ import {
   getDisponibilitaOrarie,
   setDisponibilitaOrarie,
 } from "../../../../data/doce/common";
-import { getFunzioniForm, getPersona } from "../../../../data/common";
+import {
+  getFunzioniForm,
+  getPersona,
+  getRuoloUtente,
+} from "../../../../data/common";
 
 async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
@@ -21,7 +25,7 @@ async function getHandler(userLogin, pid) {
     "FRM_ProgBase_Ricerca"
   );
 
-  const db_persona = await getPersona(userLogin.token, pid);
+  const db_persona = await getPersona(userLogin.token, pid);  
   const db_orario = await getDisponibilitaOrarie(userLogin.token, pid);
   const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
@@ -41,7 +45,7 @@ async function getHandler(userLogin, pid) {
 async function postHandler(userLogin, postData, pid) {
   let res = { status: 200, message: "OK" };
   let p3 = {};
-  console.log("************ RICEVUTO PIANO ORARIO");
+  // console.log("************ RICEVUTO PIANO ORARIO");
   // console.log(postData);
   let gise = 1;
   let newPiano = [];
@@ -58,14 +62,14 @@ async function postHandler(userLogin, postData, pid) {
       newFaor["v" + newOra] = ora ? 1 : 0;
       newOra++;
     }
-    console.log(newFaor);
+    // console.log(newFaor);
     newGise.faor.push(newFaor);
     newPiano.push(newGise);
     gise++;
   }
 
   console.log("************ POST PIANO ORARIO");
-  // console.log(newPiano);
+  console.log(newPiano);
   p3 = await setDisponibilitaOrarie(userLogin.token, pid, newPiano);
 
   console.log(p3);
@@ -85,9 +89,17 @@ async function postHandler(userLogin, postData, pid) {
 export default async function handler(req, res) {
   await utils.cors(req, res);
 
-  console.log("GESTIONE DOCENTI");
-  const pid = apic.getPid(req);
+  console.log("GESTIONE ORARIO DOCENTI");
+  let pid = apic.getPid(req);
   const userLogin = await apic.getLogin(req);
+
+  if (pid == 0) {
+    const db_ruolo = await getRuoloUtente(userLogin.token, userLogin.userID, 0);
+    // console.log(db_ruolo);
+    if (db_ruolo.length > 0) {
+      pid = db_ruolo[0].idPersona;
+    }
+  }
 
   switch (req.method) {
     case "GET":

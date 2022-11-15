@@ -23,7 +23,7 @@ const ESE_STEP_0 = "ese_search";
 const ESE_STEP_1 = "ese_dett";
 
 const TUT_STEP_0 = "tut_search";
-const DOCE_STEP_0 = "doce_search";
+const TUT_STEP_1 = "tut_orario";
 
 const TUTOP_STEP_0 = "tut_studenti";
 const TUTOP_STEP_1 = "tut_lezioni";
@@ -33,6 +33,10 @@ const FSME_STEP_0 = "fsme_home";
 const FSME_STEP_1 = "fsme_dettaglio";
 const FSME_STEP_2 = "fsme_aula";
 const FSME_STEP_3 = "fsme_esercitazione";
+
+const DOCE_STEP_0 = "doce_search";
+const DOCE_STEP_1 = "doce_materie";
+const DOCE_STEP_2 = "doce_orario";
 
 const HOME_0 = "home";
 const HOME_STUDENT = "fs";
@@ -62,7 +66,9 @@ module.exports = {
   AR_STEP_0,
   AR_STEP_1,
   TUT_STEP_0,
+  TUT_STEP_1,
   DOCE_STEP_0,
+  DOCE_STEP_2,
   FSME_STEP_0,
   FSME_STEP_2,
   TUTOP_STEP_0,

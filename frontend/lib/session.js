@@ -1,4 +1,4 @@
-import { fetchJson, fetchWithUser } from "./utils";
+import { fetchJson, fetchWithUser, getPageName, getPageIds } from "./utils";
 
 async function getAuthSession(req) {
   return req.session.user;
@@ -45,13 +45,13 @@ const getToken = async (user, password) => {
     utntUserName: user,
     utntPasswordHash: password,
   };
-  console.log(credential);
+  // console.log(credential);
   const data = await fetchJson(UserAuthenticate, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(credential),
   });
-  console.log(data);
+  // console.log(data);
 
   return data;
 };
@@ -80,6 +80,46 @@ const validateToken = async (user, token) => {
   return data;
 };
 
+const getFallback = async (req, res, query) => {
+  let fallback = {
+    authenticated: false,
+    userInfo: defaultLogin,
+  };
+  // console.dir("V0");
+  const authSession = await getAuthSession(req);
+  // console.dir(authSession);
+
+  if (!authSession) {
+    res.setHeader("location", "/login");
+    res.statusCode = 302;
+    res.end();
+    return {
+      props: {
+        fallback: fallback,
+      },
+    };
+  }
+  // console.dir("V1");
+  if (authSession.isStudent == 1) {
+    res.setHeader("location", `${process.env.frontend}/401`);
+    res.statusCode = 302;
+    res.end();
+    return {
+      props: {
+        fallback: fallback,
+      },
+    };
+  }
+  // console.dir("V2");
+  fallback.pageName = getPageName(query);
+  fallback.authenticated = true;
+  fallback.userInfo = authSession;
+  fallback.subIndex = getPageIds(query);
+  fallback.pageQuery = query;
+  // console.dir(fallback);
+  return fallback;
+};
+
 module.exports = {
   getAuthSession,
   getRoles,
@@ -87,4 +127,5 @@ module.exports = {
   validateToken,
   sessionOptions,
   defaultLogin,
+  getFallback,
 };

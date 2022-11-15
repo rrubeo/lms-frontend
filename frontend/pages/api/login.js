@@ -12,14 +12,14 @@ export default withIronSessionApiRoute(async (req, res) => {
   const bytes = CryptoJS.AES.decrypt(ciphertext, process.env.SECRET_COOKIE_PASSWORD);
   const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
-  console.log("decrypted Data -");
-  console.log(decryptedData);
+  // console.log("decrypted Data -");
+  // console.log(decryptedData);
 
   const { username, password } = decryptedData;
 
   try {
     const userLogin = await getToken(username, password);
-    console.log(userLogin);
+    // console.log(userLogin);
     let user = {
       isLoggedIn: true,
       login: userLogin.userID,
@@ -27,7 +27,7 @@ export default withIronSessionApiRoute(async (req, res) => {
     };
 
     const userRole = await getRoles(user);
-    console.log(userRole);
+    // console.log(userRole);
     if (userRole[0]) {
       user.role = userRole[0].ruolo;
       user.idRole = userRole[0].idRuoloUtente;

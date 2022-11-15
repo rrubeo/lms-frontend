@@ -292,7 +292,13 @@ function getBackLink(section, page, query) {
 }
 
 function getPageName(query) {
-  return query.param[0];
+  // console.log("getPageName");
+  // console.log(query);
+  if (query.param) {
+    // console.log(query.param[0]);
+    return query.param[0];
+  }
+  return "";
 }
 
 module.exports = {

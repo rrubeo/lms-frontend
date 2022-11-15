@@ -12,7 +12,11 @@ import {
   getDisponibilitaOrarie,
   setDisponibilitaOrarie,
 } from "../../../../data/doce/common";
-import { getFunzioniForm, getPersona } from "../../../../data/common";
+import {
+  getFunzioniForm,
+  getPersona,
+  getRuoloUtente,
+} from "../../../../data/common";
 
 async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
@@ -86,9 +90,17 @@ async function postHandler(userLogin, postData, pid) {
 export default async function handler(req, res) {
   await utils.cors(req, res);
 
-  console.log("GESTIONE TUTOR");
-  const pid = apic.getPid(req);
+  console.log("GESTIONE ORARIO TUTOR");
+  let pid = apic.getPid(req);
   const userLogin = await apic.getLogin(req);
+
+  if (pid == 0) {
+    const db_ruolo = await getRuoloUtente(userLogin.token, userLogin.userID, 0);
+    // console.log(db_ruolo);
+    if (db_ruolo.length > 0) {
+      pid = db_ruolo[0].idPersona;
+    }
+  }
 
   switch (req.method) {
     case "GET":
