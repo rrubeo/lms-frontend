@@ -27,7 +27,7 @@ async function getHandler(userLogin, pid) {
     userLogin.userID
   );
 
-  const idIscrizione = iscrizione.length == 1 ? iscrizione[0].idIscrizione : 0;
+  const idIscrizione = iscrizione.length > 0 ? iscrizione[0].idIscrizione : -1;
 
   const crediti = await getDisponibilitaCrediti(
     userLogin.token,
