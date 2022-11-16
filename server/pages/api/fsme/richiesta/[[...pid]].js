@@ -25,7 +25,7 @@ async function getHandler(userLogin, pid, userType, startDate) {
     userLogin.userID
   );
 
-  const idIscrizione = iscrizione.length == 1 ? iscrizione[0].idIscrizione : 0;
+  const idIscrizione = iscrizione.length > 0 ? iscrizione[0].idIscrizione : -1;
 
   let persona;
   let disponibilita;
