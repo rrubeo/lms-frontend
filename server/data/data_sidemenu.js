@@ -169,12 +169,6 @@ const navmenu = [
     icon: "icon-calendar",
     link: `${process.env.frontend}/${cfg.CALENDAR}`,
   },
-  {
-    id: utils.getUID(),
-    text: "News",
-    icon: "icon-bell",
-    link: `${process.env.frontend}/${cfg.HOME_0}`,
-  },
 ];
 
 const navmenustudenti = [
@@ -195,12 +189,6 @@ const navmenustudenti = [
     text: "Calendario",
     icon: "icon-calendar",
     link: `${process.env.frontend}/${cfg.CALENDAR}`,
-  },
-  {
-    id: utils.getUID(),
-    text: "News",
-    icon: "icon-bell",
-    link: `${process.env.frontend}/${cfg.HOME_0}`,
   },
 ];
 

@@ -42,7 +42,6 @@ function GetAnagraficaPersone(IdPersona) {
 const CLOUD_API_PERSONA = "api/PersPersonaDats";
 const PersPersonaDats = `${CLOUD_BASE_URL}/${CLOUD_API_PERSONA}`;
 
-
 const CLOUD_API_TBL_ISCR_STUD = "api/Tables/GetIscrizioneStudente";
 function GetIscrizioneStudente(id) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_ISCR_STUD}/${id}`;
@@ -68,6 +67,14 @@ function MoveRec(id, TipoTabella, Spostamento) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_MOVE}/${id}/${TipoTabella}/${Spostamento}`;
 }
 
+const CLOUD_API_TBL_NOTIFICHE = "api/Tables/GetNotificaDaAppuntamento";
+function GetNotificaDaAppuntamento(UserName) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_NOTIFICHE}/${UserName}`;
+}
+
+const CLOUD_API_NOTIFICHE = "api/NotiNotificheDats";
+const NotiNotificheDats = `${CLOUD_BASE_URL}/${CLOUD_API_NOTIFICHE}`;
+
 module.exports = {
   CLOUD_BASE_URL,
   UserAuthenticate,
@@ -85,4 +92,6 @@ module.exports = {
   GetRuoloUtente,
   GetAppuntamentiConfermati,
   MoveRec,
+  GetNotificaDaAppuntamento,
+  NotiNotificheDats,
 };

@@ -12,6 +12,8 @@ import {
   GetAppuntamentiConfermati,
   MoveRec,
   GetMenuXUserName,
+  GetNotificaDaAppuntamento,
+  NotiNotificheDats,
 } from "../data/config";
 
 const utils = require("../lib/utils");
@@ -316,6 +318,36 @@ const getMenuXUserName = async (token, IdUtenteUserName) => {
   return f;
 };
 
+const getNotificaDaAppuntamento = async (token, IdUtenteUserName) => {
+  const f = await utils.getFetch(
+    token,
+    GetNotificaDaAppuntamento(IdUtenteUserName)
+  );
+
+  console.log("getNotificaDaAppuntamento");
+  // console.log(f);
+  if (f.status) return [];
+
+  const data = f.map((x, index) => {
+    return {
+      id: x.idNotifica,
+      title: "APPUNTAMENTI",
+      description: x.messaggio,
+      avatar: "/images/process_steps.png",
+      type: "appuntamento",
+      createdAt: x.dataLettura,
+      isUnRead: x.dataLettura == null ? true : false,
+    };
+  });
+
+  return data;
+};
+
+const letturaNotifica = async (token, body) => {
+  let res = await utils.postFetch(token, NotiNotificheDats, body);
+  return res;
+};
+
 module.exports = {
   getToken,
   getFunzioniForm,
@@ -335,4 +367,6 @@ module.exports = {
   getAppuntamentiConfermati,
   moveRec,
   getMenuXUserName,
+  getNotificaDaAppuntamento,
+  letturaNotifica,
 };
