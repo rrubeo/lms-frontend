@@ -5,6 +5,13 @@ import { red } from "@mui/material/colors";
 const theme = createTheme({
   palette: {
     type: "light",
+    bell: {
+      main: "#ffffff",
+    },
+    notify: {
+      main: "#B34A9D",
+      contrastText: "#ffffff",
+    },
     primary: {
       main: "#252846",
     },
@@ -19,6 +26,7 @@ const theme = createTheme({
     text: {
       primary: "#252846",
       secondary: "#46505A",
+      disabled: "#B34A9D",
     },
     typography: {
       h1: {

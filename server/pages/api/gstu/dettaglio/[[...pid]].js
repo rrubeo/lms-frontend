@@ -255,6 +255,11 @@ async function postHandler(userLogin, postData, pid) {
   }
 
   console.log(p3);
+  if (p3.err == 1) {
+    res.status = 200;
+    res.message = p3.errDesc;
+    return res;
+  }
 
   if (p3.status) {
     res.status = p3.status;

@@ -13,6 +13,7 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import DCT_Notifications from "./DCT_Notifications";
 
 class DCT_UserMenu extends React.Component {
   constructor(props) {
@@ -92,6 +93,7 @@ class DCT_UserMenu extends React.Component {
               </ListItemButton>
             ))}
           </List>
+          <DCT_Notifications />
           <Tooltip title="Account settings">
             <IconButton
               onClick={this.handleClick}
