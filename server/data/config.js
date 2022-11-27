@@ -72,6 +72,12 @@ function GetNotificaDaAppuntamento(UserName) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_NOTIFICHE}/${UserName}`;
 }
 
+const CLOUD_API_TBL_PERSONABYUSERNAME = "api/Tables/GetPersonaByUsername";
+function GetPersonaByUsername(UserName) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_PERSONABYUSERNAME}/${UserName}`;
+}
+
+
 const CLOUD_API_NOTIFICHE = "api/NotiNotificheDats";
 const NotiNotificheDats = `${CLOUD_BASE_URL}/${CLOUD_API_NOTIFICHE}`;
 
@@ -94,4 +100,5 @@ module.exports = {
   MoveRec,
   GetNotificaDaAppuntamento,
   NotiNotificheDats,
+  GetPersonaByUsername,
 };

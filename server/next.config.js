@@ -7,15 +7,15 @@ const nextConfig = {
 
 const isProd = process.env.NODE_ENV === "production";
 
-// const LMS_PROD = "http://lmsapi.bitreloaded.com";
+// const LMS_PROD = "https://lmswebapi.istitutojanus.it";
 const LMS_PROD = "https://lmswebapidev.cloudandpartners.com";
-const LMS_DEV = "http://lmswebapidev.cloudandpartners.com";
+const LMS_DEV = "https://lmswebapidev.cloudandpartners.com";
 
-// const FRONT_PROD = "http://lms.istitutojanus.it:3000";
+// const FRONT_PROD = "https://lmsweb.istitutojanus.it";
 const FRONT_PROD = "https://lmsweb.cloudandpartners.com";
 const FRONT_DEV = "http://localhost:3000";
 
-// const SERVER_PROD = "http://lms.istitutojanus.it:3002/school/api";
+// const SERVER_PROD = "https://lmsserver.istitutojanus.it/school/api";
 const SERVER_PROD = "https://lmswebapi.cloudandpartners.com/school/api";
 const SERVER_DEV = "http://localhost:3002/school/api";
 

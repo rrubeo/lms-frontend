@@ -14,6 +14,7 @@ import {
   GetMenuXUserName,
   GetNotificaDaAppuntamento,
   NotiNotificheDats,
+  GetPersonaByUsername,
 } from "../data/config";
 
 const utils = require("../lib/utils");
@@ -318,11 +319,30 @@ const getMenuXUserName = async (token, IdUtenteUserName) => {
   return f;
 };
 
+
+const getPersonaByUserName = async (token, IdUtenteUserName) => {
+  const f = await utils.getFetch(
+    token,
+    GetPersonaByUsername(IdUtenteUserName)
+  );
+
+  console.log("getPersonaByUserName");
+  // console.log(f);
+  if (f.status) return [];
+
+  return f;
+};
+
+
 const getNotificaDaAppuntamento = async (token, IdUtenteUserName) => {
   const f = await utils.getFetch(
     token,
     GetNotificaDaAppuntamento(IdUtenteUserName)
   );
+
+
+
+
 
   console.log("getNotificaDaAppuntamento");
   // console.log(f);
@@ -369,4 +389,5 @@ module.exports = {
   getMenuXUserName,
   getNotificaDaAppuntamento,
   letturaNotifica,
+  getPersonaByUserName
 };

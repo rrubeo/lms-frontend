@@ -7,7 +7,11 @@ import {
   getSideUserMenu,
 } from "../../../../data/data_sidemenu";
 
-import { getFunzioniForm } from "../../../../data/common";
+import {
+  getFunzioniForm,
+  getPersonaByUserName,
+} from "../../../../data/common";
+
 
 import {
   getIscrizioneStudente,
@@ -21,6 +25,8 @@ async function getHandler(userLogin, pid) {
     userLogin.userID,
     "HOME_STUDENTE"
   );
+
+  const db_persona = await getPersonaByUserName(userLogin.token, userLogin.userID);
 
   const profile = await getIscrizioneStudente(
     userLogin.token,
@@ -37,7 +43,7 @@ async function getHandler(userLogin, pid) {
   );
   const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
-    title: "Configurazione Iscrizione studente",
+    title: "Home studente",
     menu: db_menu,
     navmenu: navmenustudenti,
     usermenu: usermenu,
@@ -45,6 +51,7 @@ async function getHandler(userLogin, pid) {
     profilo: profile,
     materie: subjects,
     lezioniViste: recentLessons,
+    persona: db_persona,
   };
   return data;
 }
@@ -62,8 +69,9 @@ export default async function handler(req, res) {
       res.status(200).json(dataGet);
       break;
     case "POST":
-      //   const dataPost = await postHandler(userLogin, req.body, res, pid);
-      //   res.status(dataPost.status).json(dataPost);
+        // const dataPost = await postHandler(userLogin, req.body, res, pid);
+        // res.status(dataPost.status).json(dataPost);
+
       break;
     case "DELETE":
       //   const dataDel = await deleteHandler(userLogin, req.body);

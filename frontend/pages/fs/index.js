@@ -2,7 +2,7 @@ import React from "react";
 import DCT_Layout from "../../components/layout/DCT_Layout";
 import Loader from "../../components/layout/loader";
 import Wip from "../../components/layout/wip";
-
+import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -17,7 +17,7 @@ import FS_List from "../../components/form/fs/FS_List";
 import { PAGE_401 } from "../../lib/redirect";
 import fsStyle from "../../styles/Fs.module.css";
 import jnStyles from "../../styles/utils.module.css";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { Link } from '@mui/material';
 
 const utils = require("../../lib/utils");
 const fs_cfg = require("../../components/form/fs/config");
@@ -65,6 +65,39 @@ function HomepageStudente() {
     redirectTo: PAGE_401,
   });
 
+
+
+
+function OpenYCM(){
+  console.debug("ycm");
+
+  var myHeaders = new Headers();
+  myHeaders.append("Access-Control-Allow-Origin", "https://lmsweb.istitutojanus.it/");
+  myHeaders.append("Content-Type","multipart/form-data");
+
+  var formdata = new FormData();
+  formdata.append("email", data.persona[0].mail);
+  formdata.append("firstname", data.persona[0].nome);
+  formdata.append("lastname", data.persona[0].cognome);
+  formdata.append("username", data.persona[0].userName);
+  formdata.append("token", userInfo.token);
+  formdata.append("userId", data.persona[0].userName);
+
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: formdata,
+    redirect: 'follow'
+  };
+
+  console.log(requestOptions);
+
+  fetch("https://courses.youcanmath.com/sync-janus.php", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+};
+
   const { fallback, mutate } = useSWRConfig();
   const { userInfo, pageName, apiUrl, pageQuery } = fallback;
 
@@ -75,11 +108,30 @@ function HomepageStudente() {
   if (data.status != 200) return <Wip>{data.message}</Wip>;
 
   // console.log(data);
-  const handleSubmit = async (event, formData) => {};
+  const handleSubmit = async (event) => {
+    console.log("SUBMIT");
+    var formdata = new FormData();
+    formdata.append("email", data.persona[0].mail);
+    formdata.append("firstname", data.persona[0].nome);
+    formdata.append("lastname", data.persona[0].cognome);
+    formdata.append("username", data.persona[0].userName);
+    formdata.append("token", userInfo.token);
+    formdata.append("userId", data.persona[0].userName);
 
-  const handleDelete = async (rowData) => {};
+    e.preventDefault();
 
-  const handleNextStep = async (event, filter, route) => {};
+    fetch("https://courses.youcanmath.com/sync-janus.php","post", {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        },
+        body: formdata,
+        
+    });
+
+    
+  };
+
+
 
   return (
     <>
@@ -140,22 +192,35 @@ function HomepageStudente() {
               >
                 Classe virtuale
               </Button> */}
-              <Button                
+              
+              <Button    
+                  type="submit"
                 variant="contained"
                 classes={{ root: jnStyles.jnBT }}
-                href={"https://courses.youcanmath.com/login/index.php"}
                 target={"_blank"}
+                onClick={OpenYCM}
+                // href="/public/ycm.html"
               >
                 Lezioni di matematica
               </Button>
+
+             
+
               <Button                
                 variant="contained"
                 classes={{ root: jnStyles.jnBT }}
-                href={CLOUD_FILES + fallback.userInfo.login + ".pdf"}
+                href={CLOUD_FILES + '/'+fallback.userInfo.login + ".pdf"}
                 target={"_blank"}
               >
                 Calendario
               </Button>
+           
+              <Link 
+                target ="_blank"
+                rel="noopener"
+                href="https://courses.youcanmath.com/login/index.php">
+                  <br></br>Login Manuale ai corsi di matematica
+              </Link>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={8} xl={8}>
               {data.materie.map((item) => (

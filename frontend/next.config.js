@@ -16,22 +16,24 @@ const JAAS_APP_KEY_PROD =
 const JAAS_APP_KEY_DEV =
   "vpaas-magic-cookie-a8b4ddef72a34e29a94228185fb02e12/c240b9";
 
-const CLOUD_FILES_PROD = "https://lmsfiles.bitreloaded.com/calendariostudente/";
-const CLOUD_FILES_DEV = "http://lmsfiles.bitreloaded.com/calendariostudente/";
+// const CLOUD_FILES_PROD = "https://lmsfiles.istitutojanus.it";
+const CLOUD_FILES_PROD = "https://lmsfilesdev.cloudandpartners.com";
+const CLOUD_FILES_DEV = "https://lmsfilesdev.cloudandpartners.com";
 
-// const IMAGES_PROD = "lmsfiles.bitreloaded.com";
+
+// const IMAGES_PROD = "lmsfiles.istitutojanus.it";
 const IMAGES_PROD = "lmsfilesdev.cloudandpartners.com";
 const IMAGES_DEV = "lmsfilesdev.cloudandpartners.com";
 
-// const LMS_PROD = "http://lmsapi.bitreloaded.com";
+// const LMS_PROD = "https://lmswebapi.istitutojanus.it";
 const LMS_PROD = "https://lmswebapidev.cloudandpartners.com";
-const LMS_DEV = "http://lmswebapidev.cloudandpartners.com";
+const LMS_DEV = "https://lmswebapidev.cloudandpartners.com";
 
-// const FRONT_PROD = "http://lms.istitutojanus.it:3000";
+// const FRONT_PROD = "https://lmsweb.istitutojanus.it";
 const FRONT_PROD = "https://lmsweb.cloudandpartners.com";
 const FRONT_DEV = "http://localhost:3000";
 
-// const SERVER_PROD = "http://lms.istitutojanus.it:3002/school/api";
+// const SERVER_PROD = "https://lmsserver.istitutojanus.it/school/api";
 const SERVER_PROD = "https://lmswebapi.cloudandpartners.com/school/api";
 const SERVER_DEV = "http://localhost:3002/school/api";
 
@@ -63,7 +65,7 @@ module.exports = withTM({
     SECRET_COOKIE_PASSWORD: "t0Kb5wKyD1yaybCwhipeG4r7YmzGNa6c",
     MUI_LICENCE:
       "d1fbab155841cc4db5a63f2e70fee1bdTz01MjYyOSxFPTE2OTc2NDI4MTExNjAsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI=",
-    version: "1.7.0",
+    version: "1.7.1",
     JAAS_ID: isProd ? JAAS_ID_PROD : JAAS_ID_DEV,
     JAAS_PRIVATE_KEY: isProd ? JAAS_PRIVATE_KEY_PROD : JAAS_PRIVATE_KEY_DEV,
     JAAS_APP_KEY: isProd ? JAAS_APP_KEY_PROD : JAAS_APP_KEY_DEV,
