@@ -1,4 +1,7 @@
 import { fetchJson, fetchWithUser, getPageName, getPageIds } from "./utils";
+import { getLogger } from "../logging/log-util";
+
+const logger = getLogger("session");
 
 async function getAuthSession(req) {
   return req.session.user;
@@ -117,6 +120,11 @@ const getFallback = async (req, res, query) => {
   fallback.subIndex = getPageIds(query);
   fallback.pageQuery = query;
   // console.dir(fallback);
+
+  logger.trace(`pageName: [${fallback.pageName}]`);
+  logger.info(`pageQuery: ${JSON.stringify(fallback.pageQuery)}`);
+  logger.trace(`subIndex: ${JSON.stringify(fallback.subIndex)}`);
+
   return fallback;
 };
 

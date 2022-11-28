@@ -1,6 +1,8 @@
 import Cors from "cors";
 import initMiddleware from "./init-middleware";
+import { getLogger } from "../logging/log-util";
 
+const logger = getLogger("utils");
 // Initialize the cors middleware
 const cors = initMiddleware(
   // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
@@ -49,6 +51,7 @@ function getAuthorization(token) {
 }
 
 const getToken = async (url, mBody) => {
+  logger.info(`getToken: [${url}]`);
   let f = await fetch(url, {
     headers: { "Content-Type": "application/json" },
     method: "POST",
@@ -61,7 +64,8 @@ const getToken = async (url, mBody) => {
 };
 
 const getFetch = async (token, url) => {
-  console.log("************ GET:", url);
+  logger.info(`GET: [${url}]`);
+
   let f = await fetch(url, {
     headers: getAuthorization(token),
     method: "GET",
@@ -72,6 +76,9 @@ const getFetch = async (token, url) => {
   let data = {};
 
   if (resp.status !== 200) {
+    logger.error(
+      `GET: [${url}] STATUS: [${resp.status}] MSG: [${resp.statusText}]`
+    );
     // console.log(resp);
     data = {
       status: resp.status,
@@ -94,20 +101,20 @@ const getFetch = async (token, url) => {
 };
 
 const postFetch = async (token, url, mBody) => {
-  console.log("************ POST:", url);
+  logger.info(`POST: [${url}]`);
   let f = await fetch(url, {
     headers: getAuthorization(token),
     method: "POST",
     body: JSON.stringify(mBody),
   });
   let resp = await f;
-  // console.log("************ POST **************");
-  // console.log(resp);
+  logger.trace(resp);
   let data = isJson(resp) ? resp.json() : resp;
   return data;
 };
 
 const postFile = async (token, url, mBody) => {
+  logger.info(`POSTFILE: [${url}]`);
   var myHeaders = new Headers();
   myHeaders.append("Accept", "*/*");
   myHeaders.append("Content-Type", "multipart/form-data");
@@ -122,21 +129,20 @@ const postFile = async (token, url, mBody) => {
 
   let f = await fetch(url, requestOptions);
   let resp = await f;
-  console.log("************ POST **************");
-  console.log(resp);
+  logger.trace(resp);
   let data = isJson(resp) ? resp.json() : resp;
   return data;
 };
 
 const deleteFetch = async (token, url) => {
+  logger.info(`DELETE: [${url}]`);
   let f = await fetch(url, {
     headers: getAuthorization(token),
     method: "DELETE",
   });
-
   let resp = await f;
+  logger.trace(resp);
   let data = isJson(resp) ? resp.json() : resp;
-
   return data;
 };
 

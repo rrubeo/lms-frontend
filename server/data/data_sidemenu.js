@@ -1,4 +1,6 @@
 import { getMenuXUserName } from "./common";
+import { getLogger } from "../logging/log-util";
+const logger = getLogger("data-data_sidemenu");
 
 const utils = require("../lib/utils");
 const cfg = require("../config");
@@ -213,8 +215,8 @@ const usermenu = [
 
 const getSideUserMenu = async (token, user) => {
   const db_menu = await getMenuXUserName(token, user);
-  console.log("getSideUserMenu");
-  // console.log(db_menu);
+  logger.debug("[getSideUserMenu]");
+  logger.trace(db_menu);
   if (db_menu.length <= 0) return db_menu;
 
   const data = sidemenu.map((x) => {

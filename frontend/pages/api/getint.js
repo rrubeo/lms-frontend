@@ -1,10 +1,11 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { validateToken, sessionOptions } from "../../lib/session";
 import { fetchJson } from "../../lib";
+import { getLogger } from "../../logging/log-util";
+
+const logger = getLogger("getint");
 
 async function getWithUser(url, userInfo) {
-  //   console.log("postWithUser");
-
   const data = await fetchJson(url, {
     method: "GET",
     headers: {
@@ -19,33 +20,34 @@ async function getWithUser(url, userInfo) {
 }
 
 export default withIronSessionApiRoute(async (req, res) => {
-  // console.log("API GET");
   const packBody = req.body;
   const userInfo = req.session.user;
 
   if (!userInfo) {
-    // console.log("User not logged.");
+    logger.warn(`User not logged.`);
     res.status(401).json({ status: 401, message: "User not logged." });
     res.end();
     return;
   }
-  
+
   try {
     const validation = await validateToken(userInfo.login, userInfo.token);
-    // console.log(validation.status);
     if (validation.status != 200) {
+      logger.warn(`Invalid Token.`);
       req.session.destroy();
       res.status(401).json({ status: 401, message: "Invalid Token." });
       res.end();
       return;
     }
 
+    logger.debug(`GET ${packBody.extUrl}`);
     const data = await getWithUser(packBody.extUrl, userInfo);
     data.status = 200;
     res.json(data);
     res.end();
     return;
   } catch (error) {
+    logger.error(`${error.message}`);
     res.status(500).json({ message: error.message });
     res.end();
     return;

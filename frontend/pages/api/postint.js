@@ -1,10 +1,11 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { validateToken, sessionOptions } from "../../lib/session";
 import { fetchJson } from "../../lib";
+import { getLogger } from "../../logging/log-util";
+
+const logger = getLogger("postint");
 
 async function postWithUser(url, userInfo, postedData) {
-  console.log("postWithUser");
-
   const data = await fetchJson(url, {
     method: "POST",
     headers: {
@@ -16,24 +17,25 @@ async function postWithUser(url, userInfo, postedData) {
     },
     body: JSON.stringify(postedData),
   });
-  // console.log(data);
+
   return data;
 }
 
 export default withIronSessionApiRoute(async (req, res) => {
-  console.log("API POST");
   const packBody = req.body;
 
   if (!packBody.data) {
+    logger.warn(`Body not found.`);
     res.status(500).json({ status: 500, message: "Body not found." });
     res.end();
     return;
   }
-  console.log(packBody);
 
+  logger.trace(`POST BODY: ${JSON.stringify(packBody)}`);
   const userInfo = req.session.user;
 
   if (!userInfo) {
+    logger.warn(`User not logged.`);
     res.status(401).json({ status: 401, message: "User not logged." });
     res.end();
     return;
@@ -41,20 +43,20 @@ export default withIronSessionApiRoute(async (req, res) => {
 
   try {
     const validation = await validateToken(userInfo.login, userInfo.token);
-    // console.log(validation.status);
     if (validation.status != 200) {
+      logger.warn(`Invalid Token.`);
       req.session.destroy();
       res.status(401).json({ status: 401, message: "Invalid Token." });
       res.end();
       return;
     }
-
+    logger.debug(`POST ${packBody.extUrl}`);
     const data = await postWithUser(packBody.extUrl, userInfo, packBody.data);
-    // console.log(data);
+
     res.json(data);
     res.end();
   } catch (error) {
-    console.log("API POST ERROR");
+    logger.error(`${error.message}`);
     res.status(500).json({ message: error.message });
     res.end();
   }

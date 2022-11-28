@@ -21,6 +21,7 @@ import Iconify from "../iconify";
 import Scrollbar from "../scrollbar";
 const utils = require("../../lib");
 import jnStyles from "../../styles/utils.module.css";
+
 const NOTIFICATIONS = [
   {
     id: 1,
@@ -75,7 +76,6 @@ class DCT_Notifications extends React.Component {
   }
 
   async loadData(pid) {
-    // console.log("loadData");
     try {
       const data = await utils.fetchJson("/api/flydata", {
         method: "POST",
@@ -224,10 +224,10 @@ class DCT_Notifications extends React.Component {
   }
 
   notificationItem(notification, status) {
-    // console.log(notification);
-    if (notification.isUnRead == status) {
-      return <></>;
-    }
+    // // console.log(notification);
+    // if (notification.isUnRead == status) {
+    //   return <></>;
+    // }
     const { avatar, title } = this.renderContent(notification);
 
     return (
@@ -343,9 +343,11 @@ class DCT_Notifications extends React.Component {
                 </ListSubheader>
               }
             >
-              {this.state.notifications.map((notification) =>
-                this.notificationItem(notification, false)
-              )}
+              {this.state.notifications
+                .filter((c) => c.isUnRead !== false)
+                .map((notification) =>
+                  this.notificationItem(notification, false)
+                )}
             </List>
             <Divider sx={{ borderStyle: "dashed" }} />
             <List
@@ -359,9 +361,14 @@ class DCT_Notifications extends React.Component {
                 </ListSubheader>
               }
             >
-              {this.state.notifications.map((notification) =>
+              {this.state.notifications
+                .filter((c) => c.isUnRead !== true)
+                .map((notification) =>
+                  this.notificationItem(notification, true)
+                )}
+              {/* {this.state.notifications.map((notification) =>
                 this.notificationItem(notification, true)
-              )}
+              )} */}
             </List>
           </Scrollbar>
           <Divider sx={{ borderStyle: "dashed" }} />

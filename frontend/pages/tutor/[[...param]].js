@@ -48,8 +48,7 @@ function Main() {
   });
   //Recupera info utente
   const { fallback, mutate } = useSWRConfig();
-  const { userInfo, pageName, apiUrl, pageQuery, subIndex } = fallback;
-
+  const { userInfo, pageName, apiUrl, pageQuery, subIndex } = fallback;  
   let { data, error } = useSWR(apiUrl, utils.getData);
 
   if (error) return <div>{error.message}</div>;

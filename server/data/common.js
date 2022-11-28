@@ -18,8 +18,11 @@ import {
 } from "../data/config";
 
 const utils = require("../lib/utils");
+import { getLogger } from "../logging/log-util";
+const logger = getLogger("data-common");
 
 const getToken = async (user, password) => {
+  logger.debug("[getToken]");
   const c = {
     utntUserName: user,
     utntPasswordHash: password,
@@ -31,10 +34,11 @@ const getToken = async (user, password) => {
 };
 
 const getFunzioniForm = async (token, user, formName) => {
+  logger.debug("[getFunzioniForm] NON ATTIVA");
+  return [];
   const f = await utils.getFetch(token, GetFunzioniForm(user, formName));
 
-  console.log("getFunzioniForm");
-  // console.log(f);
+  logger.trace(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -49,27 +53,25 @@ const getFunzioniForm = async (token, user, formName) => {
 
 const deleteObjectURL = async (token, url) => {
   const f = await utils.deleteFetch(token, url);
-  console.log("************ DELETE", url);
-  // console.log(f);
+  logger.debug(`[deleteObjectURL] ${url}`);
+  logger.trace(f);
   if (f.status) return [];
   return f;
 };
 
 const getNullGeo = async () => {
-  console.log("getNullGeo");
+  logger.debug("[getNullGeo]");
   const data = [
     { label: "Seleziona", id: 0 },
     { label: "Non Disponibile", id: -1 },
   ];
-
   return data;
 };
 
 const getPaese = async (token) => {
   const f = await utils.getFetch(token, GetPaeseCombo(0));
-
-  console.log("getPaese");
-  // console.log(f);
+  logger.debug("[getPaese]");
+  logger.trace(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -83,9 +85,8 @@ const getPaese = async (token) => {
 
 const getRegione = async (token, IdRegione) => {
   const f = await utils.getFetch(token, GetRegioneCombo(IdRegione));
-
-  console.log("getRegione");
-  // console.log(f);
+  logger.debug("[getRegione]");
+  logger.trace(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -102,9 +103,8 @@ const getProvincia = async (token, IdRegione, IdProvincia) => {
     token,
     GetProvinciaCombo(IdRegione, IdProvincia)
   );
-
-  console.log("getProvincia");
-  // console.log(f);
+  logger.debug("[getProvincia]");
+  logger.trace(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -118,9 +118,8 @@ const getProvincia = async (token, IdRegione, IdProvincia) => {
 
 const getComune = async (token, IdProvincia) => {
   const f = await utils.getFetch(token, GetComuneCombo(IdProvincia));
-
-  console.log("getComune");
-  // console.log(f);
+  logger.debug("[getComune]");
+  logger.trace(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -134,8 +133,8 @@ const getComune = async (token, IdProvincia) => {
 
 const getToponimo = async (token) => {
   const f = await utils.getFetch(token, GetToponimoCombo);
-
-  console.log("getToponimo");
+  logger.debug("[getToponimo]");
+  logger.trace(f);
   if (f.status) return [];
 
   const data = f.map((x, i) => {
@@ -150,9 +149,8 @@ const getToponimo = async (token) => {
 
 const getRicercaPersone = async (token) => {
   const f = await utils.getFetch(token, GetAnagraficaPersone(0));
-
-  console.log("getRicercaPersone");
-  // console.log(f);
+  logger.debug("[getRicercaPersone]");
+  logger.trace(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -170,7 +168,8 @@ const getRicercaPersone = async (token) => {
 
 const getPersona = async (token, idPersona) => {
   const f = await utils.getFetch(token, `${PersPersonaDats}/${idPersona}`);
-  console.log("getPersona");
+  logger.debug("[getPersona]");
+  logger.trace(f);
   if (f.status) return [];
   const c = await utils.getFetch(token, GetAnagraficaPersone(idPersona));
   // console.log(c);
@@ -194,7 +193,7 @@ const deletePersona = async (token, id) => {
 };
 
 const getYesNoCombo = async (token) => {
-  console.log("getYesNoCombo");
+  logger.debug("[getYesNoCombo]");
   // console.log(f);
 
   const data = [
@@ -211,9 +210,8 @@ const getRuoloUtente = async (token, IdUtenteUserName, IdRuoloUtente) => {
     token,
     GetRuoloUtente(IdUtenteUserName, IdRuoloUtente)
   );
-
-  console.log("getRuoloUtente");
-  // console.log(f);
+  logger.debug("[getRuoloUtente]");
+  logger.trace(f);
   if (f.status) return [];
 
   return f;
@@ -229,9 +227,8 @@ const getAppuntamentiConfermati = async (
     token,
     GetAppuntamentiConfermati(UserName, DataInizio, DataFine)
   );
-
-  console.log("getAppuntamentiConfermati");
-  console.log(f);
+  logger.debug("[getAppuntamentiConfermati]");
+  logger.trace(f);
   if (f.status) return [];
 
   const minute = 1000 * 60;
@@ -289,6 +286,8 @@ const getAppuntamentiConfermati = async (
 };
 
 const moveRec = async (token, id, TipoTabella, Spostamento) => {
+  logger.debug(`[moveRec] [${id}] [${TipoTabella}] [${Spostamento}]`);
+
   let tabella = 0;
   switch (TipoTabella) {
     case "GD_FRM_ProgBase_Classe_Argomento":
@@ -306,46 +305,33 @@ const moveRec = async (token, id, TipoTabella, Spostamento) => {
   }
   const urlPost = MoveRec(id, tabella, Spostamento);
   let res = await utils.postFetch(token, urlPost, {});
+  logger.trace(res);
   return res;
 };
 
 const getMenuXUserName = async (token, IdUtenteUserName) => {
   const f = await utils.getFetch(token, GetMenuXUserName(IdUtenteUserName));
-
-  console.log("getRuoloUtente");
-  // console.log(f);
+  logger.debug("[getMenuXUserName]");
+  logger.trace(f);
   if (f.status) return [];
-
   return f;
 };
-
 
 const getPersonaByUserName = async (token, IdUtenteUserName) => {
-  const f = await utils.getFetch(
-    token,
-    GetPersonaByUsername(IdUtenteUserName)
-  );
-
-  console.log("getPersonaByUserName");
-  // console.log(f);
+  const f = await utils.getFetch(token, GetPersonaByUsername(IdUtenteUserName));
+  logger.debug("[getPersonaByUserName]");
+  logger.trace(f);
   if (f.status) return [];
-
   return f;
 };
-
 
 const getNotificaDaAppuntamento = async (token, IdUtenteUserName) => {
   const f = await utils.getFetch(
     token,
     GetNotificaDaAppuntamento(IdUtenteUserName)
   );
-
-
-
-
-
-  console.log("getNotificaDaAppuntamento");
-  // console.log(f);
+  logger.debug("[getNotificaDaAppuntamento]");
+  logger.trace(f);
   if (f.status) return [];
 
   const data = f.map((x, index) => {
@@ -365,6 +351,8 @@ const getNotificaDaAppuntamento = async (token, IdUtenteUserName) => {
 
 const letturaNotifica = async (token, body) => {
   let res = await utils.postFetch(token, NotiNotificheDats, body);
+  logger.debug("[letturaNotifica]");
+  logger.trace(res);
   return res;
 };
 
@@ -389,5 +377,5 @@ module.exports = {
   getMenuXUserName,
   getNotificaDaAppuntamento,
   letturaNotifica,
-  getPersonaByUserName
+  getPersonaByUserName,
 };

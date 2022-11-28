@@ -1,4 +1,9 @@
+import { getLogger } from "../logging/log-util";
+
+const logger = getLogger("utils");
+
 async function fetchJson(input, init) {
+  logger.trace(`fetchJson: [${input}]`);
   const response = await fetch(input, init);
 
   // if the server replies, there's always some data in json
@@ -19,12 +24,12 @@ async function fetchJson(input, init) {
 }
 
 async function postData(url, postedData) {
-  // console.log("postData URL", url);
+  logger.debug(`postData: [${url}]`);
   const packBody = {
     extUrl: url,
     data: postedData,
   };
-  // console.log(packBody);
+  logger.trace(`${JSON.stringify(packBody)}`);
   try {
     const data = await fetchJson("/api/postint", {
       method: "POST",
@@ -32,15 +37,14 @@ async function postData(url, postedData) {
       body: JSON.stringify(packBody),
     });
 
-    // console.log(data);
+    logger.trace(`${JSON.stringify(data)}`);
     return data;
   } catch (error) {
     if (error instanceof FetchError) {
-      // console.error(error);
-      console.error("postData:", error.data.message);
+      logger.error(`${error.data.message}`);
       return error.data;
     } else {
-      console.error("An unexpected error happened:", error);
+      logger.error(`An unexpected error happened: ${error}`);
       return error;
     }
   }
@@ -84,8 +88,7 @@ async function postFileCors(url, postedData, userInfo) {
 }
 
 async function postFile(url, postedData, userInfo) {
-  // console.log(url);
-  // console.log("postFile");
+  logger.trace(`postFile: [${url}]`);
 
   let formData = new FormData();
   formData.append("file", postedData.file, postedData.file.name);
@@ -140,32 +143,34 @@ async function postFile(url, postedData, userInfo) {
 }
 
 async function getData(url) {
-  // console.log("getData URL", url);
+  logger.debug(`getData: [${url}]`);
   const packBody = {
     extUrl: url,
   };
   try {
     const apife = `${process.env.frontend}/api/getint`;
-    // const apife = "/api/getint";
+    logger.trace(`getData: [${apife}]`);
+
     const data = await fetchJson(apife, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(packBody),
     });
-    // console.log(data);
+    logger.trace(`${JSON.stringify(data)}`);
     return data;
   } catch (error) {
     if (error instanceof FetchError) {
-      console.error("getData:", error.data.message);
+      logger.error(`${error.data.message}`);
       return error.data;
     } else {
-      console.error("An unexpected error happened:", error);
+      logger.error(`An unexpected error happened: ${error}`);
       return error;
     }
   }
 }
 
 async function deleteData(url, postedData) {
+  logger.trace(`deleteData: [${url}]`);
   const packBody = {
     extUrl: url,
     data: postedData,
@@ -182,19 +187,18 @@ async function deleteData(url, postedData) {
     return data;
   } catch (error) {
     if (error instanceof FetchError) {
-      console.error("postData:", error.data.message);
+      logger.error(`${error.data.message}`);
       return error.data;
     } else {
-      console.error("An unexpected error happened:", error);
+      logger.error(`An unexpected error happened: ${error}`);
       return error;
     }
   }
 }
 
 async function fetchWithUser(url, userInfo) {
-  // console.log("fetchWithUser", url);
-  // console.log(url);
-  // console.log(userInfo);
+  logger.trace(`fetchWithUser: [${url}]`);
+
   const data = await fetchJson(url, {
     method: "GET",
     headers: {

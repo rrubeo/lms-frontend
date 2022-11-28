@@ -49,7 +49,6 @@ function getApiUrl(query) {
   }
 
   apiUrl = apiUrl + param;
-  console.log(apiUrl);
 
   return apiUrl;
 }

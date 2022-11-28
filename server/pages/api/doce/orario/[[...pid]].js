@@ -1,6 +1,7 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
-
+import { getLogger } from "../../../../logging/log-util";
+const logger = getLogger("doce-orario");
 import {
   navmenu,
   usermenu,
@@ -18,14 +19,14 @@ import {
   getRuoloUtente,
 } from "../../../../data/common";
 
-async function getHandler(userLogin, pid) {
+async function getHandler(userLogin, pid, my_ruolo) {
   const db_funzioni = await getFunzioniForm(
     userLogin.token,
     userLogin.userID,
     "FRM_ProgBase_Ricerca"
   );
 
-  const db_persona = await getPersona(userLogin.token, pid);  
+  const db_persona = await getPersona(userLogin.token, pid);
   const db_orario = await getDisponibilitaOrarie(userLogin.token, pid);
   const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
   const data = {
@@ -34,6 +35,7 @@ async function getHandler(userLogin, pid) {
     navmenu: navmenu,
     usermenu: usermenu,
     back_label: "Torna indietro",
+    back_visible: my_ruolo == 5 ? false : true,
     rows: db_orario,
     cols: cols,
     docente: db_persona,
@@ -45,8 +47,8 @@ async function getHandler(userLogin, pid) {
 async function postHandler(userLogin, postData, pid) {
   let res = { status: 200, message: "OK" };
   let p3 = {};
-  // console.log("************ RICEVUTO PIANO ORARIO");
-  // console.log(postData);
+  logger.debug("[RICEVUTO PIANO ORARIO]");
+  logger.trace(postData);
   let gise = 1;
   let newPiano = [];
   for (let m of postData.orario) {
@@ -68,11 +70,10 @@ async function postHandler(userLogin, postData, pid) {
     gise++;
   }
 
-  console.log("************ POST PIANO ORARIO");
-  console.log(newPiano);
+  logger.debug("[POST PIANO ORARIO]");
+  logger.trace(newPiano);
   p3 = await setDisponibilitaOrarie(userLogin.token, pid, newPiano);
-
-  console.log(p3);
+  logger.debug(p3);
 
   if (p3.status) {
     res.status = p3.status;
@@ -89,21 +90,27 @@ async function postHandler(userLogin, postData, pid) {
 export default async function handler(req, res) {
   await utils.cors(req, res);
 
-  console.log("GESTIONE ORARIO DOCENTI");
+  logger.info(`API-CALL [GESTIONE ORARIO DOCENTI]`);
   let pid = apic.getPid(req);
   const userLogin = await apic.getLogin(req);
+  const db_ruolo = await getRuoloUtente(userLogin.token, userLogin.userID, 0);
+  logger.trace(db_ruolo);
+
+  const my_ruolo = db_ruolo.length > 0 ? db_ruolo[0].idRuolo : 0;
 
   if (pid == 0) {
-    const db_ruolo = await getRuoloUtente(userLogin.token, userLogin.userID, 0);
-    // console.log(db_ruolo);
     if (db_ruolo.length > 0) {
       pid = db_ruolo[0].idPersona;
     }
   }
 
+  logger.debug(
+    `API-DATA [GESTIONE ORARIO DOCENTI] USER:[${userLogin.userID}] PERSONA-ID:[${pid}] RUOLO:[${my_ruolo}]`
+  );
+
   switch (req.method) {
     case "GET":
-      const dataGet = await getHandler(userLogin, pid);
+      const dataGet = await getHandler(userLogin, pid, my_ruolo);
       res.status(200).json(dataGet);
       break;
     case "POST":

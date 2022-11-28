@@ -1,28 +1,32 @@
 import { getToken } from "../data/common";
+import { getLogger } from "../logging/log-util";
+
+const logger = getLogger("apicommon");
 
 function getPid(request) {
   let { pid } = request.query;
-  console.log("getPid ########");
-  // console.log(request.query);
-  // console.log(pid);
-  console.log(pid ? pid : "getPid NON PRESENTE");
+  logger.debug(pid ? `pid:[${pid}]` : "pid:[NON PRESENTE]");
+
   if (!pid) pid = 0;
   else pid = pid[0];
-  console.log("getPid", pid);
+
+  // logger.debug(`OUT pid: [${pid}]`);
   return pid;
 }
 
 function getParentPid(request, pos) {
   let { pid } = request.query;
-  console.log("getParentPid ########");
+  // console.log("getParentPid ########");
   // console.log(pid);
   if (!pid) pid = 0;
   else pid = pid[pos];
-  console.log("getParentPid", pid);
+
+  logger.debug(`getParentPid: [${pid}]`);
   return pid;
 }
 
 async function getLogin(request) {
+  logger.debug("[getLogin]");
   let userLogin = {
     userID: "",
     token: "",

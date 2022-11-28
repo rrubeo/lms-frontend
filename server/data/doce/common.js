@@ -1,6 +1,7 @@
 const commMain = require("../common");
 const utils = require("../../lib/utils");
-
+import { getLogger } from "../../logging/log-util";
+const logger = getLogger("data-doce-common");
 import {
   GetAnagraficaDocenti,
   GetDocenteMateria,
@@ -15,9 +16,8 @@ const getAnagraficaDocenti = async (token, IdPersona, UserName) => {
     token,
     GetAnagraficaDocenti(IdPersona, UserName)
   );
-
-  console.log("getAnagraficaDocenti");
-  // console.log(f);
+  logger.debug("[getAnagraficaDocenti]");
+  logger.trace(f);
   if (f.status) return [];
 
   const options = {
@@ -42,9 +42,8 @@ const getAnagraficaDocenti = async (token, IdPersona, UserName) => {
 
 const getDocenteMateria = async (token, IdPersona) => {
   const f = await utils.getFetch(token, GetDocenteMateria(0, 0, IdPersona));
-
-  console.log("getDocenteMateria");
-  // console.log(f);
+  logger.debug("[getDocenteMateria]");
+  logger.trace(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -58,17 +57,16 @@ const getDocenteMateria = async (token, IdPersona) => {
 
 const getDisponibilitaOrarie = async (token, IdPersona) => {
   const f = await utils.getFetch(token, GetDisponibilitaOrarie(IdPersona));
-  console.log("getDisponibilitaOrarie");
-  // console.log(f);
+  logger.debug("[getDisponibilitaOrarie]");
+  logger.trace(f);
   if (f.status) return [];
   return f;
 };
 
 const getMateriaScolasticaCombo = async (token) => {
   const f = await utils.getFetch(token, GetMateriaScolasticaCombo);
-
-  console.log("getMateriaScolasticaCombo");
-  // console.log(f);
+  logger.debug("[getMateriaScolasticaCombo]");
+  logger.trace(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -88,10 +86,12 @@ const setDisponibilitaOrarie = async (token, IdPersona, body) => {
     `${SetDisponibilitaOrarie}/${IdPersona}`,
     body
   );
+  logger.debug("[setDisponibilitaOrarie]");
   return res;
 };
 
 const deleteDocenteMateria = async (token, id) => {
+  logger.debug("[deleteDocenteMateria]");
   return await commMain.deleteObjectURL(
     token,
     `${DomaDocenteMateriaRels}/${id}`

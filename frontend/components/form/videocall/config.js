@@ -13,8 +13,6 @@ function getApiUrl(query) {
   }
 
   apiUrl = apiUrl + param;
-  // console.log("getApiUrl");
-  // console.log(param);
 
   return apiUrl;
 }

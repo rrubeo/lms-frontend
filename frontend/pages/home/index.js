@@ -10,6 +10,7 @@ import { withIronSessionSsr } from "iron-session/next";
 import { sessionOptions, getFallback } from "../../lib/";
 import useUser from "../../lib/useUser";
 import { PAGE_401 } from "../../lib/redirect";
+import { getLogger } from "../../logging/log-util";
 
 const utils = require("../../lib/utils");
 const API = `${process.env.server}/menu`;
@@ -34,12 +35,15 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 sessionOptions);
 
 function HomeMain() {
+  const logger = getLogger("home");
   const { user } = useUser({
     redirectTo: PAGE_401,
   });
   // console.log(user);
   const { fallback } = useSWRConfig();
   const { userInfo, pageName, apiUrl, pageQuery } = fallback;
+
+  logger.trace(`${JSON.stringify(userInfo)}`);
 
   let { data, error } = useSWR(apiUrl, utils.getData);
 

@@ -2,6 +2,10 @@ import * as React from "react";
 import { forceReloadUtil } from "../lib";
 import Image from "next/image";
 import Box from "@mui/material/Box";
+import { getLogger } from "../logging/log-util";
+
+const logger = getLogger("ErrorBoundary");
+
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -15,11 +19,13 @@ class ErrorBoundary extends React.Component {
   }
   componentDidCatch(error, errorInfo) {
     // You can use your own error logging service here
-    console.log({ error, errorInfo });
+    // console.log({ error, errorInfo });
     this.setState({
       error: error,
       errorInfo: errorInfo,
     });
+    logger.error(`${JSON.stringify(error)}`);
+    logger.error(`${JSON.stringify(errorInfo)}`);
     forceReloadUtil();
   }
   render() {

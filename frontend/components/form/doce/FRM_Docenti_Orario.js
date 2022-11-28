@@ -74,7 +74,11 @@ class FRM_Docenti_Orario extends React.Component {
     const linkBack = `/doce/${do_cfg.DOCE_STEP_0}`;
     return (
       <>
-        <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
+        {this.props.data.back_visible ? (
+          <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
+        ) : (
+          <></>
+        )}
         <Divider sx={{ pt: "1%" }} light />
         <Box
           component="form"

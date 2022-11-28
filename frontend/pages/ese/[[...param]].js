@@ -59,7 +59,6 @@ function Main() {
   if (data.status != 200) return <Wip>{data.message}</Wip>;
 
   const reloadData = async () => {
-    console.log("data changed");
     const options = {
       revalidate: true,
       revalidateIfStale: true,
@@ -78,7 +77,6 @@ function Main() {
 
     const vres = await validateForm(formData);
 
-    // console.log(formData);
     if (vres.valid) {
       const res = await utils.postData(apiUrl, formData);
       if (res.status != 200) {
@@ -104,7 +102,6 @@ function Main() {
 
   const handleNextStep = async (event, filter, route) => {
     event.preventDefault();
-    console.log(route);
     forceNavigateUtil(route, filter, fallback.subIndex);
   };
 

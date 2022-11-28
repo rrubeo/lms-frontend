@@ -71,11 +71,14 @@ class FRM_Tutor_Orario extends React.Component {
   }
 
   render() {
-    // console.log(this.props.data);
     const linkBack = `/tutor/${tu_cfg.TUT_STEP_0}`;
     return (
       <>
-        <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
+        {this.props.data.back_visible ? (
+          <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />
+        ) : (
+          <></>
+        )}
         <Divider sx={{ pt: "1%" }} light />
         <Box
           component="form"

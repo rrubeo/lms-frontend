@@ -1,4 +1,7 @@
 import Router from "next/router";
+import { getLogger } from "../logging/log-util";
+
+const logger = getLogger("helper");
 
 export const forceReloadUtil = () => {
   Router.reload();
@@ -9,7 +12,7 @@ export const forceNavigateUtil = (route, filter, subIndex) => {
   // console.log(route);
   // console.log(filter);
   // console.log(subIndex);
-  if (!filter) console.log("MANCANO PARAMETRI");
+  if (!filter) logger.error(`Parametri di navigazione mancanti`);
   if (filter.id.toString().search("_") != -1) {
     const myArray = filter.id.split("_");
     filter.id = myArray[0];
@@ -24,9 +27,9 @@ export const forceNavigateUtil = (route, filter, subIndex) => {
     // buildRoute = `${buildRoute}/${subIndex[0]}`;
     buildRoute = `${buildRoute}/${subIndex.join("/")}`;
   }
-  // console.log("Route next:", buildRoute);
+
+  logger.debug(`Navigazione: ${buildRoute}`);
   Router.push(buildRoute);
-  // console.log(buildRoute);
 };
 
 export const forceSearchUtil = (buildRoute) => {
