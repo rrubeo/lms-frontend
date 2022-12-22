@@ -21,10 +21,12 @@ const CLOUD_BASE_URL = process.env.API_SERVER;
 const CLOUD_API_TOKEN = "api/User/authenticate";
 const CLOUD_API_VALID_TOKEN = "api/User/ValidateToken";
 const CLOUD_API_ROLES = "api/Tables/GetRuoloUtente";
+const CLOUD_API_INFO_UTENTE = "api/Tables/GetUtente";
 
 const UserValidate = `${CLOUD_BASE_URL}/${CLOUD_API_VALID_TOKEN}`;
 const UserAuthenticate = `${CLOUD_BASE_URL}/${CLOUD_API_TOKEN}`;
 const UserRole = `${CLOUD_BASE_URL}/${CLOUD_API_ROLES}`;
+const UserPersonalData = `${CLOUD_BASE_URL}/${CLOUD_API_INFO_UTENTE}`;
 
 const defaultLogin = {
   isLoggedIn: false,
@@ -33,6 +35,19 @@ const defaultLogin = {
   role: "",
   idRole: 0,
   isStudent: 0,
+  name: "",
+  email: "",
+  description: "",
+  id: 0,
+  photoUrl: "",
+};
+
+const getPersonalData = async (idPersona, userInfo) => {
+  const roles = await fetchWithUser(
+    `${UserPersonalData}/${idPersona}`,
+    userInfo
+  );
+  return roles;
 };
 
 const getRoles = async (userInfo) => {
@@ -102,8 +117,10 @@ const getFallback = async (req, res, query) => {
       },
     };
   }
-  // console.dir("V1");
-  if (authSession.isStudent == 1) {
+
+  const nomePagina = getPageName(query);
+  // console.dir(nomePagina);
+  if (authSession.isStudent == 1 && nomePagina != "network") {
     res.setHeader("location", `${process.env.frontend}/401`);
     res.statusCode = 302;
     res.end();
@@ -131,6 +148,7 @@ const getFallback = async (req, res, query) => {
 module.exports = {
   getAuthSession,
   getRoles,
+  getPersonalData,
   getToken,
   validateToken,
   sessionOptions,

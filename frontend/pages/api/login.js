@@ -1,5 +1,11 @@
 import { withIronSessionApiRoute } from "iron-session/next";
-import { getToken, getRoles, sessionOptions } from "../../lib/session";
+import {
+  getToken,
+  getRoles,
+  getPersonalData,
+  sessionOptions,
+  defaultLogin,
+} from "../../lib/session";
 import { getLogger } from "../../logging/log-util";
 
 const logger = getLogger("login");
@@ -24,12 +30,11 @@ export default withIronSessionApiRoute(async (req, res) => {
 
   try {
     const userLogin = await getToken(username, password);
+    let user = defaultLogin;
     // console.log(userLogin);
-    let user = {
-      isLoggedIn: true,
-      login: userLogin.userID,
-      token: userLogin.token,
-    };
+    user.isLoggedIn = true;
+    user.login = userLogin.userID;
+    user.token = userLogin.token;
 
     const userRole = await getRoles(user);
     // console.log(userRole);
@@ -37,7 +42,20 @@ export default withIronSessionApiRoute(async (req, res) => {
       user.role = userRole[0].ruolo;
       user.idRole = userRole[0].idRuoloUtente;
       user.isStudent = userRole[0].flagIsStudente;
+      user.id = userRole[0].idPersona;
+      //talkjs
+      const userPersonalData = await getPersonalData(
+        userRole[0].idPersona,
+        user
+      );
+      if (userPersonalData[0]) {
+        user.name = `${userPersonalData[0].nome} ${userPersonalData[0].cognome}`;
+        user.email = userPersonalData[0].mail;
+        user.description = userPersonalData[0].userName;
+        user.photoUrl = `${process.env.cloudfiles}/immaginiutente/${userPersonalData[0].userName}.jpg`;
+      }
     }
+
     req.session.user = user;
     await req.session.save();
 

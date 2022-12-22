@@ -3,9 +3,9 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import FormLabel from "@mui/material/FormLabel";
-import FS_ProfileStudent from "../fs/FS_ProfileStudent";
-import FS_Progress from "../fs/FS_Progress";
 import SEC_FasceOrarie from "./SEC_FasceOrarie";
+import SEC_StudentProfile from "./SEC_StudentProfile";
+import SEC_StudentProgress from "./SEC_StudentProgress";
 import DTC_TextBox from "../../DTC_TextBox";
 
 import jnStyles from "../../../styles/utils.module.css";
@@ -100,16 +100,31 @@ class FRM_Studente_Richiesta extends React.Component {
   render() {
     // console.log(this.props.data);
     return (
-      <Stack direction="column" spacing={4} mt={0} mb={0} p={0}>
-        <Stack direction="row" spacing={0} mt={0} mb={0} p={0}>
-          <FS_ProfileStudent
-            profile={this.props.data.iscrizione[0]}
-            urlPath={fsme_cfg.IMAGE_BASE_URL}
-          />
-          <FS_Progress
-            type="home"
-            title="Avanzamento corso"
-            profile={this.props.data.iscrizione[0]}
+      <Stack
+        direction="column"
+        spacing={{ xs: 0, sm: 0, md: 2 }}
+        mt={0}
+        mb={0}
+        p={0}
+      >
+        <Stack
+          direction={{ xs: "column", sm: "row", md: "row" }}
+          justifyContent={{
+            xs: "space-evenly",
+            sm: "space-between",
+            md: "space-between",
+          }}
+          alignItems={{ xs: "flex-start", sm: "flex-start", md: "stretch" }}
+          spacing={{ xs: 2, sm: 0, md: 0 }}
+        >
+          <SEC_StudentProfile profilo={this.props.data.iscrizione[0]} />
+          <SEC_StudentProgress
+            text={this.props.data.label_avanzamento}
+            avanzamento={
+              this.props.data.iscrizione[0].percentualeAvanzamento
+                ? this.props.data.iscrizione[0].percentualeAvanzamento
+                : 0
+            }
           />
         </Stack>
         <FormLabel

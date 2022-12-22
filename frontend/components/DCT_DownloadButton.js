@@ -1,7 +1,4 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
-import PictureAsPdf from "@mui/icons-material/PictureAsPdf";
 import IconButton from "@mui/material/IconButton";
 class DCT_DownloadButton extends React.Component {
   constructor(props) {

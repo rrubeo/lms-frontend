@@ -5,6 +5,7 @@ const logger = getLogger("apicommon");
 
 function getPid(request) {
   let { pid } = request.query;
+  // logger.debug(request.query);
   logger.debug(pid ? `pid:[${pid}]` : "pid:[NON PRESENTE]");
 
   if (!pid) pid = 0;

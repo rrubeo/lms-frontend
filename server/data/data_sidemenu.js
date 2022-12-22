@@ -171,6 +171,12 @@ const navmenu = [
     icon: "icon-calendar",
     link: `${process.env.frontend}/${cfg.CALENDAR}`,
   },
+  {
+    id: utils.getUID(),
+    text: "Chat",
+    icon: "icon-bubble2",
+    link: `${process.env.frontend}/chat/${cfg.TALKJS_CHAT}`,
+  },
 ];
 
 const navmenustudenti = [
@@ -178,13 +184,19 @@ const navmenustudenti = [
     id: utils.getUID(),
     text: "Home",
     icon: "icon-home",
-    link: `${process.env.frontend}/${cfg.HOME_STUDENT}`,
+    link: `${process.env.frontend}/fsme/${cfg.FSME_STEP_0}`,
   },
   {
     id: utils.getUID(),
     text: "Aula Virtuale",
     icon: "icon-student-teacher-assignment",
     link: `${process.env.frontend}/fsme/${cfg.FSME_STEP_2}`,
+  },
+  {
+    id: utils.getUID(),
+    text: "Chat",
+    icon: "icon-bubble2",
+    link: `${process.env.frontend}/chat/${cfg.TALKJS_CHAT}`,
   },
   {
     id: utils.getUID(),

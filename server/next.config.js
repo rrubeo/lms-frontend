@@ -7,6 +7,9 @@ const nextConfig = {
 
 const isProd = process.env.NODE_ENV === "production";
 
+const CLOUD_FILES_PROD = "https://lmsfilesdev.cloudandpartners.com";
+const CLOUD_FILES_DEV = "https://lmsfilesdev.cloudandpartners.com";
+
 // const LMS_PROD = "https://lmswebapi.istitutojanus.it";
 const LMS_PROD = "https://lmswebapidev.cloudandpartners.com";
 const LMS_DEV = "https://lmswebapidev.cloudandpartners.com";
@@ -26,6 +29,7 @@ module.exports = {
     component: "server",
     basepath: "/school",   
     API_SERVER: isProd ? LMS_PROD : LMS_DEV,
+    cloudfiles: isProd ? CLOUD_FILES_PROD : CLOUD_FILES_DEV,
     frontend: isProd ? FRONT_PROD : FRONT_DEV,
     server: isProd ? SERVER_PROD : SERVER_DEV,
   },

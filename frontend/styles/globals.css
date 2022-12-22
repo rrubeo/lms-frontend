@@ -35,3 +35,33 @@ a {
   background-color: #B34A9D !important;
   border: 2px solid #ffffff !important;
 }
+
+.rce-mlist {
+  background-color: #B34A9D !important;
+}
+
+.rce-citem-body--top-title {
+  font-size: 11pt !important;
+  text-shadow: 1px 1px #aabcdf;
+}
+
+.rce-citem-body--top-time {
+  color: #B34A9D !important;
+  font-size: 12px !important;
+  text-shadow: 1px 1px #aabcdf;
+}
+
+.rce-citem-body--bottom-title {
+  color: #B34A9D !important;
+  font-size: 12px !important;
+}
+
+.rce-citem-body--bottom-status span {
+  background: #B34A9D !important;
+  border-radius: 100%;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  padding: 13px
+}

@@ -1,5 +1,6 @@
 const utils = require("../../lib/utils");
-
+import { getLogger } from "../../logging/log-util";
+const logger = getLogger("fs");
 import {
   GetIscrizioneStudente,
   GetLezioni,
@@ -16,8 +17,8 @@ import {
 
 const getIscrizioneStudente = async (token, username) => {
   const f = await utils.getFetch(token, GetIscrizioneStudente(username));
-  console.log("getIscrizioneStudente");
-  // console.log(f);
+  logger.debug("[getIscrizioneStudente]");
+  logger.trace(f);
   if (f.status) return [];
   const data = f[0];
   return data;
@@ -25,22 +26,22 @@ const getIscrizioneStudente = async (token, username) => {
 
 const getIscrizioneStudenteMulti = async (token, username) => {
   const f = await utils.getFetch(token, GetIscrizioneStudente(username));
-  console.log("getIscrizioneStudenteMulti");
-  // console.log(f);
+  logger.debug("[getIscrizioneStudenteMulti]");
+  logger.trace(f);
   if (f.status) return [];
   const data = f.map((x) => {
     x.id = x.idIscrizione;
     x.text = x.iscrizione;
     return x;
   });
-  console.log(data);
+  // logger.debug(data);
   return data;
 };
 
 const getLezioni = async (token, username, classeArgomento) => {
   const f = await utils.getFetch(token, GetLezioni(username, classeArgomento));
-  console.log("getLezioni");
-  // console.log(f);
+  logger.debug("[getLezioni]");
+  // logger.trace(f);
   if (f.status) return [];
   const data = f;
   return data;
@@ -51,14 +52,15 @@ const getLezioniSeguite = async (token, username, idIscrizione, maxNumber) => {
     token,
     GetLezioniSeguite(username, idIscrizione, maxNumber)
   );
-  console.log("getLezioniSeguite");
-  // console.log(f);
+  logger.debug("[getLezioniSeguite]");
+  logger.trace(f);
   if (f.status) return [];
 
   const data = f.map((x) => {
     return {
       id: x.idLezione,
       name: x.lezione,
+      text: x.lezione,
     };
   });
   return data;
@@ -74,7 +76,7 @@ const getDocentiAula = async (
     token,
     GetStudenteDocente(IdIscrizione, UserNameDocente, IdPersona)
   );
-  console.log("getDocentiAula");
+  logger.debug("[getDocentiAula]");
   // console.log(f);
   if (f.status) return [];
 
@@ -84,7 +86,7 @@ const getDocentiAula = async (
       name: x.nomeDocente,
       surname: x.cognomeDocente,
       username: x.userNameDocente,
-      subject: x.materia,      
+      subject: x.materia,
       imagePath: x.pathImmagineDocenteTutor,
       text: `${x.materia} - ${x.nomeDocente} ${x.cognomeDocente}`,
     };
@@ -97,8 +99,8 @@ const getTutorAula = async (token, idRuolo, idIscrizione, username) => {
     token,
     GetStudTutor(idRuolo, idIscrizione, username)
   );
-  console.log("getTutorAula");
-  // console.log(f);
+  logger.debug("[getTutorAula]");
+  logger.trace(f);
   if (f.status) return [];
 
   const data = f.map((x, index) => {
@@ -106,7 +108,7 @@ const getTutorAula = async (token, idRuolo, idIscrizione, username) => {
       id: x.userNameTutor,
       name: x.nomeTutor,
       surname: x.cognomeTutor,
-      username: x.userNameTutor,      
+      username: x.userNameTutor,
       imagePath: x.pathImmagineDocenteTutor,
       text: `${x.nomeTutor} ${x.cognomeTutor}`,
     };
@@ -116,8 +118,8 @@ const getTutorAula = async (token, idRuolo, idIscrizione, username) => {
 
 const getLezione = async (token, idLezione) => {
   const f = await utils.getFetch(token, GetLezione(idLezione));
-  console.log("getLezione");
-  // console.log(f);
+  logger.debug("[getLezione]");
+  logger.trace(f);
   if (f.status) return [];
   const data = f;
   return data;
@@ -125,8 +127,8 @@ const getLezione = async (token, idLezione) => {
 
 const getPDF = async (token, idContenuto) => {
   const f = await utils.getFetch(token, GetPDF(idContenuto));
-  console.log("getPDF");
-  // console.log(f);
+  logger.debug("[getPDF]");
+  logger.trace(f);
   if (f.status) return [];
   const data = f;
   return data;
@@ -152,7 +154,7 @@ const getDisponibilitaCalendario = async (
       idDocenteStudente
     )
   );
-  console.log("getDisponibilitaCalendario");
+  logger.debug("[getDisponibilitaCalendario]");
   // console.log(f);
   if (f.status) return [];
   //TODO: verificare mapping
@@ -192,7 +194,7 @@ const getDisponibilitaCalendarioTutor = async (
       idDocenteStudente
     )
   );
-  console.log("getDisponibilitaCalendarioTutor");
+  logger.debug("[getDisponibilitaCalendarioTutor]");
   if (f.status) return [];
   return f;
 };
@@ -207,7 +209,7 @@ const getStudenteDocente = async (
     token,
     GetStudenteDocente(IdIscrizione, UserNameDocente, IdPersona)
   );
-  console.log("getStudenteDocente");
+  logger.debug("[getStudenteDocente]");
   // console.log(f);
   if (f.status) return [];
   const data = f;
@@ -224,8 +226,8 @@ const getDisponibilitaCrediti = async (
     token,
     GetDisponibilitaCrediti(IdIscrizione, NumMinimoMinuti, NumMaxMinuti)
   );
-  console.log("getDisponibilitaCrediti");
-  // console.log(f);
+  logger.debug("[getDisponibilitaCrediti]");
+  logger.trace(f);
   if (f.status) return [];
   return f;
 };

@@ -1,8 +1,9 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
-
+import { getLogger } from "../../../../logging/log-util";
+const logger = getLogger("fsme-richiesta");
 import { navmenustudenti, usermenu } from "../../../../data/data_sidemenu";
-import { getFunzioniForm } from "../../../../data/common";
+import { getFunzioniForm, getRuoloUtente } from "../../../../data/common";
 
 import {
   getIscrizioneStudenteMulti,
@@ -63,6 +64,7 @@ async function getHandler(userLogin, pid, userType, startDate) {
         ? `Docente ${infoDocente}`
         : `Tutor ${infoDocente}`,
     back_label: "Torna indietro",
+    label_avanzamento: "Avanzamento Corso",
     startDate: startDate,
     userType: userType,
     userNameFasce: pid,
@@ -80,8 +82,9 @@ async function getHandler(userLogin, pid, userType, startDate) {
 async function postHandler(userLogin, postData, pid, userType) {
   let res = { status: 200, message: "OK" };
   let p3 = {};
-  console.log("************ RICEVUTO RICHIESTA APPUNTAMENTO");
-  console.log(postData);
+  logger.debug("[RICEVUTO RICHIESTA APPUNTAMENTO]");
+  logger.trace(postData);
+
   // console.log(userType);
   const appu = {
     appuDataInizioAppuntamento: postData.fascia.dataOraInizioAppuntamento,
@@ -99,10 +102,10 @@ async function postHandler(userLogin, postData, pid, userType) {
     appuLink: "",
   };
 
-  console.log("************ POST APPUNTAMENTO");
-  console.log(appu);
+  logger.debug("[POST APPUNTAMENTO]");
+  logger.trace(appu);
   p3 = await insertAppuntamento(userLogin.token, appu);
-  console.log(p3);
+  logger.debug(p3);
 
   if (p3.status) {
     res.status = p3.status;
@@ -118,16 +121,27 @@ async function postHandler(userLogin, postData, pid, userType) {
 export default async function handler(req, res) {
   await utils.cors(req, res);
 
-  console.log("RICHIESTA APPUNTAMENTO");
+  logger.info(`API-CALL [RICHIESTA APPUNTAMENTO]`);
   const pid = apic.getPid(req);
   const userName = apic.getParentPid(req, 0);
   const userType = apic.getParentPid(req, 1);
   const startDate = apic.getParentPid(req, 2);
 
-  console.log("userName", userName);
-  console.log("userType", userType);
-
   const userLogin = await apic.getLogin(req);
+
+  const db_ruolo = await getRuoloUtente(userLogin.token, userLogin.userID, 0);
+  logger.trace(db_ruolo);
+
+  const my_ruolo = db_ruolo.length > 0 ? db_ruolo[0].idRuolo : 0;
+
+  let idPersona = 0;
+  if (db_ruolo.length > 0) {
+    idPersona = db_ruolo[0].idPersona;
+  }
+
+  logger.debug(
+    `API-DATA [RICHIESTA APPUNTAMENTO] USER:[${userLogin.userID}] PERSONA-ID:[${idPersona}] RUOLO:[${my_ruolo}] userName:[${userName}] userType:[${userType}]`
+  );
 
   switch (req.method) {
     case "GET":

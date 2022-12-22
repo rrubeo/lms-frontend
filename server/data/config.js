@@ -77,6 +77,23 @@ function GetPersonaByUsername(UserName) {
   return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_PERSONABYUSERNAME}/${UserName}`;
 }
 
+const CLOUD_API_TBL_RUBRICA = "api/Tables/GetRubrica";
+function GetRubrica(IdPersona, UserName) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_RUBRICA}/${IdPersona}/${UserName}`;
+}
+
+const CLOUD_API_TBL_RUBRICA_CONV = "api/Tables/GetPersoneChat";
+function GetPersoneChat(IdPersona) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_RUBRICA_CONV}/${IdPersona}`;
+}
+
+const CLOUD_API_TBL_RUBRICA_CHAT = "api/Tables/GetElencoChat";
+function GetElencoChat(IdPersonaM, IdPersonaD) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_TBL_RUBRICA_CHAT}/${IdPersonaM}/${IdPersonaD}`;
+}
+
+const CLOUD_API_RUBRICA_CHAT = "api/ChatChatDats";
+const ChatChatDats = `${CLOUD_BASE_URL}/${CLOUD_API_RUBRICA_CHAT}`;
 
 const CLOUD_API_NOTIFICHE = "api/NotiNotificheDats";
 const NotiNotificheDats = `${CLOUD_BASE_URL}/${CLOUD_API_NOTIFICHE}`;
@@ -101,4 +118,8 @@ module.exports = {
   GetNotificaDaAppuntamento,
   NotiNotificheDats,
   GetPersonaByUsername,
+  GetRubrica,
+  GetPersoneChat,
+  GetElencoChat,
+  ChatChatDats,
 };

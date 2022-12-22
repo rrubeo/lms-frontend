@@ -15,6 +15,10 @@ import {
   GetNotificaDaAppuntamento,
   NotiNotificheDats,
   GetPersonaByUsername,
+  GetRubrica,
+  GetPersoneChat,
+  GetElencoChat,
+  ChatChatDats,
 } from "../data/config";
 
 const utils = require("../lib/utils");
@@ -356,8 +360,103 @@ const letturaNotifica = async (token, body) => {
   return res;
 };
 
+const getRubricaTalk = async (token, IdUtenteUserName, IdRuoloUtente) => {
+  const f = await utils.getFetch(
+    token,
+    GetRuoloUtente(IdUtenteUserName, IdRuoloUtente)
+  );
+  logger.debug("[getRubricaTalk]");
+  logger.trace(f);
+  if (f.status) return [];
+
+  const data = f.map((x, index) => {
+    return {
+      id: x.idPersona,
+      name: `${x.nome} ${x.cognome}`,
+      email: "r.rubeo@cloudandpartners.com",
+      photoUrl:
+        "https://lmsfilesdev.cloudandpartners.com/immaginiutente/giuseppe.verdi.jpg",
+      role: x.ruolo,
+      info: x.ruolo,
+      welcomeMessage: "Ciao!",
+    };
+  });
+
+  return data;
+};
+
+const getRubricaJanus = async (token, IdPersona, UserName) => {
+  const f = await utils.getFetch(token, GetRubrica(IdPersona, UserName));
+  logger.debug("[getRubricaJanus]");
+  // logger.debug(f);
+  if (f.status) return [];
+
+  const data = f.map((x, index) => {
+    return {
+      id: x.idPersonaDestinataria,
+      name: `${x.nomeDestinatario} ${x.cognomeDestinatario}`,
+      email: "r.rubeo@cloudandpartners.com",
+      photoUrl: x.pathImmagineMittente,
+      role: "-",
+      info: "-",
+      welcomeMessage: "Ciao!",
+    };
+  });
+
+  return data;
+};
+
+const getPersoneChat = async (token, IdPersona) => {
+  const f = await utils.getFetch(token, GetPersoneChat(IdPersona));
+  logger.debug("[getPersoneChat]");
+  // logger.debug(f);
+  if (f.status) return [];
+
+  const data = f.map((x, index) => {
+    return {
+      id: x.idPersona2,
+      title: `${x.nome2} ${x.cognome2}`,
+      // alt: `${x.nome2}_${x.cognome2}`,
+      // avatar: `${process.env.cloudfiles}${x.pathImmagineDestinatario}`,
+      subtitle: x.testo,
+      unread: x.msgNonLetti,
+      date: x.dataInvio,
+    };
+  });
+
+  return data;
+};
+
+const getElencoChat = async (token, IdPersonaM, IdPersonaD) => {
+  const f = await utils.getFetch(token, GetElencoChat(IdPersonaM, IdPersonaD));
+  logger.debug("[getElencoChat]");
+  // logger.debug(f);
+  if (f.status) return [];
+
+  const data = f.map((x, index) => {
+    return {
+      id: x.idChat,
+      position: IdPersonaM == x.idPersonaInput ? "right" : "left",
+      type: "text",
+      title: IdPersonaM == x.idPersonaInput ? x.nome1 : x.nome2,
+      text: x.testo,
+      date: x.dataInvio,
+    };
+  });
+
+  return data;
+};
+
+const insChatMessage = async (token, body) => {
+  let res = await utils.postFetch(token, ChatChatDats, body);
+  logger.debug("[insChatMessage]");
+  logger.trace(res);
+  return res;
+};
+
 module.exports = {
   getToken,
+  getRubricaJanus,
   getFunzioniForm,
   deleteObjectURL,
   getNullGeo,
@@ -378,4 +477,8 @@ module.exports = {
   getNotificaDaAppuntamento,
   letturaNotifica,
   getPersonaByUserName,
+  getRubricaTalk,
+  getPersoneChat,
+  getElencoChat,
+  insChatMessage,
 };

@@ -28,7 +28,7 @@ export const forceNavigateUtil = (route, filter, subIndex) => {
     buildRoute = `${buildRoute}/${subIndex.join("/")}`;
   }
 
-  logger.debug(`Navigazione: ${buildRoute}`);
+  // logger.debug(`Navigazione: ${buildRoute}`);
   Router.push(buildRoute);
 };
 

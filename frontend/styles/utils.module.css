@@ -188,7 +188,6 @@
     border: 0px;
     padding: 0px;
     text-shadow: 1px 1px #5f638d;
-
 }
 
 .jnBD {
@@ -829,4 +828,340 @@
     border-radius: 26px;
     color: #ffffff;
     padding: 4px 10px 4px 10px;
+}
+
+
+.jnUsers {
+    display: flex;
+    width: 55%;
+    margin: 0 auto;
+    justify-content: space-around;
+}
+
+.jnUsersContainer {
+    background-color: #ffffff;
+    width: 65%;
+    padding: 20px 0;
+}
+
+.jnChatList {
+    /* border-radius: 26px; */
+    padding: 0px;
+    background-color: #aabcdf;
+}
+
+.jnChatboxContainer {
+    position: absolute;
+    bottom: 0;
+    height: 500px;
+    right: 5%;
+    width: 300px;
+}
+
+.jnChatIconOver {
+    background-color: #B34A9D;
+    font-size: 8pt;
+    font-weight: 400;
+    color: #ffffff;
+}
+
+.jnDCT_ChatContainer2 {
+    background-color: #d1d6d8;
+    font-size: 11pt;
+    font-weight: 800;
+    text-shadow: 1px 1px #d2d5ec;
+    color: #B34A9D;
+    border: 0.5px solid #788CB4;
+    border-radius: 26px;
+    padding: 10px;
+    margin: 0;
+}
+
+.jnDCT_ChatContainer {
+    border: 0.5px solid #788CB4;
+    border-radius: 26px;
+    font-size: 11pt;
+    font-weight: 800;
+    padding: 15px;
+    margin: 0;
+    overflow-x: hidden;
+    /* Hide horizontal scrollbar */
+    overflow-y: scroll;
+    /* Add vertical scrollbar */
+}
+
+.jnDCT_ChatContainer::-webkit-scrollbar {
+    width: 25px;
+    background-color: transparent;
+    border-radius: 26px;
+}
+
+.jnDCT_ChatContainer::-webkit-scrollbar-thumb {
+    width: 5px;
+    border: 10px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    border-radius: 26px;
+    background-color: #B34A9D;
+}
+
+.jnDCT_ChatMessage {
+    font-size: 18pt !important;
+}
+
+
+.jnAddressName {
+    font-size: 11pt;
+    font-weight: 800;
+    color: #B34A9D;
+    text-shadow: 1px 1px #aabcdf;
+}
+
+.jnAddressRole {
+    font-size: 10pt;
+    font-weight: 800;
+    color: #000000;
+    text-shadow: 1px 1px #aabcdf;
+}
+
+.jnAddressInfo {
+    font-size: 10pt;
+    font-weight: 400;
+    color: #000000;
+    text-shadow: 1px 1px #aabcdf;
+}
+
+.jnProgressBox {
+    position: relative;
+}
+
+.jnProgressEmpty {
+    color: #EDEDED;
+}
+
+.jnProgressFull {
+    position: absolute;
+    left: 0;
+    color: #B2499B;
+}
+
+.jnA1Progress {
+    position: absolute;
+    display: flex;
+    top: 0;
+    left: 4pt;
+    bottom: 5pt;
+    right: 0;
+    align-items: center;
+    justify-content: center;
+    font-size: 14pt;
+    font-weight: 800;
+    color: black;
+    text-align: center;
+}
+
+.jnA1Title {
+    font-size: 16pt;
+    font-weight: 800;
+    color: black;
+}
+
+.jnA1Materie {
+    font-size: 15pt;
+    font-weight: 300;
+    color: #8A8A8A;
+}
+
+.jnA1MaterieIcon {
+    font-size: 29pt;
+    font-weight: 400;
+    color: #414141;
+}
+
+.jnA1MaterieIcon2 {
+    font-size: 17pt;
+    font-weight: 400;
+    color: #000000;
+}
+
+.jnA1DescArgomento {
+    font-size: 12pt;
+    font-weight: 600;
+    color: black;
+}
+
+.jnA1DescLezione {
+    font-size: 12pt;
+    font-weight: 300;
+    border-bottom: 1px solid #ffffff;
+}
+
+.jnA1Tempo {
+    font-size: 11pt;
+    font-weight: 300;
+    color: #8A8A8A;
+}
+
+.jnA1Profile {
+    font-size: 17pt;
+    font-weight: 800;
+    color: black;
+}
+
+.jnH3Profile {
+    font-size: 13pt;
+    font-weight: 300;
+    color: #B34A9D;
+}
+
+.jnB1Profile {
+    font-size: 15pt;
+    font-weight: 300;
+    color: #8A8A8A;
+}
+
+.jnListLezioni {
+    background-color: #E9E9E9;
+    color: #000000;
+    border-radius: 26px;
+    padding: 1px;
+    /* -webkit-box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2); */
+}
+
+.jnListCorsi {
+    background-color: #B34A9D;
+    color: #ffffff;
+    border-radius: 26px;
+    padding: 10px;
+    -webkit-box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
+}
+
+.jnListTextHome {
+    font-size: 12pt;
+    font-weight: 400;
+    padding: 9px;
+    text-shadow: 1px 1px #5f638d;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.jnListText {
+    font-size: 10pt;
+    font-weight: 300;
+    padding: 9px;
+    text-shadow: 1px 1px #5f638d;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.jnListTextSelect {
+    font-size: 11pt;
+    font-weight: 800;
+    padding: 9px;
+    text-shadow: 1px 1px #5f638d;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.96);
+}
+
+.jnListLezioni::-webkit-scrollbar {
+    width: 25px;
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+.jnListLezioni::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    border: 8px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    border-radius: 9999px;
+    background-color: #ffffff;
+}
+
+.jnAccordionContainer {
+    border: 1.5px solid #888888;
+    border-radius: 26px !important;
+    padding: 0px;
+    margin: 0px 0px 10px 0px;
+
+}
+
+.jnAccordionContainer::-webkit-scrollbar {
+    width: 25px;
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+.jnAccordionContainer::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    border: 8px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    border-radius: 9999px;
+    background-color: #8A8A8A;
+}
+
+.jnAccordionRegion {
+    /* background-color: #888888; */
+    padding: 0px;
+    margin: 0px;
+    border: 0px solid #888888;
+    /* border-radius: 26px !important; */
+
+}
+
+.jnListIscrizione {
+    /* background-color: #E9E9E9;
+    color: #000000;
+    border-radius: 26px; */
+    padding: 0px;
+    /* -webkit-box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2); */
+}
+
+.jnListIscrizione::-webkit-scrollbar {
+    width: 25px;
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+.jnListIscrizione::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    border: 8px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    border-radius: 9999px;
+    background-color: #8A8A8A;
+}
+
+.jnListUltimeLezioni {
+    background-color: #798CB4;
+    color: #ffffff;
+    border-radius: 26px;
+    padding: 10px;
+    -webkit-box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
+}
+
+.jnAccordionProgress {
+    background-color: #F1F1F1;
+    height: 10px;
+    border-radius: 30px;
+    -webkit-box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.2);
+}
+
+.jnAccordionProgress span {
+    background-color: #B2499B;
+}
+
+.jnAccordion {
+    min-height: 120px;
+    max-height: 675px;
+    overflow-y: scroll;
+}
+
+
+
+.jnThumbs1 {
+    border: 2px solid #B34B9E
+}
+
+.jnThumbs0 {
+    border: 0px solid #B34B9E
 }

@@ -123,12 +123,12 @@ class DTC_Player extends React.Component {
   }
 
   videoEnd(data) {
-    console.log("videoEnd");
+    // console.log("videoEnd");
     this.props.OnVideoEnd(data);
   }
 
   videoLoaded(data) {
-    console.log("videoLoaded");
+    // console.log("videoLoaded");
     this.props.OnVideoLoaded(data);
   }
 

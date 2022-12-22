@@ -2,10 +2,9 @@ import * as React from "react";
 import Stack from "@mui/material/Stack";
 
 import DCT_Dialog from "../../DCT_Dialog";
-import FS_ProfileStudent from "../fs/FS_ProfileStudent";
-import FS_Progress from "../fs/FS_Progress";
 import SEC_List_Person from "./SEC_List_Person";
-
+import SEC_StudentProfile from "./SEC_StudentProfile";
+import SEC_StudentProgress from "./SEC_StudentProgress";
 const fsme_cfg = require("./config");
 
 class FRM_Studente_Aula extends React.Component {
@@ -24,8 +23,6 @@ class FRM_Studente_Aula extends React.Component {
   }
 
   handleOnClick(event, item) {
-    // console.log(item);
-    // console.log(this.props.data.crediti);
     if (item.id == this.state.docentiId) {
       if (this.props.data.crediti.creditiDisponibili < 1) {
         this.setState({
@@ -52,16 +49,31 @@ class FRM_Studente_Aula extends React.Component {
     // console.log(this.props.data);
     return (
       <>
-        <Stack direction="column" spacing={4} mt={0} mb={0} p={0}>
-          <Stack direction="row" spacing={0} mt={0} mb={0} p={0}>
-            <FS_ProfileStudent
-              profile={this.props.data.iscrizione[0]}
-              urlPath={fsme_cfg.IMAGE_BASE_URL}
-            />
-            <FS_Progress
-              type="home"
-              title="Avanzamento corso"
-              profile={this.props.data.iscrizione[0]}
+        <Stack
+          direction="column"
+          spacing={{ xs: 0, sm: 0, md: 2 }}
+          mt={0}
+          mb={0}
+          p={0}
+        >
+          <Stack
+            direction={{ xs: "column", sm: "row", md: "row" }}
+            justifyContent={{
+              xs: "space-evenly",
+              sm: "space-between",
+              md: "space-between",
+            }}
+            alignItems={{ xs: "flex-start", sm: "flex-start", md: "stretch" }}
+            spacing={{ xs: 2, sm: 0, md: 0 }}
+          >
+            <SEC_StudentProfile profilo={this.props.data.iscrizione[0]} />
+            <SEC_StudentProgress
+              text={this.props.data.label_avanzamento}
+              avanzamento={
+                this.props.data.iscrizione[0].percentualeAvanzamento
+                  ? this.props.data.iscrizione[0].percentualeAvanzamento
+                  : 0
+              }
             />
           </Stack>
           <Stack

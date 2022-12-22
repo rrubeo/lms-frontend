@@ -2,7 +2,8 @@ const PAGE_401 = "/401";
 const PAGE_LOGIN = "/login";
 const PAGE_HOME = "/home";
 const PAGE_NONE = "";
-const PAGE_HOME_STUDENT = "/fs";
+// const PAGE_HOME_STUDENT = "/fs";
+const PAGE_HOME_STUDENT = "/fsme/fsme_home";
 
 module.exports = {
   PAGE_401,

@@ -42,6 +42,7 @@ const HOME_0 = "home";
 const HOME_STUDENT = "fs";
 const STUDENT_AULA = "fs/aula";
 const CALENDAR = "calendar";
+const TALKJS_CHAT = "network";
 
 module.exports = {
   HOME_0,
@@ -72,4 +73,5 @@ module.exports = {
   FSME_STEP_0,
   FSME_STEP_2,
   TUTOP_STEP_0,
+  TALKJS_CHAT,
 };

@@ -93,7 +93,7 @@ class DCT_Nav extends React.Component {
               <Box
                 sx={{
                   flexGrow: 1,
-                  display: "flex",
+                  display: { xs: "none", sm: "flex", md: "flex", lg: "flex" },
                   alignItems: "center",
                   textAlign: "center",
                   height: "63px",

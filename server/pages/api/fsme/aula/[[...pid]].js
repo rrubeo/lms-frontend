@@ -1,11 +1,9 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
-
-import {
-  navmenustudenti,
-  usermenu,
-} from "../../../../data/data_sidemenu";
-import { getFunzioniForm } from "../../../../data/common";
+import { getLogger } from "../../../../logging/log-util";
+const logger = getLogger("fsme-aula");
+import { navmenustudenti, usermenu } from "../../../../data/data_sidemenu";
+import { getFunzioniForm, getRuoloUtente } from "../../../../data/common";
 
 import {
   getIscrizioneStudenteMulti,
@@ -46,6 +44,7 @@ async function getHandler(userLogin, pid) {
     back_label: "Torna indietro",
     label_docenti: "I miei insegnanti",
     label_tutor: "Il mio Tutor",
+    label_avanzamento: "Avanzamento Corso",
     navmenu: navmenustudenti,
     usermenu: usermenu,
     iscrizione: iscrizione,
@@ -60,9 +59,24 @@ async function getHandler(userLogin, pid) {
 export default async function handler(req, res) {
   await utils.cors(req, res);
 
-  console.log("AULA");
-  const pid = apic.getPid(req);
+  logger.info(`API-CALL [AULA]`);
+  let pid = apic.getPid(req);
   const userLogin = await apic.getLogin(req);
+
+  const db_ruolo = await getRuoloUtente(userLogin.token, userLogin.userID, 0);
+  logger.trace(db_ruolo);
+
+  const my_ruolo = db_ruolo.length > 0 ? db_ruolo[0].idRuolo : 0;
+
+  if (pid == 0) {
+    if (db_ruolo.length > 0) {
+      pid = db_ruolo[0].idPersona;
+    }
+  }
+
+  logger.debug(
+    `API-DATA [AULA] USER:[${userLogin.userID}] PERSONA-ID:[${pid}] RUOLO:[${my_ruolo}]`
+  );
 
   switch (req.method) {
     case "GET":

@@ -6,6 +6,7 @@ import DCT_Layout from "../../components/layout/DCT_Layout";
 import FRM_Studente_Home from "../../components/form/fsme/FRM_Studente_Home";
 import FRM_Studente_Aula from "../../components/form/fsme/FRM_Studente_Aula";
 import FRM_Studente_Richiesta from "../../components/form/fsme/FRM_Studente_Richiesta";
+import FRM_Dettaglio_Lezione from "../../components/form/fsme/FRM_Dettaglio_Lezione";
 import { validateForm } from "../../components/form/fsme/validator";
 import useUser from "../../lib/useUser";
 import { PAGE_401 } from "../../lib/redirect";
@@ -121,8 +122,17 @@ function Main() {
   const handleNextStep = async (event, filter, route) => {
     event.preventDefault();
     // console.log(filter);
-    fallback.subIndex = [filter.id, filter.startDate];
-    forceNavigateUtil(route, filter.item, fallback.subIndex);
+    // console.log(route);
+    if (
+      fallback.pageName == fsme_cfg.FSME_STEP_0 ||
+      fallback.pageName == fsme_cfg.FSME_STEP_1
+    ) {
+      fallback.subIndex = [filter.lessonId];
+      forceNavigateUtil(route, filter, fallback.subIndex);
+    } else {
+      fallback.subIndex = [filter.id, filter.startDate];
+      forceNavigateUtil(route, filter.item, fallback.subIndex);
+    }
   };
 
   const onActionRow = async (id, data) => {
@@ -144,8 +154,21 @@ function Main() {
         {pageName === fsme_cfg.FSME_STEP_0 ? (
           <FRM_Studente_Home
             id={fsme_cfg.FRM_FSME_STEP_0}
+            userInfo={userInfo}
             data={data}
             query={pageQuery}
+            onClick={handleNextStep}
+          />
+        ) : (
+          <></>
+        )}
+        {pageName === fsme_cfg.FSME_STEP_1 ? (
+          <FRM_Dettaglio_Lezione
+            id={fsme_cfg.FRM_FSME_STEP_1}
+            userInfo={userInfo}
+            data={data}
+            query={pageQuery}
+            onClick={handleNextStep}
           />
         ) : (
           <></>
