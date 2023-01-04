@@ -1,8 +1,4 @@
 import * as React from "react";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
@@ -17,7 +13,7 @@ const utils = require("../../lib/utils");
 const chat_cfg = require("./config");
 const moment = require("moment");
 
-class SEC_Message extends React.Component {
+class SEC_WapMessage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,6 +24,7 @@ class SEC_Message extends React.Component {
     this.inputKeyPress = this.inputKeyPress.bind(this);
 
     this.loadChat = this.loadChat.bind(this);
+    this.readAllMsg = this.readAllMsg.bind(this);
     this.chatOnClick = this.chatOnClick.bind(this);
     this.chatOnContextMenu = this.chatOnContextMenu.bind(this);
 
@@ -36,8 +33,8 @@ class SEC_Message extends React.Component {
   }
 
   chatOnContextMenu(chatObj) {
-    console.log("chatOnContextMenu");
-    console.log(chatObj);
+    // console.log("chatOnContextMenu");
+    // console.log(chatObj);
   }
 
   async chatOnClick(chatObj) {
@@ -49,7 +46,27 @@ class SEC_Message extends React.Component {
     this.props.onChange(chatObj.id);
   }
 
+  async readAllMsg(IdM, IdD) {
+    // console.log("readAllMsg");
+
+    const formMsg = {
+      IdM: IdM,
+      IdD: IdD,
+    };
+
+    try {
+      const res = await utils.postData(chat_cfg.CHAT_STEP_2_API, formMsg);
+      // this.setState({ listMessage: data.chat });
+      // console.log(res);
+    } catch (e) {
+      if (e instanceof utils.FetchError) {
+        console.error(e.data.message);
+      }
+    }
+  }
+
   async loadChat(IdM, IdD) {
+    // console.log("loadChat");
     try {
       const data = await utils.fetchJson("/api/flydata", {
         method: "POST",
@@ -128,97 +145,102 @@ class SEC_Message extends React.Component {
         <Box
           sx={{
             border: 0,
-            display: "flex",
-            flexWrap: "wrap",
-            flexDirection: { xs: "column", sm: "column", md: "row" },
+            // borderRadius: "16px",
+            borderColor: "#B34A9D",
+            bgcolor: "#FFFFFF",
+            boxShadow: 0,
+            p: 0,
+            flexGrow: 1,
+            maxWidth: { xs: "90vw", sm: "90vw", md: "400px" },
+            flexDirection: "row",
+            maxHeight: "590px",
+            overflow: "auto",
+            minWidth: "300px",
           }}
         >
-          <Box
-            sx={{
-              border: 1,
-              borderRadius: "16px",
-              borderColor: "#B34A9D",
-              boxShadow: 3,
-              m: 1,
-              p: 1,
-              flexGrow: 1,
-              border: 1,
-              maxHeight: "580px",
-              overflow: "auto",
-            }}
-          >
-            <ChatList
-              className={jnStyles.jnDCT_ChatMessage}
-              dataSource={this.props.personeChat}
-              width="100vw"
-              onClick={this.chatOnClick}
-              onContextMenu={this.chatOnContextMenu}
-            />
-          </Box>
-          {this.props.otherUser ? (
+          <ChatList
+            className={jnStyles.jnDCT_ChatMessage}
+            dataSource={this.props.personeChat}
+            onClick={this.chatOnClick}
+            onContextMenu={this.chatOnContextMenu}
+          />
+        </Box>
+        {this.props.otherUser && (
+          <Box sx={{ flexGrow: 1, p: 1, bgcolor: "#FFFFFF" }}>
             <Box
               sx={{
                 border: 1,
                 borderRadius: "16px",
                 borderColor: "#B34A9D",
                 boxShadow: 3,
-                m: 1,
+                display: "flex",
+                flexWrap: "wrap",
+                flexDirection: "row",
+                alignItems: "center",
+                alignContent: "center",
+                justifyContent: "flex-start",
+                mb: 1,
+                p: 1,
+                // maxWidth: 140,
+              }}
+            >
+              <Avatar
+                alt={this.props.otherUser.name}
+                src={`${process.env.cloudfiles}${this.props.otherUser.photoUrl}`}
+                size="md"
+              />
+              <Typography
+                // noWrap
+                component="span"
+                variant="body2"
+                classes={{
+                  body2: jnStyles.jnAddressName,
+                }}
+                sx={{ pl: 2 }}
+              >
+                {this.props.otherUser.name}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                border: 1,
+                borderRadius: "16px",
+                borderColor: "#B34A9D",
+                bgcolor: "#B34A9D",
+                boxShadow: 3,
+                m: 0,
                 p: 1,
                 flexGrow: 1,
+                // maxWidth: "400px",
+                flexDirection: "row",
               }}
             >
               <Box
+                id="convList"
                 sx={{
-                  border: 1,
-                  borderRadius: "16px",
-                  borderColor: "#B34A9D",
-                  boxShadow: 3,
-                  display: "flex",
-                  flexWrap: "wrap",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  alignContent: "center",
-                  justifyContent: "flex-start",
-                  m: 1,
-                  p: 1,
-                  minWidth: 240,
+                  bgcolor: "#B34A9D",
+                  height: "50vh",
+                  overflow: "auto",
                 }}
               >
-                <Avatar
-                  alt={this.props.otherUser.name}
-                  src={`${process.env.cloudfiles}${this.props.otherUser.photoUrl}`}
-                  size="md"
+                <MessageList
+                  id="convListIns"
+                  referance={this.messageListReferance}
+                  className={jnStyles.jnDCT_ChatMessage}
+                  //   lockable={true}
+                  //   // toBottomHeight={"100%"}
+                  //   toBottomHeight={"100%"}
+                  dataSource={this.state.listMessage}
+                  downButton={true}
                 />
-                <Typography
-                  // noWrap
-                  component="span"
-                  variant="body2"
-                  classes={{
-                    body2: jnStyles.jnAddressName,
-                  }}
-                  sx={{ pl: 2 }}
-                >
-                  {this.props.otherUser.name}
-                </Typography>
               </Box>
-              <Box>
-                <Box id="convList" maxHeight="450px" overflow="auto">
-                  <MessageList
-                    id="convListIns"
-                    referance={this.messageListReferance}
-                    className={jnStyles.jnDCT_ChatMessage}
-                    lockable={false}
-                    // toBottomHeight={"100%"}
-                    toBottomHeight={"200"}
-                    dataSource={this.state.listMessage}
-                    downButton={true}
-                  />
-                </Box>
+              <Box sx={{ flexGrow: 1, bgcolor: "#788CB4", mt: 1, p: 1 }}>
                 <Input
                   referance={this.changeChildInputId}
                   placeholder="Scrivi un messaggio"
                   multiline={true}
                   autoHeight={true}
+                  maxHeight={100}
                   rightButtons={
                     <Button
                       color="white"
@@ -231,13 +253,11 @@ class SEC_Message extends React.Component {
                 />
               </Box>
             </Box>
-          ) : (
-            <></>
-          )}
-        </Box>
+          </Box>
+        )}
       </>
     );
   }
 }
 
-export default SEC_Message;
+export default SEC_WapMessage;

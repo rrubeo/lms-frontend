@@ -46,6 +46,9 @@ class FRM_CustomNetwork extends React.Component {
   }
 
   async loopRead() {
+    const element = document.getElementById("convList");
+    console.log(element);
+    element.scrollIntoView();
     // console.log(this.state.startedLoop);
     if (this.state.startedLoop == false) {
       this.setState({ startedLoop: true });

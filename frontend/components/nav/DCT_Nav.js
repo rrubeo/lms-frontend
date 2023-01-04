@@ -58,7 +58,7 @@ class DCT_Nav extends React.Component {
             open={this.state.open}
             drawerwidth={this.state.drawerwidth}
           >
-            <Toolbar>
+            <Toolbar sx={{ mx: 0, p: 0 }}>
               {!this.state.isStudent ? (
                 <IconButton
                   color="inherit"
@@ -66,8 +66,8 @@ class DCT_Nav extends React.Component {
                   onClick={this.handleOnClick}
                   edge="start"
                   sx={{
-                    ml: "23px",
-
+                    mx: 0,
+                    p: 0,
                     // ...(this.state.open && { display: "none" }),
                   }}
                 >

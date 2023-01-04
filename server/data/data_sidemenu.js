@@ -19,6 +19,12 @@ const sidemenu = [
     link: `${process.env.frontend}/gs/${cfg.GSTU_STEP_0}`,
   },
   {
+    id: "2_2_14",
+    text: "Monitoraggio Studenti",
+    icon: "icon-dashboard-subscribers",
+    link: `${process.env.frontend}/monitor/${cfg.MONI_STEP_0}`,
+  },
+  {
     id: utils.getUID(),
     link: "br",
   },
@@ -144,6 +150,7 @@ const sidemenu = [
     icon: "icon-clock",
     link: `${process.env.frontend}/doce/${cfg.DOCE_STEP_2}`,
   },
+
   // {
   //   id: utils.getUID(),
   //   text: "Studente",
@@ -171,12 +178,6 @@ const navmenu = [
     icon: "icon-calendar",
     link: `${process.env.frontend}/${cfg.CALENDAR}`,
   },
-  {
-    id: utils.getUID(),
-    text: "Chat",
-    icon: "icon-bubble2",
-    link: `${process.env.frontend}/chat/${cfg.TALKJS_CHAT}`,
-  },
 ];
 
 const navmenustudenti = [
@@ -191,12 +192,6 @@ const navmenustudenti = [
     text: "Aula Virtuale",
     icon: "icon-student-teacher-assignment",
     link: `${process.env.frontend}/fsme/${cfg.FSME_STEP_2}`,
-  },
-  {
-    id: utils.getUID(),
-    text: "Chat",
-    icon: "icon-bubble2",
-    link: `${process.env.frontend}/chat/${cfg.TALKJS_CHAT}`,
   },
   {
     id: utils.getUID(),

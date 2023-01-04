@@ -1,5 +1,7 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
+import { getLogger } from "../../../../logging/log-util";
+const logger = getLogger("doce-materie");
 
 import {
   navmenu,
@@ -8,7 +10,11 @@ import {
 } from "../../../../data/data_sidemenu";
 import { cols_materie } from "../../../../data/doce/data_docenti";
 
-import { getFunzioniForm, getPersona } from "../../../../data/common";
+import {
+  getFunzioniForm,
+  getPersona,
+  getRuoloUtente,
+} from "../../../../data/common";
 import {
   getDocenteMateria,
   insertDocenteMateria,
@@ -46,8 +52,8 @@ async function getHandler(userLogin, pid) {
 async function postHandler(userLogin, postData, pid) {
   let res = { status: 200, message: "OK" };
   let p3 = {};
-  console.log("************ RICEVUTA MATERIA");
-  console.log(postData);
+  logger.debug("[RICEVUTA MATERIA]");
+  logger.trace(postData);
 
   for (let m of postData.materie) {
     let doma = {
@@ -57,11 +63,10 @@ async function postHandler(userLogin, postData, pid) {
       domaFkMascId: m.id,
     };
 
-    console.log("************ POST MATERIA");
-    console.log(doma);
+    logger.debug("[POST MATERIA]");
+    logger.trace(doma);
     p3 = await insertDocenteMateria(userLogin.token, doma);
-
-    console.log(p3);
+    logger.debug(p3);
 
     if (p3.status) {
       res.status = p3.status;
@@ -86,9 +91,23 @@ async function deleteHandler(userLogin, deleteData) {
 export default async function handler(req, res) {
   await utils.cors(req, res);
 
-  console.log("MATERIE DOCENTI");
-  const pid = apic.getPid(req);
+  logger.info(`API-CALL [MATERIE DOCENTI]`);
+  let pid = apic.getPid(req);
   const userLogin = await apic.getLogin(req);
+  const db_ruolo = await getRuoloUtente(userLogin.token, userLogin.userID, 0);
+  logger.trace(db_ruolo);
+
+  const my_ruolo = db_ruolo.length > 0 ? db_ruolo[0].idRuolo : 0;
+
+  if (pid == 0) {
+    if (db_ruolo.length > 0) {
+      pid = db_ruolo[0].idPersona;
+    }
+  }
+
+  logger.debug(
+    `API-DATA [MATERIE DOCENTI] USER:[${userLogin.userID}] PERSONA-ID:[${pid}] RUOLO:[${my_ruolo}]`
+  );
 
   switch (req.method) {
     case "GET":

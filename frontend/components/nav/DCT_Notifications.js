@@ -272,7 +272,7 @@ class DCT_Notifications extends React.Component {
 
   render() {
     return (
-      <>
+      <Box sx={{ pr: 1 }}>
         <IconButton
           color={this.state.open ? "bell" : "secondary"}
           onClick={this.handleOpen}
@@ -373,7 +373,7 @@ class DCT_Notifications extends React.Component {
           </Scrollbar>
           <Divider sx={{ borderStyle: "dashed" }} />
         </Popover>
-      </>
+      </Box>
     );
   }
 }

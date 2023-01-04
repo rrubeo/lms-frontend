@@ -13,11 +13,15 @@ import {
 import {
   getFunzioniForm,
   getRuoloUtente,
-  getAppuntamentiConfermati,
-  getRubricaTalk,
   getRubricaJanus,
   getPersoneChat,
 } from "../../../data/common";
+
+import {
+  getIscrizioneStudenteMulti,
+  getLezioni,
+  getLezioniSeguite,
+} from "../../../data/fs/common";
 
 async function getHandler(userLogin, pid) {
   const db_funzioni = await getFunzioniForm(
@@ -27,6 +31,16 @@ async function getHandler(userLogin, pid) {
   );
   const db_ruolo = await getRuoloUtente(userLogin.token, userLogin.userID, 0);
   const db_persone = await getPersoneChat(userLogin.token, pid);
+
+  const iscrizione = await getIscrizioneStudenteMulti(
+    userLogin.token,
+    userLogin.userID
+  );
+
+  let profilo = { idIscrizione: 0 };
+  if (iscrizione.length > 0) {
+    profilo = iscrizione[0];
+  }
 
   // const contatti_ruolo = db_ruolo[0].idRuolo != 6 ? 0 : 5;
   // const db_contatti2 = await getRubricaTalk(userLogin.token, 0, contatti_ruolo);
@@ -42,12 +56,14 @@ async function getHandler(userLogin, pid) {
     title: "CHAT",
     lb_rubrica: "CONTATTI",
     lb_conversa: "CONVERSAZIONI",
+    label_avanzamento: "Avanzamento Corso",
     menu: db_menu,
     navmenu: db_ruolo[0].idRuolo != 6 ? navmenu : navmenustudenti,
     usermenu: usermenu,
     funzioni: db_funzioni,
     contatti: db_contatti,
     personeChat: db_persone,
+    profilo: profilo,
   };
 
   return data;

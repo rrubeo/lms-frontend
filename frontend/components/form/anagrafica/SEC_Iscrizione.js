@@ -4,6 +4,7 @@ import FormLabel from "@mui/material/FormLabel";
 import DTC_TextBox from "../../DTC_TextBox";
 import DCT_ComboBox from "../../selector/DCT_ComboBox";
 import DTC_DataGrid from "../../grid/DTC_DataGrid";
+import DCT_Tagger from "../../selector/DCT_Tagger";
 import jnStyles from "../../../styles/utils.module.css";
 
 class SEC_Iscrizione extends React.Component {
@@ -204,6 +205,9 @@ class SEC_Iscrizione extends React.Component {
               ref={this.changeChildImportoId}
             />
           </Grid>
+          {/* <Grid item xs={12} sm={12} md={4}>
+            <DCT_Tagger />
+          </Grid> */}
           <Grid item xs={12} sm={12} md={12}>
             <DTC_DataGrid
               id="gd_ricerca"

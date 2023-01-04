@@ -14,7 +14,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import DCT_Notifications from "./DCT_Notifications";
-
+import DCT_ChatNotify from "./DCT_ChatNotify";
 class DCT_UserMenu extends React.Component {
   constructor(props) {
     super(props);
@@ -51,13 +51,13 @@ class DCT_UserMenu extends React.Component {
     this.setState({ selectedIndex: index });
 
     // console.log(event);
-    console.log(index);
+    // console.log(index);
     if (index === "logOut") {
       const data = await fetch("/api/logout", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
-      Router.push("./login");
+      Router.push(`${process.env.frontend}`);
     }
   }
 
@@ -65,7 +65,14 @@ class DCT_UserMenu extends React.Component {
     return (
       <>
         <Box
-          sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
+          sx={{
+            p: 0,
+            display: "flex",
+            flexGrow: 1,
+            alignItems: "center",
+            justifyContent: { xs: "center", sm: "flex-end", md: "flex-end" },
+            textAlign: "center",
+          }}
         >
           <List component={Stack} direction="row" disablePadding>
             {this.state.navmenu.map((item, index) => (
@@ -93,6 +100,7 @@ class DCT_UserMenu extends React.Component {
               </ListItemButton>
             ))}
           </List>
+          <DCT_ChatNotify data={this.props.user} />
           <DCT_Notifications />
           <Tooltip title="Account settings">
             <IconButton

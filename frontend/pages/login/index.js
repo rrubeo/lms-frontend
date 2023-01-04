@@ -18,7 +18,7 @@ import { PAGE_HOME } from "../../lib/redirect";
 const CryptoJS = require("crypto-js");
 
 export default function Login(props) {
-  const { mutateUser } = useUser({
+  const { user, mutateUser } = useUser({
     redirectTo: PAGE_HOME,
     redirectIfFound: true,
   });

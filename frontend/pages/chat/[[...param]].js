@@ -5,7 +5,7 @@ import Wip from "../../components/layout/wip";
 import DCT_Layout from "../../components/layout/DCT_Layout";
 import FRM_Network from "../../components/chat/FRM_Network";
 import FRM_CustomNetwork from "../../components/chat/FRM_CustomNetwork";
-
+import FRM_WapCustomNetwork from "../../components/chat/FRM_WapCustomNetwork";
 import useUser from "../../lib/useUser";
 import { PAGE_401 } from "../../lib/redirect";
 
@@ -48,7 +48,7 @@ function Main() {
   if (data.status != 200) return <Wip>{data.message}</Wip>;
 
   const reloadData = async () => {
-    console.log("reloadData");
+    // console.log("reloadData");
     const options = {
       revalidate: true,
       revalidateIfStale: true,
@@ -61,9 +61,8 @@ function Main() {
   return (
     <DCT_Layout id="Layout" data={data} user={user}>
       <section>
-        <h1>{data.title}</h1>
         {pageName === chat_cfg.CHAT_STEP_0 ? (
-          <FRM_CustomNetwork
+          <FRM_WapCustomNetwork
             id={chat_cfg.FRM_CHAT_STEP_0}
             size={640}
             width={370}

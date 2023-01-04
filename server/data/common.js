@@ -19,6 +19,7 @@ import {
   GetPersoneChat,
   GetElencoChat,
   ChatChatDats,
+  GetAggiornaDataletturaChat,
 } from "../data/config";
 
 const utils = require("../lib/utils");
@@ -454,6 +455,17 @@ const insChatMessage = async (token, body) => {
   return res;
 };
 
+const insLetturaMessage = async (token, IdD, IdM) => {
+  const f = await utils.getFetch(
+    token,
+    GetAggiornaDataletturaChat(IdD, IdM)
+  );
+  logger.debug("[insLetturaMessage]");
+  // logger.debug(f);
+  if (f.status) return [];
+  return f;
+};
+
 module.exports = {
   getToken,
   getRubricaJanus,
@@ -481,4 +493,5 @@ module.exports = {
   getPersoneChat,
   getElencoChat,
   insChatMessage,
+  insLetturaMessage,
 };

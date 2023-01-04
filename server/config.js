@@ -38,6 +38,8 @@ const DOCE_STEP_0 = "doce_search";
 const DOCE_STEP_1 = "doce_materie";
 const DOCE_STEP_2 = "doce_orario";
 
+const MONI_STEP_0 = "mon_studenti";
+
 const HOME_0 = "home";
 const HOME_STUDENT = "fs";
 const STUDENT_AULA = "fs/aula";
@@ -74,4 +76,5 @@ module.exports = {
   FSME_STEP_2,
   TUTOP_STEP_0,
   TALKJS_CHAT,
+  MONI_STEP_0,
 };

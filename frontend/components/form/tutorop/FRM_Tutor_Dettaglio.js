@@ -6,6 +6,7 @@ import Divider from "@mui/material/Divider";
 import DCT_LinkButton from "../../DCT_LinkButton";
 
 const tu_cfg = require("./config");
+const moni_cfg = require("../moni/config");
 
 class FRM_Tutor_Dettaglio extends React.Component {
   constructor(props) {
@@ -25,7 +26,11 @@ class FRM_Tutor_Dettaglio extends React.Component {
   }
 
   render() {
-    const linkBack = `/tutorop/${tu_cfg.TUTOP_STEP_0}`;
+    const linkBack =
+      this.props?.monitor == true
+        ? `/monitor/${moni_cfg.MONI_STEP_0}`
+        : `/tutorop/${tu_cfg.TUTOP_STEP_0}`;
+
     return (
       <>
         <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />

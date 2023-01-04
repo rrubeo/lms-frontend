@@ -1,7 +1,7 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
 import { getLogger } from "../../../../logging/log-util";
-const logger = getLogger("chat-conversation");
+const logger = getLogger("chat-readall");
 
 import {
   getFunzioniForm,
@@ -12,35 +12,32 @@ import {
   getPersoneChat,
   getElencoChat,
   insChatMessage,
+  insLetturaMessage,
 } from "../../../../data/common";
-
-async function getHandler(userLogin, idPersona, pid) {
-  const db_chat = await getElencoChat(userLogin.token, idPersona, pid);
-
-  const data = {
-    chat: db_chat,
-  };
-
-  return data;
-}
 
 async function postHandler(userLogin, postData, idPersona, pid) {
   let res = { status: 200, message: "OK" };
   let p3 = {};
-  logger.debug("[RICEVUTO MESSAGGIO]");
+  logger.debug("[RICEVUTO NOTIFICA LETTURA]");
   logger.trace(postData);
 
-  const msgchat = {
-    chatFkPersIdMittente: postData.chatFkPersIdMittente,
-    chatFkPersIdDestinatario: postData.chatFkPersIdDestinatario,
-    chatDataInvio: postData.chatDataInvio,
-    chatTesto: postData.chatTesto,
-    chatDataLettura: null,
-  };
+  const db_chat = await getElencoChat(
+    userLogin.token,
+    postData.IdM.id,
+    postData.IdD.id
+  );
 
-  logger.debug("[POST MESSAGGIO]");
-  logger.trace(msgchat);
-  p3 = await insChatMessage(userLogin.token, msgchat);
+  // logger.debug(db_chat);
+  // logger.debug(m);
+
+  p3 = await insLetturaMessage(
+    userLogin.token,
+    postData.IdM.id,
+    postData.IdD.id
+  );
+  logger.debug(
+    `[LETTURA MESSAGGIO] DESTINATARIO:[${postData.IdD.id}] MITTENTE:[${postData.IdM.id}]`
+  );
   logger.debug(p3);
 
   if (p3.status) {
@@ -55,7 +52,7 @@ async function postHandler(userLogin, postData, idPersona, pid) {
 export default async function handler(req, res) {
   await utils.cors(req, res);
 
-  logger.info(`API-CALL [CONVERSATION]`);
+  logger.info(`API-CALL [READALL]`);
   const pid = apic.getPid(req);
   const userLogin = await apic.getLogin(req);
 
@@ -70,14 +67,10 @@ export default async function handler(req, res) {
   }
 
   logger.debug(
-    `API-DATA [CONVERSATION] USER:[${userLogin.userID}] PERSONA-ID:[${idPersona}] RUOLO:[${my_ruolo}]`
+    `API-DATA [READALL] USER:[${userLogin.userID}] PERSONA-ID:[${idPersona}] RUOLO:[${my_ruolo}]`
   );
 
   switch (req.method) {
-    case "GET":
-      const dataGet = await getHandler(userLogin, idPersona, pid);
-      res.status(200).json(dataGet);
-      break;
     case "POST":
       const dataPost = await postHandler(userLogin, req.body, idPersona, pid);
       res.status(dataPost.status).json(dataPost);

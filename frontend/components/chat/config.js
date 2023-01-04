@@ -4,6 +4,7 @@ const FRM_CHAT_STEP_0 = "FRM_Network";
 
 const CHAT_STEP_0_API = `${process.env.server}/chat`;
 const CHAT_STEP_1_API = `${process.env.server}/chat/conversation`;
+const CHAT_STEP_2_API = `${process.env.server}/chat/readall`;
 
 const dummyUsers = [
   {
@@ -108,4 +109,5 @@ module.exports = {
   FRM_CHAT_STEP_0,
   dummyUsers,
   CHAT_STEP_1_API,
+  CHAT_STEP_2_API,
 };

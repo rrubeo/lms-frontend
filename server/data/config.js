@@ -95,6 +95,11 @@ function GetElencoChat(IdPersonaM, IdPersonaD) {
 const CLOUD_API_RUBRICA_CHAT = "api/ChatChatDats";
 const ChatChatDats = `${CLOUD_BASE_URL}/${CLOUD_API_RUBRICA_CHAT}`;
 
+const CLOUD_API_LETTURA_CHAT = "api/Tables/GetAggiornaDataletturaChat";
+function GetAggiornaDataletturaChat(IdD, IdM) {
+  return `${CLOUD_BASE_URL}/${CLOUD_API_LETTURA_CHAT}/${IdD}/${IdM}`;
+}
+
 const CLOUD_API_NOTIFICHE = "api/NotiNotificheDats";
 const NotiNotificheDats = `${CLOUD_BASE_URL}/${CLOUD_API_NOTIFICHE}`;
 
@@ -122,4 +127,5 @@ module.exports = {
   GetPersoneChat,
   GetElencoChat,
   ChatChatDats,
+  GetAggiornaDataletturaChat,
 };
