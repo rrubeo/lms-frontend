@@ -5,6 +5,8 @@ const logLevelData = {
   "tutor-orario": "debug",
   "doce-orario": "debug",
   "data-doce-common": "debug",
+  chat: "debug",
+  monitor: "debug",
 };
 
 export default logLevelData;

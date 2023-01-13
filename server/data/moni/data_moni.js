@@ -165,9 +165,91 @@ const cols_lezioni = [
   },
 ];
 
+const cols_moni_appuntamenti = [
+  {
+    field: "col1",
+    headerName: "Docente/Tutor",
+    align: "left",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 300,
+  },
+  {
+    field: "col2",
+    headerName: "Studente",
+    align: "left",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 300,
+  },
+  {
+    field: "col3",
+    type: "dateTime",
+    headerName: "Data",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 100,
+    align: "center",
+  },
+  {
+    field: "col4",
+    type: "dateTime",
+    headerName: "Inizio",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 90,
+    align: "center",
+  },
+  {
+    field: "col5",
+    type: "dateTime",
+    headerName: "Fine",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 90,
+    align: "center",
+  },
+  {
+    field: "col6",
+    headerName: "Durata (ore)",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 80,
+    type: "number",
+    align: "right",
+  },
+  {
+    field: "col7",
+    headerName: "Stato",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 200,
+  },
+  {
+    field: "col8",
+    headerName: "Tipo",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 200,
+  },
+  {
+    field: "col9",
+    headerName: "Titolo",
+    flex: 1,
+    minWidth: 50,
+  },
+  {
+    field: "col10",
+    headerName: "Commento",
+    flex: 1,
+    minWidth: 50,
+  },
+];
+
 module.exports = {
   cols_studenti,
   cols_dettaglio,
   cols_lezioni,
   cols_appuntamenti,
+  cols_moni_appuntamenti,
 };

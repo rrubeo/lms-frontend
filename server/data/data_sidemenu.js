@@ -19,12 +19,6 @@ const sidemenu = [
     link: `${process.env.frontend}/gs/${cfg.GSTU_STEP_0}`,
   },
   {
-    id: "2_2_14",
-    text: "Monitoraggio Studenti",
-    icon: "icon-dashboard-subscribers",
-    link: `${process.env.frontend}/monitor/${cfg.MONI_STEP_0}`,
-  },
-  {
     id: utils.getUID(),
     link: "br",
   },
@@ -150,7 +144,24 @@ const sidemenu = [
     icon: "icon-clock",
     link: `${process.env.frontend}/doce/${cfg.DOCE_STEP_2}`,
   },
-
+  {
+    id: "8_1",
+    text: "Monitoraggio",
+    icon: "icon-dashboard-subscribers",
+    link: "#",
+  },
+  {
+    id: "8_2_14",
+    text: "Monitoraggio Studenti",
+    icon: "icon-dashboard-subscribers",
+    link: `${process.env.frontend}/monitor/${cfg.MONI_STEP_0}`,
+  },
+  {
+    id: "8_2_15",
+    text: "Monitoraggio Appuntamenti",
+    icon: "icon-dashboard-subscribers",
+    link: `${process.env.frontend}/monitor/${cfg.MONI_STEP_4}`,
+  },
   // {
   //   id: utils.getUID(),
   //   text: "Studente",

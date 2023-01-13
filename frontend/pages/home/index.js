@@ -35,7 +35,7 @@ sessionOptions);
 
 function HomeMain() {
   const { user } = useUser({
-    redirectTo: PAGE_401,
+    // redirectTo: PAGE_401,
   });
   // console.log(user);
   const { fallback } = useSWRConfig();

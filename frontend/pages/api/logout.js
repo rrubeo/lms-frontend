@@ -7,7 +7,12 @@ const logger = getLogger("logout");
 export default withIronSessionApiRoute(logoutRoute, sessionOptions);
 
 async function logoutRoute(req, res) {
-  logger.info(`${JSON.stringify(req.session.user)}`);
+  logger.debug(`${JSON.stringify(req.session.user)}`);
   req.session.destroy();
-  res.json(defaultLogin);
+  logger.info(`session destroyed`);
+  const data = Object.assign({}, defaultLogin);
+  data.isLoggedIn = false;
+  data.token = "";
+  // logger.info(data);
+  res.json(data);
 }

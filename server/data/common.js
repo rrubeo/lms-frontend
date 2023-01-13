@@ -20,6 +20,7 @@ import {
   GetElencoChat,
   ChatChatDats,
   GetAggiornaDataletturaChat,
+  GetAppuntamentiDocentiTutor,
 } from "../data/config";
 
 const utils = require("../lib/utils");
@@ -407,27 +408,6 @@ const getRubricaJanus = async (token, IdPersona, UserName) => {
   return data;
 };
 
-const getPersoneChat = async (token, IdPersona) => {
-  const f = await utils.getFetch(token, GetPersoneChat(IdPersona));
-  logger.debug("[getPersoneChat]");
-  // logger.debug(f);
-  if (f.status) return [];
-
-  const data = f.map((x, index) => {
-    return {
-      id: x.idPersona2,
-      title: `${x.nome2} ${x.cognome2}`,
-      // alt: `${x.nome2}_${x.cognome2}`,
-      // avatar: `${process.env.cloudfiles}${x.pathImmagineDestinatario}`,
-      subtitle: x.testo,
-      unread: x.msgNonLetti,
-      date: x.dataInvio,
-    };
-  });
-
-  return data;
-};
-
 const getElencoChat = async (token, IdPersonaM, IdPersonaD) => {
   const f = await utils.getFetch(token, GetElencoChat(IdPersonaM, IdPersonaD));
   logger.debug("[getElencoChat]");
@@ -456,14 +436,32 @@ const insChatMessage = async (token, body) => {
 };
 
 const insLetturaMessage = async (token, IdD, IdM) => {
-  const f = await utils.getFetch(
-    token,
-    GetAggiornaDataletturaChat(IdD, IdM)
-  );
+  const f = await utils.getFetch(token, GetAggiornaDataletturaChat(IdD, IdM));
   logger.debug("[insLetturaMessage]");
   // logger.debug(f);
   if (f.status) return [];
   return f;
+};
+
+const getPersoneChat = async (token, IdPersona) => {
+  const f = await utils.getFetch(token, GetPersoneChat(IdPersona));
+  logger.debug("[getPersoneChat]");
+  // logger.debug(f);
+  if (f.status) return [];
+
+  const data = f.map((x, index) => {
+    return {
+      id: x.idPersona2,
+      title: `${x.nome2} ${x.cognome2}`,
+      // alt: `${x.nome2}_${x.cognome2}`,
+      // avatar: `${process.env.cloudfiles}${x.pathImmagineDestinatario}`,
+      subtitle: x.testo,
+      unread: x.msgNonLetti,
+      date: x.dataInvio,
+    };
+  });
+
+  return data;
 };
 
 module.exports = {

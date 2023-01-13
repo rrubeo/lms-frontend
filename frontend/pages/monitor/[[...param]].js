@@ -7,6 +7,7 @@ import FRM_Tutor_Studenti from "../../components/form/tutorop/FRM_Tutor_Studenti
 import FRM_Tutor_Dettaglio from "../../components/form/tutorop/FRM_Tutor_Dettaglio";
 import FRM_Tutor_Lezioni from "../../components/form/tutorop/FRM_Tutor_Lezioni";
 import FRM_Tutor_Appuntamenti from "../../components/form/tutorop/FRM_Tutor_Appuntamenti";
+import FRM_Moni_Ricerca from "../../components/form/moni/FRM_Moni_Ricerca";
 
 import { validateForm } from "../../components/form/moni/validator";
 import useUser from "../../lib/useUser";
@@ -114,6 +115,19 @@ function Main() {
     <DCT_Layout id="Layout" data={data} user={user}>
       <section>
         <h1>{data.title}</h1>
+        {pageName === moni_cfg.MONI_STEP_4 ? (
+          <FRM_Moni_Ricerca
+            id={moni_cfg.FRM_MONI_STEP_4}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            data={data}
+            onNextStep={handleNextStep}
+            action={moni_cfg.MONI_STEP_4_ACTION}
+            query={pageQuery}
+          />
+        ) : (
+          <></>
+        )}
         {pageName === moni_cfg.MONI_STEP_0 ? (
           <FRM_Tutor_Studenti
             id={moni_cfg.FRM_MONI_STEP_0}

@@ -9,6 +9,7 @@ const MONI_STEP_0 = "mon_studenti";
 const MONI_STEP_1 = `mon_lezioni`;
 const MONI_STEP_2 = `mon_appuntamenti`;
 const MONI_STEP_3 = `mon_dettaglio`;
+const MONI_STEP_4 = `mon_app_doc_tut`;
 
 const FRM_MONI_STEP_0 = "FRM_Monitor_Studenti";
 const MONI_STEP_0_API = `${process.env.server}/monitor`;
@@ -49,6 +50,10 @@ const FRM_MONI_STEP_3 = "FRM_Tutor_Dettaglio";
 const MONI_STEP_3_API = `${process.env.server}/tutorop/dettaglio`;
 const MONI_STEP_3_ACTION = [];
 
+const FRM_MONI_STEP_4 = "FRM_Moni_Ricerca";
+const MONI_STEP_4_API = `${process.env.server}/monitor/appu`;
+const MONI_STEP_4_ACTION = [];
+
 function getApiUrl(query) {
   const page = query.param[0];
   let apiUrl = "";
@@ -64,6 +69,9 @@ function getApiUrl(query) {
       break;
     case MONI_STEP_3:
       apiUrl = MONI_STEP_3_API;
+      break;
+    case MONI_STEP_4:
+      apiUrl = MONI_STEP_4_API;
       break;
   }
 
@@ -98,4 +106,8 @@ module.exports = {
   FRM_MONI_STEP_3,
   MONI_STEP_3_API,
   MONI_STEP_3_ACTION,
+  MONI_STEP_4,
+  FRM_MONI_STEP_4,
+  MONI_STEP_4_API,
+  MONI_STEP_4_ACTION,
 };

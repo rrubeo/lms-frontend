@@ -37,7 +37,7 @@ function HomeMain() {
   let user;
 
   const { fallback } = useSWRConfig();
-  console.log(fallback);
+  // console.log(fallback);
 
   const router = useRouter();
 

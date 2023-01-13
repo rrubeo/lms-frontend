@@ -1,5 +1,7 @@
 const commMain = require("../common");
 const utils = require("../../lib/utils");
+import { getLogger } from "../../logging/log-util";
+const logger = getLogger("data-gstu-common");
 
 import {
   GetAnagraficaStudente,
@@ -33,7 +35,7 @@ import {
 const getRicercaStudenti = async (token) => {
   const f = await utils.getFetch(token, GetAnagraficaStudente(0));
 
-  console.log("getRicercaStudenti");
+  logger.debug("[getRicercaStudenti]");
   // console.log(f);
   if (f.status) return [];
 
@@ -60,7 +62,7 @@ const getRicercaStudenti = async (token) => {
 const getStudente = async (token, idPersona) => {
   const f = await utils.getFetch(token, GetAnagraficaStudente(idPersona));
 
-  console.log("getStudente");
+  logger.debug("[getStudente]");
   // console.log(f);
   if (f.status) return [];
 
@@ -72,8 +74,8 @@ const getIscrizioniPersona = async (token, idPersona) => {
     token,
     GetIscrizioneStudentexIdPersona(0, idPersona, 0, 0, 0)
   );
+  logger.debug("[getIscrizioniPersona]");
 
-  console.log("getIscrizioniPersona");
   // console.log(f);
   if (f.status) return [];
 
@@ -128,8 +130,8 @@ const getIscrizione = async (
       0
     )
   );
+  logger.debug("[getIscrizione]");
 
-  console.log("getIscrizione");
   // console.log(f);
   if (f.status) return [];
   return f;
@@ -141,7 +143,7 @@ const getIdIscrizione = async (token, IdIscrizione) => {
     GetIscrizioneStudentexIdPersona(0, 0, 0, 0, IdIscrizione)
   );
 
-  console.log("getIdIscrizione");
+  logger.debug("[getIdIscrizione]");
   // console.log(f);
   if (f.status) return [];
   return f;
@@ -150,7 +152,7 @@ const getIdIscrizione = async (token, IdIscrizione) => {
 const getIstitutoIndirizzoCombo = async (token) => {
   const f = await utils.getFetch(token, GetTipoIstitutoIndirizzoCombo(0));
 
-  console.log("getIstitutoIndirizzoCombo");
+  logger.debug("[getIstitutoIndirizzoCombo]");
   // console.log(f);
   if (f.status) return [];
 
@@ -163,7 +165,7 @@ const getIstitutoIndirizzoCombo = async (token) => {
 const getAnnoAccademicoCombo = async (token) => {
   const f = await utils.getFetch(token, GetAnnoAccademicoCombo);
 
-  console.log("getAnnoAccademicoCombo");
+  logger.debug("[getAnnoAccademicoCombo]");
   // console.log(f);
   if (f.status) return [];
 
@@ -177,7 +179,7 @@ const getAnnoAccademicoCombo = async (token) => {
 const getTipoStudenteCombo = async (token) => {
   const f = await utils.getFetch(token, GetTipoStudenteCombo);
 
-  console.log("getTipoStudenteCombo");
+  logger.debug("[getTipoStudenteCombo]");
   // console.log(f);
   if (f.status) return [];
 
@@ -207,7 +209,7 @@ const deleteIscrizione = async (token, id) => {
 const getFrequenzaPagamentoCombo = async (token) => {
   const f = await utils.getFetch(token, FpagFrequenzaPagamentoTyps);
 
-  console.log("getFrequenzaPagamentoCombo");
+  logger.debug("[getFrequenzaPagamentoCombo]");
   // console.log(f);
   if (f.status) return [];
 
@@ -225,7 +227,7 @@ const getFrequenzaPagamentoCombo = async (token) => {
 const getServizioCombo = async (token) => {
   const f = await utils.getFetch(token, GetServizio);
 
-  console.log("getServizioCombo");
+  logger.debug("[getServizioCombo]");
   // console.log(f);
   if (f.status) return [];
 
@@ -246,7 +248,7 @@ const getServizioSottoscritto = async (token, IdIscrizioneStudente) => {
     GetServizioSottoscritto(IdIscrizioneStudente, 0)
   );
 
-  console.log("getServizioSottoscritto");
+  logger.debug("[getServizioSottoscritto]");
   // console.log(f);
   if (f.status) return [];
 
@@ -265,8 +267,8 @@ const getPagamentoStudente = async (token, IdIscrizioneStudente) => {
     token,
     GetPagamentoStudente(IdIscrizioneStudente)
   );
+  logger.debug("[getPagamentoStudente]");
 
-  console.log("getPagamentoStudente");
   // console.log(f);
   if (f.status) return [];
 
@@ -331,7 +333,7 @@ const deleteDocente = async (token, id) => {
 const getTutorCombo = async (token) => {
   const f = await utils.getFetch(token, GetRuoloUtente(0, 4));
 
-  console.log("getTutorCombo");
+  logger.debug("[getTutorCombo]");
   // console.log(f);
   if (f.status) return [];
 
@@ -348,9 +350,7 @@ const getTutorCombo = async (token) => {
 
 const getMateriaScolasticaCombo = async (token) => {
   const f = await utils.getFetch(token, GetMateriaScolasticaCombo);
-
-  console.log("getMateriaScolasticaCombo");
-
+  logger.debug("[getMateriaScolasticaCombo]");
   if (f.status) return [];
 
   const arr1 = [{ label: "Seleziona", id: 0 }];
@@ -369,8 +369,8 @@ const getDocenteMateria = async (token, IdMateriaScolastica, IdPersona) => {
     token,
     GetDocenteMateria(0, IdMateriaScolastica, IdPersona)
   );
+  logger.debug("[getDocenteMateria]");
 
-  console.log("getDocenteMateria");
   // console.log(f);
   if (f.status) return [];
 
@@ -391,7 +391,7 @@ const getStudenteTutor = async (token, IdIscrizioneStudente) => {
     GetStudenteTutor(IdIscrizioneStudente, 0)
   );
 
-  console.log("getStudenteTutor");
+  logger.debug("[getStudenteTutor]");
   // console.log(f);
   if (f.status) return [];
 
@@ -410,8 +410,8 @@ const getStudenteDocente = async (token, IdIscrizioneStudente) => {
     token,
     GetStudenteDocente(IdIscrizioneStudente, 0)
   );
+  logger.debug("[getStudenteDocente]");
 
-  console.log("GSTU getStudenteDocente");
   // console.log(f);
   if (f.status) return [];
 
@@ -431,8 +431,8 @@ const getProgrammaBaseNoAggrCombo = async (token, idProgrammaBase) => {
     token,
     GetProgrammaBaseNoAggrCombo(idProgrammaBase)
   );
+  logger.debug("[getProgrammaBaseNoAggrCombo]");
 
-  console.log("getProgrammaBaseNoAggrCombo");
   // console.log(f);
   if (f.status) return [];
 
@@ -458,7 +458,7 @@ const getClasseArgomentoXProgrammaBaseCombo = async (
     token,
     GetClasseArgomentoXProgrammaBaseCombo(idProgrammaBase)
   );
-  console.log("getClasseArgomentoXProgrammaBaseCombo");
+  logger.debug("[getClasseArgomentoXProgrammaBaseCombo]");
   // console.log(f);
   if (f.status) return [];
   // const arr1 = [{ label: "Seleziona", id: 0 }];
@@ -474,7 +474,8 @@ const getArgomentoXClasseArgomento = async (token, idClasseArgomento) => {
     token,
     GetArgomentoXClasseArgomento(idClasseArgomento)
   );
-  console.log("getArgomentoXClasseArgomento");
+  logger.debug("[getArgomentoXClasseArgomento]");
+
   // console.log(f);
   if (f.status) return [];
   const arr1 = [{ label: "Seleziona", id: 0 }];
@@ -487,7 +488,7 @@ const getArgomentoXClasseArgomento = async (token, idClasseArgomento) => {
 
 const getLezione = async (token, IdArgomento) => {
   const f = await utils.getFetch(token, GetLezione(IdArgomento, 0));
-  console.log("getLezione");
+  logger.debug("[getLezione]");
   // console.log(f);
   if (f.status) return [];
   // const arr1 = [{ label: "Seleziona", id: 0 }];
@@ -503,8 +504,8 @@ const getPianoStudiIndividuale = async (token, IdIscrizioneStudente) => {
     token,
     GetPianoStudiIndividuale(IdIscrizioneStudente, 0)
   );
+  logger.debug("[getPianoStudiIndividuale]");
 
-  console.log("getPianoStudiIndividuale");
   // console.log(f);
   if (f.status) return [];
 

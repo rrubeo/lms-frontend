@@ -14,10 +14,8 @@ import theme from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
 import Loader from "../components/layout/loader";
 import { Toaster } from "react-hot-toast";
-import useUser from "../lib/useUser";
 import ErrorBoundary from "../components/ErrorBoundary";
-import { PAGE_LOGIN } from "../lib/redirect";
-import { LicenseInfo } from '@mui/x-license-pro';
+import { LicenseInfo } from "@mui/x-license-pro";
 
 LicenseInfo.setLicenseKey(process.env.MUI_LICENCE);
 
@@ -27,10 +25,6 @@ export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
   const [loading, setLoading] = React.useState(false);
-
-  const { user } = useUser({
-    redirectTo: PAGE_LOGIN,
-  });
 
   React.useEffect(() => {
     const start = () => {

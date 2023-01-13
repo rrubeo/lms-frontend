@@ -39,6 +39,7 @@ const DOCE_STEP_1 = "doce_materie";
 const DOCE_STEP_2 = "doce_orario";
 
 const MONI_STEP_0 = "mon_studenti";
+const MONI_STEP_4 = "mon_app_doc_tut";
 
 const HOME_0 = "home";
 const HOME_STUDENT = "fs";
@@ -77,4 +78,5 @@ module.exports = {
   TUTOP_STEP_0,
   TALKJS_CHAT,
   MONI_STEP_0,
+  MONI_STEP_4,
 };
