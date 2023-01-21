@@ -3,15 +3,12 @@ const apic = require("../../../../lib/apicommon");
 import { getLogger } from "../../../../logging/log-util";
 const logger = getLogger("fsme-dettaglio");
 import {
-  navmenu,
   navmenustudenti,
   usermenu,
   getSideUserMenu,
 } from "../../../../data/data_sidemenu";
 
 import {
-  getFunzioniForm,
-  getPersona,
   getRuoloUtente,
 } from "../../../../data/common";
 

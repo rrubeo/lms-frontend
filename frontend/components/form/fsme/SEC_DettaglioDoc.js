@@ -1,8 +1,5 @@
 import * as React from "react";
 import Stack from "@mui/material/Stack";
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { Image } from "mui-image";

@@ -1,6 +1,7 @@
 const utils = require("../../../../lib/utils");
 const apic = require("../../../../lib/apicommon");
-
+import { getLogger } from "../../../../logging/log-util";
+const logger = getLogger("gstu-dettaglio");
 import {
   navmenu,
   usermenu,
@@ -41,7 +42,7 @@ async function getHandler(userLogin, pid) {
   const db_tipostudente = await getTipoStudenteCombo(userLogin.token);
   const db_annofreq = await getAnnoFrequenza(userLogin.token);
   const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
-  const data = {
+  let data = {
     title: "Scheda Utente",
     menu: db_menu,
     navmenu: navmenu,
@@ -78,10 +79,12 @@ async function getHandler(userLogin, pid) {
     funzioni: db_funzioni,
     crediti_label: "Numero Crediti Bonus",
     importo_label: "Importo Complessivo",
+    note_label: "Note",
+    rows_iscrizioni: [],
   };
 
   if (pid) {
-    console.log("RICHIAMA SCHEDA STUDENTE");
+    logger.info(`RICHIAMA SCHEDA STUDENTE ${pid}`);
     const db_iscrizioni = await getIscrizioniPersona(userLogin.token, pid);
     const db_studente = await getPersona(userLogin.token, pid);
     data.title = db_studente.persNome
@@ -91,7 +94,7 @@ async function getHandler(userLogin, pid) {
     data.rows_iscrizioni = db_iscrizioni;
     // console.log(data);
   } else {
-    console.log("NUOVA SCHEDA STUDENTE");
+    logger.info(`NUOVA SCHEDA STUDENTE`);
   }
 
   return data;
@@ -100,8 +103,9 @@ async function getHandler(userLogin, pid) {
 async function postHandler(userLogin, postData, pid) {
   let res = { status: 200, message: "OK" };
   let p3 = {};
-  console.log("************ RICEVUTA ISCRIZIONE");
-  // console.log(postData);
+  logger.info(`RICEVUTA ISCRIZIONE`);
+  logger.debug(postData);
+
   switch (postData.tab) {
     case 0:
       let poba = {
@@ -155,19 +159,21 @@ async function postHandler(userLogin, postData, pid) {
         istuFkAnfrId: "",
         numeroCreditiBonus: 0,
         importoTotale: 0,
+        istuNote: "",
       };
 
       if (postData.action) {
-        console.log("************ UPDATE ISCRIZIONE");
+        logger.info(`UPDATE ISCRIZIONE istuId: [${postData.gridId}]`);
+
         const db_iscrizione = await getIdIscrizione(
           userLogin.token,
           postData.gridId
         );
-        // console.log(db_iscrizione);
         if (db_iscrizione.length > 0) {
           res.status = 200;
           res.message = "Iscrizione aggiornata";
-
+          logger.info(`ISCRIZIONE RECUPERATA`);
+          logger.info(db_iscrizione[0]);
           prepIstu.istuId = postData.gridId;
           prepIstu.istuFkAnacId = db_iscrizione[0].annoAccademico;
           prepIstu.istuFkTistId = db_iscrizione[0].idTipoStudente;
@@ -175,52 +181,61 @@ async function postHandler(userLogin, postData, pid) {
           prepIstu.istuFkAnfrId = db_iscrizione[0].idAnnoFrequenza;
           prepIstu.numeroCreditiBonus = db_iscrizione[0].numeroCreditiBonus;
           prepIstu.importoTotale = db_iscrizione[0].importoTotale;
+          prepIstu.istuNote = db_iscrizione[0].note;
+          prepIstu.istuDataIscrizione = db_iscrizione[0].dataIscrizione;
 
           if (db_iscrizione[0].dataAttivazioneIscrizione == null) {
-            console.log(
-              "************ UPDATE ISCRIZIONE dataAttivazioneIscrizione NULL"
-            );
+            logger.info(`UPDATE ISCRIZIONE dataAttivazioneIscrizione NULL`);
+
             prepIstu.istuDataAttivazione = new Date();
             prepIstu.istuDataDisattivazione = null;
           } else {
             if (db_iscrizione[0].dataDisattivazioneIscrizione == null) {
-              console.log(
-                "************ UPDATE ISCRIZIONE dataDisattivazioneIscrizione NULL"
+              logger.info(
+                `UPDATE ISCRIZIONE dataDisattivazioneIscrizione NULL`
               );
+
               prepIstu.istuDataDisattivazione = new Date();
               prepIstu.istuDataAttivazione =
                 db_iscrizione[0].dataAttivazioneIscrizione;
             } else {
-              console.log(
-                "************ UPDATE ISCRIZIONE dataDisattivazioneIscrizione NOT NULL"
+              logger.info(
+                `UPDATE ISCRIZIONE dataDisattivazioneIscrizione NOT NULL`
               );
+
               prepIstu.istuDataAttivazione = new Date();
               prepIstu.istuDataDisattivazione = null;
             }
           }
-
-          // console.log(prepIstu);
         } else {
           res.status = 200;
           res.message = "Iscrizione non trovata";
+          logger.error(`${res.message}`);
           return res;
         }
       } else {
-        console.log("************ VERIFICA ISCRIZIONE");
+        logger.info(`VERIFICA ISCRIZIONE`);
+
         const chekIscrizione = await getIscrizione(
           userLogin.token,
           pid,
           postData.iscr_annofreq.id,
           postData.iscr_istituto.id
         );
-        console.log(chekIscrizione);
+        logger.debug(chekIscrizione);
 
         if (chekIscrizione.length > 0) {
           if (postData.gridId) {
-            console.log("************ MODIFICA ? ", postData.gridId);
+            logger.info(`RICHIESTA MODIFICA ${postData.gridId}`);
+
             if (postData.gridId != 0) {
-              console.log("************ UPDATE", postData.gridId);
+              logger.info(`MODIFICA ${postData.gridId}`);
               prepIstu.istuId = postData.gridId;
+              prepIstu.istuDataIscrizione = chekIscrizione[0].dataIscrizione;
+              prepIstu.istuDataAttivazione =
+                chekIscrizione[0].dataAttivazioneIscrizione;
+              prepIstu.istuDataDisattivazione =
+                chekIscrizione[0].dataDisattivazioneIscrizione;
             } else {
               res.status = 500;
               res.message =
@@ -228,6 +243,7 @@ async function postHandler(userLogin, postData, pid) {
                 " " +
                 chekIscrizione[0].indirizzoIstituto +
                 ": modifica fallita.";
+              logger.error(`${res.message}`);
               return res;
             }
           } else {
@@ -237,8 +253,13 @@ async function postHandler(userLogin, postData, pid) {
               " " +
               chekIscrizione[0].indirizzoIstituto +
               ": iscrizione presente.";
+            logger.info(`${res.message}`);
             return res;
           }
+        } else {
+          logger.info(
+            `ISCRIZIONE NON PRESENTE PER idPersona [${pid}] annoFrequenza: [${postData.iscr_annofreq.id}] istituto: [${postData.iscr_istituto.id}]`
+          );
         }
 
         prepIstu.istuFkAnacId = postData.iscr_accademico.label;
@@ -247,14 +268,15 @@ async function postHandler(userLogin, postData, pid) {
         prepIstu.istuFkAnfrId = postData.iscr_annofreq.id;
         prepIstu.numeroCreditiBonus = postData.crediti;
         prepIstu.importoTotale = postData.importo;
+        prepIstu.istuNote = postData.note;
       }
-      console.log("************ POST ISCRIZIONE");
-      console.log(prepIstu);
+      logger.info(`POST ISCRIZIONE`);
+      logger.debug(prepIstu);
       p3 = await insertIscrizione(userLogin.token, prepIstu);
       break;
   }
+  logger.debug(p3);
 
-  console.log(p3);
   if (p3.err == 1) {
     res.status = 200;
     res.message = p3.errDesc;
@@ -272,18 +294,20 @@ async function postHandler(userLogin, postData, pid) {
 }
 
 async function deleteHandler(userLogin, deleteData) {
-  console.log("deleteHandler");
-  console.log(deleteData);
+  logger.debug("deleteHandler");
+  logger.debug(deleteData);
+
   let d1 = await deleteIscrizione(userLogin.token, deleteData.key);
   const res = { status: 200, message: "Iscrizione eliminata" };
+  logger.info(`${res.message}`);
   return res;
 }
 
 export default async function handler(req, res) {
   // Run cors
   await utils.cors(req, res);
+  logger.info(`API-CALL [GSTU-DETTAGLIO]`);
 
-  console.log("SCHEDA STUDENTE");
   const pid = apic.getPid(req);
   const userLogin = await apic.getLogin(req);
 

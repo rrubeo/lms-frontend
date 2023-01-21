@@ -92,6 +92,7 @@ class FRM_GestStud_Dettaglio extends React.Component {
       accademicoValue: { label: "", id: 0 },
       creditiValue: "",
       importoValue: "",
+      noteValue: "",
       gridIscrizioniValue: 0,
     };
 
@@ -187,6 +188,7 @@ class FRM_GestStud_Dettaglio extends React.Component {
           iscr_accademico: this.state.accademicoValue,
           crediti: this.state.creditiValue,
           importo: this.state.importoValue,
+          note: this.state.noteValue,
         };
         return data1;
     }
@@ -323,6 +325,9 @@ class FRM_GestStud_Dettaglio extends React.Component {
         break;
       case "tx_importo":
         this.setState({ importoValue: data });
+        break;
+      case "tx_note":
+        this.setState({ noteValue: data });
         break;
       case "gridId":
         this.setState({ gridIscrizioniValue: data });

@@ -29,4 +29,10 @@ export const StyledScrollbar = styled(SimpleBar)(({ theme }) => ({
   "& .simplebar-mask": {
     zIndex: "inherit",
   },
+  "& .simplebar-placeholder": {
+    backgroundColor: alpha(theme.palette.grey[600], 0.48),
+    zIndex: "inherit",
+    height: "0px",
+    overflow: "auto",
+  },
 }));

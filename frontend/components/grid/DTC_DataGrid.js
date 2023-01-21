@@ -13,16 +13,20 @@ import jnStyles from "../../styles/utils.module.css";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
-
+const moment = require("moment");
 const gd_cfg = require("./config");
 
 class DTC_DataGrid extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      pageSize: 13,
       columns: [],
       currentId: "-1",
       actionList: [],
+      checkSelection: this.props.checkSelection
+        ? this.props.checkSelection
+        : false,
     };
 
     this.getActiveAction = this.getActiveAction.bind(this);
@@ -34,6 +38,7 @@ class DTC_DataGrid extends React.Component {
     this.handleUpdateClick = this.handleUpdateClick.bind(this);
     this.handleMoveUpClick = this.handleMoveUpClick.bind(this);
     this.handleMoveDownClick = this.handleMoveDownClick.bind(this);
+    this.handleSelectionChange = this.handleSelectionChange.bind(this);
   }
 
   getActiveAction(cfgAction) {
@@ -206,6 +211,11 @@ class DTC_DataGrid extends React.Component {
     this.props.onNextStep(event, params, route);
   }
 
+  handleSelectionChange(newSelection) {
+    // console.log(newSelection);
+    this.props.onChange(this.props.id, newSelection);
+  }
+
   handleRowClick(params, event) {
     event.defaultMuiPrevented = true;
     this.setState({ currentId: params.id });
@@ -226,8 +236,14 @@ class DTC_DataGrid extends React.Component {
     return (
       <Box component="div" sx={{ display: "inline", overflow: "hidden" }}>
         <DataGridPro
+          checkboxSelection={this.state.checkSelection}
           scrollbarSize={1000}
           autoHeight
+          pageSize={this.state.pageSize}
+          rowsPerPageOptions={[13, 25, 50, 100]}
+          onPageSizeChange={(newPageSize) =>
+            this.setState({ pageSize: newPageSize })
+          }
           pagination
           density="compact"
           rows={this.props.rows}
@@ -237,6 +253,9 @@ class DTC_DataGrid extends React.Component {
             Toolbar: GridToolbar,
           }}
           onRowClick={this.handleRowClick}
+          onSelectionModelChange={(newSelection) =>
+            this.handleSelectionChange(newSelection)
+          }
           onRowDoubleClick={this.handleRowDoubleClick}
           classes={{
             root: jnStyles.jnGridRoot,

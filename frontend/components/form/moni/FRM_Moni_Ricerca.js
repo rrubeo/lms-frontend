@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 
 import DTC_DataGrid from "../../grid/DTC_DataGrid";
 import jnStyles from "../../../styles/utils.module.css";
+const moment = require("moment");
 
 const utils = require("../../../lib");
 const mon_cfg = require("./config");

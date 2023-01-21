@@ -84,7 +84,7 @@ class FRM_WapCustomNetwork extends React.Component {
   render() {
     const { currentUser } = this.state;
     // console.log(currentUser);
-    console.log(this.props);
+    // console.log(this.props.data);
     return (
       <Stack
         direction="column"

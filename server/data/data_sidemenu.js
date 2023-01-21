@@ -162,6 +162,18 @@ const sidemenu = [
     icon: "icon-dashboard-subscribers",
     link: `${process.env.frontend}/monitor/${cfg.MONI_STEP_4}`,
   },
+  {
+    id: "8_2_16",
+    text: "Programmazione Lezioni",
+    icon: "icon-student-teacher-assignment",
+    link: `${process.env.frontend}/monitor/${cfg.MONI_STEP_5}`,
+  },
+  {
+    id: "8_2_17",
+    text: "Gestione Notifiche",
+    icon: "icon-bell",
+    link: `${process.env.frontend}/monitor/${cfg.MONI_STEP_6}`,
+  },
   // {
   //   id: utils.getUID(),
   //   text: "Studente",

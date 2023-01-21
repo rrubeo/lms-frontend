@@ -1,4 +1,7 @@
 import * as React from "react";
+import Badge from "@mui/material/Badge";
+import Box from "@mui/material/Box";
+import Fab from "@mui/material/Fab";
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
@@ -63,15 +66,95 @@ class SEC_StudentProfile extends React.Component {
           >
             {`Studente`}
           </Typography>
-          <Typography
-            variant="body2"
-            classes={{
-              body2: jnStyles.jnH3Profile,
+          <Box
+            sx={{
+              border: 0,
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
             }}
-            sx={{ m: 0, p: 0 }}
           >
-            {`Crediti Residui ${this.props.profilo.creditiResidui}`}
-          </Typography>
+            <Typography
+              variant="body2"
+              sx={{
+                fontWeight: 400,
+                color: "#B34A9D",
+                fontSize: 18,
+                m: 0,
+                py: 0,
+                border: 0,
+                pr: 1,
+                borderRadius: "26px",
+              }}
+            >
+              Crediti Acquistati:
+            </Typography>
+            <Fab
+              sx={{ bgcolor: "secondary.main", color: "#ffffff" }}
+              size="small"
+            >
+              {this.props.profilo.creditiAcquistati}
+            </Fab>
+            <Typography
+              variant="body2"
+              sx={{
+                fontWeight: 400,
+                color: "#B34A9D",
+                fontSize: 18,
+
+                m: 0,
+                py: 0,
+                border: 0,
+                px: 1,
+                borderRadius: "26px",
+              }}
+            >
+              Crediti Consumati:
+            </Typography>
+            <Fab color="primary" size="small">
+              {this.props.profilo.creditiErogati}
+            </Fab>
+            <Typography
+              variant="body2"
+              sx={{
+                fontWeight: 400,
+                color: "#B34A9D",
+                fontSize: 18,
+
+                m: 0,
+                py: 0,
+                border: 0,
+                px: 1,
+                borderRadius: "26px",
+              }}
+            >
+              Crediti Prenotati:
+            </Typography>
+            <Fab color="primary" size="small">
+              {this.props.profilo.creditidaAppuntamentidaConfermare}
+            </Fab>
+            <Typography
+              variant="body2"
+              sx={{
+                fontWeight: 400,
+                color: "#B34A9D",
+                fontSize: 18,
+                m: 0,
+                py: 0,
+                border: 0,
+                px: 1,
+                borderRadius: "26px",
+              }}
+            >
+              Crediti Residui:
+            </Typography>
+            <Fab
+              sx={{ bgcolor: "secondary.magenta", color: "#ffffff" }}
+              size="small"
+            >
+              {this.props.profilo.creditiResidui}
+            </Fab>
+          </Box>
         </Stack>
       </Stack>
     );

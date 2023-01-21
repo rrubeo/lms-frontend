@@ -40,6 +40,8 @@ const DOCE_STEP_2 = "doce_orario";
 
 const MONI_STEP_0 = "mon_studenti";
 const MONI_STEP_4 = "mon_app_doc_tut";
+const MONI_STEP_5 = "mon_lezz_app";
+const MONI_STEP_6 = `mon_notify`;
 
 const HOME_0 = "home";
 const HOME_STUDENT = "fs";
@@ -79,4 +81,6 @@ module.exports = {
   TALKJS_CHAT,
   MONI_STEP_0,
   MONI_STEP_4,
+  MONI_STEP_5,
+  MONI_STEP_6,
 };

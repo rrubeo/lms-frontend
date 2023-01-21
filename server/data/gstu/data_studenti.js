@@ -124,6 +124,12 @@ const cols_iscrizioni = [
     type: "number",
     align: "right",
   },
+  {
+    field: "col10",
+    headerName: "Note",
+    flex: 1,
+    minWidth: 50,
+  },
 ];
 
 const cols_servizi = [

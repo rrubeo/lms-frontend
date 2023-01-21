@@ -10,6 +10,8 @@ const MONI_STEP_1 = `mon_lezioni`;
 const MONI_STEP_2 = `mon_appuntamenti`;
 const MONI_STEP_3 = `mon_dettaglio`;
 const MONI_STEP_4 = `mon_app_doc_tut`;
+const MONI_STEP_5 = `mon_lezz_app`;
+const MONI_STEP_6 = `mon_notify`;
 
 const FRM_MONI_STEP_0 = "FRM_Monitor_Studenti";
 const MONI_STEP_0_API = `${process.env.server}/monitor`;
@@ -54,6 +56,21 @@ const FRM_MONI_STEP_4 = "FRM_Moni_Ricerca";
 const MONI_STEP_4_API = `${process.env.server}/monitor/appu`;
 const MONI_STEP_4_ACTION = [];
 
+const FRM_MONI_STEP_5 = "FRM_Moni_Lezzap";
+const MONI_STEP_5_API = `${process.env.server}/monitor/lezzap`;
+const MONI_STEP_5_ACTION = [
+  {
+    id: "1",
+    title: "Elimina",
+    icon: "icon-delete2",
+    callBack: GRID_DELETE_ACTION,
+  },
+];
+
+const FRM_MONI_STEP_6 = "FRM_Moni_Notify";
+const MONI_STEP_6_API = `${process.env.server}/monitor/notify`;
+const MONI_STEP_6_ACTION = [];
+
 function getApiUrl(query) {
   const page = query.param[0];
   let apiUrl = "";
@@ -72,6 +89,12 @@ function getApiUrl(query) {
       break;
     case MONI_STEP_4:
       apiUrl = MONI_STEP_4_API;
+      break;
+    case MONI_STEP_5:
+      apiUrl = MONI_STEP_5_API;
+      break;
+    case MONI_STEP_6:
+      apiUrl = MONI_STEP_6_API;
       break;
   }
 
@@ -110,4 +133,12 @@ module.exports = {
   FRM_MONI_STEP_4,
   MONI_STEP_4_API,
   MONI_STEP_4_ACTION,
+  MONI_STEP_5,
+  FRM_MONI_STEP_5,
+  MONI_STEP_5_API,
+  MONI_STEP_5_ACTION,
+  MONI_STEP_6,
+  FRM_MONI_STEP_6,
+  MONI_STEP_6_API,
+  MONI_STEP_6_ACTION,
 };

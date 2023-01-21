@@ -8,7 +8,8 @@ import FRM_Tutor_Dettaglio from "../../components/form/tutorop/FRM_Tutor_Dettagl
 import FRM_Tutor_Lezioni from "../../components/form/tutorop/FRM_Tutor_Lezioni";
 import FRM_Tutor_Appuntamenti from "../../components/form/tutorop/FRM_Tutor_Appuntamenti";
 import FRM_Moni_Ricerca from "../../components/form/moni/FRM_Moni_Ricerca";
-
+import FRM_Moni_Lezzap from "../../components/form/moni/FRM_Moni_Lezzap";
+import FRM_Moni_Notify from "../../components/form/moni/FRM_Moni_Notify";
 import { validateForm } from "../../components/form/moni/validator";
 import useUser from "../../lib/useUser";
 import { PAGE_401 } from "../../lib/redirect";
@@ -84,6 +85,8 @@ function Main() {
     } else {
       validationMessage(vres.data.message, MSG_ERROR);
     }
+
+    return vres.valid;
   };
 
   const handleDelete = async (rowData) => {
@@ -180,6 +183,32 @@ function Main() {
             action={moni_cfg.MONI_STEP_3_ACTION}
             query={pageQuery}
             monitor={true}
+          />
+        ) : (
+          <></>
+        )}
+        {pageName === moni_cfg.MONI_STEP_5 ? (
+          <FRM_Moni_Lezzap
+            id={moni_cfg.FRM_MONI_STEP_5}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            data={data}
+            onNextStep={handleNextStep}
+            action={moni_cfg.MONI_STEP_5_ACTION}
+            query={pageQuery}
+          />
+        ) : (
+          <></>
+        )}
+        {pageName === moni_cfg.MONI_STEP_6 ? (
+          <FRM_Moni_Notify
+            id={moni_cfg.FRM_MONI_STEP_6}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            data={data}
+            onNextStep={handleNextStep}
+            action={moni_cfg.MONI_STEP_6_ACTION}
+            query={pageQuery}
           />
         ) : (
           <></>

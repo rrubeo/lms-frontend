@@ -184,11 +184,11 @@ const cols_moni_appuntamenti = [
   },
   {
     field: "col3",
-    type: "dateTime",
+    type: "date",
     headerName: "Data",
     flex: 1,
     minWidth: 50,
-    maxWidth: 100,
+    maxWidth: 150,
     align: "center",
   },
   {
@@ -246,10 +246,55 @@ const cols_moni_appuntamenti = [
   },
 ];
 
+const cols_mon_lezz_app = [
+  {
+    field: "col1",
+    headerName: "Lezione",
+    align: "left",
+    flex: 1,
+    minWidth: 50,
+  },
+  {
+    field: "col2",
+    type: "date",
+    headerName: "Data",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 100,
+    align: "center",
+  },
+  {
+    field: "col3",
+    headerName: "Oggetto",
+    align: "left",
+    flex: 1,
+    minWidth: 50,
+  },
+  {
+    field: "col4",
+    type: "dateTime",
+    headerName: "Inizio",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 90,
+    align: "center",
+  },
+  {
+    field: "col5",
+    type: "dateTime",
+    headerName: "Fine",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 90,
+    align: "center",
+  },
+];
+
 module.exports = {
   cols_studenti,
   cols_dettaglio,
   cols_lezioni,
   cols_appuntamenti,
   cols_moni_appuntamenti,
+  cols_mon_lezz_app,
 };

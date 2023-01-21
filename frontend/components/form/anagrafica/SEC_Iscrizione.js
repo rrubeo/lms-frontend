@@ -4,6 +4,7 @@ import FormLabel from "@mui/material/FormLabel";
 import DTC_TextBox from "../../DTC_TextBox";
 import DCT_ComboBox from "../../selector/DCT_ComboBox";
 import DTC_DataGrid from "../../grid/DTC_DataGrid";
+import DTC_TextMultiline from "../../DTC_TextMultiline";
 import DCT_Tagger from "../../selector/DCT_Tagger";
 import jnStyles from "../../../styles/utils.module.css";
 
@@ -24,6 +25,8 @@ class SEC_Iscrizione extends React.Component {
       creditiValue: "0",
       importoId: "tx_importo",
       importoValue: "0",
+      noteId: "tx_note",
+      noteValue: "",
     };
 
     this.onDeleteRow = this.onDeleteRow.bind(this);
@@ -38,6 +41,7 @@ class SEC_Iscrizione extends React.Component {
     this.changeChildAccademicoId = React.createRef();
     this.changeChildCreditiId = React.createRef();
     this.changeChildImportoId = React.createRef();
+    this.changeChildNoteId = React.createRef();
   }
 
   defaultValue() {
@@ -47,8 +51,10 @@ class SEC_Iscrizione extends React.Component {
     this.changeChildAccademicoId.current.setIndex(0);
     this.changeChildCreditiId.current.setText("0");
     this.changeChildImportoId.current.setText("0");
+    this.changeChildNoteId.current.setText("");
     this.onChangeForm(this.state.creditiId, "0");
     this.onChangeForm(this.state.importoId, "0");
+    this.onChangeForm(this.state.noteId, "");
     this.onChangeForm("gridId", 0);
   }
 
@@ -81,6 +87,9 @@ class SEC_Iscrizione extends React.Component {
       case this.state.importoId:
         this.setState({ importoValue: data });
         break;
+      case this.state.noteId:
+        this.setState({ noteValue: data });
+        break;
       case "gridId":
         this.setState({ selectedId: data });
         break;
@@ -111,9 +120,11 @@ class SEC_Iscrizione extends React.Component {
     this.changeChildTipostudenteId.current.setText(data.row.col5);
     this.changeChildCreditiId.current.setText(data.row.col8);
     this.changeChildImportoId.current.setText(data.row.col9);
+    this.changeChildNoteId.current.setText(data.row.col10);
 
     this.onChangeForm(this.state.creditiId, data.row.col8);
     this.onChangeForm(this.state.importoId, data.row.col9);
+    this.onChangeForm(this.state.noteId, data.row.col10);
     this.onChangeForm("gridId", id);
 
     this.setState({
@@ -205,9 +216,16 @@ class SEC_Iscrizione extends React.Component {
               ref={this.changeChildImportoId}
             />
           </Grid>
-          {/* <Grid item xs={12} sm={12} md={4}>
-            <DCT_Tagger />
-          </Grid> */}
+          <Grid item xs={12} sm={12} md={12}>
+            <DTC_TextMultiline
+              required
+              id={this.state.noteId}
+              label={this.props.data.note_label}
+              onChange={this.onChangeForm}
+              size={1}
+              ref={this.changeChildNoteId}
+            />
+          </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <DTC_DataGrid
               id="gd_ricerca"

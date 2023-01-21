@@ -3,7 +3,6 @@ import {
   Box,
   List,
   Badge,
-  Button,
   Avatar,
   Zoom,
   Tooltip,
@@ -17,8 +16,9 @@ import {
   ListItemButton,
 } from "@mui/material";
 
+import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined";
+import ContactMailOutlinedIcon from "@mui/icons-material/ContactMailOutlined";
 import Iconify from "../iconify";
-import Scrollbar from "../scrollbar";
 const utils = require("../../lib");
 import jnStyles from "../../styles/utils.module.css";
 
@@ -55,12 +55,13 @@ const NOTIFICATIONS = [
 class DCT_Notifications extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { open: null, notifications: [] };
+    this.state = { open: null, notifications: [], width: 360 };
 
     this.defaultValue = this.defaultValue.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.getUnread = this.getUnread.bind(this);
+    this.getMsgArray = this.getMsgArray.bind(this);
     this.handleMarkAllAsRead = this.handleMarkAllAsRead.bind(this);
     this.notificationItem = this.notificationItem.bind(this);
     this.renderContent = this.renderContent.bind(this);
@@ -158,7 +159,7 @@ class DCT_Notifications extends React.Component {
   renderContent(notification) {
     // console.log(notification);
     const title = (
-      <Typography variant="subtitle2">
+      <Typography variant="subtitle2" sx={{ border: 0 }}>
         {notification.title}
         <Typography
           component="span"
@@ -172,15 +173,20 @@ class DCT_Notifications extends React.Component {
     if (notification.type === "appuntamento") {
       return {
         avatar: (
-          <img alt={notification.title} src="/images/process_steps.png" />
+          <TodayOutlinedIcon sx={{ color: "primary.main" }} />
+          // <img alt={notification.title} src="/images/process_steps.png" />
         ),
         title,
       };
     }
-    if (notification.type === "order_placed") {
+    if (notification.type === "messaggio") {
       return {
         avatar: (
-          <img alt={notification.title} src="/images/process_steps.png" />
+          // <img
+          //   alt={notification.title}
+          //   src="/images/process_steps_selected.png"
+          // />
+          <ContactMailOutlinedIcon sx={{ color: "secondary.main" }} />
         ),
         title,
       };
@@ -235,6 +241,7 @@ class DCT_Notifications extends React.Component {
         onClick={(event) => this.handleListItemClick(event, notification.id)}
         key={notification.id}
         sx={{
+          border: 0,
           py: 0,
           px: 2.5,
           mt: "1px",
@@ -244,35 +251,58 @@ class DCT_Notifications extends React.Component {
         }}
       >
         <ListItemAvatar>
-          <Avatar sx={{ bgcolor: "background.neutral" }}>{avatar}</Avatar>
+          <Avatar
+            sx={{
+              border: 2,
+              borderColor: "secondary.magenta",
+              bgcolor: "background.paper",
+              my: 1,
+            }}
+          >
+            {avatar}
+          </Avatar>
         </ListItemAvatar>
         <ListItemText
+          sx={{ border: 0 }}
           primary={title}
           secondary={
-            <Typography
-              variant="caption"
-              sx={{
-                mt: 0.5,
-                display: "flex",
-                alignItems: "center",
-                color: "text.disabled",
-              }}
-            >
-              <Iconify
-                icon="eva:clock-outline"
-                sx={{ mr: 0.5, width: 16, height: 16 }}
-              />
-              {notification.createdAt}
-            </Typography>
+            status && (
+              <Typography
+                variant="caption"
+                sx={{
+                  mt: 0.5,
+                  display: "flex",
+                  alignItems: "center",
+                  color: "text.disabled",
+                  border: 0,
+                }}
+              >
+                <Iconify
+                  icon="eva:clock-outline"
+                  sx={{ mr: 0.5, width: 16, height: 16 }}
+                />
+                {notification.createdAt}
+              </Typography>
+            )
           }
         />
       </ListItemButton>
     );
   }
 
+  getMsgArray(status) {
+    const msg = this.state.notifications.filter((c) => c.isUnRead !== status);
+
+    const retmsg = msg.map((notification) =>
+      this.notificationItem(notification, status)
+    );
+    // console.log(msg);
+    return retmsg;
+  }
+
   render() {
     return (
-      <Box sx={{ pr: 1 }}>
+      <Box sx={{ pr: 1, border: 0 }}>
         <IconButton
           color={this.state.open ? "bell" : "secondary"}
           onClick={this.handleOpen}
@@ -292,14 +322,25 @@ class DCT_Notifications extends React.Component {
           transformOrigin={{ vertical: "top", horizontal: "right" }}
           PaperProps={{
             sx: {
+              borderRadius: "26px",
               mt: 3,
               ml: 0.75,
-              width: 360,
+              width: this.state.width,
+              // // height: 260,
+              border: 0,
             },
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center", py: 2, px: 2.5 }}>
-            <Box sx={{ flexGrow: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              border: 0,
+              alignItems: "center",
+              py: 2,
+              px: 2.5,
+            }}
+          >
+            <Box sx={{ flexGrow: 1, border: 0 }}>
               <Typography
                 classes={{
                   body2: jnStyles.jnNotTitle,
@@ -327,13 +368,28 @@ class DCT_Notifications extends React.Component {
             )}
           </Box>
           <Divider sx={{ borderStyle: "dashed" }} />
-          <Scrollbar
+          {/* <Scrollbar
             sx={{
+              // display: "flex",
+              // flexWrap: "wrap",
+              border: 0,
               height: { xs: 280, sm: 400 },
+            }}
+          > */}
+          <Box
+            sx={{
+              display: "flex",
+              // flexWrap: "wrap",
+              flexDirection: "column",
+              flexGrow: 1,
+              border: 0,
+              height: { xs: 280, sm: 400 },
+              overflow: "auto",
             }}
           >
             <List
               disablePadding
+              sx={{ border: 0 }}
               subheader={
                 <ListSubheader
                   disableSticky
@@ -343,15 +399,12 @@ class DCT_Notifications extends React.Component {
                 </ListSubheader>
               }
             >
-              {this.state.notifications
-                .filter((c) => c.isUnRead !== false)
-                .map((notification) =>
-                  this.notificationItem(notification, false)
-                )}
+              {this.getMsgArray(false)}
             </List>
             <Divider sx={{ borderStyle: "dashed" }} />
             <List
               disablePadding
+              sx={{ border: 0 }}
               subheader={
                 <ListSubheader
                   disableSticky
@@ -361,16 +414,11 @@ class DCT_Notifications extends React.Component {
                 </ListSubheader>
               }
             >
-              {this.state.notifications
-                .filter((c) => c.isUnRead !== true)
-                .map((notification) =>
-                  this.notificationItem(notification, true)
-                )}
-              {/* {this.state.notifications.map((notification) =>
-                this.notificationItem(notification, true)
-              )} */}
+              {this.getMsgArray(true)}
             </List>
-          </Scrollbar>
+
+            {/* </Scrollbar> */}
+          </Box>
           <Divider sx={{ borderStyle: "dashed" }} />
         </Popover>
       </Box>

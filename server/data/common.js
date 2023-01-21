@@ -340,14 +340,36 @@ const getNotificaDaAppuntamento = async (token, IdUtenteUserName) => {
   logger.trace(f);
   if (f.status) return [];
 
+  const options = {
+    day: "2-digit",
+    weekday: "long",
+    // month: "2-digit",
+    // year: "numeric",
+    month: "long",
+  };
+
+  const dateFormat = "it-IT";
+
   const data = f.map((x, index) => {
+    let dataN = "";
+    if (x.dataLettura != null) {
+      let dataEvento = new Date(x.dataLettura).toLocaleTimeString(
+        dateFormat,
+        options
+      );
+      // const offset = dataEvento.getTimezoneOffset();
+      // dataEvento = new Date(dataEvento.getTime() - offset * 60 * 1000);
+      // dataEvento = dataEvento.toISOString().split("T")[0];
+      dataN = dataEvento.toString();
+    }
+
     return {
       id: x.idNotifica,
-      title: "APPUNTAMENTI",
+      title: x.idAppuntamento == null ? "AVVISO" : "APPUNTAMENTI",
       description: x.messaggio,
       avatar: "/images/process_steps.png",
-      type: "appuntamento",
-      createdAt: x.dataLettura,
+      type: x.idAppuntamento == null ? "messaggio" : "appuntamento",
+      createdAt: dataN,
       isUnRead: x.dataLettura == null ? true : false,
     };
   });

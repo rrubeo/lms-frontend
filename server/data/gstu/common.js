@@ -109,6 +109,7 @@ const getIscrizioniPersona = async (token, idPersona) => {
         : "",
       col8: x.numeroCreditiBonus ? x.numeroCreditiBonus : 0,
       col9: x.importoTotale ? x.importoTotale : 0,
+      col10: x.note ? x.note : "",
     };
   });
   return data;

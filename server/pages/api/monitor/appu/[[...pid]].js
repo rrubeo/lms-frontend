@@ -7,9 +7,7 @@ import {
   usermenu,
   getSideUserMenu,
 } from "../../../../data/data_sidemenu";
-import {
-  getAppuntamentiDocentiTutor,
-} from "../../../../data/moni/common";
+import { getAppuntamentiDocentiTutor } from "../../../../data/moni/common";
 
 import { getFunzioniForm, getRuoloUtente } from "../../../../data/common";
 import { cols_moni_appuntamenti } from "../../../../data/moni/data_moni";
