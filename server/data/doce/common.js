@@ -9,6 +9,7 @@ import {
   DomaDocenteMateriaRels,
   GetDisponibilitaOrarie,
   SetDisponibilitaOrarie,
+  GetStudenteDocente,
 } from "./config";
 
 const getAnagraficaDocenti = async (token, IdPersona, UserName) => {
@@ -98,6 +99,36 @@ const deleteDocenteMateria = async (token, id) => {
   );
 };
 
+const getStudenteDocente = async (
+  token,
+  IdIscrizioneStudente,
+  UserNameDocente,
+  IdPersonaDocente
+) => {
+  const f = await utils.getFetch(
+    token,
+    GetStudenteDocente(IdIscrizioneStudente, UserNameDocente, IdPersonaDocente)
+  );
+  logger.debug("[getStudenteDocente]");
+
+  // console.log(f);
+  if (f.status) return [];
+
+  const data = f.map((x) => {
+    return {
+      id: x.idIscrizioneStudente,
+      col1: x.materia,
+      col2: x.annoFrequenza,
+      col3: x.tipoIstituto,
+      col4: x.indirizzo,
+      col5: x.annoAccademico,
+      col6: x.cognomeStudente + " " + x.nomeStudente,
+      col7: x.percentualeAvanzamento,
+    };
+  });
+  return data;
+};
+
 module.exports = {
   getAnagraficaDocenti,
   getDocenteMateria,
@@ -106,4 +137,5 @@ module.exports = {
   deleteDocenteMateria,
   getDisponibilitaOrarie,
   setDisponibilitaOrarie,
+  getStudenteDocente,
 };

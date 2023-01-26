@@ -24,6 +24,15 @@ function GetDisponibilitaOrarie(IdPersona) {
 const CLOUD_API_TBL_SET_ORARIO = "api/Tables/SetDisponibilitaOrarie";
 const SetDisponibilitaOrarie = `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_SET_ORARIO}`;
 
+const CLOUD_API_TBL_STUD_DOCENTE = "api/Tables/GetStudenteDocente";
+function GetStudenteDocente(
+  IdIscrizioneStudente,
+  UserNameDocente,
+  IdPersonaDocente
+) {
+  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_STUD_DOCENTE}/${IdIscrizioneStudente}/${UserNameDocente}/${IdPersonaDocente}`;
+}
+
 module.exports = {
   GetAnagraficaDocenti,
   GetDocenteMateria,
@@ -31,4 +40,5 @@ module.exports = {
   DomaDocenteMateriaRels,
   GetDisponibilitaOrarie,
   SetDisponibilitaOrarie,
+  GetStudenteDocente,
 };

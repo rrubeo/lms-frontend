@@ -7,6 +7,7 @@ import DCT_LinkButton from "../../DCT_LinkButton";
 
 const tu_cfg = require("./config");
 const moni_cfg = require("../moni/config");
+const doce_cfg = require("../doce/config");
 
 class FRM_Tutor_Appuntamenti extends React.Component {
   constructor(props) {
@@ -26,10 +27,16 @@ class FRM_Tutor_Appuntamenti extends React.Component {
   }
 
   render() {
-    const linkBack =
-      this.props?.monitor == true
-        ? `/monitor/${moni_cfg.MONI_STEP_0}`
-        : `/tutorop/${tu_cfg.TUTOP_STEP_0}`;
+    let linkBack = "";
+
+    if (this.props?.monitor == true) {
+      linkBack = `/monitor/${moni_cfg.MONI_STEP_0}`;
+    } else if (this.props?.docenti == true) {
+      linkBack = `/doce/${doce_cfg.DOCE_STEP_3}`;
+    } else {
+      linkBack = `/tutorop/${tu_cfg.TUTOP_STEP_0}`;
+    }
+
     return (
       <>
         <DCT_LinkButton href={linkBack} text={this.props.data.back_label} />

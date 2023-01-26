@@ -8,6 +8,10 @@ import {
 const DOCE_STEP_0 = "doce_search";
 const DOCE_STEP_1 = "doce_materie";
 const DOCE_STEP_2 = "doce_orario";
+const DOCE_STEP_3 = "doce_studenti";
+const DOCE_STEP_4 = `doce_lezioni`;
+const DOCE_STEP_5 = `doce_appuntamenti`;
+const DOCE_STEP_6 = `doce_dettaglio`;
 
 const FRM_DOCE_STEP_0 = "FRM_Docenti_Ricerca";
 const DOCE_STEP_0_API = `${process.env.server}/doce`;
@@ -43,6 +47,45 @@ const FRM_DOCE_STEP_2 = "FRM_Docenti_Orario";
 const DOCE_STEP_2_API = `${process.env.server}/doce/orario`;
 const DOCE_STEP_2_ACTION = [];
 
+const FRM_DOCE_STEP_3 = "FRM_Tutor_Studenti";
+const DOCE_STEP_3_API = `${process.env.server}/doce/studenti`;
+
+const DOCE_STEP_3_ACTION = [
+  {
+    id: "1",
+    title: "Dettaglio",
+    icon: "icon-program-management",
+    callBack: GRID_ROUTE_ACTION,
+    route: DOCE_STEP_6,
+  },
+  {
+    id: "2",
+    title: "Appuntamenti",
+    icon: "icon-clock",
+    callBack: GRID_ROUTE_ACTION,
+    route: DOCE_STEP_5,
+  },
+  {
+    id: "3",
+    title: "Lezioni",
+    icon: "icon-teacher-assignment",
+    callBack: GRID_ROUTE_ACTION,
+    route: DOCE_STEP_4,
+  },
+];
+
+const FRM_DOCE_STEP_4 = "FRM_Tutor_Lezioni";
+const DOCE_STEP_4_API = `${process.env.server}/tutorop/lezioni`;
+const DOCE_STEP_4_ACTION = [];
+
+const FRM_DOCE_STEP_5 = "FRM_Tutor_Appuntamenti";
+const DOCE_STEP_5_API = `${process.env.server}/tutorop/appuntamenti`;
+const DOCE_STEP_5_ACTION = [];
+
+const FRM_DOCE_STEP_6 = "FRM_Tutor_Dettaglio";
+const DOCE_STEP_6_API = `${process.env.server}/tutorop/dettaglio`;
+const DOCE_STEP_6_ACTION = [];
+
 const MENU_API = `${process.env.server}/menu`;
 const NO_DATA_DESC = "Nessun dato";
 
@@ -58,6 +101,18 @@ function getApiUrl(query) {
       break;
     case DOCE_STEP_2:
       apiUrl = DOCE_STEP_2_API;
+      break;
+    case DOCE_STEP_3:
+      apiUrl = DOCE_STEP_3_API;
+      break;
+    case DOCE_STEP_4:
+      apiUrl = DOCE_STEP_4_API;
+      break;
+    case DOCE_STEP_5:
+      apiUrl = DOCE_STEP_5_API;
+      break;
+    case DOCE_STEP_6:
+      apiUrl = DOCE_STEP_6_API;
       break;
   }
 
@@ -90,4 +145,19 @@ module.exports = {
   DOCE_STEP_2_ACTION,
   MENU_API,
   NO_DATA_DESC,
+  DOCE_STEP_3,
+  FRM_DOCE_STEP_3,
+  DOCE_STEP_3_ACTION,
+  DOCE_STEP_6,
+  FRM_DOCE_STEP_6,
+  DOCE_STEP_6_API,
+  DOCE_STEP_6_ACTION,
+  DOCE_STEP_5,
+  FRM_DOCE_STEP_5,
+  DOCE_STEP_5_API,
+  DOCE_STEP_5_ACTION,
+  DOCE_STEP_4,
+  FRM_DOCE_STEP_4,
+  DOCE_STEP_4_API,
+  DOCE_STEP_4_ACTION,
 };

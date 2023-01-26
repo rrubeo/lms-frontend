@@ -37,6 +37,7 @@ const FSME_STEP_3 = "fsme_esercitazione";
 const DOCE_STEP_0 = "doce_search";
 const DOCE_STEP_1 = "doce_materie";
 const DOCE_STEP_2 = "doce_orario";
+const DOCE_STEP_3 = "doce_studenti";
 
 const MONI_STEP_0 = "mon_studenti";
 const MONI_STEP_4 = "mon_app_doc_tut";
@@ -83,4 +84,5 @@ module.exports = {
   MONI_STEP_4,
   MONI_STEP_5,
   MONI_STEP_6,
+  DOCE_STEP_3,
 };

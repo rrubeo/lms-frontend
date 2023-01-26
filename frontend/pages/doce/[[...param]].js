@@ -6,6 +6,10 @@ import DCT_Layout from "../../components/layout/DCT_Layout";
 import FRM_Docenti_Ricerca from "../../components/form/doce/FRM_Docenti_Ricerca";
 import FRM_Docenti_Materie from "../../components/form/doce/FRM_Docenti_Materie";
 import FRM_Docenti_Orario from "../../components/form/doce/FRM_Docenti_Orario";
+import FRM_Tutor_Studenti from "../../components/form/tutorop/FRM_Tutor_Studenti";
+import FRM_Tutor_Dettaglio from "../../components/form/tutorop/FRM_Tutor_Dettaglio";
+import FRM_Tutor_Lezioni from "../../components/form/tutorop/FRM_Tutor_Lezioni";
+import FRM_Tutor_Appuntamenti from "../../components/form/tutorop/FRM_Tutor_Appuntamenti";
 
 import { validateForm } from "../../components/form/doce/validator";
 import useUser from "../../lib/useUser";
@@ -150,6 +154,61 @@ function Main() {
             onDelete={handleDelete}
             data={data}
             query={pageQuery}
+          />
+        ) : (
+          <></>
+        )}
+        {pageName === do_cfg.DOCE_STEP_3 ? (
+          <FRM_Tutor_Studenti
+            id={do_cfg.FRM_DOCE_STEP_3}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            data={data}
+            onNextStep={handleNextStep}
+            action={do_cfg.DOCE_STEP_3_ACTION}
+            query={pageQuery}
+          />
+        ) : (
+          <></>
+        )}
+        {pageName === do_cfg.DOCE_STEP_4 ? (
+          <FRM_Tutor_Lezioni
+            id={do_cfg.FRM_DOCE_STEP_4}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            data={data}
+            onNextStep={handleNextStep}
+            action={do_cfg.DOCE_STEP_4_ACTION}
+            query={pageQuery}
+            docenti={true}
+          />
+        ) : (
+          <></>
+        )}
+        {pageName === do_cfg.DOCE_STEP_5 ? (
+          <FRM_Tutor_Appuntamenti
+            id={do_cfg.FRM_DOCE_STEP_5}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            data={data}
+            onNextStep={handleNextStep}
+            action={do_cfg.DOCE_STEP_5_ACTION}
+            query={pageQuery}
+            docenti={true}
+          />
+        ) : (
+          <></>
+        )}
+        {pageName === do_cfg.DOCE_STEP_6 ? (
+          <FRM_Tutor_Dettaglio
+            id={do_cfg.FRM_DOCE_STEP_6}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            data={data}
+            onNextStep={handleNextStep}
+            action={do_cfg.DOCE_STEP_6_ACTION}
+            query={pageQuery}
+            docenti={true}
           />
         ) : (
           <></>

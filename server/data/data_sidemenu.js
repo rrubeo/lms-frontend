@@ -136,7 +136,7 @@ const sidemenu = [
     id: "7_2_11",
     text: "I miei studenti",
     icon: "icon-teacher-assignment",
-    link: `${process.env.frontend}/tutorop/${cfg.TUTOP_STEP_0}`,
+    link: `${process.env.frontend}/doce/${cfg.DOCE_STEP_3}`,
   },
   {
     id: "7_2_13",

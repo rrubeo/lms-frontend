@@ -23,7 +23,7 @@ async function getHandler(userLogin, pid) {
     "FRM_ProgBase_Ricerca"
   );
 
-  const db_docenti = await getStudenteDocente(userLogin.token, pid);
+  const db_docenti = await getStudenteDocente(userLogin.token, pid, 0, 0);
   const db_materie = await getMateriaScolasticaCombo(userLogin.token);
   // const db_filtra = await getDocenteMateria(userLogin.token, 0);
   const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);

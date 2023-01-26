@@ -406,10 +406,15 @@ const getStudenteTutor = async (token, IdIscrizioneStudente) => {
   return data;
 };
 
-const getStudenteDocente = async (token, IdIscrizioneStudente) => {
+const getStudenteDocente = async (
+  token,
+  IdIscrizioneStudente,
+  UserNameDocente,
+  IdPersonaDocente
+) => {
   const f = await utils.getFetch(
     token,
-    GetStudenteDocente(IdIscrizioneStudente, 0)
+    GetStudenteDocente(IdIscrizioneStudente, UserNameDocente, IdPersonaDocente)
   );
   logger.debug("[getStudenteDocente]");
 
