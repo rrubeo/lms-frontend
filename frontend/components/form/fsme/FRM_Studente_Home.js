@@ -144,10 +144,20 @@ class FRM_Studente_Home extends React.Component {
               </Button>
             </Stack>
           </Stack>
-          <SEC_StudenteLezioni
-            materie={this.props.data.materie}
-            onClick={this.props.onClick}
-          />
+          <Stack
+            direction="column"
+            spacing={1}
+            justifyContent="center"
+            alignItems="center"
+          >
+            {this.props.data.materie.map((item, index) => (
+              <SEC_StudenteLezioni
+                key={`AnnoLezioni${index}`}
+                materie={item}
+                onClick={this.props.onClick}
+              />
+            ))}
+          </Stack>
         </Stack>
       </Stack>
     );

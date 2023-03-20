@@ -38,14 +38,17 @@ async function getHandler(userLogin, pid) {
     profilo = iscrizione[0];
   }
 
-  let materie = {
-    lezioniStudenteAnno: { descr: "Iscrizione" },
-    lezioniStudenteMATERIA1: [],
-  };
+  let materie = [
+    {
+      lezioniStudenteAnno: { descr: "Iscrizione" },
+      lezioniStudenteMATERIA1: [],
+    },
+  ];
 
   const db_lezioni = await getLezioni(userLogin.token, userLogin.userID, 0);
   if (db_lezioni.length > 0) {
-    materie = db_lezioni[0];
+    // materie = db_lezioni[0];
+    materie = db_lezioni;
   }
 
   const db_menu = await getSideUserMenu(userLogin.token, userLogin.userID);
