@@ -5,6 +5,8 @@ import Wip from "../../components/layout/wip";
 import DCT_Layout from "../../components/layout/DCT_Layout";
 import FRM_Tutor_Studenti from "../../components/form/tutorop/FRM_Tutor_Studenti";
 import FRM_Tutor_Dettaglio from "../../components/form/tutorop/FRM_Tutor_Dettaglio";
+import FRM_Tutor_Dettaglio_Master from "../../components/form/tutorop/FRM_Tutor_Dettaglio_Master";
+import FRM_Tutor_Dettaglio_Details from "../../components/form/tutorop/FRM_Tutor_Dettaglio_Details";
 import FRM_Tutor_Lezioni from "../../components/form/tutorop/FRM_Tutor_Lezioni";
 import FRM_Tutor_Appuntamenti from "../../components/form/tutorop/FRM_Tutor_Appuntamenti";
 import FRM_Moni_Ricerca from "../../components/form/moni/FRM_Moni_Ricerca";
@@ -25,7 +27,7 @@ import {
 } from "../../lib";
 
 import { withIronSessionSsr } from "iron-session/next";
-
+  
 const utils = require("../../lib/utils");
 const moni_cfg = require("../../components/form/moni/config");
 
@@ -209,6 +211,34 @@ function Main() {
             onNextStep={handleNextStep}
             action={moni_cfg.MONI_STEP_6_ACTION}
             query={pageQuery}
+          />
+        ) : (
+          <></>
+        )}
+        {pageName === moni_cfg.MONI_STEP_7 ? (
+          <FRM_Tutor_Dettaglio_Master
+            id={moni_cfg.FRM_MONI_STEP_7}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            data={data}
+            onNextStep={handleNextStep}
+            action={moni_cfg.MONI_STEP_7_ACTION}
+            query={pageQuery}
+            monitor={true}
+          />
+        ) : (
+          <></>
+        )}
+        {pageName === moni_cfg.MONI_STEP_8 ? (
+          <FRM_Tutor_Dettaglio_Details
+            id={moni_cfg.FRM_MONI_STEP_8}
+            onSubmit={handleSubmit}
+            onDelete={handleDelete}
+            data={data}
+            onNextStep={handleNextStep}
+            action={moni_cfg.MONI_STEP_8_ACTION}
+            query={pageQuery}
+            monitor={true}
           />
         ) : (
           <></>

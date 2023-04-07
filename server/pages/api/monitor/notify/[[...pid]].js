@@ -31,6 +31,13 @@ const colsgd = [
     minWidth: 50,
   },
   {
+    field: "col17",
+    headerName: "Tipo Studente",
+    align: "left",
+    flex: 1,
+    minWidth: 50,
+  },
+  {
     field: "col3",
     headerName: "Iscrizione",
     align: "left",

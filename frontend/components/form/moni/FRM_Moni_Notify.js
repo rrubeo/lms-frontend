@@ -63,10 +63,11 @@ class FRM_Moni_Notify extends React.Component {
       <Box
         sx={{
           display: "flex",
-          flexDirection: { xs: "column", sm: "column", md: "row" },
+          flexDirection: "column",
           border: 1,
           borderRadius: "26px",
           width: "100%",
+          mt: { xs: 2, sm: 2, md: 0 },
           py: "2%",
           px: "2%",
         }}
@@ -74,11 +75,12 @@ class FRM_Moni_Notify extends React.Component {
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
-            border: 1,
+            flexDirection: { xs: "column", sm: "column", md: "row" },
+            justifyContent: "space-between",
+            alignItems: "center",
+            border: 0,
             borderRadius: "26px",
             width: "100%",
-            mt: { xs: 2, sm: 2, md: 0 },
             py: "2%",
             px: "2%",
           }}
@@ -91,35 +93,45 @@ class FRM_Moni_Notify extends React.Component {
             size={1}
             ref={this.changeChildNotificaId}
           />
-          <Button
-            variant="contained"
-            classes={{ root: jnStyles.jnBT }}
-            onClick={this.handleSubmit}
-            sx={{ mt: 2 }}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "row", sm: "row", md: "row" },
+              m: 1,
+            }}
           >
-            Invia
-          </Button>
-          <Button
-            variant="contained"
-            classes={{ root: jnStyles.jnBT }}
-            onClick={this.handleReset}
-            sx={{ mt: 2 }}
-          >
-            Reset
-          </Button>
-          <DTC_DataGrid
-            checkSelection={true}
-            id={this.state.checkStudentiId}
-            cols={this.props.data.cols}
-            rows={this.props.data.rows}
-            onChange={this.onChangeForm}
-            onDelete={this.onDeleteRow}
-            onNextStep={this.props.onNextStep}
-            action={this.props.action}
-            actionWidth={0}
-            ref={this.changeChildGridId}
-          />
-          {/* <DCT_CheckList
+            <Button
+              variant="contained"
+              classes={{ root: jnStyles.jnBT }}
+              onClick={this.handleSubmit}
+              sx={{ ml: 1 }}
+            >
+              Invia
+            </Button>
+            <Button
+              variant="contained"
+              classes={{ root: jnStyles.jnBT }}
+              onClick={this.handleReset}
+              sx={{ ml: 1 }}
+            >
+              Reset
+            </Button>
+          </Box>
+        </Box>
+
+        <DTC_DataGrid
+          checkSelection={true}
+          id={this.state.checkStudentiId}
+          cols={this.props.data.cols}
+          rows={this.props.data.rows}
+          onChange={this.onChangeForm}
+          onDelete={this.onDeleteRow}
+          onNextStep={this.props.onNextStep}
+          action={this.props.action}
+          actionWidth={0}
+          ref={this.changeChildGridId}
+        />
+        {/* <DCT_CheckList
             id={this.state.checkStudentiId}
             label={this.props.data.studenti_label}
             list={this.props.data.studenti}
@@ -127,7 +139,6 @@ class FRM_Moni_Notify extends React.Component {
             onChange={this.onChangeForm}
             size="65vh"
           /> */}
-        </Box>
       </Box>
     );
   }

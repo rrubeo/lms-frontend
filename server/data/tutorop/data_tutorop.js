@@ -34,6 +34,12 @@ const cols_studenti = [
     minWidth: 50,
     maxWidth: 120,
   },
+  {
+    field: "col7",
+    headerName: "Note",
+    flex: 1,
+    minWidth: 50,
+  },
 ];
 
 const cols_dettaglio = [
@@ -62,6 +68,49 @@ const cols_dettaglio = [
   { field: "col4", headerName: "Lezione", flex: 1, minWidth: 50 },
   {
     field: "col5",
+    type: "boolean",
+    headerName: "Completata",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 100,
+  },
+];
+
+const cols_dettaglio_mat = [
+  {
+    field: "col1",
+    headerName: "Materia",
+    flex: 1,
+    minWidth: 50,
+  },
+  {
+    field: "col2",
+    type: "number",
+    align: "right",
+    headerName: "Avanzamento Materia",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 120,
+  },
+];
+
+const cols_dettaglio_mat_det = [
+  {
+    field: "col1",
+    headerName: "Materia",
+    flex: 1,
+    minWidth: 50,
+    maxWidth: 150,
+  },
+  {
+    field: "col2",
+    headerName: "Classe Argomento",
+    flex: 1,
+    minWidth: 50,
+  },
+  { field: "col3", headerName: "Lezione", flex: 1, minWidth: 50 },
+  {
+    field: "col4",
     type: "boolean",
     headerName: "Completata",
     flex: 1,
@@ -170,4 +219,6 @@ module.exports = {
   cols_dettaglio,
   cols_lezioni,
   cols_appuntamenti,
+  cols_dettaglio_mat,
+  cols_dettaglio_mat_det,
 };

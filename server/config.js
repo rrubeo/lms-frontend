@@ -43,6 +43,8 @@ const MONI_STEP_0 = "mon_studenti";
 const MONI_STEP_4 = "mon_app_doc_tut";
 const MONI_STEP_5 = "mon_lezz_app";
 const MONI_STEP_6 = `mon_notify`;
+const MONI_STEP_7 = `mon_dettaglio_master`;
+const MONI_STEP_8 = `mon_dettaglio_details`;
 
 const HOME_0 = "home";
 const HOME_STUDENT = "fs";
@@ -84,5 +86,7 @@ module.exports = {
   MONI_STEP_4,
   MONI_STEP_5,
   MONI_STEP_6,
+  MONI_STEP_7,
+  MONI_STEP_8,
   DOCE_STEP_3,
 };

@@ -34,9 +34,21 @@ function GetIscrizioneStudentexIdPersona(
   return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_ISCR_STU_}/${userName}/${idPersona}/${idAnnoFrequenza}/${idIndirizzoIstituto}/${IdIscrizione}`;
 }
 
+const CLOUD_API_TBL_STUD_DETT_MAT = "api/Tables/GetStudenteAvanzamentoMateria";
+function GetStudenteAvanzamentoMateria(IdIscrizione) {
+  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_STUD_DETT_MAT}/${IdIscrizione}`;
+}
+
+const CLOUD_API_TBL_STUD_DETT_LEZ = "api/Tables/GetStudenteTutorxmonitoraggio";
+function GetStudenteTutorxmonitoraggio(IdIscrizione, IdMateria) {
+  return `${cfgMain.CLOUD_BASE_URL}/${CLOUD_API_TBL_STUD_DETT_LEZ}/${IdIscrizione}/${IdMateria}`;
+}
+
 module.exports = {
   GetStudTutor,
   GetElencoAppuntamenti,
   GetStudenteTutorDettaglio,
   GetIscrizioneStudentexIdPersona,
+  GetStudenteAvanzamentoMateria,
+  GetStudenteTutorxmonitoraggio,
 };

@@ -1,11 +1,15 @@
 const commMain = require("../common");
 const utils = require("../../lib/utils");
+import { getLogger } from "../../logging/log-util";
+const logger = getLogger("data-tutorop-common");
 
 import {
   GetStudTutor,
   GetElencoAppuntamenti,
   GetStudenteTutorDettaglio,
   GetIscrizioneStudentexIdPersona,
+  GetStudenteAvanzamentoMateria,
+  GetStudenteTutorxmonitoraggio,
 } from "./config";
 
 const getStudTutor = async (token, IdIscrizioneStudente, UserNameTutor) => {
@@ -13,9 +17,7 @@ const getStudTutor = async (token, IdIscrizioneStudente, UserNameTutor) => {
     token,
     GetStudTutor(IdIscrizioneStudente, UserNameTutor)
   );
-
-  console.log("getStudTutor");
-  // console.log(f);
+  logger.debug("[getStudTutor]");
   if (f.status) return [];
 
   const data = f.map((x) => {
@@ -27,6 +29,7 @@ const getStudTutor = async (token, IdIscrizioneStudente, UserNameTutor) => {
       col4: x.annoAccademico,
       col5: x.cognomeStudente + " " + x.nomeStudente,
       col6: x.percAvanzamentoTotale,
+      col7: x.note,
     };
   });
   return data;
@@ -54,9 +57,7 @@ const getElencoAppuntamenti = async (
       IdTipoAppuntamento
     )
   );
-
-  console.log("getElencoAppuntamenti");
-  // console.log(f);
+  logger.debug("[getElencoAppuntamenti]");
   if (f.status) return [];
 
   const options = {
@@ -113,9 +114,7 @@ const getElencoAppuntamentiLezione = async (
       IdTipoAppuntamento
     )
   );
-
-  console.log("getElencoAppuntamentiLezione");
-  // console.log(f);
+  logger.debug("[getElencoAppuntamentiLezione]");
   if (f.status) return [];
 
   const options = {
@@ -157,9 +156,7 @@ const getStudenteTutorDettaglio = async (token, IdIscrizioneStudente) => {
     token,
     GetStudenteTutorDettaglio(IdIscrizioneStudente)
   );
-
-  console.log("getStudenteTutorDettaglio");
-  // console.log(f);
+  logger.debug("[getStudenteTutorDettaglio]");
   if (f.status) return [];
 
   const data = f.map((x, index) => {
@@ -180,11 +177,51 @@ const getIscrizioneStudente = async (token, IdIscrizioneStudente) => {
     token,
     GetIscrizioneStudentexIdPersona(0, 0, 0, 0, IdIscrizioneStudente)
   );
-
-  console.log("getIscrizioneStudente");
-  // console.log(f);
+  logger.debug("[getIscrizioneStudente]");
   if (f.status) return [];
   return f;
+};
+
+const getStudenteAvanzamentoMateria = async (token, IdIscrizioneStudente) => {
+  const f = await utils.getFetch(
+    token,
+    GetStudenteAvanzamentoMateria(IdIscrizioneStudente)
+  );
+  logger.debug("[getStudenteAvanzamentoMateria]");
+  if (f.status) return [];
+
+  const data = f.map((x, index) => {
+    return {
+      id: `${x.idIscrizione}@${x.idMateria}`,     
+      col1: x.materia,
+      col2: x.percAvanzamentoMateria,
+    };
+  });
+  return data;
+};
+
+const getStudenteTutorxmonitoraggio = async (
+  token,
+  IdIscrizione,
+  IdMateria
+) => {
+  const f = await utils.getFetch(
+    token,
+    GetStudenteTutorxmonitoraggio(IdIscrizione, IdMateria)
+  );
+  logger.debug("[getStudenteTutorxmonitoraggio]");
+  if (f.status) return [];
+
+  const data = f.map((x, index) => {
+    return {
+      id: index,
+      col1: x.materia,
+      col2: x.classeArgomento,
+      col3: x.lezione,
+      col4: x.lezioneCompletata,
+    };
+  });
+  return data;
 };
 
 module.exports = {
@@ -193,4 +230,6 @@ module.exports = {
   getIscrizioneStudente,
   getElencoAppuntamenti,
   getElencoAppuntamentiLezione,
+  getStudenteAvanzamentoMateria,
+  getStudenteTutorxmonitoraggio,
 };

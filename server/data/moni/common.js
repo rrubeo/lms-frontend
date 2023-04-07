@@ -268,6 +268,7 @@ const getGridIscrizioneStudente = async (
       col14: x.provinciaDomicilio,
       col15: x.comuneDomicilio,
       col16: x.indirizzoDomicilio,
+      col17: x.tipoStudente,
     };
   });
 
