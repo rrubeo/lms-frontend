@@ -124,6 +124,7 @@ const getStudenteDocente = async (
       col5: x.annoAccademico,
       col6: x.cognomeStudente + " " + x.nomeStudente,
       col7: x.percentualeAvanzamento,
+      col8: x.note,
     };
   });
   return data;

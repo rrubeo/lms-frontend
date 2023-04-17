@@ -56,6 +56,12 @@ const cols_studenti = [
     minWidth: 50,
     maxWidth: 120,
   },
+  {
+    field: "col8",
+    headerName: "Note",
+    flex: 1,
+    minWidth: 50,
+  },
 ];
 
 async function getHandler(userLogin, pid) {
