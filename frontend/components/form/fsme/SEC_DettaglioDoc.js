@@ -57,8 +57,8 @@ class SEC_DettaglioDoc extends React.Component {
                   ? jnStyles.jnThumbs1
                   : jnStyles.jnThumbs0
               }
-              src={`${item.thumbImagePath}?w=248&fit=crop&auto=format`}
-              srcSet={`${item.thumbImagePath}?w=248&fit=crop&auto=format&dpr=2 2x`}
+              src={`${item.thumbImagePath}`}
+              srcSet={`${item.thumbImagePath}`}
               alt={`Page ${index}`}
               loading="lazy"
             />
