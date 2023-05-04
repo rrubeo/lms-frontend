@@ -5,35 +5,35 @@ const nextConfig = {
 
 const isProd = process.env.NODE_ENV === "production";
 
-const JAAS_ID_PROD = "vpaas-magic-cookie-a8b4ddef72a34e29a94228185fb02e12";
-const JAAS_ID_DEV = "vpaas-magic-cookie-a8b4ddef72a34e29a94228185fb02e12";
+const JAAS_ID_PROD = "vpaas-magic-cookie-44fbc9e9908645ffaed5aeaedf80632f";
+const JAAS_ID_DEV = "vpaas-magic-cookie-44fbc9e9908645ffaed5aeaedf80632f";
 const JAAS_PRIVATE_KEY_PROD =
-  "-----BEGIN PRIVATE KEY-----MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCTEVnF8Ijvh7dMZd/z1Uket9l6PfJyTy1uCcSbhecIiMvByieVGh9DEg0U9Q45IqE5pImWZ4y3vrOZaRf5Koa2YcFW7OJ6xcoUwP7036E2H1Oh8gpqwy+/7nCoAHrY7wE+VcHs3uAgclqy+mbgIY8MjRm3sqZJGFCkFs1w0f325lwEPqhmu1i+MPP4u958WJnhnSir+7RRomfCovLEXyMEoASR8sVesLPjq44Gta0bMEsms7PJ8UN86BQ7pYZLb4LR2qm9n1wZ1vmjUsGlautMkxOC55N4lc7Mn2ibrRM22g3UD3ahiNJGcMJ83CcIknlmiCV/ktjSFN2BMeupNr8RAgMBAAECggEAFvoL+4fT7RBYC+CSt6an8NuqZ5XMDh3erCVsiRvHd6bfppwtyPa20aS9VHvgx/5oD/hr4oq1CnQJ3Tr1GuGRAGePbERAMgw6wTlR2/IgXrNQPqnxBLMP/72B7k184+2bVSDS1m4PuCIFl5bVgcjcb4qP7QpFPoBFAQ3q9Ohp9CvVprXnfgHGh1v6/BxooLUGodrOulmSuwnJmqe5mEwXcYmJ9ETbCSM/3ur0hCg4ryRnWUXuMTYEoROVcPiCnzFoDGuKKVf9qhKMGR5b6YVrDZcAIzwsci/S84T+xCq7Jk/hniDyrsYKZUZ4MMWuVeztQwKjSFYwJTS8vILfoBTQAQKBgQDpJ3R4EbP1RUIpXh/uB18gT1rU1Hcrvv+fKIXaViNQF9OjdwkJ1KHWUbxqIfoqut6zRhqwtC88goOJjS9rdlhZsHVstcFxhOffKImAmzXmxM2lMw4WUFt3c8FYxU+LEziniRcfjEUZejA9VUp9pUUxvWIE9Gd8KALLTR32JgYsEQKBgQChendgKf4zA6iZ2M4s/CV4f8vZ83aBToqQr3uF/aFqUvVyL8USRd6JG41LeDQTNM/xfoGSuHGMY4XOmWkWtuMGSAjW/6mJOH6jYFjeCH+pHwjeir9ei45Lwy3czabuWRwjaTvgYOD7pYBqK79jcN8jtXPgnO8xrN+xUBDBW8ZjAQKBgQDjuL+PDmtgIdcvJFm3WMfWfOtQeHw05AYzY5bo27z922fAfuD7Ew1GkOqgFrOKzJ37J3umHzcLuMXUsWshYKOGZk0qcpOP1qnKUoOKcw5AaPQaaDVYIgBUOWEc3QqF4a4yJDnLfGt5KNi47vckpSliHYEBKd1xbHreKmIbKqRYoQKBgAI8vCKs8kSqrE9VXaXp6Gr++kgOw3mPKQRQKhn1JaNfet8WIljadvbXVuHQzIfnl2n1Ir5xp8EWL+ho37fc2NBhdx3jdOndyoNg9lo9K+ef8nOC4Jviuxn5nk0M3F85BNbIwnedYACcjmbqLECoc67++JgIFJhPmNnQDitfpiQBAoGBANheyjSIA7UL/847jMwiqcn+wqEKh8V35YJzAIJH2+mN9dRMCCBYC0iHGh8/4YSQ2oQjifVMW6Ely8FVA/4fMzsSL/CTIoonUlW3GIRaKPl5ZfuhmcFfJckb7V5IcDdrqSvy6Ww56XdgEeR1jGFn9pkFB4nBQOlLW+B5fFxPexyJ-----END PRIVATE KEY-----";
+  "-----BEGIN PRIVATE KEY-----MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCQ71/SaMh/UXVQ1+5OsTb3DXRSa1YABDt7TC2r9xUVL77W5SsT/i+gcuR2OqUbjaImro3ijpuhuSIAZ9Qs7sZGWTdwDmZFnSu2fX4/j9TVawr2geBIYbPSe2OxLWq5aEIYD3uxsArO4DWOst5Fk1DgBvR3+t5Xoty20m2OtISSkpONyA6YoMFAncNGD0vlp5xAP/x4vVv1ozuYnS8Fl6JsBlrzCob9ilVKLjLED/DIe2b3OEYn4iRHR1H4XzaFJvBI+5YfoIrPnLvbCUQQa1F3j6OrHcuBgv72nq8ppTAE5CdywicIugmON37CE22xrif9Lp6w0RLcQkAdIozRjievAgMBAAECggEBAIhIDZoT3TOarO1vnS1xhXWYuSAmvZ8WW7f8UZW5p6FcW95FbtRF1xLP9fMWAdp+u1IUIGZAIidXpZksCF6XxuivS2maoKAkwc2/As9Rt5dWJ+DTDsoA1M2+KGeZhRkB5+Qn6u+R0Rfly3Z6ynYxp4KAB7ApvJg7E7707v+Yzm/i6I7nqk2BDJxAM59bSSoVQKVYQEtFDwuv7Jk0oOxkQ28SjaCt4NclxItukkbK0JMBfW0K6FSVP6zqO4eZbC5mBpyDH3H/3qgutjvwLbkD5Qd9rHKSarLjiWzdjtcMulKE3GTe4tE9m1RH77CFaTdeF6Gja6AyM3PFbJ7SSo02usECgYEAz2b0YVGgQRXft4m+Zh+zfO+vxD4wbiC+9rZyaIyF4M4saFg22/WoE0mGuLueMRh6wjACJFOVCFFBYyi8YdzAl/I12/JOXZuovVFaANJIULH3DiHpbawu4+rXnIULgV16IKltKXb6GCoDbtwflxOH5wRRxa9AyRDIY+o9C0HEFnMCgYEAsuVSdXTRREHz6xoStwYzfOPrFzaByTzzdKtCftENCa/W1mA4l8R9z1dII2/HwrAG9M+vR8BN9KLuRL7/oxLfKZGFxNtnC2/q9hXfFEdE8V7b7sSIGAUxSrwe0/HjKA9n+HSa+3Ecx3nKscc5KCdXaSclCvmHsuN3mT+QJ+6iHtUCgYEApIpATMjuQ1RwNPLxe6Ggyvh40E6qK2SNO7uIzorVV4EZ1/pMI3sjyZFmcT5fhQGvuklOGbW5oWydXGaf9V+l56X/tqvoIflxCCj3J3msZ2CY6LxcrWaRmL3iKkme1BXt4uWnNeMvDGagbJ3z7e5PviY+HYAo/Jr079eQcFLPlyMCgYB9cLOrTKhYVm600emBkMWVszNraXsEIssLafMMfYXI3xWj6ICGWu9k7ezVfFH0P/4At4hOpZeEDKNKbStPq7Hzsei8qqPMr0NwHtH3pCnBniRVflV3klyH7PUo5JnFw1fCLfFmkl/9t3bbxbhcYYm3YA1nbqUqWLnKKXnppjjjqQKBgEBw+26nYKAxD9zbFVK10lyO013Jl+Ytf0WjW3U7Dnc6fmbg92cAukCKPMl2eUFQs2gIQTpunR/1i6zYM9SpANPCD/QX0G/GRy5K5aS8fSc4sD/C4nwCqceFOE5YWnZLZOVx9x8tEmRS0mOYYGN8nCCM5ImemNRnt6PsnR8Y2Uem-----END PRIVATE KEY-----";
 const JAAS_PRIVATE_KEY_DEV =
-  "-----BEGIN PRIVATE KEY-----MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCTEVnF8Ijvh7dMZd/z1Uket9l6PfJyTy1uCcSbhecIiMvByieVGh9DEg0U9Q45IqE5pImWZ4y3vrOZaRf5Koa2YcFW7OJ6xcoUwP7036E2H1Oh8gpqwy+/7nCoAHrY7wE+VcHs3uAgclqy+mbgIY8MjRm3sqZJGFCkFs1w0f325lwEPqhmu1i+MPP4u958WJnhnSir+7RRomfCovLEXyMEoASR8sVesLPjq44Gta0bMEsms7PJ8UN86BQ7pYZLb4LR2qm9n1wZ1vmjUsGlautMkxOC55N4lc7Mn2ibrRM22g3UD3ahiNJGcMJ83CcIknlmiCV/ktjSFN2BMeupNr8RAgMBAAECggEAFvoL+4fT7RBYC+CSt6an8NuqZ5XMDh3erCVsiRvHd6bfppwtyPa20aS9VHvgx/5oD/hr4oq1CnQJ3Tr1GuGRAGePbERAMgw6wTlR2/IgXrNQPqnxBLMP/72B7k184+2bVSDS1m4PuCIFl5bVgcjcb4qP7QpFPoBFAQ3q9Ohp9CvVprXnfgHGh1v6/BxooLUGodrOulmSuwnJmqe5mEwXcYmJ9ETbCSM/3ur0hCg4ryRnWUXuMTYEoROVcPiCnzFoDGuKKVf9qhKMGR5b6YVrDZcAIzwsci/S84T+xCq7Jk/hniDyrsYKZUZ4MMWuVeztQwKjSFYwJTS8vILfoBTQAQKBgQDpJ3R4EbP1RUIpXh/uB18gT1rU1Hcrvv+fKIXaViNQF9OjdwkJ1KHWUbxqIfoqut6zRhqwtC88goOJjS9rdlhZsHVstcFxhOffKImAmzXmxM2lMw4WUFt3c8FYxU+LEziniRcfjEUZejA9VUp9pUUxvWIE9Gd8KALLTR32JgYsEQKBgQChendgKf4zA6iZ2M4s/CV4f8vZ83aBToqQr3uF/aFqUvVyL8USRd6JG41LeDQTNM/xfoGSuHGMY4XOmWkWtuMGSAjW/6mJOH6jYFjeCH+pHwjeir9ei45Lwy3czabuWRwjaTvgYOD7pYBqK79jcN8jtXPgnO8xrN+xUBDBW8ZjAQKBgQDjuL+PDmtgIdcvJFm3WMfWfOtQeHw05AYzY5bo27z922fAfuD7Ew1GkOqgFrOKzJ37J3umHzcLuMXUsWshYKOGZk0qcpOP1qnKUoOKcw5AaPQaaDVYIgBUOWEc3QqF4a4yJDnLfGt5KNi47vckpSliHYEBKd1xbHreKmIbKqRYoQKBgAI8vCKs8kSqrE9VXaXp6Gr++kgOw3mPKQRQKhn1JaNfet8WIljadvbXVuHQzIfnl2n1Ir5xp8EWL+ho37fc2NBhdx3jdOndyoNg9lo9K+ef8nOC4Jviuxn5nk0M3F85BNbIwnedYACcjmbqLECoc67++JgIFJhPmNnQDitfpiQBAoGBANheyjSIA7UL/847jMwiqcn+wqEKh8V35YJzAIJH2+mN9dRMCCBYC0iHGh8/4YSQ2oQjifVMW6Ely8FVA/4fMzsSL/CTIoonUlW3GIRaKPl5ZfuhmcFfJckb7V5IcDdrqSvy6Ww56XdgEeR1jGFn9pkFB4nBQOlLW+B5fFxPexyJ-----END PRIVATE KEY-----";
+  "-----BEGIN PRIVATE KEY-----MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCQ71/SaMh/UXVQ1+5OsTb3DXRSa1YABDt7TC2r9xUVL77W5SsT/i+gcuR2OqUbjaImro3ijpuhuSIAZ9Qs7sZGWTdwDmZFnSu2fX4/j9TVawr2geBIYbPSe2OxLWq5aEIYD3uxsArO4DWOst5Fk1DgBvR3+t5Xoty20m2OtISSkpONyA6YoMFAncNGD0vlp5xAP/x4vVv1ozuYnS8Fl6JsBlrzCob9ilVKLjLED/DIe2b3OEYn4iRHR1H4XzaFJvBI+5YfoIrPnLvbCUQQa1F3j6OrHcuBgv72nq8ppTAE5CdywicIugmON37CE22xrif9Lp6w0RLcQkAdIozRjievAgMBAAECggEBAIhIDZoT3TOarO1vnS1xhXWYuSAmvZ8WW7f8UZW5p6FcW95FbtRF1xLP9fMWAdp+u1IUIGZAIidXpZksCF6XxuivS2maoKAkwc2/As9Rt5dWJ+DTDsoA1M2+KGeZhRkB5+Qn6u+R0Rfly3Z6ynYxp4KAB7ApvJg7E7707v+Yzm/i6I7nqk2BDJxAM59bSSoVQKVYQEtFDwuv7Jk0oOxkQ28SjaCt4NclxItukkbK0JMBfW0K6FSVP6zqO4eZbC5mBpyDH3H/3qgutjvwLbkD5Qd9rHKSarLjiWzdjtcMulKE3GTe4tE9m1RH77CFaTdeF6Gja6AyM3PFbJ7SSo02usECgYEAz2b0YVGgQRXft4m+Zh+zfO+vxD4wbiC+9rZyaIyF4M4saFg22/WoE0mGuLueMRh6wjACJFOVCFFBYyi8YdzAl/I12/JOXZuovVFaANJIULH3DiHpbawu4+rXnIULgV16IKltKXb6GCoDbtwflxOH5wRRxa9AyRDIY+o9C0HEFnMCgYEAsuVSdXTRREHz6xoStwYzfOPrFzaByTzzdKtCftENCa/W1mA4l8R9z1dII2/HwrAG9M+vR8BN9KLuRL7/oxLfKZGFxNtnC2/q9hXfFEdE8V7b7sSIGAUxSrwe0/HjKA9n+HSa+3Ecx3nKscc5KCdXaSclCvmHsuN3mT+QJ+6iHtUCgYEApIpATMjuQ1RwNPLxe6Ggyvh40E6qK2SNO7uIzorVV4EZ1/pMI3sjyZFmcT5fhQGvuklOGbW5oWydXGaf9V+l56X/tqvoIflxCCj3J3msZ2CY6LxcrWaRmL3iKkme1BXt4uWnNeMvDGagbJ3z7e5PviY+HYAo/Jr079eQcFLPlyMCgYB9cLOrTKhYVm600emBkMWVszNraXsEIssLafMMfYXI3xWj6ICGWu9k7ezVfFH0P/4At4hOpZeEDKNKbStPq7Hzsei8qqPMr0NwHtH3pCnBniRVflV3klyH7PUo5JnFw1fCLfFmkl/9t3bbxbhcYYm3YA1nbqUqWLnKKXnppjjjqQKBgEBw+26nYKAxD9zbFVK10lyO013Jl+Ytf0WjW3U7Dnc6fmbg92cAukCKPMl2eUFQs2gIQTpunR/1i6zYM9SpANPCD/QX0G/GRy5K5aS8fSc4sD/C4nwCqceFOE5YWnZLZOVx9x8tEmRS0mOYYGN8nCCM5ImemNRnt6PsnR8Y2Uem-----END PRIVATE KEY-----";
 const JAAS_APP_KEY_PROD =
-  "vpaas-magic-cookie-a8b4ddef72a34e29a94228185fb02e12/c240b9";
+  "vpaas-magic-cookie-44fbc9e9908645ffaed5aeaedf80632f/06e08a";
 const JAAS_APP_KEY_DEV =
-  "vpaas-magic-cookie-a8b4ddef72a34e29a94228185fb02e12/c240b9";
+  "vpaas-magic-cookie-44fbc9e9908645ffaed5aeaedf80632f/06e08a";
 
-// const CLOUD_FILES_PROD = "https://lmsfiles.istitutojanus.it";
-const CLOUD_FILES_PROD = "https://lmsfilesdev.cloudandpartners.com";
+const CLOUD_FILES_PROD = "https://lmsfiles.istitutojanus.it";
+// const CLOUD_FILES_PROD = "https://lmsfilesdev.cloudandpartners.com";
 const CLOUD_FILES_DEV = "https://lmsfilesdev.cloudandpartners.com";
 
-// const IMAGES_PROD = "lmsfiles.istitutojanus.it";
-const IMAGES_PROD = "lmsfilesdev.cloudandpartners.com";
+const IMAGES_PROD = "lmsfiles.istitutojanus.it";
+// const IMAGES_PROD = "lmsfilesdev.cloudandpartners.com";
 const IMAGES_DEV = "lmsfilesdev.cloudandpartners.com";
 
-// const LMS_PROD = "https://lmswebapi.istitutojanus.it";
-const LMS_PROD = "https://lmswebapidev.cloudandpartners.com";
+const LMS_PROD = "https://lmswebapi.istitutojanus.it";
+// const LMS_PROD = "https://lmswebapidev.cloudandpartners.com";
 const LMS_DEV = "https://lmswebapidev.cloudandpartners.com";
 
-// const FRONT_PROD = "https://lmsweb.istitutojanus.it";
-const FRONT_PROD = "https://lmsweb.cloudandpartners.com";
+const FRONT_PROD = "https://lmsweb.istitutojanus.it";
+// const FRONT_PROD = "https://lmsweb.cloudandpartners.com";
 const FRONT_DEV = "http://localhost:3000";
 
-// const SERVER_PROD = "https://lmsserver.istitutojanus.it/school/api";
-const SERVER_PROD = "https://lmswebapi.cloudandpartners.com/school/api";
+const SERVER_PROD = "https://lmsserver.istitutojanus.it/school/api";
+// const SERVER_PROD = "https://lmswebapi.cloudandpartners.com/school/api";
 const SERVER_DEV = "http://localhost:3002/school/api";
 
 const withTM = require("next-transpile-modules")([
@@ -64,7 +64,7 @@ module.exports = withTM({
     SECRET_COOKIE_PASSWORD: "t0Kb5wKyD1yaybCwhipeG4r7YmzGNa6c",
     MUI_LICENCE:
       "d1fbab155841cc4db5a63f2e70fee1bdTz01MjYyOSxFPTE2OTc2NDI4MTExNjAsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI=",
-    version: "1.10.1",
+    version: "1.10.2",
     JAAS_ID: isProd ? JAAS_ID_PROD : JAAS_ID_DEV,
     JAAS_PRIVATE_KEY: isProd ? JAAS_PRIVATE_KEY_PROD : JAAS_PRIVATE_KEY_DEV,
     JAAS_APP_KEY: isProd ? JAAS_APP_KEY_PROD : JAAS_APP_KEY_DEV,

@@ -7,19 +7,20 @@ const nextConfig = {
 
 const isProd = process.env.NODE_ENV === "production";
 
-const CLOUD_FILES_PROD = "https://lmsfilesdev.cloudandpartners.com";
+const CLOUD_FILES_PROD = "https://lmsfiles.istitutojanus.it";
+// const CLOUD_FILES_PROD = "https://lmsfilesdev.cloudandpartners.com";
 const CLOUD_FILES_DEV = "https://lmsfilesdev.cloudandpartners.com";
 
-// const LMS_PROD = "https://lmswebapi.istitutojanus.it";
-const LMS_PROD = "https://lmswebapidev.cloudandpartners.com";
+const LMS_PROD = "https://lmswebapi.istitutojanus.it";
+// const LMS_PROD = "https://lmswebapidev.cloudandpartners.com";
 const LMS_DEV = "https://lmswebapidev.cloudandpartners.com";
 
-// const FRONT_PROD = "https://lmsweb.istitutojanus.it";
-const FRONT_PROD = "https://lmsweb.cloudandpartners.com";
+const FRONT_PROD = "https://lmsweb.istitutojanus.it";
+// const FRONT_PROD = "https://lmsweb.cloudandpartners.com";
 const FRONT_DEV = "http://localhost:3000";
 
-// const SERVER_PROD = "https://lmsserver.istitutojanus.it/school/api";
-const SERVER_PROD = "https://lmswebapi.cloudandpartners.com/school/api";
+const SERVER_PROD = "https://lmsserver.istitutojanus.it/school/api";
+// const SERVER_PROD = "https://lmswebapi.cloudandpartners.com/school/api";
 const SERVER_DEV = "http://localhost:3002/school/api";
 
 module.exports = {
