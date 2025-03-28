@@ -206,7 +206,7 @@ export default function DTC_Calendar(props) {
           btPartecipa={stateDialog.btPartecipa}
           linkPartecipa={stateDialog.linkPartecipa}
           btElimina={stateDialog.btElimina}
-          commentaLabel="COMMENTO"
+          commentaLabel="LINK"
           confermaLabel="CONFERMA"
           eliminaLabel="ELIMINA"
           partecipaLabel="PARTECIPA"

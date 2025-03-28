@@ -86,11 +86,11 @@ class SEC_Dialog extends React.Component {
     // console.log("setText", text);
     this.setState({ commentoValue: text });
     // this.changeCommentoId.current.setText(text);
-    // console.log(this.changeCommentoId);
+     console.log(this.changeCommentoId);
   }
 
   render() {
-    // console.log("commentoValue", this.state.commentoValue);
+    console.log("commentoValue", this.state.commentoValue);
     return (
       <Dialog
         onClose={this.handleClose}
@@ -104,12 +104,13 @@ class SEC_Dialog extends React.Component {
           <DialogContentText sx={{ pb: "3%" }} id="alert-dialog-description">
             <span>{`${this.props.text ? this.props.text : ""}`}</span>
           </DialogContentText>
+       
           {this.props.btCommenta == true ? (
             <DTC_TextBox
               id={this.state.commentoId}
-              label="Commento"
+              label={this.state.commentoValue}
               onChange={this.onChangeForm}
-              size={1}
+              size={500}
               ref={this.changeCommentoId}
             />
           ) : (
@@ -123,7 +124,7 @@ class SEC_Dialog extends React.Component {
               <Button onClick={this.handleCommento}>
                 {this.props.commentaLabel
                   ? this.props.commentaLabel
-                  : "Commento"}
+                  : "Link"}
               </Button>
             ) : (
               <></>
@@ -145,7 +146,7 @@ class SEC_Dialog extends React.Component {
               <></>
             )}
             {this.props.btPartecipa == true ? (
-              <Button href={`${process.env.frontend}/videocall${this.props.linkPartecipa}`}>
+              <Button href={`${this.state.commentoValue}`} target="_blank">
                 {this.props.partecipaLabel
                   ? this.props.partecipaLabel
                   : "Partecipa"}

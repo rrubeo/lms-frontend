@@ -24,7 +24,8 @@ class FRM_Studente_Aula extends React.Component {
 
   handleOnClick(event, item) {
     if (item.id == this.state.docentiId) {
-      if (this.props.data.crediti.creditiDisponibili < 1) {
+      
+      if (this.props.data.crediti.creditiResidui < 1) {
         this.setState({
           dialogTitle: "Crediti non sufficienti",
           dialogText: "Richiedi crediti aggiuntivi.",
@@ -46,7 +47,7 @@ class FRM_Studente_Aula extends React.Component {
   }
 
   render() {
-    // console.log(this.props.data);
+     console.log(this.props.data);
     return (
       <>
         <Stack
@@ -67,14 +68,14 @@ class FRM_Studente_Aula extends React.Component {
             spacing={{ xs: 2, sm: 0, md: 0 }}
           >
             <SEC_StudentProfile profilo={this.props.data.iscrizione[0]} />
-            <SEC_StudentProgress
+            {/* <SEC_StudentProgress
               text={this.props.data.label_avanzamento}
               avanzamento={
                 this.props.data.iscrizione[0].percentualeAvanzamento
                   ? this.props.data.iscrizione[0].percentualeAvanzamento
                   : 0
               }
-            />
+            /> */}
           </Stack>
           <Stack
             direction={{ xs: "column", sm: "column", md: "row" }}

@@ -63,20 +63,20 @@ class DCT_ChatNotify extends React.Component {
   }
   render() {
     // console.log(this.props);
-    return (
-      <Box sx={{ pr: 3 }}>
-        <IconButton
-          color="secondary"
-          href={`${process.env.frontend}/chat/network`}
-          sx={{ width: 30, height: 20 }}
-        >
-          <Badge badgeContent={this.state.newMsg} color="notify">
-            <Tooltip TransitionComponent={Zoom} title="Chat">
-              <Iconify width={32} icon="mdi:chat-outline" />
-            </Tooltip>
-          </Badge>
-        </IconButton>
-      </Box>
+    return (<></>
+      // <Box sx={{ pr: 3 }}>
+      //   <IconButton
+      //     color="secondary"
+      //     href={`${process.env.frontend}/chat/network`}
+      //     sx={{ width: 30, height: 20 }}
+      //   >
+      //     <Badge badgeContent={this.state.newMsg} color="notify">
+      //       <Tooltip TransitionComponent={Zoom} title="Chat">
+      //         <Iconify width={32} icon="mdi:chat-outline" />
+      //       </Tooltip>
+      //     </Badge>
+      //   </IconButton>
+      // </Box>
     );
   }
 }

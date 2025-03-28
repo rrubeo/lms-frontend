@@ -204,12 +204,12 @@ const navmenu = [
 ];
 
 const navmenustudenti = [
-  {
-    id: utils.getUID(),
-    text: "Home",
-    icon: "icon-home",
-    link: `${process.env.frontend}/fsme/${cfg.FSME_STEP_0}`,
-  },
+  // {
+  //   id: utils.getUID(),
+  //   text: "Home",
+  //   icon: "icon-home",
+  //   link: `${process.env.frontend}/fsme/${cfg.FSME_STEP_0}`,
+  // },
   {
     id: utils.getUID(),
     text: "Aula Virtuale",
